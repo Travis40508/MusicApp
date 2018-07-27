@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true">
 
@@ -12,6 +13,8 @@
         android:imeOptions="actionDone"
         android:focusedByDefault="false"
         android:layout_margin="10dp"
+        android:textColorHint="@android:color/white"
+        android:textColor="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="match_parent"

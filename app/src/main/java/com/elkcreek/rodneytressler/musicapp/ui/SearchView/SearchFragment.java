@@ -16,7 +16,9 @@ import android.widget.ProgressBar;
 
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.ui.BioView.BioFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.ArtistAdapter;
+import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 import java.util.List;
 
@@ -28,6 +30,9 @@ import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import dagger.android.support.AndroidSupportInjection;
 
+import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.BIO_FRAGMENT_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
+
 public class SearchFragment extends Fragment implements SearchView {
 
     @Inject protected SearchPresenter presenter;
@@ -38,6 +43,7 @@ public class SearchFragment extends Fragment implements SearchView {
     @BindView(R.id.progress_bar)
     protected ProgressBar progressBar;
     private ArtistAdapter adapter;
+
 
     @OnTextChanged(value = R.id.input_artist_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void onArtistSearchChange(Editable editable) {
@@ -75,6 +81,12 @@ public class SearchFragment extends Fragment implements SearchView {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter.notifyDataSetChanged();
+        adapter.setAdapterCallback(new ArtistAdapter.Callback() {
+            @Override
+            public void onArtistClicked(MusicApi.Artist artist) {
+                presenter.artistClicked(artist);
+            }
+        });
     }
 
     @Override
@@ -85,5 +97,14 @@ public class SearchFragment extends Fragment implements SearchView {
     @Override
     public void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showBioFragment(MusicApi.Artist artist) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ARTIST_NAME_KEY, artist.getArtistName());
+        BioFragment fragment = BioFragment.newInstance();
+        fragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, fragment, BIO_FRAGMENT_TAG).commit();
     }
 }

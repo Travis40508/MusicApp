@@ -14,7 +14,8 @@ import dagger.android.AndroidInjection;
 public class MainActivity extends AppCompatActivity implements MainView {
 
     @Inject protected MainPresenter presenter;
-    private static final String SEARCH_PRESENTER_TAG = "search_presenter_tag";
+    private static final String SEARCH_FRAGMENT_TAG = "search_fragment_tag";
+    public static final String BIO_FRAGMENT_TAG = "bio_fragment_tag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     public void attachSearchFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, SearchFragment.newInstance(), SEARCH_PRESENTER_TAG).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, SearchFragment.newInstance(), SEARCH_FRAGMENT_TAG).commit();
     }
 }

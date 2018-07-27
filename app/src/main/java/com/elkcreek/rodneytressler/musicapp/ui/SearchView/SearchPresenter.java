@@ -48,4 +48,7 @@ public class SearchPresenter implements BasePresenter<SearchView> {
                 });
     }
 
+    public void artistClicked(MusicApi.Artist artist) {
+        view.showBioFragment(artist);
+    }
 }

@@ -10,7 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface MusicApi {
-    @GET("/2.0?method=artist.search&format=json&limit=5")
+    @GET("/2.0?method=artist.search&format=json&limit=12")
     Observable<SearchResponse> getArtistSearchResults(@Query("artist") String artist, @Query("api_key") String apiKey);
 
     @GET("/2.0?method=artist.getinfo&format=json&limit=5")
@@ -85,6 +85,10 @@ public interface MusicApi {
     class ArtistBioResponse {
         @SerializedName("artist")
         @Expose private Artist artist;
+
+        public Artist getArtist() {
+            return artist;
+        }
     }
 
     class ArtistBio {

@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder> {
 
     private List<MusicApi.Artist> artistList;
+    private Callback callback;
 
     public ArtistAdapter(List<MusicApi.Artist> artistList) {
         this.artistList = artistList;
@@ -38,11 +39,25 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
     @Override
     public void onBindViewHolder(@NonNull ArtistViewHolder artistViewHolder, int position) {
         artistViewHolder.bindArtist(artistList.get(position));
+        artistViewHolder.itemView.setOnClickListener(onArtistClicked(artistList.get(position)));
+    }
+
+    private View.OnClickListener onArtistClicked(MusicApi.Artist artist) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callback.onArtistClicked(artist);
+            }
+        };
     }
 
     @Override
     public int getItemCount() {
         return artistList.size();
+    }
+
+    public void setAdapterCallback(Callback callback) {
+        this.callback = callback;
     }
 
     public class ArtistViewHolder extends RecyclerView.ViewHolder {
@@ -62,5 +77,9 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
             Glide.with(itemView).load(artist.getArtistImages().get(2).getImageUrl()).into(artistImage);
             artistText.setText(artist.getArtistName());
         }
+    }
+
+    public interface Callback {
+        void onArtistClicked(MusicApi.Artist artist);
     }
 }
