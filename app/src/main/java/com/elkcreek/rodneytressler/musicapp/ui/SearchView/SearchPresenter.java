@@ -9,6 +9,8 @@ import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+
 public class SearchPresenter implements BasePresenter<SearchView> {
 
     private final MusicApiService musicApiService;
@@ -22,13 +24,6 @@ public class SearchPresenter implements BasePresenter<SearchView> {
     @Override
     public void attachView(SearchView view) {
         this.view = view;
-        if(view != null) {
-            musicApiService.getArtistSearchResults("Pearl Jam", Constants.API_KEY)
-                    .subscribe(searchResponse -> {
-                        MusicApi.Artist artist = searchResponse.getSearchResults().getArtistMatches().getArtistList().get(0);
-                        Log.d("@@@@", artist.getArtistImages().get(3).getImageUrl());
-                    });
-        }
     }
 
     @Override
@@ -40,4 +35,17 @@ public class SearchPresenter implements BasePresenter<SearchView> {
     public void unsubscribe() {
 
     }
+
+    public void artistSearchTextChanged(String artistSearchText, boolean adapterHasItems) {
+        if(!adapterHasItems) {
+            view.showProgressBar();
+        }
+        musicApiService.getArtistSearchResults(artistSearchText, Constants.API_KEY)
+                .onErrorResumeNext(Observable.empty())
+                .subscribe(searchResponse -> {
+                    view.hideProgressBar();
+                    view.loadArtists(searchResponse.getSearchResults().getArtistMatches().getArtistList());
+                });
+    }
+
 }

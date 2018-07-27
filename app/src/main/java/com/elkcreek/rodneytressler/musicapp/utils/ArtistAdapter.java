@@ -1,5 +1,6 @@
 package com.elkcreek.rodneytressler.musicapp.utils;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -56,7 +59,8 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         }
 
         public void bindArtist(MusicApi.Artist artist) {
-            //Use Glide
+            Glide.with(itemView).load(artist.getArtistImages().get(2).getImageUrl()).into(artistImage);
+            artistText.setText(artist.getArtistName());
         }
     }
 }

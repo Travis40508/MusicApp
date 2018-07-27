@@ -10,8 +10,11 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface MusicApi {
-    @GET("/2.0?method=artist.search&format=json")
+    @GET("/2.0?method=artist.search&format=json&limit=5")
     Observable<SearchResponse> getArtistSearchResults(@Query("artist") String artist, @Query("api_key") String apiKey);
+
+    @GET("/2.0?method=artist.getinfo&format=json&limit=5")
+    Observable<ArtistBioResponse> getArtistBio(@Query("artist") String artist, @Query("api_key") String apiKey);
 
     class SearchResponse {
         @SerializedName("results")
@@ -47,12 +50,19 @@ public interface MusicApi {
         @SerializedName("image")
         @Expose private List<ArtistImage> artistImages;
 
+        @SerializedName("bio")
+        @Expose private ArtistBio artistBio;
+
         public String getArtistName() {
             return artistName;
         }
 
         public List<ArtistImage> getArtistImages() {
             return artistImages;
+        }
+
+        public ArtistBio getArtistBio() {
+            return artistBio;
         }
     }
 
@@ -69,6 +79,20 @@ public interface MusicApi {
 
         public String getImageSize() {
             return imageSize;
+        }
+    }
+
+    class ArtistBioResponse {
+        @SerializedName("artist")
+        @Expose private Artist artist;
+    }
+
+    class ArtistBio {
+        @SerializedName("content")
+        @Expose private String bioContent;
+
+        public String getBioContent() {
+            return bioContent;
         }
     }
 }

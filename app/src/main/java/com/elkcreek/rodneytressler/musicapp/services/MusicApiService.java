@@ -6,4 +6,5 @@ import io.reactivex.Observable;
 
 public interface MusicApiService {
     Observable<MusicApi.SearchResponse> getArtistSearchResults(String artist, String apiKey);
+    Observable<MusicApi.ArtistBioResponse> getArtistBio(String artist, String apiKey);
 }

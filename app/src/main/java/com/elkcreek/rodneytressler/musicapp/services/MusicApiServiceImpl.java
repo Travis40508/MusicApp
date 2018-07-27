@@ -18,6 +18,13 @@ public class MusicApiServiceImpl implements MusicApiService {
     @Override
     public Observable<MusicApi.SearchResponse> getArtistSearchResults(String artist, String apiKey) {
         return musicApi.getArtistSearchResults(artist, apiKey)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<MusicApi.ArtistBioResponse> getArtistBio(String artist, String apiKey) {
+        return musicApi.getArtistBio(artist, apiKey)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
