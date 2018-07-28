@@ -41,7 +41,7 @@ public class BioFragment extends Fragment implements BioView {
         View view = inflater.inflate(R.layout.fragment_bio, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
-        presenter.artistRetrieved(getArguments().getString(Constants.ARTIST_NAME_KEY));
+        presenter.artistRetrieved(getArguments().getString(Constants.ARTIST_UID_KEY));
         return view;
     }
 

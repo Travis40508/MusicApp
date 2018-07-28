@@ -31,7 +31,7 @@ import butterknife.OnTextChanged;
 import dagger.android.support.AndroidSupportInjection;
 
 import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.BIO_FRAGMENT_TAG;
-import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
 
 public class SearchFragment extends Fragment implements SearchView {
 
@@ -83,8 +83,13 @@ public class SearchFragment extends Fragment implements SearchView {
         adapter.notifyDataSetChanged();
         adapter.setAdapterCallback(new ArtistAdapter.Callback() {
             @Override
-            public void onArtistClicked(MusicApi.Artist artist) {
-                presenter.artistClicked(artist);
+            public void onArtistInfoClicked(MusicApi.Artist artist) {
+                presenter.onArtistInfoClicked(artist);
+            }
+
+            @Override
+            public void onArtistMusicClicked(MusicApi.Artist artist) {
+                presenter.onArtistMusicClicked(artist);
             }
         });
     }
@@ -100,11 +105,11 @@ public class SearchFragment extends Fragment implements SearchView {
     }
 
     @Override
-    public void showBioFragment(MusicApi.Artist artist) {
+    public void showBioFragment(String artistUID) {
         Bundle bundle = new Bundle();
-        bundle.putString(ARTIST_NAME_KEY, artist.getArtistName());
+        bundle.putString(ARTIST_UID_KEY, artistUID);
         BioFragment fragment = BioFragment.newInstance();
         fragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, fragment, BIO_FRAGMENT_TAG).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, fragment, BIO_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 }

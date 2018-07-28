@@ -39,17 +39,10 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
     @Override
     public void onBindViewHolder(@NonNull ArtistViewHolder artistViewHolder, int position) {
         artistViewHolder.bindArtist(artistList.get(position));
-        artistViewHolder.itemView.setOnClickListener(onArtistClicked(artistList.get(position)));
+        artistViewHolder.infoButton.setOnClickListener(artistViewHolder.onInfoButtonClicked(artistList.get(position)));
+        artistViewHolder.musicButton.setOnClickListener(artistViewHolder.onMusicButtonClicked(artistList.get(position)));
     }
 
-    private View.OnClickListener onArtistClicked(MusicApi.Artist artist) {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callback.onArtistClicked(artist);
-            }
-        };
-    }
 
     @Override
     public int getItemCount() {
@@ -68,6 +61,12 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         @BindView(R.id.text_artist_name)
         protected TextView artistText;
 
+        @BindView(R.id.button_info)
+        protected ImageView infoButton;
+
+        @BindView(R.id.button_music)
+        protected ImageView musicButton;
+
         public ArtistViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -77,9 +76,28 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
             Glide.with(itemView).load(artist.getArtistImages().get(2).getImageUrl()).into(artistImage);
             artistText.setText(artist.getArtistName());
         }
+
+        public View.OnClickListener onInfoButtonClicked(MusicApi.Artist artist) {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    callback.onArtistInfoClicked(artist);
+                }
+            };
+        }
+
+        public View.OnClickListener onMusicButtonClicked(MusicApi.Artist artist) {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    callback.onArtistMusicClicked(artist);
+                }
+            };
+        }
     }
 
     public interface Callback {
-        void onArtistClicked(MusicApi.Artist artist);
+        void onArtistInfoClicked(MusicApi.Artist artist);
+        void onArtistMusicClicked(MusicApi.Artist artist);
     }
 }

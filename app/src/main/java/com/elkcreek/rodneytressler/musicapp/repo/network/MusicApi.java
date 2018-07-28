@@ -7,14 +7,18 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface MusicApi {
     @GET("/2.0?method=artist.search&format=json&limit=12")
     Observable<SearchResponse> getArtistSearchResults(@Query("artist") String artist, @Query("api_key") String apiKey);
 
-    @GET("/2.0?method=artist.getinfo&format=json&limit=5")
-    Observable<ArtistBioResponse> getArtistBio(@Query("artist") String artist, @Query("api_key") String apiKey);
+    @GET("/2.0?method=artist.getinfo&format=json")
+    Observable<ArtistBioResponse> getArtistBio(@Query("mbid") String mbid, @Query("api_key") String apiKey);
+
+    @GET("/2.0?method=chart.gettopartists&format=json")
+    Observable<TopArtistsResponse> getTopArtists(@Query("api_key") String apiKey);
 
     class SearchResponse {
         @SerializedName("results")
@@ -53,6 +57,9 @@ public interface MusicApi {
         @SerializedName("bio")
         @Expose private ArtistBio artistBio;
 
+        @SerializedName("mbid")
+        @Expose private String artistUID;
+
         public String getArtistName() {
             return artistName;
         }
@@ -63,6 +70,10 @@ public interface MusicApi {
 
         public ArtistBio getArtistBio() {
             return artistBio;
+        }
+
+        public String getArtistUID() {
+            return artistUID;
         }
     }
 
@@ -97,6 +108,23 @@ public interface MusicApi {
 
         public String getBioContent() {
             return bioContent;
+        }
+    }
+
+    class TopArtistsResponse {
+        @SerializedName("artists")
+        @Expose private Artists artists;
+
+        public Artists getArtists() {
+            return artists;
+        }
+    }
+    class Artists {
+        @SerializedName("artist")
+        @Expose private List<Artist> artistList;
+
+        public List<Artist> getArtistList() {
+            return artistList;
         }
     }
 }

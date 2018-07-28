@@ -30,4 +30,12 @@ public class MainPresenter implements BasePresenter<MainView> {
     public void unsubscribe() {
 
     }
+
+    public void backPressed(int backStackEntryCount) {
+        if(backStackEntryCount > 0) {
+            view.detachImmediateFragment();
+        } else {
+            view.closeApp();
+        }
+    }
 }

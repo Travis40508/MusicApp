@@ -31,4 +31,19 @@ public class MainActivity extends AppCompatActivity implements MainView {
     public void attachSearchFragment() {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, SearchFragment.newInstance(), SEARCH_FRAGMENT_TAG).commit();
     }
+
+    @Override
+    public void detachImmediateFragment() {
+        getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void closeApp() {
+        super.onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        presenter.backPressed(getSupportFragmentManager().getBackStackEntryCount());
+    }
 }

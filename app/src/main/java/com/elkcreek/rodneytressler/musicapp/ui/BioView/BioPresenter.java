@@ -6,13 +6,17 @@ import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 public class BioPresenter implements BasePresenter<BioView> {
     private final MusicApiService musicApiService;
     private BioView view;
+    private CompositeDisposable disposable;
 
     @Inject
     public BioPresenter(MusicApiService musicApiService) {
         this.musicApiService = musicApiService;
+        disposable = new CompositeDisposable();
     }
 
     @Override
@@ -30,11 +34,11 @@ public class BioPresenter implements BasePresenter<BioView> {
 
     }
 
-    public void artistRetrieved(String artistName) {
-        musicApiService.getArtistBio(artistName, Constants.API_KEY)
+    public void artistRetrieved(String artistUid) {
+        disposable.add(musicApiService.getArtistBio(artistUid, Constants.API_KEY)
                 .subscribe(artistBioResponse -> {
                     view.showArtistImage(artistBioResponse.getArtist().getArtistImages().get(3).getImageUrl());
                     view.showArtistBio(artistBioResponse.getArtist().getArtistBio().getBioContent());
-                });
+                }));
     }
 }
