@@ -20,6 +20,9 @@ public interface MusicApi {
     @GET("/2.0?method=chart.gettopartists&format=json")
     Observable<TopArtistsResponse> getTopArtists(@Query("api_key") String apiKey);
 
+    @GET("/2.0?method=artist.gettoptracks&format=json")
+    Observable<TopTracksResponse> getTopTracks(@Query("mbid") String mbid, @Query("api_key") String apiKey);
+
     class SearchResponse {
         @SerializedName("results")
         @Expose private SearchResults searchResults;
@@ -125,6 +128,47 @@ public interface MusicApi {
 
         public List<Artist> getArtistList() {
             return artistList;
+        }
+    }
+
+    class TopTracksResponse {
+        @SerializedName("toptracks")
+        @Expose private TopTracks topTracks;
+
+        public TopTracks getTopTracks() {
+            return topTracks;
+        }
+    }
+
+    class TopTracks {
+        @SerializedName("track")
+        @Expose private List<Track> trackList;
+
+        public List<Track> getTrackList() {
+            return trackList;
+        }
+    }
+
+    class Track {
+        @SerializedName("name")
+        @Expose private String trackName;
+
+        @SerializedName("url")
+        @Expose private String trackUrl;
+
+        @SerializedName("image")
+        @Expose private List<ArtistImage> artistImage;
+
+        public String getTrackName() {
+            return trackName;
+        }
+
+        public String getTrackUrl() {
+            return trackUrl;
+        }
+
+        public List<ArtistImage> getArtistImage() {
+            return artistImage;
         }
     }
 }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
@@ -62,5 +63,15 @@ public class BioFragment extends Fragment implements BioView {
     @Override
     public void showArtistBio(String artistBio) {
         artistBioText.setText(artistBio);
+    }
+
+    @Override
+    public void detachFragment() {
+        getActivity().getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void showNoBioToast() {
+        Toast.makeText(getContext(), "No Bio Found!", Toast.LENGTH_SHORT).show();
     }
 }

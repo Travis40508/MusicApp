@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MusicApp</string>
+    <string name="top_artists_text">Today\'s Top Artists</string>
 </resources>

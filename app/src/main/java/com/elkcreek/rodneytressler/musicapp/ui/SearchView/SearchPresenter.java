@@ -73,10 +73,12 @@ public class SearchPresenter implements BasePresenter<SearchView> {
             view.showProgressBar();
         }
         if(!artistSearchText.isEmpty()) {
+            view.showSearchTextValue(artistSearchText);
             disposable.add(getArtistSearchResults(artistSearchText)
                     .subscribe(getSearchResponse()));
 
         } else {
+            view.showSearchTextTopArtists();
             disposable.add(getTopArtists().subscribe(updateViewWithTopArtist()));
         }
 
@@ -87,6 +89,6 @@ public class SearchPresenter implements BasePresenter<SearchView> {
     }
 
     public void onArtistMusicClicked(MusicApi.Artist artist) {
-
+        view.showArtistTracks(artist);
     }
 }

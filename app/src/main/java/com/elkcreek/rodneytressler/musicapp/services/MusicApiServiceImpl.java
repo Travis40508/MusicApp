@@ -35,4 +35,11 @@ public class MusicApiServiceImpl implements MusicApiService {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    @Override
+    public Observable<MusicApi.TopTracksResponse> getTopTracks(String artistUid, String apiKey) {
+        return musicApi.getTopTracks(artistUid, apiKey)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

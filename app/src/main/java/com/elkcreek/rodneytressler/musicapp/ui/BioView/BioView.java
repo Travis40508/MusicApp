@@ -6,4 +6,8 @@ public interface BioView extends BaseView {
     void showArtistImage(String artistImages);
 
     void showArtistBio(String artistBio);
+
+    void detachFragment();
+
+    void showNoBioToast();
 }

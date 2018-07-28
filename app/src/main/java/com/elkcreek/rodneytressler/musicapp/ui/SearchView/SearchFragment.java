@@ -13,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.BioView.BioFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.TracksView.TracksFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.ArtistAdapter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
@@ -31,6 +33,8 @@ import butterknife.OnTextChanged;
 import dagger.android.support.AndroidSupportInjection;
 
 import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.BIO_FRAGMENT_TAG;
+import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.TRACKS_FRAGMENT_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
 
 public class SearchFragment extends Fragment implements SearchView {
@@ -42,6 +46,8 @@ public class SearchFragment extends Fragment implements SearchView {
     protected EditText artistInput;
     @BindView(R.id.progress_bar)
     protected ProgressBar progressBar;
+    @BindView(R.id.text_search_value)
+    protected TextView searchText;
     private ArtistAdapter adapter;
 
 
@@ -111,5 +117,25 @@ public class SearchFragment extends Fragment implements SearchView {
         BioFragment fragment = BioFragment.newInstance();
         fragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, fragment, BIO_FRAGMENT_TAG).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void showArtistTracks(MusicApi.Artist artist) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ARTIST_UID_KEY, artist.getArtistUID());
+        bundle.putString(ARTIST_NAME_KEY, artist.getArtistName());
+        TracksFragment fragment = TracksFragment.newInstance();
+        fragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, fragment, TRACKS_FRAGMENT_TAG).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void showSearchTextValue(String searchText) {
+        this.searchText.setText("Showing Results For '" + searchText + "'");
+    }
+
+    @Override
+    public void showSearchTextTopArtists() {
+        this.searchText.setText(R.string.top_artists_text);
     }
 }
