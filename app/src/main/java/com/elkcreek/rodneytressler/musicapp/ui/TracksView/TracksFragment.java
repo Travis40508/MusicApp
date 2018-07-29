@@ -45,6 +45,18 @@ public class TracksFragment extends Fragment implements TracksView {
         super.onAttach(context);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.subscribe();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.unsubscribe();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -100,6 +112,6 @@ public class TracksFragment extends Fragment implements TracksView {
 
     @Override
     public void toastNoTracksError() {
-        Toast.makeText(getContext(), "No Tracks Found!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.no_tracks_found_text, Toast.LENGTH_SHORT).show();
     }
 }

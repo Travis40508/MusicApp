@@ -36,6 +36,18 @@ public class BioFragment extends Fragment implements BioView {
         super.onAttach(context);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.subscribe();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.unsubscribe();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,6 +84,6 @@ public class BioFragment extends Fragment implements BioView {
 
     @Override
     public void showNoBioToast() {
-        Toast.makeText(getContext(), "No Bio Found!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.no_bio_found_text, Toast.LENGTH_SHORT).show();
     }
 }

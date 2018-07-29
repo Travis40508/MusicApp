@@ -15,11 +15,11 @@ public class BioPresenter implements BasePresenter<BioView> {
     private final MusicApiService musicApiService;
     private BioView view;
     private CompositeDisposable disposable;
+    private String artistUid;
 
     @Inject
     public BioPresenter(MusicApiService musicApiService) {
         this.musicApiService = musicApiService;
-        disposable = new CompositeDisposable();
     }
 
     @Override
@@ -29,12 +29,14 @@ public class BioPresenter implements BasePresenter<BioView> {
 
     @Override
     public void subscribe() {
-
+        disposable = new CompositeDisposable();
+        disposable.add(getArtistBio(artistUid)
+                .subscribe(updateUiWithArtistBio(), updateUiOnError()));
     }
 
     @Override
     public void unsubscribe() {
-
+        disposable.dispose();
     }
 
     private Observable<MusicApi.ArtistBioResponse> getArtistBio(String artistUid) {
@@ -48,7 +50,7 @@ public class BioPresenter implements BasePresenter<BioView> {
         };
     }
 
-    private Consumer<Throwable> onArtistBioError() {
+    private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
           view.detachFragment();
           view.showNoBioToast();
@@ -56,7 +58,6 @@ public class BioPresenter implements BasePresenter<BioView> {
     }
 
     public void artistRetrieved(String artistUid) {
-        disposable.add(getArtistBio(artistUid)
-                .subscribe(updateUiWithArtistBio(), onArtistBioError()));
+        this.artistUid = artistUid;
     }
 }

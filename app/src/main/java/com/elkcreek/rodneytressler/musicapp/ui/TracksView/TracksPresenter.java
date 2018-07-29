@@ -16,10 +16,10 @@ public class TracksPresenter implements BasePresenter<TracksView> {
     private final MusicApiService musicApiService;
     private TracksView view;
     private CompositeDisposable disposable;
+    private String artistUid;
 
     @Inject
     public TracksPresenter(MusicApiService musicApiService) {
-        disposable = new CompositeDisposable();
         this.musicApiService = musicApiService;
     }
 
@@ -38,7 +38,7 @@ public class TracksPresenter implements BasePresenter<TracksView> {
         };
     }
 
-    private Consumer<Throwable> onTopTracksError() {
+    private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
           view.removeFragment();
           view.toastNoTracksError();
@@ -47,16 +47,17 @@ public class TracksPresenter implements BasePresenter<TracksView> {
 
     @Override
     public void subscribe() {
-
+        disposable = new CompositeDisposable();
+        disposable.add(getArtistTopTracks(artistUid).subscribe(updateUiWithTopTracks(), updateUiOnError()));
     }
 
     @Override
     public void unsubscribe() {
-
+        disposable.dispose();
     }
 
     public void artistRetrieved(String artistUid) {
-        disposable.add(getArtistTopTracks(artistUid).subscribe(updateUiWithTopTracks(), onTopTracksError()));
+        this.artistUid = artistUid;
     }
 
     public void artistNameRetrieved(String artistName) {

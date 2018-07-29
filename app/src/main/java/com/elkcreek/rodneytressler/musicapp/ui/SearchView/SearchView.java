@@ -19,4 +19,6 @@ public interface SearchView extends BaseView {
     void showSearchTextValue(String s);
 
     void showSearchTextTopArtists();
+
+    void showErrorLoadingToast();
 }

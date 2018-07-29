@@ -7,12 +7,12 @@ import com.elkcreek.rodneytressler.musicapp.services.MusicApiService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
-import java.util.function.Consumer;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 
 public class SearchPresenter implements BasePresenter<SearchView> {
 
@@ -23,18 +23,11 @@ public class SearchPresenter implements BasePresenter<SearchView> {
     @Inject
     public SearchPresenter(MusicApiService musicApiService) {
         this.musicApiService = musicApiService;
-        disposable = new CompositeDisposable();
     }
 
     @Override
     public void attachView(SearchView view) {
         this.view = view;
-        if(view != null) {
-            view.showProgressBar();
-            disposable.add(getTopArtists().subscribe(
-                    updateViewWithTopArtist()
-            ));
-        }
     }
     private Observable<MusicApi.TopArtistsResponse> getTopArtists() {
         return musicApiService.getTopArtists(Constants.API_KEY).onErrorResumeNext(Observable.empty());
@@ -44,14 +37,20 @@ public class SearchPresenter implements BasePresenter<SearchView> {
         return musicApiService.getArtistSearchResults(artistSearchText, Constants.API_KEY).onErrorResumeNext(Observable.empty());
     }
 
-    private io.reactivex.functions.Consumer<MusicApi.TopArtistsResponse> updateViewWithTopArtist() {
+    private Consumer<MusicApi.TopArtistsResponse> updateViewWithTopArtist() {
         return topArtists -> {
             view.loadArtists(topArtists.getArtists().getArtistList());
             view.hideProgressBar();
         };
     }
 
-    private io.reactivex.functions.Consumer<MusicApi.SearchResponse> getSearchResponse() {
+    private Consumer<Throwable> updateUiWithError() {
+        return throwable -> {
+          view.showErrorLoadingToast();
+        };
+    }
+
+    private Consumer<MusicApi.SearchResponse> getSearchResponse() {
         return searchResponse -> {
             view.hideProgressBar();
             view.loadArtists(searchResponse.getSearchResults().getArtistMatches().getArtistList());
@@ -60,12 +59,18 @@ public class SearchPresenter implements BasePresenter<SearchView> {
 
     @Override
     public void subscribe() {
-
+        if (disposable == null) {
+            view.showProgressBar();
+        }
+        disposable = new CompositeDisposable();
+        disposable.add(getTopArtists().subscribe(
+                updateViewWithTopArtist()
+        ));
     }
 
     @Override
     public void unsubscribe() {
-
+        disposable.dispose();
     }
 
     public void artistSearchTextChanged(String artistSearchText, boolean adapterHasItems) {
@@ -75,11 +80,11 @@ public class SearchPresenter implements BasePresenter<SearchView> {
         if(!artistSearchText.isEmpty()) {
             view.showSearchTextValue(artistSearchText);
             disposable.add(getArtistSearchResults(artistSearchText)
-                    .subscribe(getSearchResponse()));
+                    .subscribe(getSearchResponse(), updateUiWithError()));
 
         } else {
             view.showSearchTextTopArtists();
-            disposable.add(getTopArtists().subscribe(updateViewWithTopArtist()));
+            disposable.add(getTopArtists().subscribe(updateViewWithTopArtist(), updateUiWithError()));
         }
 
     }
