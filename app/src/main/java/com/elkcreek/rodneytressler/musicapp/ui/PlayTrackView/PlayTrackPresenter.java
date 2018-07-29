@@ -30,5 +30,6 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
 
     public void trackUrlRetrieved(String trackUrl) {
         view.showTrackWebView(trackUrl);
+        view.hideProgressBar();
     }
 }

@@ -31,6 +31,8 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     @Inject protected PlayTrackPresenter presenter;
     @BindView(R.id.track_web_view)
     protected WebView trackWebView;
+    @BindView(R.id.progress_bar_play_track)
+    protected ProgressBar progressBar;
 
     @Override
     public void onAttach(Context context) {
@@ -63,6 +65,11 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
         trackWebView.getSettings().setJavaScriptEnabled(true);
         trackWebView.setWebChromeClient(new WebChromeClient());
         trackWebView.loadUrl(trackUrl);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
     }
 
 }
