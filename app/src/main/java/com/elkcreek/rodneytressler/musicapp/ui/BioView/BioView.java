@@ -10,4 +10,8 @@ public interface BioView extends BaseView {
     void detachFragment();
 
     void showNoBioToast();
+
+    void showArtistName(String artistName);
+
+    void hideProgressBar();
 }

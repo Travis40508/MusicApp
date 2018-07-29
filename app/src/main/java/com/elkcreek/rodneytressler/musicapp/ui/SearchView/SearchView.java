@@ -12,7 +12,7 @@ public interface SearchView extends BaseView {
 
     void hideProgressBar();
 
-    void showBioFragment(String artistUID);
+    void showBioFragment(MusicApi.Artist artist);
 
     void showArtistTracks(MusicApi.Artist artist);
 

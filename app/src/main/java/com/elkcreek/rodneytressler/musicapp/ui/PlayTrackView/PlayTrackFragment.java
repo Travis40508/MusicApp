@@ -1,6 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.ui.PlayTrackView;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,8 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
@@ -61,4 +64,5 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
         trackWebView.setWebChromeClient(new WebChromeClient());
         trackWebView.loadUrl(trackUrl);
     }
+
 }

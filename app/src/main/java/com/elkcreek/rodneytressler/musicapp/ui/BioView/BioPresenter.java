@@ -47,17 +47,22 @@ public class BioPresenter implements BasePresenter<BioView> {
         return artistBioResponse -> {
             view.showArtistImage(artistBioResponse.getArtist().getArtistImages().get(3).getImageUrl());
             view.showArtistBio(artistBioResponse.getArtist().getArtistBio().getBioContent());
+            view.hideProgressBar();
         };
     }
 
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
-          view.detachFragment();
-          view.showNoBioToast();
+            view.detachFragment();
+            view.showNoBioToast();
         };
     }
 
     public void artistRetrieved(String artistUid) {
         this.artistUid = artistUid;
+    }
+
+    public void artistNameRetrieved(String artistName) {
+        view.showArtistName(artistName);
     }
 }

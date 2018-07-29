@@ -35,6 +35,7 @@ public class TracksPresenter implements BasePresenter<TracksView> {
     private Consumer<MusicApi.TopTracksResponse> updateUiWithTopTracks() {
         return topTracksResponse -> {
             view.showTopTracks(topTracksResponse.getTopTracks().getTrackList());
+            view.hideProgressBar();
         };
     }
 

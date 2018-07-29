@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
@@ -123,9 +124,10 @@ public class SearchFragment extends Fragment implements SearchView {
     }
 
     @Override
-    public void showBioFragment(String artistUID) {
+    public void showBioFragment(MusicApi.Artist artist) {
         Bundle bundle = new Bundle();
-        bundle.putString(ARTIST_UID_KEY, artistUID);
+        bundle.putString(ARTIST_UID_KEY, artist.getArtistUID());
+        bundle.putString(ARTIST_NAME_KEY, artist.getArtistName());
         BioFragment fragment = BioFragment.newInstance();
         fragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, fragment, BIO_FRAGMENT_TAG).addToBackStack(null).commit();
@@ -149,5 +151,10 @@ public class SearchFragment extends Fragment implements SearchView {
     @Override
     public void showSearchTextTopArtists() {
         this.searchText.setText(R.string.top_artists_text);
+    }
+
+    @Override
+    public void showErrorLoadingToast() {
+        Toast.makeText(getContext(), R.string.network_error_text, Toast.LENGTH_SHORT).show();
     }
 }

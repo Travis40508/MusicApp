@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,10 @@ public class BioFragment extends Fragment implements BioView {
     protected ImageView artistBioImage;
     @BindView(R.id.text_artist_bio)
     protected TextView artistBioText;
+    @BindView(R.id.text_bio_artist_name)
+    protected TextView artistName;
+    @BindView(R.id.bio_progress_bar)
+    protected ProgressBar bioProgressBar;
 
     @Override
     public void onAttach(Context context) {
@@ -55,6 +61,7 @@ public class BioFragment extends Fragment implements BioView {
         ButterKnife.bind(this, view);
         presenter.attachView(this);
         presenter.artistRetrieved(getArguments().getString(Constants.ARTIST_UID_KEY));
+        presenter.artistNameRetrieved(getArguments().getString(Constants.ARTIST_NAME_KEY));
         return view;
     }
 
@@ -75,6 +82,7 @@ public class BioFragment extends Fragment implements BioView {
     @Override
     public void showArtistBio(String artistBio) {
         artistBioText.setText(artistBio);
+        Log.d("@@@@@", artistBio);
     }
 
     @Override
@@ -85,5 +93,15 @@ public class BioFragment extends Fragment implements BioView {
     @Override
     public void showNoBioToast() {
         Toast.makeText(getContext(), R.string.no_bio_found_text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showArtistName(String artistName) {
+        this.artistName.setText(artistName);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        bioProgressBar.setVisibility(View.GONE);
     }
 }

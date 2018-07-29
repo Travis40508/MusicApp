@@ -90,7 +90,7 @@ public class SearchPresenter implements BasePresenter<SearchView> {
     }
 
     public void onArtistInfoClicked(MusicApi.Artist artist) {
-        view.showBioFragment(artist.getArtistUID());
+        view.showBioFragment(artist);
     }
 
     public void onArtistMusicClicked(MusicApi.Artist artist) {

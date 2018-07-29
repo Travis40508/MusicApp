@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,8 @@ public class TracksFragment extends Fragment implements TracksView {
     protected RecyclerView recyclerView;
     @BindView(R.id.text_tracks_artist)
     protected TextView artistName;
+    @BindView(R.id.progress_bar_tracks)
+    protected ProgressBar progressBar;
 
     private TracksAdapter adapter;
 
@@ -113,5 +116,10 @@ public class TracksFragment extends Fragment implements TracksView {
     @Override
     public void toastNoTracksError() {
         Toast.makeText(getContext(), R.string.no_tracks_found_text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
     }
 }

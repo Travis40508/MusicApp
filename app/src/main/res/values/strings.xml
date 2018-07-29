@@ -3,4 +3,5 @@
     <string name="top_artists_text">Today\'s Top Artists</string>
     <string name="no_bio_found_text">No Bio Found!</string>
     <string name="no_tracks_found_text">No Tracks Found!</string>
+    <string name="network_error_text">Error Connecting to Network - Please Try Again</string>
 </resources>

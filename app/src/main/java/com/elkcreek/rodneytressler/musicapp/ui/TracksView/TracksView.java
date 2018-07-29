@@ -15,4 +15,6 @@ public interface TracksView extends BaseView {
     void removeFragment();
 
     void toastNoTracksError();
+
+    void hideProgressBar();
 }
