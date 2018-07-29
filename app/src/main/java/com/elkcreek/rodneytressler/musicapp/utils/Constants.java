@@ -7,4 +7,5 @@ public class Constants {
     public static final String ARTIST_NAME_KEY = "artist_name_key";
     public static final String TRACK_URL_KEY = "track_url_key";
     public static final String USER_AGENT = "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
+    public static final String DATABASE_KEY = "database_key";
 }

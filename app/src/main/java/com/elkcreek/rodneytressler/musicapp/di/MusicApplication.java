@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 
 import com.elkcreek.rodneytressler.musicapp.di.components.DaggerApplicationComponent;
 import com.elkcreek.rodneytressler.musicapp.di.modules.ApplicationModule;
+import com.elkcreek.rodneytressler.musicapp.di.modules.MusicDatabaseModule;
 import com.elkcreek.rodneytressler.musicapp.di.modules.NetworkModule;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
@@ -29,6 +30,7 @@ public class MusicApplication extends Application implements HasActivityInjector
         DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .networkModule(new NetworkModule(Constants.BASE_URL))
+                .musicDatabaseModule(new MusicDatabaseModule())
                 .build()
                 .inject(this);
     }

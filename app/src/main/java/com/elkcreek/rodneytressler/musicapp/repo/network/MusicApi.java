@@ -1,5 +1,9 @@
 package com.elkcreek.rodneytressler.musicapp.repo.network;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -149,6 +153,8 @@ public interface MusicApi {
         }
     }
 
+
+    @Entity
     class Track {
         @SerializedName("name")
         @Expose private String trackName;
@@ -156,8 +162,20 @@ public interface MusicApi {
         @SerializedName("url")
         @Expose private String trackUrl;
 
+        @Ignore
         @SerializedName("image")
         @Expose private List<ArtistImage> artistImage;
+
+        @PrimaryKey(autoGenerate = true)
+        private int primaryKey;
+
+        private String imageUrl;
+
+
+        public Track() {
+
+        }
+
 
         public String getTrackName() {
             return trackName;
@@ -169,6 +187,34 @@ public interface MusicApi {
 
         public List<ArtistImage> getArtistImage() {
             return artistImage;
+        }
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
+
+        public void setTrackName(String trackName) {
+            this.trackName = trackName;
+        }
+
+        public void setTrackUrl(String trackUrl) {
+            this.trackUrl = trackUrl;
+        }
+
+        public void setArtistImage(List<ArtistImage> artistImage) {
+            this.artistImage = artistImage;
+        }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
+
+        public int getPrimaryKey() {
+            return primaryKey;
+        }
+
+        public void setPrimaryKey(int primaryKey) {
+            this.primaryKey = primaryKey;
         }
     }
 }

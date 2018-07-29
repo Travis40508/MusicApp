@@ -29,6 +29,7 @@ public class SearchPresenter implements BasePresenter<SearchView> {
     public void attachView(SearchView view) {
         this.view = view;
     }
+
     private Observable<MusicApi.TopArtistsResponse> getTopArtists() {
         return musicApiService.getTopArtists(Constants.API_KEY).onErrorResumeNext(Observable.empty());
     }
@@ -46,7 +47,7 @@ public class SearchPresenter implements BasePresenter<SearchView> {
 
     private Consumer<Throwable> updateUiWithError() {
         return throwable -> {
-          view.showErrorLoadingToast();
+            view.showErrorLoadingToast();
         };
     }
 
@@ -74,10 +75,10 @@ public class SearchPresenter implements BasePresenter<SearchView> {
     }
 
     public void artistSearchTextChanged(String artistSearchText, boolean adapterHasItems) {
-        if(!adapterHasItems) {
+        if (!adapterHasItems) {
             view.showProgressBar();
         }
-        if(!artistSearchText.isEmpty()) {
+        if (!artistSearchText.isEmpty()) {
             view.showSearchTextValue(artistSearchText);
             disposable.add(getArtistSearchResults(artistSearchText)
                     .subscribe(getSearchResponse(), updateUiWithError()));
@@ -96,4 +97,5 @@ public class SearchPresenter implements BasePresenter<SearchView> {
     public void onArtistMusicClicked(MusicApi.Artist artist) {
         view.showArtistTracks(artist);
     }
+
 }

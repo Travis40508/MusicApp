@@ -82,7 +82,6 @@ public class BioFragment extends Fragment implements BioView {
     @Override
     public void showArtistBio(String artistBio) {
         artistBioText.setText(artistBio);
-        Log.d("@@@@@", artistBio);
     }
 
     @Override
