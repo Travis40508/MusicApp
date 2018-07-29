@@ -34,11 +34,9 @@ public class TracksPresenter implements BasePresenter<TracksView> {
         this.view = view;
     }
 
-//    private Observable<MusicApi.TopTracksResponse> getArtistTopTracks(String artistUid) {
-//        return musicApiService.getTopTracks(artistUid, Constants.API_KEY);
-//    }
-    private Observable<List<MusicApi.Track>> getArtistTopTracksFromDatabase() {
-        return musicDatabaseService.getTrackList().toObservable();
+
+    private Observable<List<MusicApi.Track>> getArtistTopTracksFromDatabase(String artistUid) {
+        return musicDatabaseService.getTrackList(artistUid).toObservable();
     }
 
     private Observable<List<MusicApi.Track>> getArtistTracksFromNetwork(String artistUid) {
@@ -46,9 +44,12 @@ public class TracksPresenter implements BasePresenter<TracksView> {
                 .map(MusicApi.TopTracksResponse::getTopTracks)
                 .map(MusicApi.TopTracks::getTrackList)
                 .doOnNext(tracks -> {
-                    for(MusicApi.Track item : tracks) {
-                        if(item.getImageUrl() == null || item.getImageUrl().isEmpty()) {
+                    for (MusicApi.Track item : tracks) {
+                        if (item.getImageUrl() == null || item.getImageUrl().isEmpty()) {
                             item.setImageUrl(item.getArtistImage().get(2).getImageUrl());
+                        }
+                        if (item.getArtistUid() == null || item.getArtistUid().isEmpty()) {
+                            item.setArtistUid(artistUid);
                         }
                         musicDatabaseService.insertTrack(item);
                     }
@@ -56,22 +57,21 @@ public class TracksPresenter implements BasePresenter<TracksView> {
     }
 
     private Observable<List<MusicApi.Track>> getArtistTopTracks(String artistUid) {
-        return getArtistTopTracksFromDatabase()
-                .onErrorResumeNext(Observable.empty())
-                .switchIfEmpty(getArtistTracksFromNetwork(artistUid));
+        return getArtistTopTracksFromDatabase(artistUid)
+                .flatMap(tracks -> tracks.isEmpty() ? getArtistTracksFromNetwork(artistUid) : Observable.just(tracks));
     }
 
     private Consumer<List<MusicApi.Track>> updateUiWithTopTracks() {
         return tracks -> {
-          view.showTopTracks(tracks);
-          view.hideProgressBar();
+            view.showTopTracks(tracks);
+            view.hideProgressBar();
         };
     }
 
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
-          view.removeFragment();
-          view.toastNoTracksError();
+            view.removeFragment();
+            view.toastNoTracksError();
         };
     }
 
@@ -98,7 +98,4 @@ public class TracksPresenter implements BasePresenter<TracksView> {
         view.showPlayTrackFragment(trackUrl);
     }
 
-    public void viewDestroyed() {
-        musicDatabaseService.deleteTracks();
-    }
 }

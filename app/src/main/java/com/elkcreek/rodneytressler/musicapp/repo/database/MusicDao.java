@@ -18,8 +18,8 @@ public interface MusicDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTrack(MusicApi.Track track);
 
-    @Query("SELECT * FROM Track")
-    Flowable<List<MusicApi.Track>> getTrackList();
+    @Query("SELECT * FROM Track WHERE artistUid LIKE :artistUid")
+    Flowable<List<MusicApi.Track>> getTrackList(String artistUid);
 
     @Delete
     void deleteTracks(MusicApi.Track... tracks);

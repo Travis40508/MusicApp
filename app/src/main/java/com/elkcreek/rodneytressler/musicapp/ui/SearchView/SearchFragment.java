@@ -50,6 +50,7 @@ public class SearchFragment extends Fragment implements SearchView {
     @BindView(R.id.text_search_value)
     protected TextView searchText;
     private ArtistAdapter adapter;
+    private TracksFragment tracksFragment;
 
 
     @OnTextChanged(value = R.id.input_artist_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -82,6 +83,7 @@ public class SearchFragment extends Fragment implements SearchView {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
+        presenter.checkSavedInstanceState(savedInstanceState == null, getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG) == null);
         return view;
     }
 
@@ -138,9 +140,9 @@ public class SearchFragment extends Fragment implements SearchView {
         Bundle bundle = new Bundle();
         bundle.putString(ARTIST_UID_KEY, artist.getArtistUID());
         bundle.putString(ARTIST_NAME_KEY, artist.getArtistName());
-        TracksFragment fragment = TracksFragment.newInstance();
-        fragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, fragment, TRACKS_FRAGMENT_TAG).addToBackStack(null).commit();
+        tracksFragment = TracksFragment.newInstance();
+        tracksFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, tracksFragment, TRACKS_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 
     @Override
@@ -156,5 +158,11 @@ public class SearchFragment extends Fragment implements SearchView {
     @Override
     public void showErrorLoadingToast() {
         Toast.makeText(getContext(), R.string.network_error_text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void reAttachTracksFragment() {
+        tracksFragment = (TracksFragment) getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG);
+        getActivity().getSupportFragmentManager().beginTransaction().add(tracksFragment, TRACKS_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 }

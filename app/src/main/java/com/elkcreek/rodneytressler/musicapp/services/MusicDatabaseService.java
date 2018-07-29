@@ -13,7 +13,7 @@ public interface MusicDatabaseService {
 
     void insertTrack(MusicApi.Track track);
 
-    Flowable<List<MusicApi.Track>> getTrackList();
+    Flowable<List<MusicApi.Track>> getTrackList(String artistUid);
 
     void deleteTracks();
 }

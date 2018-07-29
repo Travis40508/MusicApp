@@ -170,6 +170,7 @@ public interface MusicApi {
         private int primaryKey;
 
         private String imageUrl;
+        private String artistUid;
 
 
         public Track() {
@@ -215,6 +216,14 @@ public interface MusicApi {
 
         public void setPrimaryKey(int primaryKey) {
             this.primaryKey = primaryKey;
+        }
+
+        public String getArtistUid() {
+            return artistUid;
+        }
+
+        public void setArtistUid(String artistUid) {
+            this.artistUid = artistUid;
         }
     }
 }

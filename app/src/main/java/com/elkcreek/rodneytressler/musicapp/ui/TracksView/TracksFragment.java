@@ -60,11 +60,6 @@ public class TracksFragment extends Fragment implements TracksView {
         presenter.unsubscribe();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        presenter.viewDestroyed();
-    }
 
     @Nullable
     @Override

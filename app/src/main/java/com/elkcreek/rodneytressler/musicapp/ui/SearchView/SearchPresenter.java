@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.MusicApiService;
+import com.elkcreek.rodneytressler.musicapp.services.MusicDatabaseService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
@@ -75,6 +76,10 @@ public class SearchPresenter implements BasePresenter<SearchView> {
     }
 
     public void artistSearchTextChanged(String artistSearchText, boolean adapterHasItems) {
+        if(disposable == null) {
+            disposable = new CompositeDisposable();
+        }
+
         if (!adapterHasItems) {
             view.showProgressBar();
         }
@@ -98,4 +103,11 @@ public class SearchPresenter implements BasePresenter<SearchView> {
         view.showArtistTracks(artist);
     }
 
+    public void checkSavedInstanceState(boolean savedInstanceStateIsNull, boolean tracksFragmentIsNull) {
+        if(!savedInstanceStateIsNull) {
+            if(!tracksFragmentIsNull) {
+                view.reAttachTracksFragment();
+            }
+        }
+    }
 }

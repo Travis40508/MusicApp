@@ -29,8 +29,8 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
                 }));
     }
 
-    public Flowable<List<MusicApi.Track>> getTrackList() {
-        return database.musicDao().getTrackList()
+    public Flowable<List<MusicApi.Track>> getTrackList(String artistUid) {
+        return database.musicDao().getTrackList(artistUid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
