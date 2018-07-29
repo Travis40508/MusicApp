@@ -35,8 +35,20 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public void deleteTracks() {
+    @Override
+    public void insertBio(MusicApi.ArtistBio artistBio) {
         disposable.add(Observable.just(database)
-        .subscribeOn(Schedulers.io()).subscribe(musicDatabase -> musicDatabase.musicDao().deleteTracks()));
+                .subscribeOn(Schedulers.io())
+                .subscribe(musicDatabase -> {
+                    musicDatabase.musicDao().insertBio(artistBio);
+                }));
     }
+
+    @Override
+    public Flowable<MusicApi.ArtistBio> getArtistBio(String artistUid) {
+        return database.musicDao().getArtistBio(artistUid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 }

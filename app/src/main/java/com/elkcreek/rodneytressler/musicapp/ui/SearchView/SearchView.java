@@ -23,4 +23,6 @@ public interface SearchView extends BaseView {
     void showErrorLoadingToast();
 
     void reAttachTracksFragment();
+
+    void reAttachBioFragment();
 }

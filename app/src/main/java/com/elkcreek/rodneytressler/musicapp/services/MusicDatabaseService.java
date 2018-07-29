@@ -1,5 +1,9 @@
 package com.elkcreek.rodneytressler.musicapp.services;
 
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
+import android.arch.persistence.room.Query;
+
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 
 import java.util.List;
@@ -15,5 +19,7 @@ public interface MusicDatabaseService {
 
     Flowable<List<MusicApi.Track>> getTrackList(String artistUid);
 
-    void deleteTracks();
+    void insertBio(MusicApi.ArtistBio artistBio);
+
+    Flowable<MusicApi.ArtistBio> getArtistBio(String artistUid);
 }

@@ -21,9 +21,9 @@ public interface MusicDao {
     @Query("SELECT * FROM Track WHERE artistUid LIKE :artistUid")
     Flowable<List<MusicApi.Track>> getTrackList(String artistUid);
 
-    @Delete
-    void deleteTracks(MusicApi.Track... tracks);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertBio(MusicApi.ArtistBio artistBio);
 
-    @Query("DELETE FROM Track")
-    void deleteTracks();
+    @Query("SELECT * FROM ArtistBio where artistUid LIKE :artistUid")
+    Flowable<MusicApi.ArtistBio> getArtistBio(String artistUid);
 }

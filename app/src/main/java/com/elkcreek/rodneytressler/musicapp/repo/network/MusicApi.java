@@ -29,7 +29,8 @@ public interface MusicApi {
 
     class SearchResponse {
         @SerializedName("results")
-        @Expose private SearchResults searchResults;
+        @Expose
+        private SearchResults searchResults;
 
         public SearchResults getSearchResults() {
             return searchResults;
@@ -38,7 +39,8 @@ public interface MusicApi {
 
     class SearchResults {
         @SerializedName("artistmatches")
-        @Expose private ArtistMatches artistMatches;
+        @Expose
+        private ArtistMatches artistMatches;
 
         public ArtistMatches getArtistMatches() {
             return artistMatches;
@@ -47,7 +49,8 @@ public interface MusicApi {
 
     class ArtistMatches {
         @SerializedName("artist")
-        @Expose private List<Artist> artistList;
+        @Expose
+        private List<Artist> artistList;
 
         public List<Artist> getArtistList() {
             return artistList;
@@ -56,16 +59,20 @@ public interface MusicApi {
 
     class Artist {
         @SerializedName("name")
-        @Expose private String artistName;
+        @Expose
+        private String artistName;
 
         @SerializedName("image")
-        @Expose private List<ArtistImage> artistImages;
+        @Expose
+        private List<ArtistImage> artistImages;
 
         @SerializedName("bio")
-        @Expose private ArtistBio artistBio;
+        @Expose
+        private ArtistBio artistBio;
 
         @SerializedName("mbid")
-        @Expose private String artistUID;
+        @Expose
+        private String artistUID;
 
         public String getArtistName() {
             return artistName;
@@ -86,10 +93,12 @@ public interface MusicApi {
 
     class ArtistImage {
         @SerializedName("#text")
-        @Expose private String imageUrl;
+        @Expose
+        private String imageUrl;
 
         @SerializedName("size")
-        @Expose private String imageSize;
+        @Expose
+        private String imageSize;
 
         public String getImageUrl() {
             return imageUrl;
@@ -102,33 +111,74 @@ public interface MusicApi {
 
     class ArtistBioResponse {
         @SerializedName("artist")
-        @Expose private Artist artist;
+        @Expose
+        private Artist artist;
 
         public Artist getArtist() {
             return artist;
         }
     }
 
+    @Entity
     class ArtistBio {
         @SerializedName("content")
-        @Expose private String bioContent;
+        @Expose
+        private String bioContent;
+
+        @PrimaryKey(autoGenerate = true)
+        private int primaryKey;
+
+
+        String artistImage;
+        String artistUid;
 
         public String getBioContent() {
             return bioContent;
+        }
+
+        public void setBioContent(String bioContent) {
+            this.bioContent = bioContent;
+        }
+
+        public int getPrimaryKey() {
+            return primaryKey;
+        }
+
+        public void setPrimaryKey(int primaryKey) {
+            this.primaryKey = primaryKey;
+        }
+
+        public String getArtistImage() {
+            return artistImage;
+        }
+
+        public void setArtistImage(String artistImage) {
+            this.artistImage = artistImage;
+        }
+
+        public String getArtistUid() {
+            return artistUid;
+        }
+
+        public void setArtistUid(String artistUid) {
+            this.artistUid = artistUid;
         }
     }
 
     class TopArtistsResponse {
         @SerializedName("artists")
-        @Expose private Artists artists;
+        @Expose
+        private Artists artists;
 
         public Artists getArtists() {
             return artists;
         }
     }
+
     class Artists {
         @SerializedName("artist")
-        @Expose private List<Artist> artistList;
+        @Expose
+        private List<Artist> artistList;
 
         public List<Artist> getArtistList() {
             return artistList;
@@ -137,7 +187,8 @@ public interface MusicApi {
 
     class TopTracksResponse {
         @SerializedName("toptracks")
-        @Expose private TopTracks topTracks;
+        @Expose
+        private TopTracks topTracks;
 
         public TopTracks getTopTracks() {
             return topTracks;
@@ -146,7 +197,8 @@ public interface MusicApi {
 
     class TopTracks {
         @SerializedName("track")
-        @Expose private List<Track> trackList;
+        @Expose
+        private List<Track> trackList;
 
         public List<Track> getTrackList() {
             return trackList;
@@ -157,14 +209,17 @@ public interface MusicApi {
     @Entity
     class Track {
         @SerializedName("name")
-        @Expose private String trackName;
+        @Expose
+        private String trackName;
 
         @SerializedName("url")
-        @Expose private String trackUrl;
+        @Expose
+        private String trackUrl;
 
         @Ignore
         @SerializedName("image")
-        @Expose private List<ArtistImage> artistImage;
+        @Expose
+        private List<ArtistImage> artistImage;
 
         @PrimaryKey(autoGenerate = true)
         private int primaryKey;

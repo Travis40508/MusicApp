@@ -51,6 +51,7 @@ public class SearchFragment extends Fragment implements SearchView {
     protected TextView searchText;
     private ArtistAdapter adapter;
     private TracksFragment tracksFragment;
+    private BioFragment bioFragment;
 
 
     @OnTextChanged(value = R.id.input_artist_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -83,7 +84,9 @@ public class SearchFragment extends Fragment implements SearchView {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
-        presenter.checkSavedInstanceState(savedInstanceState == null, getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG) == null);
+        presenter.checkSavedInstanceState(savedInstanceState == null,
+                getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG) == null,
+                getActivity().getSupportFragmentManager().findFragmentByTag(BIO_FRAGMENT_TAG) == null);
         return view;
     }
 
@@ -130,9 +133,9 @@ public class SearchFragment extends Fragment implements SearchView {
         Bundle bundle = new Bundle();
         bundle.putString(ARTIST_UID_KEY, artist.getArtistUID());
         bundle.putString(ARTIST_NAME_KEY, artist.getArtistName());
-        BioFragment fragment = BioFragment.newInstance();
-        fragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, fragment, BIO_FRAGMENT_TAG).addToBackStack(null).commit();
+        bioFragment = BioFragment.newInstance();
+        bioFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, bioFragment, BIO_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 
     @Override
@@ -164,5 +167,11 @@ public class SearchFragment extends Fragment implements SearchView {
     public void reAttachTracksFragment() {
         tracksFragment = (TracksFragment) getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG);
         getActivity().getSupportFragmentManager().beginTransaction().add(tracksFragment, TRACKS_FRAGMENT_TAG).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void reAttachBioFragment() {
+        bioFragment = (BioFragment) getActivity().getSupportFragmentManager().findFragmentByTag(BIO_FRAGMENT_TAG);
+        getActivity().getSupportFragmentManager().beginTransaction().add(bioFragment, BIO_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 }
