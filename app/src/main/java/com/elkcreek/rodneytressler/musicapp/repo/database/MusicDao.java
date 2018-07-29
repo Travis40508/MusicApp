@@ -23,4 +23,7 @@ public interface MusicDao {
 
     @Delete
     void deleteTracks(MusicApi.Track... tracks);
+
+    @Query("DELETE FROM Track")
+    void deleteTracks();
 }

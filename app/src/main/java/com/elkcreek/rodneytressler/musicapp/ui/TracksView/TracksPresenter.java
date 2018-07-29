@@ -52,8 +52,7 @@ public class TracksPresenter implements BasePresenter<TracksView> {
                         }
                         musicDatabaseService.insertTrack(item);
                     }
-                })
-                .map(tracks -> tracks);
+                });
     }
 
     private Observable<List<MusicApi.Track>> getArtistTopTracks(String artistUid) {
@@ -97,5 +96,9 @@ public class TracksPresenter implements BasePresenter<TracksView> {
 
     public void onPlayClicked(String trackUrl) {
         view.showPlayTrackFragment(trackUrl);
+    }
+
+    public void viewDestroyed() {
+        musicDatabaseService.deleteTracks();
     }
 }

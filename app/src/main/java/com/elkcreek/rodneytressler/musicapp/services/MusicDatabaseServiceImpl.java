@@ -24,7 +24,6 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     public void insertTrack(MusicApi.Track track) {
         disposable.add(Observable.just(database)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(musicDatabase -> {
                     musicDatabase.musicDao().insertTrack(track);
                 }));
@@ -38,7 +37,6 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
 
     public void deleteTracks() {
         disposable.add(Observable.just(database)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread()).subscribe(musicDatabase -> musicDatabase.musicDao().deleteTracks()));
+        .subscribeOn(Schedulers.io()).subscribe(musicDatabase -> musicDatabase.musicDao().deleteTracks()));
     }
 }
