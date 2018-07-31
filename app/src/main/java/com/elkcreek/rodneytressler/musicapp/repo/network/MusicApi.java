@@ -1,8 +1,10 @@
 package com.elkcreek.rodneytressler.musicapp.repo.network;
 
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -57,15 +59,24 @@ public interface MusicApi {
         }
     }
 
+    @Entity
     class Artist {
+
+        @PrimaryKey(autoGenerate = true)
+        int artistPrimaryKey;
+
         @SerializedName("name")
         @Expose
         private String artistName;
 
+
+        @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
         @SerializedName("image")
         @Expose
         private List<ArtistImage> artistImages;
 
+
+        @Embedded
         @SerializedName("bio")
         @Expose
         private ArtistBio artistBio;
@@ -88,6 +99,30 @@ public interface MusicApi {
 
         public String getArtistUID() {
             return artistUID;
+        }
+
+        public void setArtistName(String artistName) {
+            this.artistName = artistName;
+        }
+
+        public void setArtistImages(List<ArtistImage> artistImages) {
+            this.artistImages = artistImages;
+        }
+
+        public void setArtistBio(ArtistBio artistBio) {
+            this.artistBio = artistBio;
+        }
+
+        public void setArtistUID(String artistUID) {
+            this.artistUID = artistUID;
+        }
+
+        public int getArtistPrimaryKey() {
+            return artistPrimaryKey;
+        }
+
+        public void setArtistPrimaryKey(int artistPrimaryKey) {
+            this.artistPrimaryKey = artistPrimaryKey;
         }
     }
 
@@ -119,18 +154,11 @@ public interface MusicApi {
         }
     }
 
-    @Entity
     class ArtistBio {
         @SerializedName("content")
         @Expose
         private String bioContent;
 
-        @PrimaryKey(autoGenerate = true)
-        private int primaryKey;
-
-
-        String artistImage;
-        String artistUid;
 
         public String getBioContent() {
             return bioContent;
@@ -140,29 +168,6 @@ public interface MusicApi {
             this.bioContent = bioContent;
         }
 
-        public int getPrimaryKey() {
-            return primaryKey;
-        }
-
-        public void setPrimaryKey(int primaryKey) {
-            this.primaryKey = primaryKey;
-        }
-
-        public String getArtistImage() {
-            return artistImage;
-        }
-
-        public void setArtistImage(String artistImage) {
-            this.artistImage = artistImage;
-        }
-
-        public String getArtistUid() {
-            return artistUid;
-        }
-
-        public void setArtistUid(String artistUid) {
-            this.artistUid = artistUid;
-        }
     }
 
     class TopArtistsResponse {

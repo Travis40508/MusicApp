@@ -7,6 +7,7 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -21,6 +22,7 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
         disposable = new CompositeDisposable();
     }
 
+    @Override
     public void insertTrack(MusicApi.Track track) {
         disposable.add(Observable.just(database)
                 .subscribeOn(Schedulers.io())
@@ -29,26 +31,29 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
                 }));
     }
 
+    @Override
     public Flowable<List<MusicApi.Track>> getTrackList(String artistUid) {
         return database.musicDao().getTrackList(artistUid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+
     @Override
-    public void insertBio(MusicApi.ArtistBio artistBio) {
-        disposable.add(Observable.just(database)
-                .subscribeOn(Schedulers.io())
-                .subscribe(musicDatabase -> {
-                    musicDatabase.musicDao().insertBio(artistBio);
-                }));
+    public void insertBioResponse(MusicApi.ArtistBioResponse artistBioResponse) {
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                database.musicDao().insertArtist(artistBioResponse.getArtist());
+            }
+        });
     }
 
     @Override
-    public Flowable<MusicApi.ArtistBio> getArtistBio(String artistUid) {
+    public Observable<MusicApi.Artist> getArtistBio(String artistUid) {
         return database.musicDao().getArtistBio(artistUid)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread()).toObservable();
     }
 
 }

@@ -1,17 +1,11 @@
 package com.elkcreek.rodneytressler.musicapp.services;
 
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
-import android.arch.persistence.room.Query;
-
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 
 import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public interface MusicDatabaseService {
 
@@ -19,7 +13,8 @@ public interface MusicDatabaseService {
 
     Flowable<List<MusicApi.Track>> getTrackList(String artistUid);
 
-    void insertBio(MusicApi.ArtistBio artistBio);
+    void insertBioResponse(MusicApi.ArtistBioResponse artistBioResponse);
 
-    Flowable<MusicApi.ArtistBio> getArtistBio(String artistUid);
+    Observable<MusicApi.Artist> getArtistBio(String artistUid);
+
 }

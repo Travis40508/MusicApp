@@ -1,5 +1,6 @@
 package com.elkcreek.rodneytressler.musicapp.ui.BioView;
 
+import android.media.MediaPlayer;
 import android.util.Log;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
@@ -12,6 +13,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 
 public class BioPresenter implements BasePresenter<BioView> {
@@ -36,8 +38,32 @@ public class BioPresenter implements BasePresenter<BioView> {
     @Override
     public void subscribe() {
         disposable = new CompositeDisposable();
-        disposable.add(getArtistBio(artistUid)
-                .subscribe(updateUiWithArtistBio(), updateUiOnError()));
+        disposable.add(getArtistBio(artistUid).subscribe(updateUiWithArtist(), updateUiOnError()));
+    }
+
+    private Observable<MusicApi.Artist> getArtistBio(String artistUid) {
+        return getArtistBioFromDatabase(artistUid)
+                .onErrorResumeNext(Observable.empty())
+                .switchIfEmpty(getArtistBioFromNetwork(artistUid));
+    }
+
+    private Observable<MusicApi.Artist> getArtistBioFromDatabase(String artistUid) {
+        return musicDatabaseService.getArtistBio(artistUid);
+    }
+
+    private Observable<MusicApi.Artist> getArtistBioFromNetwork(String artistUid) {
+        return musicApiService.getArtistBio(artistUid, Constants.API_KEY)
+                .doOnNext(musicDatabaseService::insertBioResponse)
+                .map(MusicApi.ArtistBioResponse::getArtist);
+    }
+
+    private Consumer<MusicApi.Artist> updateUiWithArtist() {
+        return artist -> {
+          view.hideProgressBar();
+          view.showArtistBio(artist.getArtistBio().getBioContent());
+          view.showArtistImage(artist.getArtistImages().get(2).getImageUrl());
+          view.showArtistName(artist.getArtistName());
+        };
     }
 
     @Override
@@ -45,42 +71,10 @@ public class BioPresenter implements BasePresenter<BioView> {
         disposable.dispose();
     }
 
-    //todo figure out why this can't seem to get passed just querying the database.
-    private Observable<MusicApi.ArtistBio> getArtistBio(String artistUid) {
-        return getArtistBioFromDatabase(artistUid)
-                .onErrorResumeNext(Observable.empty())
-                .switchIfEmpty(getArtistBioFromNetwork(artistUid));
-    }
-
-    private Observable<MusicApi.ArtistBio> getArtistBioFromNetwork(String artistUid) {
-        return musicApiService.getArtistBio(artistUid, Constants.API_KEY)
-                .map(MusicApi.ArtistBioResponse::getArtist)
-                .doOnNext(artist -> this.artistImage = artist.getArtistImages().get(2).getImageUrl())
-                .map(MusicApi.Artist::getArtistBio)
-                .doOnNext(artistBio -> {
-                    if(artistBio.getArtistImage() == null || artistBio.getArtistImage().isEmpty()) {
-                        artistBio.setArtistImage(this.artistImage);
-                    } else if (artistBio.getArtistUid() == null || artistBio.getArtistUid().isEmpty()) {
-                        artistBio.setArtistUid(artistUid);
-                    }
-                    musicDatabaseService.insertBio(artistBio);
-                });
-    }
-
-    private Observable<MusicApi.ArtistBio> getArtistBioFromDatabase(String artistUid) {
-        return musicDatabaseService.getArtistBio(artistUid).toObservable();
-    }
-
-    private Consumer<MusicApi.ArtistBio> updateUiWithArtistBio() {
-        return artistBio -> {
-          view.showArtistImage(artistBio.getArtistImage());
-          view.showArtistBio(artistBio.getBioContent());
-          view.hideProgressBar();
-        };
-    }
 
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
+            Log.d("@@@@", throwable.getMessage());
             view.detachFragment();
             view.showNoBioToast();
         };
