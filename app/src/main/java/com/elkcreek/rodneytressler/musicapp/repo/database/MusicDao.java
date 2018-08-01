@@ -18,7 +18,7 @@ public interface MusicDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTrack(MusicApi.Track track);
 
-    @Query("SELECT * FROM Track WHERE artistUid LIKE :artistUid")
+    @Query("SELECT * FROM Track WHERE `artistartistUID` LIKE :artistUid")
     Flowable<List<MusicApi.Track>> getTrackList(String artistUid);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

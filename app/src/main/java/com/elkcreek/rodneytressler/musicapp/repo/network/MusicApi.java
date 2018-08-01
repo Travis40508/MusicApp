@@ -2,7 +2,6 @@ package com.elkcreek.rodneytressler.musicapp.repo.network;
 
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
@@ -124,6 +123,7 @@ public interface MusicApi {
         public void setArtistPrimaryKey(int artistPrimaryKey) {
             this.artistPrimaryKey = artistPrimaryKey;
         }
+
     }
 
     class ArtistImage {
@@ -221,21 +221,17 @@ public interface MusicApi {
         @Expose
         private String trackUrl;
 
-        @Ignore
+        @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
         @SerializedName("image")
         @Expose
         private List<ArtistImage> artistImage;
 
+        @Embedded(prefix = "artist")
+        @SerializedName("artist")
+        @Expose private Artist artist;
+
         @PrimaryKey(autoGenerate = true)
         private int primaryKey;
-
-        private String imageUrl;
-        private String artistUid;
-
-
-        public Track() {
-
-        }
 
 
         public String getTrackName() {
@@ -250,9 +246,6 @@ public interface MusicApi {
             return artistImage;
         }
 
-        public String getImageUrl() {
-            return imageUrl;
-        }
 
         public void setTrackName(String trackName) {
             this.trackName = trackName;
@@ -260,14 +253,6 @@ public interface MusicApi {
 
         public void setTrackUrl(String trackUrl) {
             this.trackUrl = trackUrl;
-        }
-
-        public void setArtistImage(List<ArtistImage> artistImage) {
-            this.artistImage = artistImage;
-        }
-
-        public void setImageUrl(String imageUrl) {
-            this.imageUrl = imageUrl;
         }
 
         public int getPrimaryKey() {
@@ -278,12 +263,18 @@ public interface MusicApi {
             this.primaryKey = primaryKey;
         }
 
-        public String getArtistUid() {
-            return artistUid;
+        public void setArtistImage(List<ArtistImage> artistImage) {
+            this.artistImage = artistImage;
         }
 
-        public void setArtistUid(String artistUid) {
-            this.artistUid = artistUid;
+        public Artist getArtist() {
+            return artist;
         }
+
+        public void setArtist(Artist artist) {
+            this.artist = artist;
+        }
+
+
     }
 }

@@ -65,7 +65,7 @@ public class TracksAdapter extends RecyclerView.Adapter<TracksAdapter.TracksView
         }
 
         public void bindTrack(MusicApi.Track track) {
-            Glide.with(itemView).load(track.getImageUrl()).into(trackImage);
+            Glide.with(itemView).load(track.getArtistImage().get(2).getImageUrl()).into(trackImage);
             trackName.setText(track.getTrackName());
         }
 

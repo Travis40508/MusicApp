@@ -1,5 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.ui.TracksView;
 
+import android.util.Log;
+
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.MusicApiService;
 import com.elkcreek.rodneytressler.musicapp.services.MusicDatabaseService;
@@ -45,12 +47,6 @@ public class TracksPresenter implements BasePresenter<TracksView> {
                 .map(MusicApi.TopTracks::getTrackList)
                 .doOnNext(tracks -> {
                     for (MusicApi.Track item : tracks) {
-                        if (item.getImageUrl() == null || item.getImageUrl().isEmpty()) {
-                            item.setImageUrl(item.getArtistImage().get(2).getImageUrl());
-                        }
-                        if (item.getArtistUid() == null || item.getArtistUid().isEmpty()) {
-                            item.setArtistUid(artistUid);
-                        }
                         musicDatabaseService.insertTrack(item);
                     }
                 });
@@ -70,6 +66,7 @@ public class TracksPresenter implements BasePresenter<TracksView> {
 
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
+            Log.d("@@@@", throwable.getMessage());
             view.removeFragment();
             view.toastNoTracksError();
         };
