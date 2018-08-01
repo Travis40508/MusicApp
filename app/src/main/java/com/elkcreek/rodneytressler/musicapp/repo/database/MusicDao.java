@@ -25,6 +25,6 @@ public interface MusicDao {
     void insertArtist(MusicApi.Artist artist);
 
     @Query("SELECT * FROM Artist WHERE artistUID LIKE :artistUid")
-    Flowable<MusicApi.Artist> getArtistBio(String artistUid);
+    Flowable<List<MusicApi.Artist>> getArtistBios(String artistUid);
 
 }
