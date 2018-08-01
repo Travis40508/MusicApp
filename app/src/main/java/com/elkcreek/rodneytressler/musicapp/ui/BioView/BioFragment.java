@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +20,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
+import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
+import com.elkcreek.rodneytressler.musicapp.utils.SimilarArtistAdapter;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -40,6 +46,9 @@ public class BioFragment extends Fragment implements BioView {
     protected FrameLayout loadingLayout;
     @BindView(R.id.text_read_more)
     protected TextView readMoreText;
+    @BindView(R.id.bio_similar_artist_recycler_view)
+    protected RecyclerView similarArtistRecyclerView;
+    private SimilarArtistAdapter adapter;
 
     @OnClick(R.id.read_more_layout)
     protected void onReadMoreClicked(View view) {
@@ -118,5 +127,13 @@ public class BioFragment extends Fragment implements BioView {
     @Override
     public void setReadMoreText(String readMoreText) {
         this.readMoreText.setText(readMoreText);
+    }
+
+    @Override
+    public void showSimilarArtists(List<MusicApi.Artist> artistList) {
+        adapter = new SimilarArtistAdapter(artistList);
+        similarArtistRecyclerView.setAdapter(adapter);
+        similarArtistRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        adapter.notifyDataSetChanged();
     }
 }

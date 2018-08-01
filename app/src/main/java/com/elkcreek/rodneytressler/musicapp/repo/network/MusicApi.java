@@ -3,6 +3,7 @@ package com.elkcreek.rodneytressler.musicapp.repo.network;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverter;
 import android.arch.persistence.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
@@ -84,6 +85,10 @@ public interface MusicApi {
         @Expose
         private String artistUID;
 
+        @Embedded
+        @SerializedName("similar")
+        @Expose private Similar similar;
+
         public String getArtistName() {
             return artistName;
         }
@@ -124,6 +129,28 @@ public interface MusicApi {
             this.artistPrimaryKey = artistPrimaryKey;
         }
 
+        public Similar getSimilar() {
+            return similar;
+        }
+
+        public void setSimilar(Similar similar) {
+            this.similar = similar;
+        }
+    }
+
+    @Entity
+    class Similar {
+        @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
+        @SerializedName("artist")
+        @Expose private List<Artist> artistList;
+
+        public List<Artist> getArtistList() {
+            return artistList;
+        }
+
+        public void setArtistList(List<Artist> artistList) {
+            this.artistList = artistList;
+        }
     }
 
     class ArtistImage {

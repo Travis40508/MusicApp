@@ -59,6 +59,7 @@ public class BioPresenter implements BasePresenter<BioView> {
             view.hideLoadingLayout();
             view.showArtistImage(artist.getArtistImages().get(2).getImageUrl());
             view.showArtistName(artist.getArtistName());
+            view.showSimilarArtists(artist.getSimilar().getArtistList());
         };
     }
 

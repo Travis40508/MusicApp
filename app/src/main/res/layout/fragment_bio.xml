@@ -10,6 +10,7 @@
 
 
     <ScrollView
+        android:id="@+id/bio_scroll_view"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -68,9 +69,26 @@
 
             </LinearLayout>
 
+            <TextView
+                android:textColor="@android:color/white"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:text="@string/similar_artists_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/bio_similar_artist_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+            </android.support.v7.widget.RecyclerView>
+
         </LinearLayout>
 
     </ScrollView>
+
 
     <FrameLayout
         android:id="@+id/loading_layout"

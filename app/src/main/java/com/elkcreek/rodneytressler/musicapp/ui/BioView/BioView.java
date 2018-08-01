@@ -1,6 +1,9 @@
 package com.elkcreek.rodneytressler.musicapp.ui.BioView;
 
+import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.utils.BaseView;
+
+import java.util.List;
 
 public interface BioView extends BaseView {
     void showArtistImage(String artistImages);
@@ -16,4 +19,6 @@ public interface BioView extends BaseView {
     void hideLoadingLayout();
 
     void setReadMoreText(String readMoreTextCollapse);
+
+    void showSimilarArtists(List<MusicApi.Artist> artistList);
 }
