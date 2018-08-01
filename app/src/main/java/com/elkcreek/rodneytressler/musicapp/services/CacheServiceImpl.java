@@ -39,4 +39,23 @@ public class CacheServiceImpl implements CacheService {
                     }
                 });
     }
+
+    @Override
+    public Observable<MusicApi.Artist> getArtistBio(String artistUid) {
+        return getArtistBioFromDatabase(artistUid)
+                .onErrorResumeNext(Observable.empty())
+                .switchIfEmpty(getArtistBioFromNetwork(artistUid));
+    }
+
+    @Override
+    public Observable<MusicApi.Artist> getArtistBioFromDatabase(String artistUid) {
+        return musicDatabaseService.getArtistBio(artistUid);
+    }
+
+    @Override
+    public Observable<MusicApi.Artist> getArtistBioFromNetwork(String artistUid) {
+        return musicApiService.getArtistBio(artistUid, Constants.API_KEY)
+                .doOnNext(musicDatabaseService::insertBioResponse)
+                .map(MusicApi.ArtistBioResponse::getArtist);
+    }
 }
