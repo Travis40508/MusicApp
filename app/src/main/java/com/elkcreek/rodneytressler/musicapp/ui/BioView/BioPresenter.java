@@ -23,6 +23,9 @@ public class BioPresenter implements BasePresenter<BioView> {
     private BioView view;
     private CompositeDisposable disposable;
     private String artistUid;
+    private boolean isExpanded;
+    private static final String READ_MORE_TEXT_COLLAPSE = "Collapse";
+    private static final String READ_MORE_TEXT_EXPAND = "Read More";
 
     @Inject
     public BioPresenter(CacheService cacheService) {
@@ -37,16 +40,25 @@ public class BioPresenter implements BasePresenter<BioView> {
     @Override
     public void subscribe() {
         disposable = new CompositeDisposable();
+        isExpanded = false;
+        fetchBio();
+    }
+
+    private void fetchBio() {
         disposable.add(cacheService.getArtistBio(artistUid).subscribe(updateUiWithArtist(), updateUiOnError()));
     }
 
 
     private Consumer<MusicApi.Artist> updateUiWithArtist() {
         return artist -> {
-          view.hideProgressBar();
-          view.showArtistBio(artist.getArtistBio().getBioContent());
-          view.showArtistImage(artist.getArtistImages().get(2).getImageUrl());
-          view.showArtistName(artist.getArtistName());
+            if (!isExpanded) {
+                view.showArtistBio(artist.getArtistBio().getBioSummary());
+            } else {
+                view.showArtistBio(artist.getArtistBio().getBioContent());
+            }
+            view.hideLoadingLayout();
+            view.showArtistImage(artist.getArtistImages().get(2).getImageUrl());
+            view.showArtistName(artist.getArtistName());
         };
     }
 
@@ -69,5 +81,15 @@ public class BioPresenter implements BasePresenter<BioView> {
 
     public void artistNameRetrieved(String artistName) {
         view.showArtistName(artistName);
+    }
+
+    public void readMoreClicked(String readMoreText) {
+        isExpanded = !isExpanded;
+        if (readMoreText.equalsIgnoreCase("Read More")) {
+            view.setReadMoreText(READ_MORE_TEXT_COLLAPSE);
+        } else {
+            view.setReadMoreText(READ_MORE_TEXT_EXPAND);
+        }
+        fetchBio();
     }
 }

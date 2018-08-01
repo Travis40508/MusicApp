@@ -6,14 +6,8 @@
     android:background="@android:color/black"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ProgressBar
-        android:id="@+id/bio_progress_bar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
+
 
     <ScrollView
         android:layout_marginTop="10dp"
@@ -53,8 +47,43 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
+            <LinearLayout
+                android:id="@+id/read_more_layout"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_margin="5dp"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/text_read_more"
+                    android:textColor="@android:color/white"
+                    android:text="Read More"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/loading_layout"
+        android:background="@android:color/black"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/bio_progress_bar"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

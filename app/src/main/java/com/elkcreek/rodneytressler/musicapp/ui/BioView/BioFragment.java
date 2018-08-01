@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 
 public class BioFragment extends Fragment implements BioView {
@@ -33,8 +36,15 @@ public class BioFragment extends Fragment implements BioView {
     protected TextView artistBioText;
     @BindView(R.id.text_bio_artist_name)
     protected TextView artistName;
-    @BindView(R.id.bio_progress_bar)
-    protected ProgressBar bioProgressBar;
+    @BindView(R.id.loading_layout)
+    protected FrameLayout loadingLayout;
+    @BindView(R.id.text_read_more)
+    protected TextView readMoreText;
+
+    @OnClick(R.id.read_more_layout)
+    protected void onReadMoreClicked(View view) {
+        presenter.readMoreClicked(readMoreText.getText().toString());
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -99,8 +109,14 @@ public class BioFragment extends Fragment implements BioView {
         this.artistName.setText(artistName);
     }
 
+
     @Override
-    public void hideProgressBar() {
-        bioProgressBar.setVisibility(View.GONE);
+    public void hideLoadingLayout() {
+        loadingLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setReadMoreText(String readMoreText) {
+        this.readMoreText.setText(readMoreText);
     }
 }

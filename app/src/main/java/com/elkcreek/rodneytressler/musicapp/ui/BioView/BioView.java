@@ -13,5 +13,7 @@ public interface BioView extends BaseView {
 
     void showArtistName(String artistName);
 
-    void hideProgressBar();
+    void hideLoadingLayout();
+
+    void setReadMoreText(String readMoreTextCollapse);
 }

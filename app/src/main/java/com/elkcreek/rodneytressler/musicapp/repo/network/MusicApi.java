@@ -159,6 +159,9 @@ public interface MusicApi {
         @Expose
         private String bioContent;
 
+        @SerializedName("summary")
+        @Expose private String bioSummary;
+
 
         public String getBioContent() {
             return bioContent;
@@ -168,6 +171,13 @@ public interface MusicApi {
             this.bioContent = bioContent;
         }
 
+        public String getBioSummary() {
+            return bioSummary;
+        }
+
+        public void setBioSummary(String bioSummary) {
+            this.bioSummary = bioSummary;
+        }
     }
 
     class TopArtistsResponse {
