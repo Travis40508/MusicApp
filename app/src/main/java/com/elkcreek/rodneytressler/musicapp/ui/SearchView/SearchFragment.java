@@ -166,12 +166,12 @@ public class SearchFragment extends Fragment implements SearchView {
     @Override
     public void reAttachTracksFragment() {
         tracksFragment = (TracksFragment) getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().add(tracksFragment, TRACKS_FRAGMENT_TAG).addToBackStack(null).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, tracksFragment, TRACKS_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 
     @Override
     public void reAttachBioFragment() {
         bioFragment = (BioFragment) getActivity().getSupportFragmentManager().findFragmentByTag(BIO_FRAGMENT_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().add(bioFragment, BIO_FRAGMENT_TAG).addToBackStack(null).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, bioFragment, BIO_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 }

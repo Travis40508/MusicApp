@@ -41,6 +41,7 @@ public class TracksFragment extends Fragment implements TracksView {
     protected ProgressBar progressBar;
 
     private TracksAdapter adapter;
+    private PlayTrackFragment playTrackFragment;
 
     @Override
     public void onAttach(Context context) {
@@ -69,6 +70,9 @@ public class TracksFragment extends Fragment implements TracksView {
         presenter.attachView(this);
         presenter.artistNameRetrieved(getArguments().getString(Constants.ARTIST_NAME_KEY));
         presenter.artistRetrieved(getArguments().getString(Constants.ARTIST_UID_KEY));
+        presenter.screenRotated(
+                savedInstanceState == null,
+                getActivity().getSupportFragmentManager().findFragmentByTag(PLAY_TRACK_FRAGMENT_TAG) == null);
         return view;
     }
 
@@ -104,9 +108,9 @@ public class TracksFragment extends Fragment implements TracksView {
     public void showPlayTrackFragment(String trackUrl) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.TRACK_URL_KEY, trackUrl);
-        PlayTrackFragment fragment = PlayTrackFragment.newInstance();
-        fragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, fragment, PLAY_TRACK_FRAGMENT_TAG).addToBackStack(null).commit();
+        playTrackFragment = PlayTrackFragment.newInstance();
+        playTrackFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, playTrackFragment, PLAY_TRACK_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 
     @Override
@@ -122,5 +126,11 @@ public class TracksFragment extends Fragment implements TracksView {
     @Override
     public void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void reAttachPlayTracksFragment() {
+        playTrackFragment = (PlayTrackFragment) getActivity().getSupportFragmentManager().findFragmentByTag(PLAY_TRACK_FRAGMENT_TAG);
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, playTrackFragment, PLAY_TRACK_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 }
