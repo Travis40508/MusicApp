@@ -3,6 +3,7 @@ package com.elkcreek.rodneytressler.musicapp.ui.TracksView;
 import android.util.Log;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.services.CacheService;
 import com.elkcreek.rodneytressler.musicapp.services.MusicApiService;
 import com.elkcreek.rodneytressler.musicapp.services.MusicDatabaseService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
@@ -19,42 +20,19 @@ import io.reactivex.functions.Consumer;
 
 public class TracksPresenter implements BasePresenter<TracksView> {
 
-    private final MusicApiService musicApiService;
-    private final MusicDatabaseService musicDatabaseService;
+    private final CacheService cacheService;
     private TracksView view;
     private CompositeDisposable disposable;
     private String artistUid;
 
     @Inject
-    public TracksPresenter(MusicApiService musicApiService, MusicDatabaseService musicDatabaseService) {
-        this.musicApiService = musicApiService;
-        this.musicDatabaseService = musicDatabaseService;
+    public TracksPresenter(CacheService cacheService) {
+        this.cacheService = cacheService;
     }
 
     @Override
     public void attachView(TracksView view) {
         this.view = view;
-    }
-
-
-    private Observable<List<MusicApi.Track>> getArtistTopTracksFromDatabase(String artistUid) {
-        return musicDatabaseService.getTrackList(artistUid).toObservable();
-    }
-
-    private Observable<List<MusicApi.Track>> getArtistTracksFromNetwork(String artistUid) {
-        return musicApiService.getTopTracks(artistUid, Constants.API_KEY)
-                .map(MusicApi.TopTracksResponse::getTopTracks)
-                .map(MusicApi.TopTracks::getTrackList)
-                .doOnNext(tracks -> {
-                    for (MusicApi.Track item : tracks) {
-                        musicDatabaseService.insertTrack(item);
-                    }
-                });
-    }
-
-    private Observable<List<MusicApi.Track>> getArtistTopTracks(String artistUid) {
-        return getArtistTopTracksFromDatabase(artistUid)
-                .flatMap(tracks -> tracks.isEmpty() ? getArtistTracksFromNetwork(artistUid) : Observable.just(tracks));
     }
 
     private Consumer<List<MusicApi.Track>> updateUiWithTopTracks() {
@@ -66,7 +44,6 @@ public class TracksPresenter implements BasePresenter<TracksView> {
 
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
-            Log.d("@@@@", throwable.getMessage());
             view.removeFragment();
             view.toastNoTracksError();
         };
@@ -75,7 +52,7 @@ public class TracksPresenter implements BasePresenter<TracksView> {
     @Override
     public void subscribe() {
         disposable = new CompositeDisposable();
-        disposable.add(getArtistTopTracks(artistUid).subscribe(updateUiWithTopTracks(), updateUiOnError()));
+        disposable.add(cacheService.getArtistTopTracks(artistUid).subscribe(updateUiWithTopTracks(), updateUiOnError()));
     }
 
     @Override
