@@ -171,6 +171,7 @@ public interface MusicApi {
         }
     }
 
+
     class ArtistBioResponse {
         @SerializedName("artist")
         @Expose

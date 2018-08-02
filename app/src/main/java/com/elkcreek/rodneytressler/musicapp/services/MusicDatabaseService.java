@@ -13,7 +13,7 @@ public interface MusicDatabaseService {
 
     Flowable<List<MusicApi.Track>> getTrackList(String artistUid);
 
-    void insertBioResponse(MusicApi.ArtistBioResponse artistBioResponse);
+    void insertBioResponse(MusicApi.Artist artist);
 
     Observable<MusicApi.Artist> getArtistBio(String artistUid);
 

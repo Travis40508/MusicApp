@@ -71,6 +71,7 @@ public class BioPresenter implements BasePresenter<BioView> {
 
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
+            throwable.getCause();
             view.detachFragment();
             view.showNoBioToast();
         };

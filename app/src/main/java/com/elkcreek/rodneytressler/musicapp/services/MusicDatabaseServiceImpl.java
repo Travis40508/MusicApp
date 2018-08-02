@@ -40,11 +40,11 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
 
 
     @Override
-    public void insertBioResponse(MusicApi.ArtistBioResponse artistBioResponse) {
+    public void insertBioResponse(MusicApi.Artist artist) {
         Schedulers.io().scheduleDirect(new Runnable() {
             @Override
             public void run() {
-                database.musicDao().insertArtist(artistBioResponse.getArtist());
+                database.musicDao().insertArtist(artist);
             }
         });
     }
