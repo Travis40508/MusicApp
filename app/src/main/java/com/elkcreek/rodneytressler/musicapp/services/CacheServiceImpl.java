@@ -59,4 +59,12 @@ public class CacheServiceImpl implements CacheService {
                 .filter(artist -> artist.getArtistBio() != null)
                 .doOnNext(musicDatabaseService::insertBioResponse);
     }
+
+    @Override
+    public Observable<MusicApi.Artist> getArtistBioWithName(String artistName, String apiKey) {
+        return musicApiService.getArtistBioWithName(artistName, Constants.API_KEY)
+                .map(MusicApi.ArtistBioResponse::getArtist)
+                .filter(artist -> artist.getArtistBio() != null)
+                .doOnNext(musicDatabaseService::insertBioResponse);
+    }
 }

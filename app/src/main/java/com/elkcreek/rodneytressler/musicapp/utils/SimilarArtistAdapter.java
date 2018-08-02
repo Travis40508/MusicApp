@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 public class SimilarArtistAdapter extends RecyclerView.Adapter<SimilarArtistAdapter.SimilarArtistViewHolder> {
 
     private List<MusicApi.Artist> similarArtistList;
+    private BiosCallback biosCallback;
 
     public SimilarArtistAdapter(List<MusicApi.Artist> similarArtistList) {
         this.similarArtistList = similarArtistList;
@@ -35,11 +36,16 @@ public class SimilarArtistAdapter extends RecyclerView.Adapter<SimilarArtistAdap
     @Override
     public void onBindViewHolder(@NonNull SimilarArtistViewHolder similarArtistViewHolder, int position) {
         similarArtistViewHolder.bindSimilarArtist(similarArtistList.get(position));
+        similarArtistViewHolder.itemView.setOnClickListener(similarArtistViewHolder.onSimilarArtistClicked(similarArtistList.get(position)));
     }
 
     @Override
     public int getItemCount() {
         return similarArtistList.size();
+    }
+
+    public void setCallback(BiosCallback biosCallback) {
+        this.biosCallback = biosCallback;
     }
 
     public class SimilarArtistViewHolder extends RecyclerView.ViewHolder {
@@ -59,5 +65,18 @@ public class SimilarArtistAdapter extends RecyclerView.Adapter<SimilarArtistAdap
             Glide.with(itemView.getContext()).load(artist.getArtistImages().get(2).getImageUrl()).into(similarArtistImage);
             similarArtistName.setText(artist.getArtistName());
         }
+
+        public View.OnClickListener onSimilarArtistClicked(MusicApi.Artist artist) {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    biosCallback.onSimilarArtistClicked(artist);
+                }
+            };
+        }
+    }
+
+    public interface BiosCallback {
+        void onSimilarArtistClicked(MusicApi.Artist artist);
     }
 }

@@ -21,4 +21,6 @@ public interface BioView extends BaseView {
     void setReadMoreText(String readMoreTextCollapse);
 
     void showSimilarArtists(List<MusicApi.Artist> artistList);
+
+    void showSimilarArtistScreen(String artistUID, String artistName);
 }

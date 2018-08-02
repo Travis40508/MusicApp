@@ -17,4 +17,5 @@ public interface CacheService {
     Observable<MusicApi.Artist> getArtistBio(String artistUid);
     Observable<MusicApi.Artist> getArtistBioFromDatabase(String artistUid);
     Observable<MusicApi.Artist> getArtistBioFromNetwork(String artistUid);
+    Observable<MusicApi.Artist> getArtistBioWithName(String artistName, String apiKey);
 }

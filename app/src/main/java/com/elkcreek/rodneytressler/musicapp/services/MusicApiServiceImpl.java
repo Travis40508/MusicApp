@@ -42,4 +42,11 @@ public class MusicApiServiceImpl implements MusicApiService {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    @Override
+    public Observable<MusicApi.ArtistBioResponse> getArtistBioWithName(String artistName, String apiKey) {
+        return musicApi.getArtistBioWithName(artistName, apiKey)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

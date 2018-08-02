@@ -33,6 +33,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 
+import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.BIO_FRAGMENT_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
+
 public class BioFragment extends Fragment implements BioView {
 
     @Inject protected BioPresenter presenter;
@@ -135,5 +139,21 @@ public class BioFragment extends Fragment implements BioView {
         similarArtistRecyclerView.setAdapter(adapter);
         similarArtistRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         adapter.notifyDataSetChanged();
+        adapter.setCallback(new SimilarArtistAdapter.BiosCallback() {
+            @Override
+            public void onSimilarArtistClicked(MusicApi.Artist artist) {
+                presenter.similarArtistClicked(artist);
+            }
+        });
+    }
+
+    @Override
+    public void showSimilarArtistScreen(String artistUID, String artistName) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ARTIST_UID_KEY, artistUID);
+        bundle.putString(ARTIST_NAME_KEY, artistName);
+        BioFragment bioFragment = BioFragment.newInstance();
+        bioFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, bioFragment, BIO_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 }

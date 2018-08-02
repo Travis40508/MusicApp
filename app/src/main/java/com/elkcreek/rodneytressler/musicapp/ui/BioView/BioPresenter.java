@@ -71,7 +71,6 @@ public class BioPresenter implements BasePresenter<BioView> {
 
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
-            throwable.getCause();
             view.detachFragment();
             view.showNoBioToast();
         };
@@ -93,5 +92,13 @@ public class BioPresenter implements BasePresenter<BioView> {
             view.setReadMoreText(READ_MORE_TEXT_EXPAND);
         }
         fetchBio();
+    }
+
+    public void similarArtistClicked(MusicApi.Artist artist) {
+        disposable.add(cacheService.getArtistBioWithName(artist.getArtistName(), Constants.API_KEY).subscribe(
+                artist1 -> {
+                    view.showSimilarArtistScreen(artist1.getArtistUID(), artist1.getArtistName());
+                }
+        ));
     }
 }
