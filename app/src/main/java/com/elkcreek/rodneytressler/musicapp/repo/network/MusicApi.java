@@ -52,6 +52,8 @@ public interface MusicApi {
         }
     }
 
+    //TODO save the current day to a shared pref and check each launch to see if it's that day, if it is, pull today's top artists from a database, otherwise, clear it and make the network call and insert into the database
+
     class ArtistMatches {
         @SerializedName("artist")
         @Expose

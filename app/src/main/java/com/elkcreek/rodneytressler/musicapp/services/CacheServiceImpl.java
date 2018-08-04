@@ -43,6 +43,7 @@ public class CacheServiceImpl implements CacheService {
     @Override
     public Observable<MusicApi.Artist> getArtistBio(String artistUid) {
         return getArtistBioFromDatabase(artistUid)
+                .flatMap(artist -> artist.getArtistBio() == null ? Observable.error(Throwable::new) : Observable.just(artist))
                 .onErrorResumeNext(Observable.empty())
                 .switchIfEmpty(getArtistBioFromNetwork(artistUid));
     }
@@ -56,15 +57,34 @@ public class CacheServiceImpl implements CacheService {
     public Observable<MusicApi.Artist> getArtistBioFromNetwork(String artistUid) {
         return musicApiService.getArtistBio(artistUid, Constants.API_KEY)
                 .map(MusicApi.ArtistBioResponse::getArtist)
-                .filter(artist -> artist.getArtistBio() != null)
                 .doOnNext(musicDatabaseService::insertBioResponse);
     }
 
     @Override
     public Observable<MusicApi.Artist> getArtistBioWithName(String artistName, String apiKey) {
-        return musicApiService.getArtistBioWithName(artistName, Constants.API_KEY)
+        return musicApiService.getArtistBioWithName(artistName, apiKey)
                 .map(MusicApi.ArtistBioResponse::getArtist)
                 .filter(artist -> artist.getArtistBio() != null)
                 .doOnNext(musicDatabaseService::insertBioResponse);
+    }
+
+    @Override
+    public Observable<List<MusicApi.Artist>> getTopArtists() {
+        return getTopArtistsFromDatabase()
+                .onErrorResumeNext(Observable.empty())
+                .switchIfEmpty(getTopArtistsFromNetwork());
+    }
+
+    @Override
+    public Observable<List<MusicApi.Artist>> getTopArtistsFromDatabase() {
+        return musicDatabaseService.getTopArtists();
+    }
+
+    @Override
+    public Observable<List<MusicApi.Artist>> getTopArtistsFromNetwork() {
+        return musicApiService.getTopArtists(Constants.API_KEY)
+                .map(topArtistsResponse -> topArtistsResponse.getArtists().getArtistList())
+                .doOnNext(artists -> Observable.fromIterable(artists)
+                .forEach(musicDatabaseService::insertTopArtist));
     }
 }

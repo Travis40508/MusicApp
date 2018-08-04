@@ -21,7 +21,6 @@ import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.BioView.BioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TracksView.TracksFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.ArtistAdapter;
-import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 import java.util.List;
 

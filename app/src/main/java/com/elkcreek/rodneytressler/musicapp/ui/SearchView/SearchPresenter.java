@@ -1,29 +1,40 @@
 package com.elkcreek.rodneytressler.musicapp.ui.SearchView;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.services.CacheService;
 import com.elkcreek.rodneytressler.musicapp.services.MusicApiService;
 import com.elkcreek.rodneytressler.musicapp.services.MusicDatabaseService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 
+import java.util.Calendar;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class SearchPresenter implements BasePresenter<SearchView> {
 
     private final MusicApiService musicApiService;
+    private final SharedPreferences sharedPreferences;
+    private final CacheService cacheService;
     private SearchView view;
     private CompositeDisposable disposable;
 
     @Inject
-    public SearchPresenter(MusicApiService musicApiService) {
+    public SearchPresenter(MusicApiService musicApiService, SharedPreferences sharedPreferences, CacheService cacheService) {
         this.musicApiService = musicApiService;
+        this.sharedPreferences = sharedPreferences;
+        this.cacheService = cacheService;
     }
 
     @Override
@@ -31,17 +42,14 @@ public class SearchPresenter implements BasePresenter<SearchView> {
         this.view = view;
     }
 
-    private Observable<MusicApi.TopArtistsResponse> getTopArtists() {
-        return musicApiService.getTopArtists(Constants.API_KEY).onErrorResumeNext(Observable.empty());
-    }
 
     private Observable<MusicApi.SearchResponse> getArtistSearchResults(String artistSearchText) {
         return musicApiService.getArtistSearchResults(artistSearchText, Constants.API_KEY).onErrorResumeNext(Observable.empty());
     }
 
-    private Consumer<MusicApi.TopArtistsResponse> updateViewWithTopArtist() {
+    private Consumer<List<MusicApi.Artist>> updateViewWithTopArtist() {
         return topArtists -> {
-            view.loadArtists(topArtists.getArtists().getArtistList());
+            view.loadArtists(topArtists);
             view.hideProgressBar();
         };
     }
@@ -65,9 +73,19 @@ public class SearchPresenter implements BasePresenter<SearchView> {
             view.showProgressBar();
         }
         disposable = new CompositeDisposable();
-        disposable.add(getTopArtists().subscribe(
-                updateViewWithTopArtist()
-        ));
+        int weekOffYear = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
+
+        if (sharedPreferences.getInt(Constants.WEEKOFYEAR, 0) == 0 || weekOffYear != sharedPreferences.getInt(Constants.WEEKOFYEAR, 0)) {
+            disposable.add(cacheService.getTopArtistsFromNetwork().subscribe(updateViewWithTopArtist()));
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt(Constants.WEEKOFYEAR, Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
+            editor.apply();
+        } else {
+            disposable.add(cacheService.getTopArtists().subscribe(
+                    updateViewWithTopArtist()
+            ));
+        }
+
     }
 
     @Override
@@ -76,7 +94,7 @@ public class SearchPresenter implements BasePresenter<SearchView> {
     }
 
     public void artistSearchTextChanged(String artistSearchText, boolean adapterHasItems) {
-        if(disposable == null) {
+        if (disposable == null) {
             disposable = new CompositeDisposable();
         }
 
@@ -90,7 +108,7 @@ public class SearchPresenter implements BasePresenter<SearchView> {
 
         } else {
             view.showSearchTextTopArtists();
-            disposable.add(getTopArtists().subscribe(updateViewWithTopArtist(), updateUiWithError()));
+            disposable.add(cacheService.getTopArtists().subscribe(updateViewWithTopArtist(), updateUiWithError()));
         }
 
     }
@@ -104,10 +122,10 @@ public class SearchPresenter implements BasePresenter<SearchView> {
     }
 
     public void checkSavedInstanceState(boolean savedInstanceStateIsNull, boolean tracksFragmentIsNull, boolean bioFragmentIsNull) {
-        if(!savedInstanceStateIsNull) {
-            if(!tracksFragmentIsNull) {
+        if (!savedInstanceStateIsNull) {
+            if (!tracksFragmentIsNull) {
                 view.reAttachTracksFragment();
-            } else if(!bioFragmentIsNull) {
+            } else if (!bioFragmentIsNull) {
                 view.reAttachBioFragment();
             }
         }

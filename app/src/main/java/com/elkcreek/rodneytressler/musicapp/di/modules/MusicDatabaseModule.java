@@ -4,6 +4,7 @@ package com.elkcreek.rodneytressler.musicapp.di.modules;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.elkcreek.rodneytressler.musicapp.repo.database.MusicDatabase;
 import com.elkcreek.rodneytressler.musicapp.services.MusicDatabaseService;
@@ -32,5 +33,11 @@ public class MusicDatabaseModule {
     @Provides
     MusicDatabaseService providesMusicDatabaseService(MusicDatabase musicDatabase) {
         return new MusicDatabaseServiceImpl(musicDatabase);
+    }
+
+    @Provides
+    SharedPreferences providesSharedPreferences(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SHAREDPREFKEY, Context.MODE_PRIVATE);
+        return sharedPreferences;
     }
 }

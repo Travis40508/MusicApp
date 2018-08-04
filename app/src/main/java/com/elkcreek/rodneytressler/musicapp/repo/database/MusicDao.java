@@ -24,7 +24,6 @@ public interface MusicDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertArtist(MusicApi.Artist artist);
 
-    @Query("SELECT * FROM Artist WHERE artistUID LIKE :artistUid")
+    @Query("SELECT * FROM Artist WHERE artistUID LIKE :artistUid AND bioSummary")
     Flowable<List<MusicApi.Artist>> getArtistBios(String artistUid);
-
 }
