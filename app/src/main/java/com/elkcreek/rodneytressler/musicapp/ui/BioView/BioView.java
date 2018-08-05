@@ -23,4 +23,8 @@ public interface BioView extends BaseView {
     void showSimilarArtists(List<MusicApi.Artist> artistList);
 
     void showSimilarArtistScreen(String artistUID, String artistName);
+
+    void showTracksFragment(String artistUid, String artistName);
+
+    void reAttachTracksFragment();
 }

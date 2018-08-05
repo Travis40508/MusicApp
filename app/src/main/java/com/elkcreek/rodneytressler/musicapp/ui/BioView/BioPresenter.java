@@ -21,6 +21,7 @@ public class BioPresenter implements BasePresenter<BioView> {
     private boolean isExpanded;
     private static final String READ_MORE_TEXT_COLLAPSE = "Collapse";
     private static final String READ_MORE_TEXT_EXPAND = "Read More";
+    private String artistName;
 
     @Inject
     public BioPresenter(RepositoryService repositoryService) {
@@ -76,6 +77,7 @@ public class BioPresenter implements BasePresenter<BioView> {
     }
 
     public void artistNameRetrieved(String artistName) {
+        this.artistName = artistName;
         view.showArtistName(artistName);
     }
 
@@ -97,5 +99,17 @@ public class BioPresenter implements BasePresenter<BioView> {
                     view.showSimilarArtistScreen(artist1.getArtistUID(), artist1.getArtistName());
                 }
         ));
+    }
+
+    public void viewTracksClicked() {
+        view.showTracksFragment(artistUid, artistName);
+    }
+
+    public void checkSavedInstanceState(boolean saveInstanceStateIsNull, boolean tracksFragmentIsNull) {
+        if(!saveInstanceStateIsNull) {
+            if(!tracksFragmentIsNull) {
+                view.reAttachTracksFragment();
+            }
+        }
     }
 }
