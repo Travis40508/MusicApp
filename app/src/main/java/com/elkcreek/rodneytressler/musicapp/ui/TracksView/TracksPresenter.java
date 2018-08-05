@@ -72,4 +72,23 @@ public class TracksPresenter implements BasePresenter<TracksView> {
             }
         }
     }
+
+    public void trackSearchTextChanged(String searchText, boolean adapterHasItems) {
+        if (disposable == null) {
+            disposable = new CompositeDisposable();
+        }
+
+        if (!adapterHasItems) {
+            view.showProgressBar();
+        }
+
+        if (!searchText.isEmpty()) {
+            view.showSearchTextValue(searchText);
+            view.showSearchedTracks(searchText);
+        } else {
+            disposable.add(repositoryService.getArtistTopTracks(artistUid)
+                    .subscribe(updateUiWithTopTracks(), updateUiOnError()));
+            view.showAllTracksText();
+        }
+    }
 }

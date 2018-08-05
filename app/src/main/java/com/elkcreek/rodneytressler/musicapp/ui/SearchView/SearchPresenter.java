@@ -71,6 +71,7 @@ public class SearchPresenter implements BasePresenter<SearchView> {
         disposable = new CompositeDisposable();
         int weekOfYear = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
 
+        //Refactor this to Repo pattern
         if (sharedPreferences.getInt(Constants.WEEKOFYEAR, 0) == 0 || weekOfYear != sharedPreferences.getInt(Constants.WEEKOFYEAR, 0)) {
             repositoryService.deleteTopArtists();
             disposable.add(repositoryService.getTopArtistsFromNetwork().subscribe(updateViewWithTopArtist()));

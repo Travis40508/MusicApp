@@ -19,4 +19,12 @@ public interface TracksView extends BaseView {
     void hideProgressBar();
 
     void reAttachPlayTracksFragment();
+
+    void showProgressBar();
+
+    void showSearchedTracks(String searchText);
+
+    void showSearchTextValue(String searchText);
+
+    void showAllTracksText();
 }

@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -21,9 +22,11 @@ public class TracksAdapter extends RecyclerView.Adapter<TracksAdapter.TracksView
 
     private List<MusicApi.Track> trackList;
     private TracksCallback tracksCallback;
+    private List<MusicApi.Track> fullTrackList;
 
     public TracksAdapter(List<MusicApi.Track> trackList) {
         this.trackList = trackList;
+        fullTrackList = trackList;
     }
 
     @NonNull
@@ -46,6 +49,17 @@ public class TracksAdapter extends RecyclerView.Adapter<TracksAdapter.TracksView
 
     public void setPlayCallback(TracksCallback tracksCallback) {
         this.tracksCallback = tracksCallback;
+    }
+
+    public void showSearchedTracks(String searchText) {
+        List<MusicApi.Track> searchedTrackList = new ArrayList<>();
+        for(MusicApi.Track item : fullTrackList) {
+            if(item.getTrackName().toLowerCase().contains(searchText.toLowerCase())) {
+                searchedTrackList.add(item);
+                trackList = searchedTrackList;
+                notifyDataSetChanged();
+            }
+        }
     }
 
     public class TracksViewHolder extends RecyclerView.ViewHolder {

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +27,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
 import dagger.android.support.AndroidSupportInjection;
 
 import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.PLAY_TRACK_FRAGMENT_TAG;
-import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.TRACKS_FRAGMENT_TAG;
 
 public class TracksFragment extends Fragment implements TracksView {
     @Inject TracksPresenter presenter;
@@ -39,9 +40,17 @@ public class TracksFragment extends Fragment implements TracksView {
     protected TextView artistName;
     @BindView(R.id.progress_bar_tracks)
     protected ProgressBar progressBar;
+    @BindView(R.id.tracks_search_value)
+    protected TextView searchedTracksText;
 
     private TracksAdapter adapter;
     private PlayTrackFragment playTrackFragment;
+
+
+    @OnTextChanged(value = R.id.input_track_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void onArtistSearchChange(Editable editable) {
+        presenter.trackSearchTextChanged(editable.toString(), adapter != null && adapter.getItemCount() > 0);
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -132,5 +141,25 @@ public class TracksFragment extends Fragment implements TracksView {
     public void reAttachPlayTracksFragment() {
         playTrackFragment = (PlayTrackFragment) getActivity().getSupportFragmentManager().findFragmentByTag(PLAY_TRACK_FRAGMENT_TAG);
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, playTrackFragment, PLAY_TRACK_FRAGMENT_TAG).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showSearchedTracks(String searchText) {
+        adapter.showSearchedTracks(searchText);
+    }
+
+    @Override
+    public void showSearchTextValue(String searchText) {
+        searchedTracksText.setText("Showing Results For '" + searchText + "'");
+    }
+
+    @Override
+    public void showAllTracksText() {
+        searchedTracksText.setText("Showing All Tracks");
     }
 }
