@@ -38,4 +38,5 @@ public class MainPresenter implements BasePresenter<MainView> {
             view.closeApp();
         }
     }
+
 }

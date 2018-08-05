@@ -27,4 +27,6 @@ public interface TracksView extends BaseView {
     void showSearchTextValue(String searchText);
 
     void showAllTracksText();
+
+    void clearBackStack();
 }

@@ -91,4 +91,8 @@ public class TracksPresenter implements BasePresenter<TracksView> {
             view.showAllTracksText();
         }
     }
+
+    public void homeClicked() {
+        view.clearBackStack();
+    }
 }

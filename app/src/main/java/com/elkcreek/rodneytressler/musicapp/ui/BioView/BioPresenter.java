@@ -112,4 +112,8 @@ public class BioPresenter implements BasePresenter<BioView> {
             }
         }
     }
+
+    public void homeClicked() {
+        view.clearBackStack();
+    }
 }

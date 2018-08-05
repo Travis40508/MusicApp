@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -27,6 +28,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import dagger.android.support.AndroidSupportInjection;
 
@@ -45,6 +47,11 @@ public class TracksFragment extends Fragment implements TracksView {
 
     private TracksAdapter adapter;
     private PlayTrackFragment playTrackFragment;
+
+    @OnClick(R.id.image_home_button)
+    protected void homeButtonClicked(View view) {
+        presenter.homeClicked();
+    }
 
 
     @OnTextChanged(value = R.id.input_track_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -161,5 +168,10 @@ public class TracksFragment extends Fragment implements TracksView {
     @Override
     public void showAllTracksText() {
         searchedTracksText.setText("Showing All Tracks");
+    }
+
+    @Override
+    public void clearBackStack() {
+        getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 }
