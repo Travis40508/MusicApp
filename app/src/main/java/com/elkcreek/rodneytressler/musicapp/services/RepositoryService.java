@@ -23,4 +23,5 @@ public interface RepositoryService {
     Observable<List<MusicApi.Artist>> getTopArtists();
     Observable<List<MusicApi.Artist>> getTopArtistsFromDatabase();
     Observable<List<MusicApi.Artist>> getTopArtistsFromNetwork();
+    void deleteTopArtists();
 }

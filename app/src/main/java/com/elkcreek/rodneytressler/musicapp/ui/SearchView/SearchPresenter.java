@@ -69,12 +69,13 @@ public class SearchPresenter implements BasePresenter<SearchView> {
             view.showProgressBar();
         }
         disposable = new CompositeDisposable();
-        int weekOffYear = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
+        int weekOfYear = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
 
-        if (sharedPreferences.getInt(Constants.WEEKOFYEAR, 0) == 0 || weekOffYear != sharedPreferences.getInt(Constants.WEEKOFYEAR, 0)) {
+        if (sharedPreferences.getInt(Constants.WEEKOFYEAR, 0) == 0 || weekOfYear != sharedPreferences.getInt(Constants.WEEKOFYEAR, 0)) {
+            repositoryService.deleteTopArtists();
             disposable.add(repositoryService.getTopArtistsFromNetwork().subscribe(updateViewWithTopArtist()));
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt(Constants.WEEKOFYEAR, Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
+            editor.putInt(Constants.WEEKOFYEAR, weekOfYear);
             editor.apply();
         } else {
             disposable.add(repositoryService.getTopArtists().subscribe(

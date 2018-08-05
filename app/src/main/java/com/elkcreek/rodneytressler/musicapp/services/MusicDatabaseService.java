@@ -22,5 +22,7 @@ public interface MusicDatabaseService {
 
     void updateTopArtist(MusicApi.Artist artist);
 
+    void deleteTopArtists();
+
 
 }

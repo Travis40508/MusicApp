@@ -90,4 +90,14 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
         });
     }
 
+    @Override
+    public void deleteTopArtists() {
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                database.musicDao().deleteTopArtists(true);
+            }
+        });
+    }
+
 }

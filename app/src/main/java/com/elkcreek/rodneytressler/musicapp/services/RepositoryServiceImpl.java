@@ -89,4 +89,9 @@ public class RepositoryServiceImpl implements RepositoryService {
                 .doOnNext(artists -> Observable.fromIterable(artists)
                 .forEach(musicDatabaseService::insertTopArtist));
     }
+
+    @Override
+    public void deleteTopArtists() {
+        musicDatabaseService.deleteTopArtists();
+    }
 }

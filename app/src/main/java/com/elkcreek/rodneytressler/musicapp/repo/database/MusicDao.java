@@ -36,4 +36,7 @@ public interface MusicDao {
 
     @Query("UPDATE Artist SET bioSummary = :artistSummary, bioContent = :artistContent, artistList = :similarArtistList WHERE artistUID = :artistUID")
     void updateArtist(String artistSummary, String artistContent, String artistUID, List<MusicApi.Artist> similarArtistList);
+
+    @Query("DELETE FROM Artist WHERE isTopArtist = :isTopArtist")
+    void deleteTopArtists(boolean isTopArtist);
 }
