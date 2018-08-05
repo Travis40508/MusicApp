@@ -20,5 +20,7 @@ public interface MusicDatabaseService {
     void insertTopArtist(MusicApi.Artist artist);
     Observable<List<MusicApi.Artist>> getTopArtists();
 
+    void updateTopArtist(MusicApi.Artist artist);
+
 
 }

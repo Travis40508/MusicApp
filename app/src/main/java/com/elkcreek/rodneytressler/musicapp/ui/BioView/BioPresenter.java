@@ -1,25 +1,20 @@
 package com.elkcreek.rodneytressler.musicapp.ui.BioView;
 
-import android.media.MediaPlayer;
 import android.util.Log;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
-import com.elkcreek.rodneytressler.musicapp.services.CacheService;
-import com.elkcreek.rodneytressler.musicapp.services.MusicApiService;
-import com.elkcreek.rodneytressler.musicapp.services.MusicDatabaseService;
+import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 
 public class BioPresenter implements BasePresenter<BioView> {
 
-    private final CacheService cacheService;
+    private final RepositoryService repositoryService;
     private BioView view;
     private CompositeDisposable disposable;
     private String artistUid;
@@ -28,8 +23,8 @@ public class BioPresenter implements BasePresenter<BioView> {
     private static final String READ_MORE_TEXT_EXPAND = "Read More";
 
     @Inject
-    public BioPresenter(CacheService cacheService) {
-        this.cacheService = cacheService;
+    public BioPresenter(RepositoryService repositoryService) {
+        this.repositoryService = repositoryService;
     }
 
     @Override
@@ -45,7 +40,7 @@ public class BioPresenter implements BasePresenter<BioView> {
     }
 
     private void fetchBio() {
-        disposable.add(cacheService.getArtistBio(artistUid).subscribe(updateUiWithArtist(), updateUiOnError()));
+        disposable.add(repositoryService.getArtistBio(artistUid).subscribe(updateUiWithArtist(), updateUiOnError()));
     }
 
 
@@ -95,7 +90,9 @@ public class BioPresenter implements BasePresenter<BioView> {
     }
 
     public void similarArtistClicked(MusicApi.Artist artist) {
-        disposable.add(cacheService.getArtistBioWithName(artist.getArtistName(), Constants.API_KEY).subscribe(
+        //TODO rework this, it looks like shit.
+
+        disposable.add(repositoryService.getArtistBioWithName(artist.getArtistName(), Constants.API_KEY).subscribe(
                 artist1 -> {
                     view.showSimilarArtistScreen(artist1.getArtistUID(), artist1.getArtistName());
                 }

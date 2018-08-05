@@ -75,4 +75,19 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
                 .toObservable();
     }
 
+    @Override
+    public void updateTopArtist(MusicApi.Artist artist) {
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                String artistSummary = artist.getArtistBio().getBioSummary();
+                String artistContent = artist.getArtistBio().getBioContent();
+                String artistUID = artist.getArtistUID();
+                List<MusicApi.Artist> similarArtistList = artist.getSimilar().getArtistList();
+
+                database.musicDao().updateArtist(artistSummary, artistContent, artistUID, similarArtistList);
+            }
+        });
+    }
+
 }

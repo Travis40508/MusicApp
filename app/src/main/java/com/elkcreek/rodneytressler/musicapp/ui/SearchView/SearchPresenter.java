@@ -1,12 +1,10 @@
 package com.elkcreek.rodneytressler.musicapp.ui.SearchView;
 
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
-import com.elkcreek.rodneytressler.musicapp.services.CacheService;
+import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.services.MusicApiService;
-import com.elkcreek.rodneytressler.musicapp.services.MusicDatabaseService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
@@ -17,24 +15,22 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 public class SearchPresenter implements BasePresenter<SearchView> {
 
     private final MusicApiService musicApiService;
     private final SharedPreferences sharedPreferences;
-    private final CacheService cacheService;
+    private final RepositoryService repositoryService;
     private SearchView view;
     private CompositeDisposable disposable;
 
     @Inject
-    public SearchPresenter(MusicApiService musicApiService, SharedPreferences sharedPreferences, CacheService cacheService) {
+    public SearchPresenter(MusicApiService musicApiService, SharedPreferences sharedPreferences, RepositoryService repositoryService) {
         this.musicApiService = musicApiService;
         this.sharedPreferences = sharedPreferences;
-        this.cacheService = cacheService;
+        this.repositoryService = repositoryService;
     }
 
     @Override
@@ -76,12 +72,12 @@ public class SearchPresenter implements BasePresenter<SearchView> {
         int weekOffYear = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
 
         if (sharedPreferences.getInt(Constants.WEEKOFYEAR, 0) == 0 || weekOffYear != sharedPreferences.getInt(Constants.WEEKOFYEAR, 0)) {
-            disposable.add(cacheService.getTopArtistsFromNetwork().subscribe(updateViewWithTopArtist()));
+            disposable.add(repositoryService.getTopArtistsFromNetwork().subscribe(updateViewWithTopArtist()));
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putInt(Constants.WEEKOFYEAR, Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
             editor.apply();
         } else {
-            disposable.add(cacheService.getTopArtists().subscribe(
+            disposable.add(repositoryService.getTopArtists().subscribe(
                     updateViewWithTopArtist()
             ));
         }
@@ -108,7 +104,7 @@ public class SearchPresenter implements BasePresenter<SearchView> {
 
         } else {
             view.showSearchTextTopArtists();
-            disposable.add(cacheService.getTopArtists().subscribe(updateViewWithTopArtist(), updateUiWithError()));
+            disposable.add(repositoryService.getTopArtists().subscribe(updateViewWithTopArtist(), updateUiWithError()));
         }
 
     }

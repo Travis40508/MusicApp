@@ -7,12 +7,12 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
-public class CacheServiceImpl implements CacheService {
+public class RepositoryServiceImpl implements RepositoryService {
 
     private final MusicApiService musicApiService;
     private final MusicDatabaseService musicDatabaseService;
 
-    public CacheServiceImpl(MusicApiService musicApiService, MusicDatabaseService musicDatabaseService) {
+    public RepositoryServiceImpl(MusicApiService musicApiService, MusicDatabaseService musicDatabaseService) {
         this.musicApiService = musicApiService;
         this.musicDatabaseService = musicDatabaseService;
     }
@@ -58,7 +58,8 @@ public class CacheServiceImpl implements CacheService {
     public Observable<MusicApi.Artist> getArtistBioFromNetwork(String artistUid) {
         return musicApiService.getArtistBio(artistUid, Constants.API_KEY)
                 .map(MusicApi.ArtistBioResponse::getArtist)
-                .doOnNext(musicDatabaseService::insertBioResponse);
+                .doOnNext(musicDatabaseService::insertBioResponse)
+                .doOnNext(musicDatabaseService::updateTopArtist);
     }
 
     @Override

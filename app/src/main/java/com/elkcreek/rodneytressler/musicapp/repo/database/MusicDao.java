@@ -33,4 +33,7 @@ public interface MusicDao {
 
     @Query("SELECT * FROM Artist WHERE isTopArtist LIKE :isTopArtist")
     Flowable<List<MusicApi.Artist>> getTopArtists(boolean isTopArtist);
+
+    @Query("UPDATE Artist SET bioSummary = :artistSummary, bioContent = :artistContent, artistList = :similarArtistList WHERE artistUID = :artistUID")
+    void updateArtist(String artistSummary, String artistContent, String artistUID, List<MusicApi.Artist> similarArtistList);
 }

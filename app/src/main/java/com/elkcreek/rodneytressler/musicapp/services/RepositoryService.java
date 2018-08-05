@@ -6,7 +6,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
-public interface CacheService {
+public interface RepositoryService {
 
     //Tracks
     Observable<List<MusicApi.Track>> getArtistTopTracks(String artistUid);
