@@ -5,6 +5,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 
@@ -24,6 +25,12 @@ public interface MusicDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertArtist(MusicApi.Artist artist);
 
-    @Query("SELECT * FROM Artist WHERE artistUID LIKE :artistUid AND bioSummary")
+    @Query("SELECT * FROM Artist WHERE artistUID LIKE :artistUid")
     Flowable<List<MusicApi.Artist>> getArtistBios(String artistUid);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertTopArtist(MusicApi.Artist artist);
+
+    @Query("SELECT * FROM Artist WHERE isTopArtist LIKE :isTopArtist")
+    Flowable<List<MusicApi.Artist>> getTopArtists(boolean isTopArtist);
 }

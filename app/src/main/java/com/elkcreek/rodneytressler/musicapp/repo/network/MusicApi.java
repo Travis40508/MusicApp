@@ -94,6 +94,8 @@ public interface MusicApi {
         @SerializedName("similar")
         @Expose private Similar similar;
 
+        private boolean isTopArtist;
+
         public String getArtistName() {
             return artistName;
         }
@@ -140,6 +142,14 @@ public interface MusicApi {
 
         public void setSimilar(Similar similar) {
             this.similar = similar;
+        }
+
+        public boolean isTopArtist() {
+            return isTopArtist;
+        }
+
+        public void setTopArtist(boolean topArtist) {
+            isTopArtist = topArtist;
         }
     }
 

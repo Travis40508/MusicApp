@@ -61,14 +61,15 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
         Schedulers.io().scheduleDirect(new Runnable() {
             @Override
             public void run() {
-                database.topArtistDao().insertTopArtists(artist);
+                artist.setTopArtist(true);
+                database.musicDao().insertTopArtist(artist);
             }
         });
     }
 
     @Override
     public Observable<List<MusicApi.Artist>> getTopArtists() {
-        return database.topArtistDao().getTopArtists()
+        return database.musicDao().getTopArtists(true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .toObservable();

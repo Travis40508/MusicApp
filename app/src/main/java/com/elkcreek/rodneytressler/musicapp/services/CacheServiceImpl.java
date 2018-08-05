@@ -40,6 +40,7 @@ public class CacheServiceImpl implements CacheService {
                 });
     }
 
+
     @Override
     public Observable<MusicApi.Artist> getArtistBio(String artistUid) {
         return getArtistBioFromDatabase(artistUid)

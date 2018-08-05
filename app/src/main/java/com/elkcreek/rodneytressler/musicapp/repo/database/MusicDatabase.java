@@ -11,5 +11,4 @@ import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 public abstract class MusicDatabase extends RoomDatabase{
 
     public abstract MusicDao musicDao();
-    public abstract TopArtistDao topArtistDao();
 }
