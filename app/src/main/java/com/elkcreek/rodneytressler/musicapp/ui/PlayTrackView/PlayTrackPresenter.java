@@ -32,4 +32,12 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
         view.showTrackWebView(trackUrl);
         view.hideProgressBar();
     }
+
+    public void screenRotated(boolean savedInstanceStateIsNull, boolean playTracksFragmentIsNull) {
+        if(!savedInstanceStateIsNull) {
+            if(!playTracksFragmentIsNull) {
+                view.reAttachPlayTracksFragment();
+            }
+        }
+    }
 }

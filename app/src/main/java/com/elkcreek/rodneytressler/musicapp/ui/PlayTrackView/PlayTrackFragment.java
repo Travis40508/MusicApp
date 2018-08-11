@@ -26,6 +26,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
+import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.PLAY_TRACK_FRAGMENT_TAG;
+import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.TRACKS_FRAGMENT_TAG;
+
 public class PlayTrackFragment extends Fragment implements PlayTrackView {
 
     @Inject protected PlayTrackPresenter presenter;
@@ -33,6 +36,8 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     protected WebView trackWebView;
     @BindView(R.id.progress_bar_play_track)
     protected ProgressBar progressBar;
+
+    private PlayTrackFragment playTrackFragment;
 
     @Override
     public void onAttach(Context context) {
@@ -46,6 +51,9 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
         View view = inflater.inflate(R.layout.fragment_play_track, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
+        presenter.screenRotated(
+                savedInstanceState == null,
+                getActivity().getSupportFragmentManager().findFragmentByTag(PLAY_TRACK_FRAGMENT_TAG) == null);
         presenter.trackUrlRetrieved(getArguments().getString(Constants.TRACK_URL_KEY));
         return view;
     }
@@ -70,6 +78,12 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     @Override
     public void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void reAttachPlayTracksFragment() {
+        playTrackFragment = (PlayTrackFragment) getActivity().getSupportFragmentManager().findFragmentByTag(PLAY_TRACK_FRAGMENT_TAG);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, playTrackFragment, PLAY_TRACK_FRAGMENT_TAG).commit();
     }
 
 }

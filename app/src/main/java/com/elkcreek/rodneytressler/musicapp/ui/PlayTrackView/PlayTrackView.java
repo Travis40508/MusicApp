@@ -6,4 +6,6 @@ public interface PlayTrackView extends BaseView {
     void showTrackWebView(String trackUrl);
 
     void hideProgressBar();
+
+    void reAttachPlayTracksFragment();
 }
