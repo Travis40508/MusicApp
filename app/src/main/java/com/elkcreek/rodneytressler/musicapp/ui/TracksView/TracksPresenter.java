@@ -19,6 +19,7 @@ public class TracksPresenter implements BasePresenter<TracksView> {
     private TracksView view;
     private CompositeDisposable disposable;
     private String artistUid;
+    private String artistName;
 
     @Inject
     public TracksPresenter(RepositoryService repositoryService) {
@@ -60,6 +61,7 @@ public class TracksPresenter implements BasePresenter<TracksView> {
     }
 
     public void artistNameRetrieved(String artistName) {
+        this.artistName = artistName;
         view.showArtistName(artistName);
     }
 
@@ -96,5 +98,9 @@ public class TracksPresenter implements BasePresenter<TracksView> {
 
     public void homeClicked() {
         view.clearBackStack();
+    }
+
+    public void viewBioClicked() {
+        view.showBio(artistName, artistUid);
     }
 }

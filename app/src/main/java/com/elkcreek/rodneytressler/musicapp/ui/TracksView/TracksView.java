@@ -29,4 +29,6 @@ public interface TracksView extends BaseView {
     void clearBackStack();
 
     void reattachTracksFragment();
+
+    void showBio(String artistName, String artistUid);
 }

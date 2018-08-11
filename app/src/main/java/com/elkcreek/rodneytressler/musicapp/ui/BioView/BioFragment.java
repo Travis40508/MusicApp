@@ -35,10 +35,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 
-import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.BIO_FRAGMENT_TAG;
-import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.TRACKS_FRAGMENT_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.BIO_FRAGMENT_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACKS_FRAGMENT_TAG;
 
 public class BioFragment extends Fragment implements BioView {
 
@@ -200,5 +200,6 @@ public class BioFragment extends Fragment implements BioView {
 
     @Override
     public void showLoadingLayout() {
+        loadingLayout.setVisibility(View.VISIBLE);
     }
 }

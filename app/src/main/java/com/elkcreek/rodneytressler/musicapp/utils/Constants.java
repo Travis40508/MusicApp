@@ -10,4 +10,11 @@ public class Constants {
     public static final String DATABASE_KEY = "database_key";
     public static final String SHAREDPREFKEY = "shared_pref_key";
     public static final String WEEKOFYEAR = "week_of_year";
+
+
+    //Fragment Tags
+    public static final String SEARCH_FRAGMENT_TAG = "search_fragment_tag";
+    public static final String BIO_FRAGMENT_TAG = "bio_fragment_tag";
+    public static final String TRACKS_FRAGMENT_TAG = "tracks_fragment_tag";
+    public static final String PLAY_TRACK_FRAGMENT_TAG = "play_track_fragment_tag";
 }

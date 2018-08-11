@@ -25,9 +25,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
-
-import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.PLAY_TRACK_FRAGMENT_TAG;
-import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.TRACKS_FRAGMENT_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.PLAY_TRACK_FRAGMENT_TAG;
 
 public class PlayTrackFragment extends Fragment implements PlayTrackView {
 

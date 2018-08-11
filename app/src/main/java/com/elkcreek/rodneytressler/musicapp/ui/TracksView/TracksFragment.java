@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.ui.BioView.BioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.PlayTrackView.PlayTrackFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import com.elkcreek.rodneytressler.musicapp.utils.TracksAdapter;
@@ -32,8 +33,11 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import dagger.android.support.AndroidSupportInjection;
 
-import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.PLAY_TRACK_FRAGMENT_TAG;
-import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.TRACKS_FRAGMENT_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.BIO_FRAGMENT_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.PLAY_TRACK_FRAGMENT_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACKS_FRAGMENT_TAG;
 
 public class TracksFragment extends Fragment implements TracksView {
     @Inject TracksPresenter presenter;
@@ -54,6 +58,9 @@ public class TracksFragment extends Fragment implements TracksView {
     protected void homeButtonClicked(View view) {
         presenter.homeClicked();
     }
+
+    @OnClick(R.id.text_view_bio)
+    protected void viewBioClicked(View view) {presenter.viewBioClicked();}
 
 
     @OnTextChanged(value = R.id.input_track_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -175,5 +182,15 @@ public class TracksFragment extends Fragment implements TracksView {
     public void reattachTracksFragment() {
         tracksFragment = (TracksFragment) getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, tracksFragment, TRACKS_FRAGMENT_TAG).commit();
+    }
+
+    @Override
+    public void showBio(String artistName, String artistUid) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ARTIST_NAME_KEY, artistName);
+        bundle.putString(ARTIST_UID_KEY, artistUid);
+        BioFragment bioFragment = BioFragment.newInstance();
+        bioFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, bioFragment, BIO_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 }
