@@ -61,5 +61,28 @@ public class TypeConverters {
         return artistList;
     }
 
+    @TypeConverter
+    public String fromTrackList(List<MusicApi.Track> tracks) {
+        if (tracks == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<MusicApi.Track>>() {
+        }.getType();
+        String json = gson.toJson(tracks, type);
+        return json;
+    }
+
+    @TypeConverter
+    public List<MusicApi.Track> toTrackList(String tracksString) {
+        if (tracksString == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<MusicApi.Track>>() {
+        }.getType();
+        List<MusicApi.Track> trackList = gson.fromJson(tracksString, type);
+        return trackList;
+    }
 
 }

@@ -45,4 +45,7 @@ public interface MusicDao {
 
     @Query("DELETE FROM Artist WHERE isTopArtist = :isTopArtist")
     void deleteTopArtists(boolean isTopArtist);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertTopTracks(List<MusicApi.Track> trackList);
 }

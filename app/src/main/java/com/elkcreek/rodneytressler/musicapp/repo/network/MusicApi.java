@@ -254,6 +254,7 @@ public interface MusicApi {
     }
 
     class TopTracks {
+        @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
         @SerializedName("track")
         @Expose
         private List<Track> trackList;

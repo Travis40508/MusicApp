@@ -25,5 +25,7 @@ public interface MusicDatabaseService {
 
     void deleteTopArtists();
 
+    void insertTopTracks(List<MusicApi.Track> trackList);
+
 
 }

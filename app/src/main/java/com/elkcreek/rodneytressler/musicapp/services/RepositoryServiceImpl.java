@@ -35,11 +35,7 @@ public class RepositoryServiceImpl implements RepositoryService {
         return musicApiService.getTopTracks(artistUid, Constants.API_KEY)
                 .map(MusicApi.TopTracksResponse::getTopTracks)
                 .map(MusicApi.TopTracks::getTrackList)
-                .doOnNext(tracks -> {
-                    for (MusicApi.Track item : tracks) {
-                        musicDatabaseService.insertTrack(item);
-                    }
-                });
+                .doOnNext(musicDatabaseService::insertTopTracks);
     }
 
 

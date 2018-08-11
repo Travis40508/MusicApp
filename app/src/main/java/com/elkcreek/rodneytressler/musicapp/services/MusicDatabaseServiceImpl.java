@@ -108,4 +108,14 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
         });
     }
 
+    @Override
+    public void insertTopTracks(List<MusicApi.Track> trackList) {
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                database.musicDao().insertTopTracks(trackList);
+            }
+        });
+    }
+
 }
