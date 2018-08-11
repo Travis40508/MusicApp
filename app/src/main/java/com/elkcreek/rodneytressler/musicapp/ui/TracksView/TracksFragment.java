@@ -33,6 +33,7 @@ import butterknife.OnTextChanged;
 import dagger.android.support.AndroidSupportInjection;
 
 import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.PLAY_TRACK_FRAGMENT_TAG;
+import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.TRACKS_FRAGMENT_TAG;
 
 public class TracksFragment extends Fragment implements TracksView {
     @Inject TracksPresenter presenter;
@@ -47,6 +48,7 @@ public class TracksFragment extends Fragment implements TracksView {
 
     private TracksAdapter adapter;
     private PlayTrackFragment playTrackFragment;
+    private TracksFragment tracksFragment;
 
     @OnClick(R.id.image_home_button)
     protected void homeButtonClicked(View view) {
@@ -88,7 +90,7 @@ public class TracksFragment extends Fragment implements TracksView {
         presenter.attachView(this);
         presenter.screenRotated(
                 savedInstanceState == null,
-                getActivity().getSupportFragmentManager().findFragmentByTag(PLAY_TRACK_FRAGMENT_TAG) == null);
+                getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG) == null);
         return view;
     }
 
@@ -173,5 +175,11 @@ public class TracksFragment extends Fragment implements TracksView {
     @Override
     public void clearBackStack() {
         getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+    @Override
+    public void reattachTracksFragment() {
+        tracksFragment = (TracksFragment) getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, tracksFragment, TRACKS_FRAGMENT_TAG).commit();
     }
 }

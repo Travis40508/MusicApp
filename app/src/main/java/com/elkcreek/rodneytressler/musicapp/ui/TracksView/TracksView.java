@@ -29,4 +29,6 @@ public interface TracksView extends BaseView {
     void showAllTracksText();
 
     void clearBackStack();
+
+    void reattachTracksFragment();
 }

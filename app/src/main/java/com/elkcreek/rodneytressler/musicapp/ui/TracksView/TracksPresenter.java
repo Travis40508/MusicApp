@@ -65,10 +65,11 @@ public class TracksPresenter implements BasePresenter<TracksView> {
         view.showPlayTrackFragment(trackUrl);
     }
 
-    public void screenRotated(boolean savedInstanceStateIsNull, boolean playTracksFragmentIsNull) {
+    public void screenRotated(boolean savedInstanceStateIsNull, boolean tracksFragmentTag) {
         if(!savedInstanceStateIsNull) {
-            if(!playTracksFragmentIsNull) {
-                view.reAttachPlayTracksFragment();
+            if(!tracksFragmentTag) {
+//                view.reAttachPlayTracksFragment();
+                view.reattachTracksFragment();
             }
         }
     }
