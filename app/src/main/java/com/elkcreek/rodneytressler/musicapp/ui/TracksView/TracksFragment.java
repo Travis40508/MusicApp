@@ -68,6 +68,8 @@ public class TracksFragment extends Fragment implements TracksView {
     @Override
     public void onResume() {
         super.onResume();
+        presenter.artistNameRetrieved(getArguments().getString(Constants.ARTIST_NAME_KEY));
+        presenter.artistRetrieved(getArguments().getString(Constants.ARTIST_UID_KEY));
         presenter.subscribe();
     }
 
@@ -84,8 +86,6 @@ public class TracksFragment extends Fragment implements TracksView {
         View view = inflater.inflate(R.layout.fragment_tracks, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
-        presenter.artistNameRetrieved(getArguments().getString(Constants.ARTIST_NAME_KEY));
-        presenter.artistRetrieved(getArguments().getString(Constants.ARTIST_UID_KEY));
         presenter.screenRotated(
                 savedInstanceState == null,
                 getActivity().getSupportFragmentManager().findFragmentByTag(PLAY_TRACK_FRAGMENT_TAG) == null);

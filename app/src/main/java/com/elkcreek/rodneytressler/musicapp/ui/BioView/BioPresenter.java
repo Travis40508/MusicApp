@@ -92,7 +92,6 @@ public class BioPresenter implements BasePresenter<BioView> {
         fetchBio();
     }
 
-    //TODO figure out why this is causing it to flicker to the same artist, requiring two clicks to get to the new artist
     public void similarArtistClicked(MusicApi.Artist artist) {
         disposable.add(repositoryService.getArtistBioWithName(artist.getArtistName(), Constants.API_KEY).subscribe(
                 similarArtist -> {

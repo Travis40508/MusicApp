@@ -189,7 +189,7 @@ public class BioFragment extends Fragment implements BioView {
     @Override
     public void reAttachTracksFragment() {
         tracksFragment = (TracksFragment) getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, tracksFragment, TRACKS_FRAGMENT_TAG).addToBackStack(null).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, tracksFragment, TRACKS_FRAGMENT_TAG).commit();
     }
 
     @Override
@@ -200,8 +200,8 @@ public class BioFragment extends Fragment implements BioView {
 
     @Override
     public void reAttachBioFragment() {
-//        bioFragment = (BioFragment) getActivity().getSupportFragmentManager().findFragmentByTag(BIO_FRAGMENT_FROM_BIO_TAG);
-//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, bioFragment, BIO_FRAGMENT_FROM_BIO_TAG).addToBackStack(null).commit();
+        bioFragment = (BioFragment) getActivity().getSupportFragmentManager().findFragmentByTag(BIO_FRAGMENT_TAG);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, bioFragment, BIO_FRAGMENT_TAG).commit();
     }
 
     @Override
