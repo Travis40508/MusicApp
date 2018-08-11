@@ -10,6 +10,7 @@ public class Constants {
     public static final String DATABASE_KEY = "database_key";
     public static final String SHAREDPREFKEY = "shared_pref_key";
     public static final String WEEKOFYEAR = "week_of_year";
+    public static final String YEAR = "year";
 
 
     //Fragment Tags
