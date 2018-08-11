@@ -29,4 +29,8 @@ public interface BioView extends BaseView {
     void reAttachTracksFragment();
 
     void clearBackStack();
+
+    void reAttachBioFragment();
+
+    void showLoadingLayout();
 }

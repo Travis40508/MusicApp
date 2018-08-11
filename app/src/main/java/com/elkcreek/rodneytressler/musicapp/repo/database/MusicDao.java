@@ -28,6 +28,9 @@ public interface MusicDao {
     @Query("SELECT * FROM Artist WHERE artistUID LIKE :artistUid")
     Flowable<List<MusicApi.Artist>> getArtistBios(String artistUid);
 
+    @Query("SELECT * FROM Artist WHERE artistName LIKE :artistName")
+    Flowable<List<MusicApi.Artist>> getArtistBioWithName(String artistName);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTopArtist(MusicApi.Artist artist);
 
@@ -36,6 +39,9 @@ public interface MusicDao {
 
     @Query("UPDATE Artist SET bioSummary = :artistSummary, bioContent = :artistContent, artistList = :similarArtistList WHERE artistUID = :artistUID")
     void updateArtist(String artistSummary, String artistContent, String artistUID, List<MusicApi.Artist> similarArtistList);
+
+    @Query("UPDATE Artist SET artistUID = :artistUID WHERE artistName = :artistName")
+    void updateArtistWithName(String artistUID, String artistName);
 
     @Query("DELETE FROM Artist WHERE isTopArtist = :isTopArtist")
     void deleteTopArtists(boolean isTopArtist);

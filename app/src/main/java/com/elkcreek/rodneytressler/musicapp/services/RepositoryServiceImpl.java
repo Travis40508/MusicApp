@@ -42,7 +42,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 
 
     @Override
-    public Observable<MusicApi.Artist> getArtistBio(String artistUid) {
+    public Observable<MusicApi.Artist> getArtistBio(String artistUid, String artistName) {
         return getArtistBioFromDatabase(artistUid)
                 .flatMap(artist -> artist.getArtistBio() == null ? Observable.error(Throwable::new) : Observable.just(artist))
                 .onErrorResumeNext(Observable.empty())
@@ -64,9 +64,21 @@ public class RepositoryServiceImpl implements RepositoryService {
 
     @Override
     public Observable<MusicApi.Artist> getArtistBioWithName(String artistName, String apiKey) {
-        return musicApiService.getArtistBioWithName(artistName, apiKey)
+        return getArtistBioWithNameFromDatabase(artistName)
+                .flatMap(artist -> artist.getArtistBio() == null ? Observable.error(Throwable::new) : Observable.just(artist))
+                .onErrorResumeNext(Observable.empty())
+                .switchIfEmpty(getArtistBioWithNameFromNetwork(artistName));
+    }
+
+    @Override
+    public Observable<MusicApi.Artist> getArtistBioWithNameFromDatabase(String artistName) {
+        return musicDatabaseService.getArtistBioWithName(artistName);
+    }
+
+    @Override
+    public Observable<MusicApi.Artist> getArtistBioWithNameFromNetwork(String artistName) {
+        return musicApiService.getArtistBioWithName(artistName, Constants.API_KEY)
                 .map(MusicApi.ArtistBioResponse::getArtist)
-                .filter(artist -> artist.getArtistBio() != null)
                 .doOnNext(musicDatabaseService::insertBioResponse);
     }
 

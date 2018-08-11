@@ -57,6 +57,14 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     }
 
     @Override
+    public Observable<MusicApi.Artist> getArtistBioWithName(String artistName) {
+        return database.musicDao().getArtistBioWithName(artistName)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).toObservable()
+                .map(artists -> artists.get(0));
+    }
+
+    @Override
     public void insertTopArtist(MusicApi.Artist artist) {
         Schedulers.io().scheduleDirect(new Runnable() {
             @Override

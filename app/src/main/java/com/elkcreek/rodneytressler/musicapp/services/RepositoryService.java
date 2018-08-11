@@ -14,10 +14,12 @@ public interface RepositoryService {
     Observable<List<MusicApi.Track>> getArtistTracksFromNetwork(String artistUid);
 
     //Bio
-    Observable<MusicApi.Artist> getArtistBio(String artistUid);
+    Observable<MusicApi.Artist> getArtistBio(String artistUid, String artistName);
     Observable<MusicApi.Artist> getArtistBioFromDatabase(String artistUid);
     Observable<MusicApi.Artist> getArtistBioFromNetwork(String artistUid);
     Observable<MusicApi.Artist> getArtistBioWithName(String artistName, String apiKey);
+    Observable<MusicApi.Artist> getArtistBioWithNameFromDatabase(String artistName);
+    Observable<MusicApi.Artist> getArtistBioWithNameFromNetwork(String artistName);
 
     //TopArtists
     Observable<List<MusicApi.Artist>> getTopArtists();

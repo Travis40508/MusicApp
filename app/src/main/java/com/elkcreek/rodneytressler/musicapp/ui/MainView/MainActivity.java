@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     public static final String BIO_FRAGMENT_TAG = "bio_fragment_tag";
     public static final String TRACKS_FRAGMENT_TAG = "tracks_fragment_tag";
     public static final String TRACKS_FRAGMENT_FROM_BIO_TAG = "tracks_fragment_from_bio_tag";
+    public static final String BIO_FRAGMENT_FROM_BIO_TAG = "bio_fragment_from_bio_tag";
     public static final String PLAY_TRACK_FRAGMENT_TAG = "play_track_fragment_tag";
 
     @Override

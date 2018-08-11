@@ -37,11 +37,12 @@ public class BioPresenter implements BasePresenter<BioView> {
     public void subscribe() {
         disposable = new CompositeDisposable();
         isExpanded = false;
+        view.showLoadingLayout();
         fetchBio();
     }
 
     private void fetchBio() {
-        disposable.add(repositoryService.getArtistBio(artistUid).subscribe(updateUiWithArtist(), updateUiOnError()));
+        disposable.add(repositoryService.getArtistBio(artistUid, artistName).subscribe(updateUiWithArtist(), updateUiOnError()));
     }
 
 
@@ -91,12 +92,11 @@ public class BioPresenter implements BasePresenter<BioView> {
         fetchBio();
     }
 
+    //TODO figure out why this is causing it to flicker to the same artist, requiring two clicks to get to the new artist
     public void similarArtistClicked(MusicApi.Artist artist) {
-        //TODO rework this, it looks like shit.
-
         disposable.add(repositoryService.getArtistBioWithName(artist.getArtistName(), Constants.API_KEY).subscribe(
-                artist1 -> {
-                    view.showSimilarArtistScreen(artist1.getArtistUID(), artist1.getArtistName());
+                similarArtist -> {
+                    view.showSimilarArtistScreen(similarArtist.getArtistUID(), similarArtist.getArtistName());
                 }
         ));
     }
@@ -105,10 +105,12 @@ public class BioPresenter implements BasePresenter<BioView> {
         view.showTracksFragment(artistUid, artistName);
     }
 
-    public void checkSavedInstanceState(boolean saveInstanceStateIsNull, boolean tracksFragmentIsNull) {
-        if(!saveInstanceStateIsNull) {
-            if(!tracksFragmentIsNull) {
+    public void checkSavedInstanceState(boolean saveInstanceStateIsNull, boolean tracksFragmentIsNull, boolean bioFragmentIsNull) {
+        if (!saveInstanceStateIsNull) {
+            if (!tracksFragmentIsNull) {
                 view.reAttachTracksFragment();
+            } else if (!bioFragmentIsNull) {
+                view.reAttachBioFragment();
             }
         }
     }

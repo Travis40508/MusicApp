@@ -126,7 +126,7 @@ public class TracksFragment extends Fragment implements TracksView {
         bundle.putString(Constants.TRACK_URL_KEY, trackUrl);
         playTrackFragment = PlayTrackFragment.newInstance();
         playTrackFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, playTrackFragment, PLAY_TRACK_FRAGMENT_TAG).addToBackStack(null).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, playTrackFragment, PLAY_TRACK_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 
     @Override
@@ -147,7 +147,7 @@ public class TracksFragment extends Fragment implements TracksView {
     @Override
     public void reAttachPlayTracksFragment() {
         playTrackFragment = (PlayTrackFragment) getActivity().getSupportFragmentManager().findFragmentByTag(PLAY_TRACK_FRAGMENT_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_holder, playTrackFragment, PLAY_TRACK_FRAGMENT_TAG).addToBackStack(null).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, playTrackFragment, PLAY_TRACK_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 
     @Override
