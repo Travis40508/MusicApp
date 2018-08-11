@@ -27,7 +27,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 
     @Override
     public Observable<List<MusicApi.Track>> getArtistTopTracksFromDatabase(String artistUid) {
-        return musicDatabaseService.getTrackList(artistUid).toObservable();
+        return musicDatabaseService.getTrackList(artistUid);
     }
 
     @Override

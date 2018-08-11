@@ -24,16 +24,17 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
 
     @Override
     public void insertTrack(MusicApi.Track track) {
-        disposable.add(Observable.just(database)
-                .subscribeOn(Schedulers.io())
-                .subscribe(musicDatabase -> {
-                    musicDatabase.musicDao().insertTrack(track);
-                }));
+        //TODO delete this
+//        disposable.add(Observable.just(database)
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(musicDatabase -> {
+//                    musicDatabase.musicDao().insertTrack(track);
+//                }));
     }
 
     @Override
-    public Flowable<List<MusicApi.Track>> getTrackList(String artistUid) {
-        return database.musicDao().getTrackList(artistUid)
+    public Observable<List<MusicApi.Track>> getTrackList(String artistUid) {
+        return database.musicDao().getTrackList(artistUid).toObservable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
