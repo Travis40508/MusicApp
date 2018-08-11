@@ -102,7 +102,6 @@ public class BioFragment extends Fragment implements BioView {
         ButterKnife.bind(this, view);
         presenter.attachView(this);
         presenter.checkSavedInstanceState(savedInstanceState == null,
-                getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG) == null,
                 getActivity().getSupportFragmentManager().findFragmentByTag(BIO_FRAGMENT_TAG) == null);
         return view;
     }
@@ -186,11 +185,6 @@ public class BioFragment extends Fragment implements BioView {
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, tracksFragment, TRACKS_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 
-    @Override
-    public void reAttachTracksFragment() {
-        tracksFragment = (TracksFragment) getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, tracksFragment, TRACKS_FRAGMENT_TAG).commit();
-    }
 
     @Override
     public void clearBackStack() {

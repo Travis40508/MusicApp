@@ -104,11 +104,9 @@ public class BioPresenter implements BasePresenter<BioView> {
         view.showTracksFragment(artistUid, artistName);
     }
 
-    public void checkSavedInstanceState(boolean saveInstanceStateIsNull, boolean tracksFragmentIsNull, boolean bioFragmentIsNull) {
+    public void checkSavedInstanceState(boolean saveInstanceStateIsNull, boolean bioFragmentIsNull) {
         if (!saveInstanceStateIsNull) {
-            if (!tracksFragmentIsNull) {
-                view.reAttachTracksFragment();
-            } else if (!bioFragmentIsNull) {
+            if (!bioFragmentIsNull) {
                 view.reAttachBioFragment();
             }
         }

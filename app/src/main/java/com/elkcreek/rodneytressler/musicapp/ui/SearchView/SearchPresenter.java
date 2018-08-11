@@ -122,13 +122,4 @@ public class SearchPresenter implements BasePresenter<SearchView> {
         view.showArtistTracks(artist);
     }
 
-    public void checkSavedInstanceState(boolean savedInstanceStateIsNull, boolean tracksFragmentIsNull, boolean bioFragmentIsNull) {
-        if (!savedInstanceStateIsNull) {
-            if (!tracksFragmentIsNull) {
-                view.reAttachTracksFragment();
-            } else if (!bioFragmentIsNull) {
-                view.reAttachBioFragment();
-            }
-        }
-    }
 }

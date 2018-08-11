@@ -90,8 +90,7 @@ public class TracksFragment extends Fragment implements TracksView {
         presenter.attachView(this);
         presenter.screenRotated(
                 savedInstanceState == null,
-                getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG) == null,
-                getActivity().getSupportFragmentManager().findFragmentByTag(PLAY_TRACK_FRAGMENT_TAG) == null);
+                getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG) == null);
         return view;
     }
 
@@ -145,12 +144,6 @@ public class TracksFragment extends Fragment implements TracksView {
     @Override
     public void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void reAttachPlayTracksFragment() {
-        playTrackFragment = (PlayTrackFragment) getActivity().getSupportFragmentManager().findFragmentByTag(PLAY_TRACK_FRAGMENT_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, playTrackFragment, PLAY_TRACK_FRAGMENT_TAG).commit();
     }
 
     @Override

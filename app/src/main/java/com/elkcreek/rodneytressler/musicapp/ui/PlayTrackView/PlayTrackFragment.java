@@ -32,7 +32,6 @@ import static com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity.TRAC
 public class PlayTrackFragment extends Fragment implements PlayTrackView {
 
     @Inject protected PlayTrackPresenter presenter;
-    @BindView(R.id.track_web_view)
     protected WebView trackWebView;
     @BindView(R.id.progress_bar_play_track)
     protected ProgressBar progressBar;
@@ -54,7 +53,6 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
         presenter.screenRotated(
                 savedInstanceState == null,
                 getActivity().getSupportFragmentManager().findFragmentByTag(PLAY_TRACK_FRAGMENT_TAG) == null);
-        presenter.trackUrlRetrieved(getArguments().getString(Constants.TRACK_URL_KEY));
         return view;
     }
 

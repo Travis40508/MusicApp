@@ -20,7 +20,9 @@ public class RepositoryServiceImpl implements RepositoryService {
     @Override
     public Observable<List<MusicApi.Track>> getArtistTopTracks(String artistUid) {
         return getArtistTopTracksFromDatabase(artistUid)
-                .flatMap(tracks -> tracks.isEmpty() ? getArtistTracksFromNetwork(artistUid) : Observable.just(tracks));
+                .flatMap(tracks -> tracks.isEmpty() ? Observable.error(Throwable::new) : Observable.just(tracks))
+                .onErrorResumeNext(Observable.empty())
+                .switchIfEmpty(getArtistTracksFromNetwork(artistUid));
     }
 
     @Override

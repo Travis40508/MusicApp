@@ -1,5 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.ui.TracksView;
 
+import android.util.Log;
+
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
@@ -65,12 +67,10 @@ public class TracksPresenter implements BasePresenter<TracksView> {
         view.showPlayTrackFragment(trackUrl);
     }
 
-    public void screenRotated(boolean savedInstanceStateIsNull, boolean tracksFragmentIsNull, boolean playTracksFragmentIsNull) {
+    public void screenRotated(boolean savedInstanceStateIsNull, boolean tracksFragmentIsNull) {
         if(!savedInstanceStateIsNull) {
             if(!tracksFragmentIsNull) {
                 view.reattachTracksFragment();
-            } else if (!playTracksFragmentIsNull) {
-                view.reAttachPlayTracksFragment();
             }
         }
     }

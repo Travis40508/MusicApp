@@ -21,8 +21,4 @@ public interface SearchView extends BaseView {
     void showSearchTextTopArtists();
 
     void showErrorLoadingToast();
-
-    void reAttachTracksFragment();
-
-    void reAttachBioFragment();
 }

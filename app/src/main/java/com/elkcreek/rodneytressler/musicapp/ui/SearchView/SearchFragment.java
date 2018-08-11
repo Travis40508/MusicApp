@@ -83,9 +83,6 @@ public class SearchFragment extends Fragment implements SearchView {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
-        presenter.checkSavedInstanceState(savedInstanceState == null,
-                getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG) == null,
-                getActivity().getSupportFragmentManager().findFragmentByTag(BIO_FRAGMENT_TAG) == null);
         return view;
     }
 
@@ -166,17 +163,5 @@ public class SearchFragment extends Fragment implements SearchView {
     @Override
     public void showErrorLoadingToast() {
         Toast.makeText(getContext(), R.string.network_error_text, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void reAttachTracksFragment() {
-        tracksFragment = (TracksFragment) getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, tracksFragment, TRACKS_FRAGMENT_TAG).commit();
-    }
-
-    @Override
-    public void reAttachBioFragment() {
-        bioFragment = (BioFragment) getActivity().getSupportFragmentManager().findFragmentByTag(BIO_FRAGMENT_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, bioFragment, BIO_FRAGMENT_TAG).commit();
     }
 }
