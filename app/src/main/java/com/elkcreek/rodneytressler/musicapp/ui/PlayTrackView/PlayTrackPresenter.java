@@ -25,6 +25,7 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
     private static final String READ_MORE_TEXT_COLLAPSE = "Collapse";
     private static final String READ_MORE_TEXT_EXPAND = "Read More";
     private String trackUid;
+    private String videoId;
 
     @Inject
     public PlayTrackPresenter(YoutubeApiService youtubeApiService, RepositoryService repositoryService, MusicApiService musicApiService) {
@@ -60,7 +61,7 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
     public void getVideoId(String trackName, String artistName) {
         compositeDisposable.add(youtubeApiService.getYoutubeVideo(Constants.YOUTUBE_API_KEY, trackName + artistName)
                 .subscribe(youtubeResponse -> {
-                   Log.d("@@@@", youtubeResponse.getYoutubeItemsList().get(0).getYoutubeItemId().getYoutubeVideoId());
+                   this.videoId = youtubeResponse.getYoutubeItemsList().get(0).getYoutubeItemId().getYoutubeVideoId();
                 }));
     }
 
@@ -103,5 +104,9 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
             view.setReadMoreText(READ_MORE_TEXT_EXPAND);
         }
         fetchTrack();
+    }
+
+    public void imageAlbumCoverClicked() {
+        view.showVideo(videoId);
     }
 }

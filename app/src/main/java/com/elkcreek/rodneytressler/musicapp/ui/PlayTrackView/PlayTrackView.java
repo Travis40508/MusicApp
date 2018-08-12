@@ -20,4 +20,6 @@ public interface PlayTrackView extends BaseView {
     void showTrackName(String trackName);
 
     void setReadMoreText(String readMoreTextCollapse);
+
+    void showVideo(String videoId);
 }

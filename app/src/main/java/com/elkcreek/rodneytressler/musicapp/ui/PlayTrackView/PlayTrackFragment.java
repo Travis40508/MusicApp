@@ -51,6 +51,9 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     @OnClick(R.id.read_more_layout)
     protected void onReadMoreLayoutClicked(View view) {presenter.onReadMoreClicked(readMoreText.getText().toString());}
 
+    @OnClick(R.id.image_album_cover)
+    protected void onImageAlbumCoverClicked(View view) {presenter.imageAlbumCoverClicked();}
+
     private PlayTrackFragment playTrackFragment;
 
     @Override
@@ -65,24 +68,6 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
         presenter.subscribe();
         presenter.trackRetrieved(getArguments().getString(TRACK_UID_KEY));
         presenter.getVideoId(getArguments().getString(Constants.TRACK_NAME_KEY), getArguments().getString(Constants.ARTIST_NAME_KEY));
-//        YouTubePlayerSupportFragment youTubePlayerSupportFragment = YouTubePlayerSupportFragment.newInstance();
-//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.youtube_fragment_holder, youTubePlayerSupportFragment).commit();
-//        youTubePlayerSupportFragment.initialize(Constants.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
-//            @Override
-//            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
-//                if(!wasRestored) {
-//                    youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
-//                    youTubePlayer.loadVideo("YR5ApYxkU-U");
-//                    youTubePlayer.play();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-//                Log.d("@@@@@", youTubeInitializationResult.toString());
-//            }
-//        });
     }
 
     @Nullable
@@ -150,6 +135,28 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     @Override
     public void setReadMoreText(String readMoreText) {
         this.readMoreText.setText(readMoreText);
+    }
+
+    @Override
+    public void showVideo(String videoId) {
+        YouTubePlayerSupportFragment youTubePlayerSupportFragment = YouTubePlayerSupportFragment.newInstance();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.youtube_fragment_holder, youTubePlayerSupportFragment).commit();
+        youTubePlayerSupportFragment.initialize(Constants.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
+                if(!wasRestored) {
+                    youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+                    youTubePlayer.loadVideo(videoId);
+                    youTubePlayer.play();
+                }
+
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+                Log.d("@@@@@", youTubeInitializationResult.toString());
+            }
+        });
     }
 
 }
