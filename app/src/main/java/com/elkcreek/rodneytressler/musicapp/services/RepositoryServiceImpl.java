@@ -104,4 +104,23 @@ public class RepositoryServiceImpl implements RepositoryService {
     public void deleteTopArtists() {
         musicDatabaseService.deleteTopArtists();
     }
+
+    @Override
+    public Observable<MusicApi.Track> getTrack(String trackUid) {
+        return getTrackFromDatabase(trackUid)
+                .onErrorResumeNext(Observable.empty())
+                .switchIfEmpty(getTrackFromNetwork(trackUid));
+    }
+
+    @Override
+    public Observable<MusicApi.Track> getTrackFromDatabase(String trackUid) {
+        return musicDatabaseService.getTrack(trackUid);
+    }
+
+    @Override
+    public Observable<MusicApi.Track> getTrackFromNetwork(String trackUid) {
+        return musicApiService.getTrackInfo(trackUid, Constants.API_KEY)
+                .map(MusicApi.TrackInfoResponse::getTrack)
+                .doOnNext(musicDatabaseService::insertTrack);
+    }
 }

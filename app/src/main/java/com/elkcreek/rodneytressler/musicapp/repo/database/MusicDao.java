@@ -28,6 +28,9 @@ public interface MusicDao {
     @Query("SELECT * FROM Artist WHERE artistUID LIKE :artistUid")
     Flowable<List<MusicApi.Artist>> getArtistBios(String artistUid);
 
+    @Query("SELECT * FROM Track WHERE trackUid LIKE :trackUid")
+    Flowable<List<MusicApi.Track>> getTrack(String trackUid);
+
     @Query("SELECT * FROM Artist WHERE artistName LIKE :artistName")
     Flowable<List<MusicApi.Artist>> getArtistBioWithName(String artistName);
 

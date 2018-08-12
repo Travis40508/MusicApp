@@ -32,6 +32,9 @@ public interface MusicApi {
     @GET("/2.0?method=artist.gettoptracks&format=json")
     Observable<TopTracksResponse> getTopTracks(@Query("mbid") String mbid, @Query("api_key") String apiKey);
 
+    @GET("/2.0/?method=track.getInfo&format=json")
+    Observable<TrackInfoResponse> getTrackInfo(@Query("mbid") String trackUid, @Query("api_key") String apiKey);
+
     class SearchResponse {
         @SerializedName("results")
         @Expose
@@ -51,8 +54,6 @@ public interface MusicApi {
             return artistMatches;
         }
     }
-
-    //TODO save the current day to a shared pref and check each launch to see if it's that day, if it is, pull today's top artists from a database, otherwise, clear it and make the network call and insert into the database
 
     class ArtistMatches {
         @SerializedName("artist")
@@ -284,8 +285,20 @@ public interface MusicApi {
         @SerializedName("artist")
         @Expose private Artist artist;
 
+        @Embedded(prefix = "album")
+        @SerializedName("album")
+        @Expose private Album album;
+
+        @Embedded(prefix = "wiki")
+        @SerializedName("wiki")
+        @Expose private Wiki wiki;
+
+        @SerializedName("mbid")
+        @Expose private String trackUid;
+
         @PrimaryKey(autoGenerate = true)
         private int primaryKey;
+
 
 
         public String getTrackName() {
@@ -329,6 +342,95 @@ public interface MusicApi {
             this.artist = artist;
         }
 
+        public String getTrackUid() {
+            return trackUid;
+        }
 
+        public void setTrackUid(String trackUid) {
+            this.trackUid = trackUid;
+        }
+
+        public Album getAlbum() {
+            return album;
+        }
+
+        public void setAlbum(Album album) {
+            this.album = album;
+        }
+
+        public Wiki getWiki() {
+            return wiki;
+        }
+
+        public void setWiki(Wiki wiki) {
+            this.wiki = wiki;
+        }
+    }
+
+    class TrackInfoResponse {
+        @SerializedName("track")
+        @Expose private Track track;
+
+        public Track getTrack() {
+            return track;
+        }
+    }
+
+    class Album {
+
+        @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
+        @SerializedName("image")
+        @Expose
+        private List<TrackImage> trackImage;
+
+        public List<TrackImage> getTrackImage() {
+            return trackImage;
+        }
+
+        public void setTrackImage(List<TrackImage> trackImage) {
+            this.trackImage = trackImage;
+        }
+    }
+
+    class TrackImage {
+        @SerializedName("#text")
+        @Expose
+        private String imageUrl;
+
+        @SerializedName("size")
+        @Expose
+        private String imageSize;
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
+
+        public String getImageSize() {
+            return imageSize;
+        }
+    }
+
+    class Wiki {
+        @SerializedName("summary")
+        @Expose private String trackSummary;
+
+        @SerializedName("content")
+        @Expose private String trackContent;
+
+        public String getTrackSummary() {
+            return trackSummary;
+        }
+
+        public void setTrackSummary(String trackSummary) {
+            this.trackSummary = trackSummary;
+        }
+
+        public String getTrackContent() {
+            return trackContent;
+        }
+
+        public void setTrackContent(String trackContent) {
+            this.trackContent = trackContent;
+        }
     }
 }

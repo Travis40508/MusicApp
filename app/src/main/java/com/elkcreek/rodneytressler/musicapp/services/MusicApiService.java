@@ -11,4 +11,5 @@ public interface MusicApiService {
     Observable<MusicApi.TopArtistsResponse> getTopArtists(String apiKey);
     Observable<MusicApi.TopTracksResponse> getTopTracks(String artistUid, String apiKey);
     Observable<MusicApi.ArtistBioResponse> getArtistBioWithName(String artistName, String apiKey);
+    Observable<MusicApi.TrackInfoResponse> getTrackInfo(String trackUid, String apiKey);
 }

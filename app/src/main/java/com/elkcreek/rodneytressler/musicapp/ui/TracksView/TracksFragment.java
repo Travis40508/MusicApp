@@ -38,6 +38,8 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KE
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.BIO_FRAGMENT_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.PLAY_TRACK_FRAGMENT_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACKS_FRAGMENT_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_NAME_KEY;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_UID_KEY;
 
 public class TracksFragment extends Fragment implements TracksView {
     @Inject TracksPresenter presenter;
@@ -116,7 +118,7 @@ public class TracksFragment extends Fragment implements TracksView {
         adapter.setPlayCallback(new TracksAdapter.TracksCallback() {
             @Override
             public void onPlayClicked(MusicApi.Track track) {
-                presenter.onPlayClicked(track.getTrackUrl());
+                presenter.onPlayClicked(track);
             }
         });
         recyclerView.setAdapter(adapter);
@@ -130,9 +132,11 @@ public class TracksFragment extends Fragment implements TracksView {
     }
 
     @Override
-    public void showPlayTrackFragment(String trackUrl) {
+    public void showPlayTrackFragment(String trackName, String artistName, String trackUid) {
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.TRACK_URL_KEY, trackUrl);
+        bundle.putString(TRACK_NAME_KEY, trackName);
+        bundle.putString(ARTIST_NAME_KEY, artistName);
+        bundle.putString(TRACK_UID_KEY, trackUid);
         playTrackFragment = PlayTrackFragment.newInstance();
         playTrackFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, playTrackFragment, PLAY_TRACK_FRAGMENT_TAG).addToBackStack(null).commit();

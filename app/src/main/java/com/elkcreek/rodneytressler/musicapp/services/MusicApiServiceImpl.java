@@ -49,4 +49,11 @@ public class MusicApiServiceImpl implements MusicApiService {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    @Override
+    public Observable<MusicApi.TrackInfoResponse> getTrackInfo(String trackUid, String apiKey) {
+        return musicApi.getTrackInfo(trackUid, apiKey)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

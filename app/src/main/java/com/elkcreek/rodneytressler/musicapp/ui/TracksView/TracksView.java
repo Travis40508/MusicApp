@@ -10,8 +10,6 @@ public interface TracksView extends BaseView {
 
     void showArtistName(String artistName);
 
-    void showPlayTrackFragment(String trackUrl);
-
     void removeFragment();
 
     void toastNoTracksError();
@@ -31,4 +29,6 @@ public interface TracksView extends BaseView {
     void reattachTracksFragment();
 
     void showBio(String artistName, String artistUid);
+
+    void showPlayTrackFragment(String trackName, String artistName, String trackUid);
 }

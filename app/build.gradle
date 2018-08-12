@@ -76,4 +76,7 @@ dependencies {
 
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //Youtube
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
 }

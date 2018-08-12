@@ -26,6 +26,6 @@ public interface MusicDatabaseService {
     void deleteTopArtists();
 
     void insertTopTracks(List<MusicApi.Track> trackList);
-
+    Observable<MusicApi.Track> getTrack(String trackUid);
 
 }

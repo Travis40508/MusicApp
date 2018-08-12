@@ -1,8 +1,14 @@
 package com.elkcreek.rodneytressler.musicapp.di.modules;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.repo.network.YoutubeApi;
 import com.elkcreek.rodneytressler.musicapp.services.MusicApiService;
 import com.elkcreek.rodneytressler.musicapp.services.MusicApiServiceImpl;
+import com.elkcreek.rodneytressler.musicapp.services.YoutubeApiService;
+import com.elkcreek.rodneytressler.musicapp.services.YoutubeApiServiceImpl;
+import com.elkcreek.rodneytressler.musicapp.utils.Constants;
+
+import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
@@ -16,9 +22,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkModule {
 
     private final String baseUrl;
+    private final String youtubeBaseUrl;
 
-    public NetworkModule(String baseUrl) {
+    public NetworkModule(String baseUrl, String youtubeBaseUrl) {
         this.baseUrl = baseUrl;
+        this.youtubeBaseUrl = youtubeBaseUrl;
     }
 
     @Provides
@@ -32,6 +40,7 @@ public class NetworkModule {
     }
 
     @Provides
+    @Named(Constants.MUSIC_RETROFIT)
     Retrofit providesRetrofit(OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
@@ -43,7 +52,20 @@ public class NetworkModule {
     }
 
     @Provides
-    MusicApi providesMusicApi(Retrofit retrofit) {
+    @Named(Constants.YOUTUBE_RETROFIT)
+    Retrofit providesYoutubeRetrofit(OkHttpClient okHttpClient) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(youtubeBaseUrl)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+
+        return retrofit;
+    }
+
+    @Provides
+    MusicApi providesMusicApi(@Named(Constants.MUSIC_RETROFIT) Retrofit retrofit) {
         MusicApi musicApi = retrofit.create(MusicApi.class);
 
         return musicApi;
@@ -52,5 +74,17 @@ public class NetworkModule {
     @Provides
     MusicApiService providesMusicApiService(MusicApi musicApi) {
         return new MusicApiServiceImpl(musicApi);
+    }
+
+    @Provides
+    YoutubeApi providesYoutubeApi(@Named(Constants.YOUTUBE_RETROFIT) Retrofit retrofit) {
+        YoutubeApi youtubeApi = retrofit.create(YoutubeApi.class);
+
+        return youtubeApi;
+    }
+
+    @Provides
+    YoutubeApiService providesYoutubeApiService(YoutubeApi youtubeApi) {
+        return  new YoutubeApiServiceImpl(youtubeApi);
     }
 }

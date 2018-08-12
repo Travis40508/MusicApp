@@ -65,8 +65,8 @@ public class TracksPresenter implements BasePresenter<TracksView> {
         view.showArtistName(artistName);
     }
 
-    public void onPlayClicked(String trackUrl) {
-        view.showPlayTrackFragment(trackUrl);
+    public void onPlayClicked(MusicApi.Track track) {
+        view.showPlayTrackFragment(track.getTrackName(), artistName, track.getTrackUid());
     }
 
     public void screenRotated(boolean savedInstanceStateIsNull, boolean tracksFragmentIsNull) {

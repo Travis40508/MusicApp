@@ -26,4 +26,9 @@ public interface RepositoryService {
     Observable<List<MusicApi.Artist>> getTopArtistsFromDatabase();
     Observable<List<MusicApi.Artist>> getTopArtistsFromNetwork();
     void deleteTopArtists();
+
+    //Track
+    Observable<MusicApi.Track> getTrack(String trackUid);
+    Observable<MusicApi.Track> getTrackFromNetwork(String trackUid);
+    Observable<MusicApi.Track> getTrackFromDatabase(String trackUid);
 }
