@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="200dp"
     android:background="@android:color/transparent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -10,40 +10,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_width="wrap_content"
-        android:layout_height="80dp" />
+        android:layout_height="180dp" />
 
     <TextView
         android:id="@+id/text_artist_name"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/image_artist_item"
-        android:layout_marginLeft="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="10dp"
         android:textSize="20sp"
         android:textColor="@android:color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <ImageView
-        android:id="@+id/button_info"
-        android:src="@drawable/ic_info_button"
-        app:layout_constraintTop_toBottomOf="@id/text_artist_name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="5dp"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
 
     <ImageView
         android:id="@+id/button_music"
         android:src="@drawable/ic_music_button"
-        app:layout_constraintTop_toBottomOf="@id/text_artist_name"
+        app:layout_constraintStart_toEndOf="@id/image_artist_item"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/button_info"
-        android:layout_margin="5dp"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
 
     <View
         app:layout_constraintBottom_toBottomOf="parent"

@@ -39,7 +39,8 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
     @Override
     public void onBindViewHolder(@NonNull ArtistViewHolder artistViewHolder, int position) {
         artistViewHolder.bindArtist(artistList.get(position));
-        artistViewHolder.infoButton.setOnClickListener(artistViewHolder.onInfoButtonClicked(artistList.get(position)));
+//        artistViewHolder.infoButton.setOnClickListener(artistViewHolder.onInfoButtonClicked(artistList.get(position)));
+        artistViewHolder.artistImage.setOnClickListener(artistViewHolder.onInfoButtonClicked(artistList.get(position)));
         artistViewHolder.musicButton.setOnClickListener(artistViewHolder.onMusicButtonClicked(artistList.get(position)));
     }
 
@@ -61,8 +62,8 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         @BindView(R.id.text_artist_name)
         protected TextView artistText;
 
-        @BindView(R.id.button_info)
-        protected ImageView infoButton;
+//        @BindView(R.id.button_info)
+//        protected ImageView infoButton;
 
         @BindView(R.id.button_music)
         protected ImageView musicButton;
