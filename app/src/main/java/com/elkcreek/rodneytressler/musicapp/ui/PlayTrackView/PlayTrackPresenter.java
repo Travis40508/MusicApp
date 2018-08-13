@@ -59,12 +59,17 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
     }
 
     public void getVideoId(String trackName, String artistName) {
-//        compositeDisposable.add(youtubeApiService.getYoutubeVideo(Constants.YOUTUBE_API_KEY, trackName + artistName)
-//                .subscribe(youtubeResponse -> {
-//                    this.videoId = youtubeResponse.getYoutubeItemsList().get(0).getYoutubeItemId().getYoutubeVideoId();
-//                }, throwable -> {
-//                    Log.d("@@@@", throwable.getMessage());
-//                }));
+        compositeDisposable.add(repositoryService.getYoutubeVideoId(trackUid, trackName + artistName).subscribe(storeYoutubeVideoId(), throwErrorWhenNoYoutubeVideoId()));
+    }
+
+    private Consumer<String> storeYoutubeVideoId() {
+        return videoId -> this.videoId = videoId;
+    }
+
+    private Consumer<Throwable> throwErrorWhenNoYoutubeVideoId() {
+        return throwable -> {
+          view.toastUnableToLoadVideo(Constants.UNABLE_TO_LOAD_VIDEO);
+        };
     }
 
     public void trackRetrieved(String trackUid) {

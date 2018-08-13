@@ -11,10 +11,12 @@ public class RepositoryServiceImpl implements RepositoryService {
 
     private final MusicApiService musicApiService;
     private final MusicDatabaseService musicDatabaseService;
+    private final YoutubeApiService youtubeApiService;
 
-    public RepositoryServiceImpl(MusicApiService musicApiService, MusicDatabaseService musicDatabaseService) {
+    public RepositoryServiceImpl(MusicApiService musicApiService, MusicDatabaseService musicDatabaseService, YoutubeApiService youtubeApiService) {
         this.musicApiService = musicApiService;
         this.musicDatabaseService = musicDatabaseService;
+        this.youtubeApiService = youtubeApiService;
     }
 
     @Override
@@ -116,6 +118,26 @@ public class RepositoryServiceImpl implements RepositoryService {
     @Override
     public Observable<MusicApi.Track> getTrackFromDatabase(String trackUid) {
         return musicDatabaseService.getTrack(trackUid);
+    }
+
+    @Override
+    public Observable<String> getYoutubeVideoId(String trackUid, String searchQuery) {
+        return getYoutubeVideoFromDatabase(trackUid)
+                .onErrorResumeNext(Observable.empty())
+                .switchIfEmpty(getYoutubeVideoFromNetwork(trackUid, searchQuery));
+    }
+
+    @Override
+    public Observable<String> getYoutubeVideoFromDatabase(String trackUid) {
+        return musicDatabaseService.getTrack(trackUid)
+                .map(MusicApi.Track::getYoutubeId);
+    }
+
+    @Override
+    public Observable<String> getYoutubeVideoFromNetwork(String trackUid, String searchQuery) {
+        return youtubeApiService.getYoutubeVideo(Constants.YOUTUBE_API_KEY, searchQuery)
+                .map(youtubeResponse -> youtubeResponse.getYoutubeItemsList().get(0).getYoutubeItemId().getYoutubeVideoId())
+                .doOnNext(videoId -> musicDatabaseService.updateTrackWithYoutubeId(videoId, trackUid));
     }
 
     @Override

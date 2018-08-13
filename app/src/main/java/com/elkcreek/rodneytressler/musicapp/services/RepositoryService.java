@@ -31,4 +31,9 @@ public interface RepositoryService {
     Observable<MusicApi.Track> getTrack(String trackUid);
     Observable<MusicApi.Track> getTrackFromNetwork(String trackUid);
     Observable<MusicApi.Track> getTrackFromDatabase(String trackUid);
+
+    //Youtube
+    Observable<String> getYoutubeVideoId(String trackUid, String searchQuery);
+    Observable<String> getYoutubeVideoFromDatabase(String trackUid);
+    Observable<String> getYoutubeVideoFromNetwork(String trackUid, String searchQuery);
 }

@@ -28,4 +28,6 @@ public interface PlayTrackView extends BaseView {
     void resumeYoutubeFragment();
 
     void destroyYoutubeFragment();
+
+    void toastUnableToLoadVideo(String unableToLoadVideo);
 }

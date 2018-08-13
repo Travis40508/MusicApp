@@ -24,4 +24,7 @@ public class Constants {
     //Retrofit
     public static final String MUSIC_RETROFIT = "music_retrofit";
     public static final String YOUTUBE_RETROFIT = "youtube_retrofit";
+
+    //Error Message
+    public static final String UNABLE_TO_LOAD_VIDEO = "Unable to load video. Please try again";
 }
