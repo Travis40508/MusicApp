@@ -37,7 +37,6 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
     @Override
     public void attachView(PlayTrackView view) {
         this.view = view;
-        view.initializeYoutubeFragment();
     }
 
     @Override
@@ -48,7 +47,7 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
 
     @Override
     public void unsubscribe() {
-
+        compositeDisposable.dispose();
     }
 
     public void screenRotated(boolean savedInstanceStateIsNull, boolean playTracksFragmentIsNull) {

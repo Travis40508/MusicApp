@@ -162,10 +162,6 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     }
 
     @Override
-    public void initializeYoutubeFragment() {
-    }
-
-    @Override
     public void pauseYoutubeFragment() {
         youTubePlayerSupportFragment.onPause();
     }

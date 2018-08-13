@@ -23,8 +23,6 @@ public interface PlayTrackView extends BaseView {
 
     void showVideo(String videoId);
 
-    void initializeYoutubeFragment();
-
     void pauseYoutubeFragment();
 
     void resumeYoutubeFragment();

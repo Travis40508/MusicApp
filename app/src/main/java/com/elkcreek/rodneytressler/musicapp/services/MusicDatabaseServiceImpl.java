@@ -104,11 +104,12 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
         Schedulers.io().scheduleDirect(new Runnable() {
             @Override
             public void run() {
-                String trackName = track.getTrackName();
                 String trackUid = track.getTrackUid();
-                String artistName = track.getArtist().getArtistName();
+                String trackSummary = track.getWiki().getTrackSummary();
+                String trackContent = track.getWiki().getTrackContent();
+                List<MusicApi.TrackImage> trackImage = track.getAlbum().getTrackImage();
 
-                database.musicDao().updateTrack(trackUid, trackName, artistName);
+                database.musicDao().updateTrack(trackUid, trackSummary, trackContent, trackImage);
             }
         });
     }
