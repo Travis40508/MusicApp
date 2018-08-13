@@ -23,7 +23,7 @@ public interface MusicDatabaseService {
 
     void updateTopArtist(MusicApi.Artist artist);
     void updateTrack(MusicApi.Track track);
-
+    void updateTrackWithYoutubeId(String youtubeId, String trackUid);
     void deleteTopArtists();
     void deleteTrack(String trackUid);
 

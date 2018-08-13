@@ -49,6 +49,9 @@ public interface MusicDao {
     @Query("UPDATE Track SET wikiTrackSummary = :summary, wikiTrackContent = :content, albumtrackImage = :trackImage WHERE trackUid = :trackUid")
     void updateTrack(String trackUid, String summary, String content, List<MusicApi.TrackImage> trackImage);
 
+    @Query("UPDATE Track SET youtubeId = :youtubeId WHERE trackUid = :trackUid")
+    void updateTrackWithYoutubeId(String youtubeId, String trackUid);
+
     @Query("DELETE FROM Artist WHERE isTopArtist = :isTopArtist")
     void deleteTopArtists(boolean isTopArtist);
 

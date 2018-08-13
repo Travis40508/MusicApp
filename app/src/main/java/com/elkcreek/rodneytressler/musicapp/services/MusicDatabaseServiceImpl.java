@@ -115,6 +115,16 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     }
 
     @Override
+    public void updateTrackWithYoutubeId(String youtubeId, String trackUid) {
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                database.musicDao().updateTrackWithYoutubeId(youtubeId, trackUid);
+            }
+        });
+    }
+
+    @Override
     public void deleteTopArtists() {
         Schedulers.io().scheduleDirect(new Runnable() {
             @Override

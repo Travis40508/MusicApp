@@ -51,20 +51,20 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
     }
 
     public void screenRotated(boolean savedInstanceStateIsNull, boolean playTracksFragmentIsNull) {
-        if(!savedInstanceStateIsNull) {
-            if(!playTracksFragmentIsNull) {
+        if (!savedInstanceStateIsNull) {
+            if (!playTracksFragmentIsNull) {
                 view.reAttachPlayTracksFragment();
             }
         }
     }
 
     public void getVideoId(String trackName, String artistName) {
-        compositeDisposable.add(youtubeApiService.getYoutubeVideo(Constants.YOUTUBE_API_KEY, trackName + artistName)
-                .subscribe(youtubeResponse -> {
-                   this.videoId = youtubeResponse.getYoutubeItemsList().get(0).getYoutubeItemId().getYoutubeVideoId();
-                }, throwable -> {
-                    Log.d("@@@@", throwable.getMessage());
-                }));
+//        compositeDisposable.add(youtubeApiService.getYoutubeVideo(Constants.YOUTUBE_API_KEY, trackName + artistName)
+//                .subscribe(youtubeResponse -> {
+//                    this.videoId = youtubeResponse.getYoutubeItemsList().get(0).getYoutubeItemId().getYoutubeVideoId();
+//                }, throwable -> {
+//                    Log.d("@@@@", throwable.getMessage());
+//                }));
     }
 
     public void trackRetrieved(String trackUid) {
@@ -73,9 +73,7 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
     }
 
     private void fetchTrack() {
-                compositeDisposable.add(repositoryService.getTrack(trackUid).subscribe(updateUiWithTrack(), updateUiOnError()));
-//        compositeDisposable.add(musicApiService.getTrackInfo(trackUid, Constants.API_KEY).map(MusicApi.TrackInfoResponse::getTrack)
-//                .subscribe(updateUiWithTrack(), updateUiOnError()));
+        compositeDisposable.add(repositoryService.getTrack(trackUid).subscribe(updateUiWithTrack(), updateUiOnError()));
     }
 
     private Consumer<MusicApi.Track> updateUiWithTrack() {
@@ -94,7 +92,7 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
 
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
-          Log.d("@@@@", throwable.getMessage());
+            Log.d("@@@@", throwable.getMessage());
         };
     }
 
@@ -113,19 +111,19 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
     }
 
     public void onPause(boolean youtubeFragmentIsNull) {
-        if(!youtubeFragmentIsNull) {
+        if (!youtubeFragmentIsNull) {
             view.pauseYoutubeFragment();
         }
     }
 
     public void onResume(boolean youtubeFragmentIsNull) {
-        if(!youtubeFragmentIsNull) {
+        if (!youtubeFragmentIsNull) {
             view.resumeYoutubeFragment();
         }
     }
 
     public void onDestroy(boolean youtubeFragmentIsNull) {
-        if(!youtubeFragmentIsNull) {
+        if (!youtubeFragmentIsNull) {
             view.destroyYoutubeFragment();
         }
     }

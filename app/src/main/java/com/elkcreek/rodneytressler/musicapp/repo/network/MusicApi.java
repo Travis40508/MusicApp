@@ -299,7 +299,16 @@ public interface MusicApi {
         @PrimaryKey(autoGenerate = true)
         private int primaryKey;
 
+        private String youtubeId;
 
+
+        public String getYoutubeId() {
+            return youtubeId;
+        }
+
+        public void setYoutubeId(String youtubeId) {
+            this.youtubeId = youtubeId;
+        }
 
         public String getTrackName() {
             return trackName;
