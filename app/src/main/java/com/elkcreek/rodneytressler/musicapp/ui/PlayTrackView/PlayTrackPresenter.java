@@ -99,7 +99,7 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
         return throwable -> {
             view.hideLoadingLayout();
             view.showTrackSummary(Constants.NO_CONTENT_AVAILABLE_TEXT);
-            Log.d("@@@@", throwable.getMessage());
+            view.showNoPreviewAvailable();
         };
     }
 

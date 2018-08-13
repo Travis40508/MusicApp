@@ -34,4 +34,6 @@ public interface PlayTrackView extends BaseView {
     void showNoSummaryAvailableText(String noSummaryAvailableText);
 
     void showNoContentAvailableText(String noContentAvailableText);
+
+    void showNoPreviewAvailable();
 }

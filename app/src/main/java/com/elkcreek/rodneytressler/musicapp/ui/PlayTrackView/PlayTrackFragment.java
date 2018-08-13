@@ -47,6 +47,8 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     protected LinearLayout readMoreLayout;
     @BindView(R.id.text_read_more)
     protected TextView readMoreText;
+    @BindView(R.id.image_no_preview_available)
+    protected TextView noPreviewAvailable;
     private YouTubePlayerSupportFragment youTubePlayerSupportFragment;
 
     @OnClick(R.id.read_more_layout)
@@ -54,6 +56,9 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
 
     @OnClick(R.id.image_album_cover)
     protected void onImageAlbumCoverClicked(View view) {presenter.imageAlbumCoverClicked();}
+
+    @OnClick(R.id.image_no_preview_available)
+    protected void onNoPreviewAvailableClicked(View view) {presenter.imageAlbumCoverClicked();}
 
     private PlayTrackFragment playTrackFragment;
 
@@ -189,6 +194,11 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     @Override
     public void showNoContentAvailableText(String noContentAvailableText) {
         this.trackBio.setText(noContentAvailableText);
+    }
+
+    @Override
+    public void showNoPreviewAvailable() {
+        noPreviewAvailable.setVisibility(View.VISIBLE);
     }
 
     @Override

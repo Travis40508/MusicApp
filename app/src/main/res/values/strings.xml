@@ -5,4 +5,5 @@
     <string name="no_tracks_found_text">No Tracks Found!</string>
     <string name="network_error_text">Error Connecting to Network - Please Try Again</string>
     <string name="similar_artists_text">Similar Artists</string>
+    <string name="no_preview_available">No Preview Available</string>
 </resources>
