@@ -22,4 +22,12 @@ public interface PlayTrackView extends BaseView {
     void setReadMoreText(String readMoreTextCollapse);
 
     void showVideo(String videoId);
+
+    void initializeYoutubeFragment();
+
+    void pauseYoutubeFragment();
+
+    void resumeYoutubeFragment();
+
+    void destroyYoutubeFragment();
 }

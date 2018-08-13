@@ -100,11 +100,35 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     }
 
     @Override
+    public void updateTrack(MusicApi.Track track) {
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                String trackName = track.getTrackName();
+                String trackUid = track.getTrackUid();
+                String artistName = track.getArtist().getArtistName();
+
+                database.musicDao().updateTrack(trackUid, trackName, artistName);
+            }
+        });
+    }
+
+    @Override
     public void deleteTopArtists() {
         Schedulers.io().scheduleDirect(new Runnable() {
             @Override
             public void run() {
                 database.musicDao().deleteTopArtists(true);
+            }
+        });
+    }
+
+    @Override
+    public void deleteTrack(String trackUid) {
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                database.musicDao().deleteTrack(trackUid);
             }
         });
     }

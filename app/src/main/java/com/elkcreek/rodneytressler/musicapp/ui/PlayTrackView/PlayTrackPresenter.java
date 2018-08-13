@@ -37,6 +37,7 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
     @Override
     public void attachView(PlayTrackView view) {
         this.view = view;
+        view.initializeYoutubeFragment();
     }
 
     @Override
@@ -62,6 +63,8 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
         compositeDisposable.add(youtubeApiService.getYoutubeVideo(Constants.YOUTUBE_API_KEY, trackName + artistName)
                 .subscribe(youtubeResponse -> {
                    this.videoId = youtubeResponse.getYoutubeItemsList().get(0).getYoutubeItemId().getYoutubeVideoId();
+                }, throwable -> {
+                    Log.d("@@@@", throwable.getMessage());
                 }));
     }
 
@@ -71,9 +74,9 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
     }
 
     private void fetchTrack() {
-        //        compositeDisposable.add(repositoryService.getTrack(trackUid).subscribe(updateUiWithTrack(), updateUiOnError()));
-        compositeDisposable.add(musicApiService.getTrackInfo(trackUid, Constants.API_KEY).map(MusicApi.TrackInfoResponse::getTrack)
-                .subscribe(updateUiWithTrack(), updateUiOnError()));
+                compositeDisposable.add(repositoryService.getTrack(trackUid).subscribe(updateUiWithTrack(), updateUiOnError()));
+//        compositeDisposable.add(musicApiService.getTrackInfo(trackUid, Constants.API_KEY).map(MusicApi.TrackInfoResponse::getTrack)
+//                .subscribe(updateUiWithTrack(), updateUiOnError()));
     }
 
     private Consumer<MusicApi.Track> updateUiWithTrack() {
@@ -108,5 +111,23 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
 
     public void imageAlbumCoverClicked() {
         view.showVideo(videoId);
+    }
+
+    public void onPause(boolean youtubeFragmentIsNull) {
+        if(!youtubeFragmentIsNull) {
+            view.pauseYoutubeFragment();
+        }
+    }
+
+    public void onResume(boolean youtubeFragmentIsNull) {
+        if(!youtubeFragmentIsNull) {
+            view.resumeYoutubeFragment();
+        }
+    }
+
+    public void onDestroy(boolean youtubeFragmentIsNull) {
+        if(!youtubeFragmentIsNull) {
+            view.destroyYoutubeFragment();
+        }
     }
 }

@@ -47,6 +47,7 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     protected LinearLayout readMoreLayout;
     @BindView(R.id.text_read_more)
     protected TextView readMoreText;
+    private YouTubePlayerSupportFragment youTubePlayerSupportFragment;
 
     @OnClick(R.id.read_more_layout)
     protected void onReadMoreLayoutClicked(View view) {presenter.onReadMoreClicked(readMoreText.getText().toString());}
@@ -68,6 +69,7 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
         presenter.subscribe();
         presenter.trackRetrieved(getArguments().getString(TRACK_UID_KEY));
         presenter.getVideoId(getArguments().getString(Constants.TRACK_NAME_KEY), getArguments().getString(Constants.ARTIST_NAME_KEY));
+        presenter.onResume(youTubePlayerSupportFragment == null);
     }
 
     @Nullable
@@ -139,7 +141,7 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
 
     @Override
     public void showVideo(String videoId) {
-        YouTubePlayerSupportFragment youTubePlayerSupportFragment = YouTubePlayerSupportFragment.newInstance();
+        youTubePlayerSupportFragment = YouTubePlayerSupportFragment.newInstance();
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.youtube_fragment_holder, youTubePlayerSupportFragment).commit();
         youTubePlayerSupportFragment.initialize(Constants.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
             @Override
@@ -154,9 +156,39 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
 
             @Override
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-                Log.d("@@@@@", youTubeInitializationResult.toString());
+
             }
         });
     }
 
+    @Override
+    public void initializeYoutubeFragment() {
+    }
+
+    @Override
+    public void pauseYoutubeFragment() {
+        youTubePlayerSupportFragment.onPause();
+    }
+
+    @Override
+    public void resumeYoutubeFragment() {
+        youTubePlayerSupportFragment.onResume();
+    }
+
+    @Override
+    public void destroyYoutubeFragment() {
+        youTubePlayerSupportFragment.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        presenter.onPause(youTubePlayerSupportFragment == null);
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        presenter.onDestroy(youTubePlayerSupportFragment == null);
+        super.onDestroy();
+    }
 }

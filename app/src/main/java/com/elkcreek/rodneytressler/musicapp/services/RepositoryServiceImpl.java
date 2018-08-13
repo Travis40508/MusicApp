@@ -108,6 +108,7 @@ public class RepositoryServiceImpl implements RepositoryService {
     @Override
     public Observable<MusicApi.Track> getTrack(String trackUid) {
         return getTrackFromDatabase(trackUid)
+                .flatMap(track -> track.getWiki() == null ? Observable.error(Throwable::new) : Observable.just(track))
                 .onErrorResumeNext(Observable.empty())
                 .switchIfEmpty(getTrackFromNetwork(trackUid));
     }
@@ -121,6 +122,7 @@ public class RepositoryServiceImpl implements RepositoryService {
     public Observable<MusicApi.Track> getTrackFromNetwork(String trackUid) {
         return musicApiService.getTrackInfo(trackUid, Constants.API_KEY)
                 .map(MusicApi.TrackInfoResponse::getTrack)
-                .doOnNext(musicDatabaseService::insertTrack);
+                .doOnNext(musicDatabaseService::insertTrack)
+                .doOnNext(musicDatabaseService::updateTrack);
     }
 }
