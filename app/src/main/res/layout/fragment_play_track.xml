@@ -6,6 +6,15 @@
     android:background="@android:color/black"
     android:clickable="true">
 
+    <ImageView
+        android:id="@+id/image_home_button"
+        android:src="@drawable/ic_home"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="10dp"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <ScrollView
         android:id="@+id/track_scroll_view"

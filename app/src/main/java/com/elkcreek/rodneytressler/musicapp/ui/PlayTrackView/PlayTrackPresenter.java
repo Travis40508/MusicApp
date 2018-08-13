@@ -134,4 +134,8 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
             view.destroyYoutubeFragment();
         }
     }
+
+    public void homeButtonClicked() {
+        view.takeUserHome();
+    }
 }

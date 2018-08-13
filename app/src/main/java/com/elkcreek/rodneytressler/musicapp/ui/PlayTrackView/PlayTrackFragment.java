@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,9 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     @BindView(R.id.image_no_preview_available)
     protected TextView noPreviewAvailable;
     private YouTubePlayerSupportFragment youTubePlayerSupportFragment;
+
+    @OnClick(R.id.image_home_button)
+    protected void onHomeButtonClicked(View view) {presenter.homeButtonClicked();}
 
     @OnClick(R.id.read_more_layout)
     protected void onReadMoreLayoutClicked(View view) {presenter.onReadMoreClicked(readMoreText.getText().toString());}
@@ -199,6 +203,11 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     @Override
     public void showNoPreviewAvailable() {
         noPreviewAvailable.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void takeUserHome() {
+        getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     @Override
