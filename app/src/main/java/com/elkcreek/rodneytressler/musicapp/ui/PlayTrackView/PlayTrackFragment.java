@@ -182,6 +182,16 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     }
 
     @Override
+    public void showNoSummaryAvailableText(String noSummaryAvailableText) {
+        this.trackBio.setText(noSummaryAvailableText);
+    }
+
+    @Override
+    public void showNoContentAvailableText(String noContentAvailableText) {
+        this.trackBio.setText(noContentAvailableText);
+    }
+
+    @Override
     public void onPause() {
         presenter.onPause(youTubePlayerSupportFragment == null);
         super.onPause();

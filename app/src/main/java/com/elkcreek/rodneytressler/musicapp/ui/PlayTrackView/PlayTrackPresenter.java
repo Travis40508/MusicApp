@@ -68,7 +68,7 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
 
     private Consumer<Throwable> throwErrorWhenNoYoutubeVideoId() {
         return throwable -> {
-          view.toastUnableToLoadVideo(Constants.UNABLE_TO_LOAD_VIDEO);
+            view.toastUnableToLoadVideo(Constants.UNABLE_TO_LOAD_VIDEO);
         };
     }
 
@@ -84,9 +84,17 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
     private Consumer<MusicApi.Track> updateUiWithTrack() {
         return track -> {
             if (!isExpanded) {
-                view.showTrackSummary(track.getWiki().getTrackSummary());
+                if (track.getWiki().getTrackSummary().isEmpty()) {
+                    view.showTrackSummary(track.getWiki().getTrackSummary());
+                } else {
+                    view.showNoSummaryAvailableText(Constants.NO_SUMMARY_AVAILABLE_TEXT);
+                }
             } else {
-                view.showTrackContent(track.getWiki().getTrackContent());
+                if (track.getWiki().getTrackContent().isEmpty()) {
+                    view.showTrackContent(track.getWiki().getTrackContent());
+                } else {
+                    view.showNoContentAvailableText(Constants.NO_CONTENT_AVAILABLE_TEXT);
+                }
             }
             view.hideLoadingLayout();
             view.showTrackAlbumCover(track.getAlbum().getTrackImage().get(2).getImageUrl());
@@ -97,6 +105,7 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
 
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
+            view.hideLoadingLayout();
             Log.d("@@@@", throwable.getMessage());
         };
     }
