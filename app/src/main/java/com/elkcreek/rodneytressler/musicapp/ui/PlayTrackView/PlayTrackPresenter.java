@@ -84,17 +84,9 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
     private Consumer<MusicApi.Track> updateUiWithTrack() {
         return track -> {
             if (!isExpanded) {
-                if (track.getWiki().getTrackSummary().isEmpty()) {
-                    view.showTrackSummary(track.getWiki().getTrackSummary());
-                } else {
-                    view.showNoSummaryAvailableText(Constants.NO_SUMMARY_AVAILABLE_TEXT);
-                }
+                view.showTrackSummary(track.getWiki().getTrackSummary());
             } else {
-                if (track.getWiki().getTrackContent().isEmpty()) {
-                    view.showTrackContent(track.getWiki().getTrackContent());
-                } else {
-                    view.showNoContentAvailableText(Constants.NO_CONTENT_AVAILABLE_TEXT);
-                }
+                view.showTrackContent(track.getWiki().getTrackContent());
             }
             view.hideLoadingLayout();
             view.showTrackAlbumCover(track.getAlbum().getTrackImage().get(2).getImageUrl());
@@ -106,6 +98,7 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
             view.hideLoadingLayout();
+            view.showTrackSummary(Constants.NO_CONTENT_AVAILABLE_TEXT);
             Log.d("@@@@", throwable.getMessage());
         };
     }
