@@ -54,6 +54,11 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         this.callback = callback;
     }
 
+    public void setArtistList(List<MusicApi.Artist> artistList) {
+        this.artistList = artistList;
+        notifyDataSetChanged();
+    }
+
     public class ArtistViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.image_artist_item)

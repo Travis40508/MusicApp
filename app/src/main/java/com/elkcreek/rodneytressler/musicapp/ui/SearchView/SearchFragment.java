@@ -22,6 +22,7 @@ import com.elkcreek.rodneytressler.musicapp.ui.BioView.BioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TracksView.TracksFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.ArtistAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -83,8 +84,12 @@ public class SearchFragment extends Fragment implements SearchView {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
+        adapter = new ArtistAdapter(new ArrayList<>());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -103,10 +108,7 @@ public class SearchFragment extends Fragment implements SearchView {
 
     @Override
     public void loadArtists(List<MusicApi.Artist> artistList) {
-        adapter = new ArtistAdapter(artistList);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter.notifyDataSetChanged();
+        adapter.setArtistList(artistList);
         adapter.setAdapterCallback(new ArtistAdapter.Callback() {
             @Override
             public void onArtistInfoClicked(MusicApi.Artist artist) {

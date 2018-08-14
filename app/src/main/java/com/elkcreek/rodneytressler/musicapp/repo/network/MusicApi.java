@@ -17,7 +17,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface MusicApi {
-    @GET("/2.0?method=artist.search&format=json&limit=12")
+    @GET("/2.0?method=artist.search&format=json&limit=5")
     Observable<SearchResponse> getArtistSearchResults(@Query("artist") String artist, @Query("api_key") String apiKey);
 
     @GET("/2.0?method=artist.getinfo&format=json")
@@ -26,7 +26,7 @@ public interface MusicApi {
     @GET("/2.0?method=artist.getinfo&format=json")
     Observable<ArtistBioResponse> getArtistBioWithName(@Query("artist") String artistName, @Query("api_key") String apiKey);
 
-    @GET("/2.0?method=chart.gettopartists&format=json")
+    @GET("/2.0?method=chart.gettopartists&format=json&limit=12")
     Observable<TopArtistsResponse> getTopArtists(@Query("api_key") String apiKey);
 
     @GET("/2.0?method=artist.gettoptracks&format=json")
