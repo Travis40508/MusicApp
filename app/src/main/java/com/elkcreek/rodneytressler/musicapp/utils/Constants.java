@@ -20,6 +20,7 @@ public class Constants {
     public static final String BIO_FRAGMENT_TAG = "bio_fragment_tag";
     public static final String TRACKS_FRAGMENT_TAG = "tracks_fragment_tag";
     public static final String PLAY_TRACK_FRAGMENT_TAG = "play_track_fragment_tag";
+    public static final String YOUTUBE_TAG = "youtube_tag";
 
     //Retrofit
     public static final String MUSIC_RETROFIT = "music_retrofit";

@@ -20,6 +20,7 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
 import javax.inject.Inject;
@@ -30,6 +31,7 @@ import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.PLAY_TRACK_FRAGMENT_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_UID_KEY;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.YOUTUBE_TAG;
 
 public class PlayTrackFragment extends Fragment implements PlayTrackView {
 
@@ -151,7 +153,7 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     @Override
     public void showVideo(String videoId) {
         youTubePlayerSupportFragment = YouTubePlayerSupportFragment.newInstance();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.youtube_fragment_holder, youTubePlayerSupportFragment).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.youtube_fragment_holder, youTubePlayerSupportFragment, YOUTUBE_TAG).commit();
         youTubePlayerSupportFragment.initialize(Constants.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
@@ -209,6 +211,7 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     public void takeUserHome() {
         getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
+
 
     @Override
     public void onPause() {
