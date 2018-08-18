@@ -39,7 +39,7 @@ public class TracksAdapter extends RecyclerView.Adapter<TracksAdapter.TracksView
     @Override
     public void onBindViewHolder(@NonNull TracksViewHolder tracksViewHolder, int position) {
         tracksViewHolder.bindTrack(trackList.get(position));
-        tracksViewHolder.trackPlayButton.setOnClickListener(tracksViewHolder.onPlayClicked(trackList.get(position)));
+        tracksViewHolder.itemView.setOnClickListener(tracksViewHolder.onPlayClicked(trackList.get(position)));
     }
 
     @Override
@@ -69,9 +69,6 @@ public class TracksAdapter extends RecyclerView.Adapter<TracksAdapter.TracksView
 
         @BindView(R.id.text_track_name)
         protected TextView trackName;
-
-        @BindView(R.id.button_play)
-        protected ImageView trackPlayButton;
 
         public TracksViewHolder(@NonNull View itemView) {
             super(itemView);

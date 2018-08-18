@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:background="@android:color/black"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:clickable="true">
+    android:clickable="true"
+    android:focusable="true">
 
     <EditText
         android:id="@+id/input_artist_search"
@@ -49,7 +50,8 @@
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="100dp">
 
     </android.support.v7.widget.RecyclerView>
 
