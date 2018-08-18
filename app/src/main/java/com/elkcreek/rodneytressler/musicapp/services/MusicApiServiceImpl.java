@@ -2,6 +2,8 @@ package com.elkcreek.rodneytressler.musicapp.services;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 
+import java.util.List;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -55,5 +57,13 @@ public class MusicApiServiceImpl implements MusicApiService {
         return musicApi.getTrackInfo(trackUid, apiKey)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<List<MusicApi.Album>> getTopAlbums(String apiKey, String artistUid) {
+        return musicApi.getTopAlbums(apiKey, artistUid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(albumResponse -> albumResponse.getTopAlbums().getAlbumList());
     }
 }

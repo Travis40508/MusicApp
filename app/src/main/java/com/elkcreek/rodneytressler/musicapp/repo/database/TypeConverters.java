@@ -109,4 +109,28 @@ public class TypeConverters {
         return trackImageList;
     }
 
+    @TypeConverter
+    public String fromAlbumList(List<MusicApi.Album> albumList) {
+        if (albumList == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<MusicApi.Album>>() {
+        }.getType();
+        String json = gson.toJson(albumList, type);
+        return json;
+    }
+
+    @TypeConverter
+    public List<MusicApi.Album> toAlbumList(String albumString) {
+        if (albumString == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<MusicApi.Album>>() {
+        }.getType();
+        List<MusicApi.Album> albumlist = gson.fromJson(albumString, type);
+        return albumlist;
+    }
+
 }

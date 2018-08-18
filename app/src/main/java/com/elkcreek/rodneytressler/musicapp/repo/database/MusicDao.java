@@ -60,4 +60,10 @@ public interface MusicDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTopTracks(List<MusicApi.Track> trackList);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAlbums(List<MusicApi.Album> albumList);
+
+    @Query("SELECT * FROM Album WHERE artistartistUID LIKE :artistUid")
+    Flowable<List<MusicApi.Album>> getAlbumList(String artistUid);
 }

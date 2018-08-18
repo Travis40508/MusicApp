@@ -1,5 +1,6 @@
 package com.elkcreek.rodneytressler.musicapp.di.modules;
 
+import com.elkcreek.rodneytressler.musicapp.ui.AlbumsView.AlbumsFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.BioView.BioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity;
 import com.elkcreek.rodneytressler.musicapp.ui.PlayTrackView.PlayTrackFragment;
@@ -26,4 +27,7 @@ public abstract class ViewModule {
 
     @ContributesAndroidInjector
     abstract PlayTrackFragment contributesPlayTrackFragmentInjector();
+
+    @ContributesAndroidInjector
+    abstract AlbumsFragment contributesAlbumsFragmentInjector();
 }

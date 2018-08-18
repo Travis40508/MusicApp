@@ -162,4 +162,21 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
                 .map(trackList -> trackList.get(0));
     }
 
+    @Override
+    public Observable<List<MusicApi.Album>> getAlbumList(String artistUid) {
+        return database.musicDao().getAlbumList(artistUid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).toObservable();
+    }
+
+    @Override
+    public void insertAlbums(List<MusicApi.Album> albumList) {
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                database.musicDao().insertAlbums(albumList);
+            }
+        });
+    }
+
 }

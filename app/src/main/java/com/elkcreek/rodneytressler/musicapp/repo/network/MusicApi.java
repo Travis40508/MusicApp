@@ -3,7 +3,6 @@ package com.elkcreek.rodneytressler.musicapp.repo.network;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverter;
 import android.arch.persistence.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
@@ -34,6 +33,9 @@ public interface MusicApi {
 
     @GET("/2.0/?method=track.getInfo&format=json")
     Observable<TrackInfoResponse> getTrackInfo(@Query("mbid") String trackUid, @Query("api_key") String apiKey);
+
+    @GET("2.0?method=artist.gettopalbums&format=json")
+    Observable<AlbumResponse> getTopAlbums(@Query("api_key") String apiKey, @Query("mbid") String artistUid);
 
     class SearchResponse {
         @SerializedName("results")
@@ -385,12 +387,25 @@ public interface MusicApi {
         }
     }
 
+    @Entity
     class Album {
+
+        @PrimaryKey(autoGenerate = true)
+        private int primaryKey;
 
         @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
         @SerializedName("image")
         @Expose
         private List<TrackImage> trackImage;
+
+        @SerializedName("name")
+        @Expose private String albumName;
+
+        @SerializedName("mbid")
+        @Expose private String albumUid;
+
+        @Embedded(prefix = "artist")
+        private Artist artist;
 
         public List<TrackImage> getTrackImage() {
             return trackImage;
@@ -398,6 +413,38 @@ public interface MusicApi {
 
         public void setTrackImage(List<TrackImage> trackImage) {
             this.trackImage = trackImage;
+        }
+
+        public String getAlbumName() {
+            return albumName;
+        }
+
+        public void setAlbumName(String albumName) {
+            this.albumName = albumName;
+        }
+
+        public String getAlbumUid() {
+            return albumUid;
+        }
+
+        public void setAlbumUid(String albumUid) {
+            this.albumUid = albumUid;
+        }
+
+        public int getPrimaryKey() {
+            return primaryKey;
+        }
+
+        public void setPrimaryKey(int primaryKey) {
+            this.primaryKey = primaryKey;
+        }
+
+        public Artist getArtist() {
+            return artist;
+        }
+
+        public void setArtist(Artist artist) {
+            this.artist = artist;
         }
     }
 
@@ -440,6 +487,25 @@ public interface MusicApi {
 
         public void setTrackContent(String trackContent) {
             this.trackContent = trackContent;
+        }
+    }
+
+    class AlbumResponse {
+        @SerializedName("topalbums")
+        @Expose private TopAlbums topAlbums;
+
+        public TopAlbums getTopAlbums() {
+            return topAlbums;
+        }
+    }
+
+    class TopAlbums {
+        @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
+        @SerializedName("album")
+        @Expose private List<Album> albumList;
+
+        public List<Album> getAlbumList() {
+            return albumList;
         }
     }
 }

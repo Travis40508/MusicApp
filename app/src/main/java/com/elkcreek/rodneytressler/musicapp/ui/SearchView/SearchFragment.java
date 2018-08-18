@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.ui.AlbumsView.AlbumsFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.BioView.BioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TracksView.TracksFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.ArtistAdapter;
@@ -33,6 +34,7 @@ import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import dagger.android.support.AndroidSupportInjection;
 
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUMS_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.BIO_FRAGMENT_TAG;
@@ -52,6 +54,7 @@ public class SearchFragment extends Fragment implements SearchView {
     private ArtistAdapter adapter;
     private TracksFragment tracksFragment;
     private BioFragment bioFragment;
+    private AlbumsFragment albumsFragment;
 
 
     @OnTextChanged(value = R.id.input_artist_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -147,9 +150,12 @@ public class SearchFragment extends Fragment implements SearchView {
         Bundle bundle = new Bundle();
         bundle.putString(ARTIST_UID_KEY, artist.getArtistUID());
         bundle.putString(ARTIST_NAME_KEY, artist.getArtistName());
-        tracksFragment = TracksFragment.newInstance();
-        tracksFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, tracksFragment, TRACKS_FRAGMENT_TAG).addToBackStack(null).commit();
+        albumsFragment = AlbumsFragment.newInstance();
+        albumsFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, albumsFragment, ALBUMS_TAG).addToBackStack(null).commit();
+//        tracksFragment = TracksFragment.newInstance();
+//        tracksFragment.setArguments(bundle);
+//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, tracksFragment, TRACKS_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 
     @Override
