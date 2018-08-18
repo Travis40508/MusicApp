@@ -144,7 +144,6 @@ public class RepositoryServiceImpl implements RepositoryService {
     public Observable<MusicApi.Track> getTrackFromNetwork(String trackUid) {
         return musicApiService.getTrackInfo(trackUid, Constants.API_KEY)
                 .map(MusicApi.TrackInfoResponse::getTrack)
-                .doOnNext(musicDatabaseService::insertTrack)
                 .doOnNext(musicDatabaseService::updateTrack);
     }
 }
