@@ -6,9 +6,12 @@ import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 
 public class AlbumsPresenter implements BasePresenter<AlbumsView> {
     private final RepositoryService repositoryService;
@@ -34,15 +37,19 @@ public class AlbumsPresenter implements BasePresenter<AlbumsView> {
     }
 
     private void fetchAlbums() {
-        disposable.add(repositoryService.getAlbums(artistUid).subscribe(
-                albumList -> {
-                    for(MusicApi.Album item : albumList) {
-                        Log.d("@@@@", item.getAlbumName());
-                    }
-                }, throwable -> {
-                    Log.d("@@@@", throwable.getMessage());
-                }
-        ));
+        disposable.add(repositoryService.getAlbums(artistUid).subscribe(updateUiWithAlbum(), updateUiWithError()));
+    }
+
+    private Consumer<List<MusicApi.Album>> updateUiWithAlbum() {
+        return albumList -> {
+          view.showTopAlbums(albumList);
+        };
+    }
+
+    private Consumer<Throwable> updateUiWithError() {
+        return throwable -> {
+            Log.d("@@@@", throwable.getMessage());
+        };
     }
 
     @Override
