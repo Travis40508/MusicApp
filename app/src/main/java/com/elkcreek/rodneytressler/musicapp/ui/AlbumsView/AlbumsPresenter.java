@@ -75,6 +75,6 @@ public class AlbumsPresenter implements BasePresenter<AlbumsView> {
     }
 
     public void albumClicked(MusicApi.Album album) {
-        view.showAlbumTracks(album.getArtist().getArtistName(), album.getArtist().getArtistUID(), album.getAlbumName(), album.getAlbumUid(), album.getTrackImage().get(2).getImageUrl());
+        view.showAlbumTracks(artistName, artistUid, album.getAlbumName(), album.getAlbumUid(), album.getTrackImage().get(2).getImageUrl());
     }
 }

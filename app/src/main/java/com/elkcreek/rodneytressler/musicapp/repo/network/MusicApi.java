@@ -34,6 +34,9 @@ public interface MusicApi {
     @GET("/2.0/?method=track.getInfo&format=json")
     Observable<TrackInfoResponse> getTrackInfo(@Query("mbid") String trackUid, @Query("api_key") String apiKey);
 
+    @GET("/2.0/?method=track.getInfo&format=json")
+    Observable<TrackInfoResponse> getTrackInfoWithName(@Query("track") String trackName, @Query("artist") String artistName, @Query("api_key") String apiKey);
+
     @GET("2.0?method=artist.gettopalbums&format=json")
     Observable<AlbumResponse> getTopAlbums(@Query("api_key") String apiKey, @Query("mbid") String artistUid);
 
@@ -408,7 +411,7 @@ public interface MusicApi {
         @Expose private String albumUid;
 
         @Embedded(prefix = "artist")
-        @Expose  private Artist artist;
+        @Expose  private Artist artistResponse;
 
         @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
         @SerializedName("tracks")
@@ -454,12 +457,12 @@ public interface MusicApi {
             this.trackList = trackList;
         }
 
-        public Artist getArtist() {
-            return artist;
+        public Artist getArtistResponse() {
+            return artistResponse;
         }
 
-        public void setArtist(Artist artist) {
-            this.artist = artist;
+        public void setArtistResponse(Artist artistResponse) {
+            this.artistResponse = artistResponse;
         }
     }
 
@@ -514,6 +517,9 @@ public interface MusicApi {
         }
     }
 
+    //TODO write logic to have this object stored in database, instead of arbitrarily trying to store an array of albums.
+    //TODO also figure out why you're unable to Update Tracks with their UID once obtained via name and artist name
+    @Entity
     class TopAlbums {
         @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
         @SerializedName("album")

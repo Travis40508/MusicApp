@@ -9,4 +9,6 @@ public interface AlbumTracksView extends BaseView {
     void reAttachAlbumTracksFragment();
 
     void showTrackListForAlbum(List<MusicApi.Track> trackList, String imageUrl);
+
+    void showPlayTracksFragment(String trackName, String trackUid, String artistName);
 }

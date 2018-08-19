@@ -81,6 +81,16 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
     }
 
     public void albumClicked(MusicApi.Track track) {
+        if(track.getTrackUid() == null) {
+            disposable.add(repositoryService.getTrackWithName(track.getTrackName(), track.getArtist().getArtistName()).subscribe(updateUiWithTrack(), updateUiWithError()));
+        } else {
+            view.showPlayTracksFragment(track.getTrackName(), track.getTrackUid(), track.getArtist().getArtistName());
+        }
+    }
 
+    private Consumer<MusicApi.Track> updateUiWithTrack() {
+        return track -> {
+            view.showPlayTracksFragment(track.getTrackName(), track.getTrackUid(), track.getArtist().getArtistName());
+        };
     }
 }

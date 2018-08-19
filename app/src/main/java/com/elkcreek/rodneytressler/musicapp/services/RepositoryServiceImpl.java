@@ -180,6 +180,13 @@ public class RepositoryServiceImpl implements RepositoryService {
                 .doOnNext(trackList -> musicDatabaseService.updateAlbumWithAlbumUid(trackList, albumUid));
     }
 
+    @Override
+    public Observable<MusicApi.Track> getTrackWithName(String trackName, String artistName) {
+        return musicApiService.getTrackInfoWithName(trackName, artistName, Constants.API_KEY)
+                .map(MusicApi.TrackInfoResponse::getTrack)
+                .doOnNext(musicDatabaseService::updateTrackWithUid);
+    }
+
 
     @Override
     public Observable<MusicApi.Track> getTrackFromNetwork(String trackUid) {

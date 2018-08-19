@@ -74,4 +74,11 @@ public class MusicApiServiceImpl implements MusicApiService {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(MusicApi.AlbumInfoResponse::getAlbumInfo);
     }
+
+    @Override
+    public Observable<MusicApi.TrackInfoResponse> getTrackInfoWithName(String trackName, String artistName, String apiKey) {
+        return musicApi.getTrackInfoWithName(trackName, artistName, apiKey)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

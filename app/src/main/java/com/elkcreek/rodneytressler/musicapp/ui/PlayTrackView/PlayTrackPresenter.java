@@ -97,6 +97,7 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
 
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
+            Log.d("@@@@", throwable.getMessage());
             view.hideLoadingLayout();
             view.showTrackSummary(Constants.NO_CONTENT_AVAILABLE_TEXT);
             view.showNoPreviewAvailable();

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.ui.PlayTrackView.PlayTrackFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.AlbumTracksAdapter;
 import com.elkcreek.rodneytressler.musicapp.utils.TracksAdapter;
 
@@ -30,6 +31,9 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_TRACKS_
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_UID_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.PLAY_TRACK_FRAGMENT_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_NAME_KEY;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_UID_KEY;
 
 public class AlbumTracksFragment extends Fragment implements AlbumTracksView {
 
@@ -38,6 +42,7 @@ public class AlbumTracksFragment extends Fragment implements AlbumTracksView {
     protected RecyclerView recyclerView;
     private AlbumTracksFragment albumTracksFragment;
     private AlbumTracksAdapter adapter;
+    private PlayTrackFragment playTrackFragment;
 
     @Override
     public void onAttach(Context context) {
@@ -96,5 +101,16 @@ public class AlbumTracksFragment extends Fragment implements AlbumTracksView {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showPlayTracksFragment(String trackName, String trackUid, String artistName) {
+        Bundle bundle = new Bundle();
+        bundle.putString(TRACK_NAME_KEY, trackName);
+        bundle.putString(ARTIST_NAME_KEY, artistName);
+        bundle.putString(TRACK_UID_KEY, trackUid);
+        playTrackFragment = PlayTrackFragment.newInstance();
+        playTrackFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, playTrackFragment, PLAY_TRACK_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 }

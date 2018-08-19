@@ -197,4 +197,16 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
                 .map(albumList -> albumList.get(0));
     }
 
+    @Override
+    public void updateTrackWithUid(MusicApi.Track track) {
+        String trackUid = track.getTrackUid();
+        String trackUrl = track.getTrackUrl();
+
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                database.musicDao().updateTrackWithUid(trackUid, trackUrl);
+            }
+        });
+    }
 }

@@ -52,6 +52,9 @@ public interface MusicDao {
     @Query("UPDATE Track SET youtubeId = :youtubeId WHERE trackUid = :trackUid")
     void updateTrackWithYoutubeId(String youtubeId, String trackUid);
 
+    @Query("UPDATE Track SET trackUid = :trackUid WHERE trackUrl LIKE :trackUrl")
+    void updateTrackWithUid(String trackUid, String trackUrl);
+
     @Query("DELETE FROM Artist WHERE isTopArtist = :isTopArtist")
     void deleteTopArtists(boolean isTopArtist);
 
