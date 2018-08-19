@@ -1,6 +1,4 @@
-package com.elkcreek.rodneytressler.musicapp.ui.TracksView;
-
-import android.util.Log;
+package com.elkcreek.rodneytressler.musicapp.ui.AllTracksView;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
@@ -13,21 +11,21 @@ import javax.inject.Inject;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 
-public class TracksPresenter implements BasePresenter<TracksView> {
+public class AllTracksPresenter implements BasePresenter<AllTracksView> {
 
     private final RepositoryService repositoryService;
-    private TracksView view;
+    private AllTracksView view;
     private CompositeDisposable disposable;
     private String artistUid;
     private String artistName;
 
     @Inject
-    public TracksPresenter(RepositoryService repositoryService) {
+    public AllTracksPresenter(RepositoryService repositoryService) {
         this.repositoryService = repositoryService;
     }
 
     @Override
-    public void attachView(TracksView view) {
+    public void attachView(AllTracksView view) {
         this.view = view;
     }
 

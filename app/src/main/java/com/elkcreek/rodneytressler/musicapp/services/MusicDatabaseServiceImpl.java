@@ -179,4 +179,22 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
         });
     }
 
+    @Override
+    public void updateAlbumWithAlbumUid(List<MusicApi.Track> trackList, String albumUid) {
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                database.musicDao().updateAlbumWithAlbumUid(trackList, albumUid);
+            }
+        });
+    }
+
+    @Override
+    public Observable<MusicApi.Album> getAlbumByUid(String albumUid) {
+        return database.musicDao().getAlbumByUid(albumUid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).toObservable()
+                .map(albumList -> albumList.get(0));
+    }
+
 }

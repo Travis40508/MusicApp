@@ -159,6 +159,27 @@ public class RepositoryServiceImpl implements RepositoryService {
                 .doOnNext(musicDatabaseService::insertAlbums);
     }
 
+    @Override
+    public Observable<List<MusicApi.Track>> getTracksFromAlbum(String albumUid) {
+        return getTracksFromAlbumFromDatabase(albumUid)
+                .flatMap(trackList -> trackList.get(0) == null ? Observable.error(Throwable::new) : Observable.just(trackList))
+                .onErrorResumeNext(Observable.empty())
+                .switchIfEmpty(getTracksFromAlbumFromNetwork(albumUid));
+    }
+
+    @Override
+    public Observable<List<MusicApi.Track>> getTracksFromAlbumFromDatabase(String albumUid) {
+        return musicDatabaseService.getAlbumByUid(albumUid)
+                .map(album -> album.getTracksResponse().getTrackList());
+    }
+
+    @Override
+    public Observable<List<MusicApi.Track>> getTracksFromAlbumFromNetwork(String albumUid) {
+        return musicApiService.getAlbumInfo(Constants.API_KEY, albumUid)
+                .map(album -> album.getTracksResponse().getTrackList())
+                .doOnNext(trackList -> musicDatabaseService.updateAlbumWithAlbumUid(trackList, albumUid));
+    }
+
 
     @Override
     public Observable<MusicApi.Track> getTrackFromNetwork(String trackUid) {

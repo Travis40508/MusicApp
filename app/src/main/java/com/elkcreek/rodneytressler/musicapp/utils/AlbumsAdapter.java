@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsViewHolder> {
 
     private List<MusicApi.Album> albumList;
+    private AlbumCallback callback;
 
     public AlbumsAdapter(List<MusicApi.Album> albumList) {
         this.albumList = albumList;
@@ -35,11 +36,16 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsView
     @Override
     public void onBindViewHolder(@NonNull AlbumsViewHolder albumsViewHolder, int position) {
         albumsViewHolder.bindView(albumList.get(position));
+        albumsViewHolder.itemView.setOnClickListener(albumsViewHolder.onAlbumClicked(albumList.get(position)));
     }
 
     @Override
     public int getItemCount() {
         return albumList.size();
+    }
+
+    public void setAlbumCallback(AlbumCallback albumCallback) {
+        this.callback = albumCallback;
     }
 
     public class AlbumsViewHolder extends RecyclerView.ViewHolder {
@@ -59,5 +65,18 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsView
             Glide.with(itemView.getContext()).load(album.getTrackImage().get(2).getImageUrl()).into(albumCover);
             albumName.setText(album.getAlbumName());
         }
+
+        public View.OnClickListener onAlbumClicked(MusicApi.Album album) {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    callback.albumClicked(album);
+                }
+            };
+        }
+    }
+
+    public interface AlbumCallback {
+        void albumClicked(MusicApi.Album album);
     }
 }

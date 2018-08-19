@@ -9,6 +9,8 @@ public class Constants {
     public static final String ARTIST_NAME_KEY = "artist_name_key";
     public static final String TRACK_UID_KEY = "track_uid_key";
     public static final String TRACK_NAME_KEY = "track_name_key";
+    public static final String ALBUM_NAME_KEY = "album_name_key";
+    public static final String ALBUM_UID_KEY = "album_uid_key";
     public static final String DATABASE_KEY = "database_key";
     public static final String SHAREDPREFKEY = "shared_pref_key";
     public static final String WEEKOFYEAR = "week_of_year";
@@ -22,6 +24,7 @@ public class Constants {
     public static final String PLAY_TRACK_FRAGMENT_TAG = "play_track_fragment_tag";
     public static final String ALBUMS_TAG = "albums_tag";
     public static final String YOUTUBE_TAG = "youtube_tag";
+    public static final String ALBUM_TRACKS_TAG = "album_tracks_tag";
 
     //Retrofit
     public static final String MUSIC_RETROFIT = "music_retrofit";

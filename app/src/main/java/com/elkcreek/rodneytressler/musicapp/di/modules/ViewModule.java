@@ -1,11 +1,12 @@
 package com.elkcreek.rodneytressler.musicapp.di.modules;
 
+import com.elkcreek.rodneytressler.musicapp.ui.AlbumTracksView.AlbumTracksFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.AlbumsView.AlbumsFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.AllTracksView.AllTracksFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.BioView.BioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity;
 import com.elkcreek.rodneytressler.musicapp.ui.PlayTrackView.PlayTrackFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.SearchView.SearchFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.TracksView.TracksFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -23,11 +24,14 @@ public abstract class ViewModule {
     abstract SearchFragment contributesSearchFragmentInjector();
 
     @ContributesAndroidInjector
-    abstract TracksFragment contributesTracksFragmentInjector();
+    abstract AllTracksFragment contributesTracksFragmentInjector();
 
     @ContributesAndroidInjector
     abstract PlayTrackFragment contributesPlayTrackFragmentInjector();
 
     @ContributesAndroidInjector
     abstract AlbumsFragment contributesAlbumsFragmentInjector();
+
+    @ContributesAndroidInjector
+    abstract AlbumTracksFragment contributesAlbumTracksFragmentInjector();
 }

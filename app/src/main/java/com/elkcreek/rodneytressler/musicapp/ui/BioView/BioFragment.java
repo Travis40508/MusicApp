@@ -8,21 +8,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
-import com.elkcreek.rodneytressler.musicapp.ui.TracksView.TracksFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.AllTracksView.AllTracksFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import com.elkcreek.rodneytressler.musicapp.utils.SimilarArtistAdapter;
 
@@ -57,7 +54,7 @@ public class BioFragment extends Fragment implements BioView {
     @BindView(R.id.bio_similar_artist_recycler_view)
     protected RecyclerView similarArtistRecyclerView;
     private SimilarArtistAdapter adapter;
-    private TracksFragment tracksFragment;
+    private AllTracksFragment allTracksFragment;
     private BioFragment bioFragment;
 
     @OnClick(R.id.read_more_layout)
@@ -180,9 +177,9 @@ public class BioFragment extends Fragment implements BioView {
         Bundle bundle = new Bundle();
         bundle.putString(ARTIST_UID_KEY, artistUid);
         bundle.putString(ARTIST_NAME_KEY, artistName);
-        tracksFragment = TracksFragment.newInstance();
-        tracksFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, tracksFragment, TRACKS_FRAGMENT_TAG).addToBackStack(null).commit();
+        allTracksFragment = AllTracksFragment.newInstance();
+        allTracksFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, allTracksFragment, TRACKS_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 
 

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.ui.AlbumTracksView.AlbumTracksFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.AlbumsAdapter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
@@ -25,6 +26,11 @@ import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUMS_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_NAME_KEY;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_TRACKS_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_UID_KEY;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
 
 public class AlbumsFragment extends Fragment implements AlbumsView {
 
@@ -84,8 +90,26 @@ public class AlbumsFragment extends Fragment implements AlbumsView {
     @Override
     public void showTopAlbums(List<MusicApi.Album> albumList) {
         adapter = new AlbumsAdapter(albumList);
+        adapter.setAlbumCallback(new AlbumsAdapter.AlbumCallback() {
+            @Override
+            public void albumClicked(MusicApi.Album album) {
+                presenter.albumClicked(album);
+            }
+        });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showAlbumTracks(String artistName, String artistUID, String albumName, String albumUid) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ARTIST_NAME_KEY, artistName);
+        bundle.putString(ARTIST_UID_KEY, artistUID);
+        bundle.putString(ALBUM_NAME_KEY, albumName);
+        bundle.putString(ALBUM_UID_KEY, albumUid);
+        AlbumTracksFragment albumTracksFragment = AlbumTracksFragment.newInstance();
+        albumTracksFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, albumTracksFragment, ALBUM_TRACKS_TAG).commit();
     }
 }

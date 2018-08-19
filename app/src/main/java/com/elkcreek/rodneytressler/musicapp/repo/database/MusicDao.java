@@ -66,4 +66,10 @@ public interface MusicDao {
 
     @Query("SELECT * FROM Album WHERE artistartistUID LIKE :artistUid")
     Flowable<List<MusicApi.Album>> getAlbumList(String artistUid);
+
+    @Query("UPDATE Album SET trackresponsetrackList = :trackList WHERE albumUid = :albumUid")
+    void updateAlbumWithAlbumUid(List<MusicApi.Track> trackList, String albumUid);
+
+    @Query("SELECT * FROM Album WHERE albumUid LIKE :albumUid")
+    Flowable<List<MusicApi.Album>> getAlbumByUid(String albumUid);
 }

@@ -1,4 +1,4 @@
-package com.elkcreek.rodneytressler.musicapp.ui.TracksView;
+package com.elkcreek.rodneytressler.musicapp.ui.AllTracksView;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -41,8 +41,9 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACKS_FRAGME
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_UID_KEY;
 
-public class TracksFragment extends Fragment implements TracksView {
-    @Inject TracksPresenter presenter;
+public class AllTracksFragment extends Fragment implements AllTracksView {
+    @Inject
+    AllTracksPresenter presenter;
     @BindView(R.id.recycler_view_tracks)
     protected RecyclerView recyclerView;
     @BindView(R.id.text_tracks_artist)
@@ -54,7 +55,7 @@ public class TracksFragment extends Fragment implements TracksView {
 
     private TracksAdapter adapter;
     private PlayTrackFragment playTrackFragment;
-    private TracksFragment tracksFragment;
+    private AllTracksFragment allTracksFragment;
 
     @OnClick(R.id.image_home_button)
     protected void homeButtonClicked(View view) {
@@ -92,7 +93,7 @@ public class TracksFragment extends Fragment implements TracksView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tracks, container, false);
+        View view = inflater.inflate(R.layout.fragment_all_tracks, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
         presenter.artistNameRetrieved(getArguments().getString(Constants.ARTIST_NAME_KEY));
@@ -103,11 +104,11 @@ public class TracksFragment extends Fragment implements TracksView {
         return view;
     }
 
-    public static TracksFragment newInstance() {
+    public static AllTracksFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        TracksFragment fragment = new TracksFragment();
+        AllTracksFragment fragment = new AllTracksFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -184,8 +185,8 @@ public class TracksFragment extends Fragment implements TracksView {
 
     @Override
     public void reattachTracksFragment() {
-        tracksFragment = (TracksFragment) getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, tracksFragment, TRACKS_FRAGMENT_TAG).commit();
+        allTracksFragment = (AllTracksFragment) getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, allTracksFragment, TRACKS_FRAGMENT_TAG).commit();
     }
 
     @Override

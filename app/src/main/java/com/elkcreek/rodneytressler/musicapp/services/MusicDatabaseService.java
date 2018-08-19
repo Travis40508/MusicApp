@@ -31,5 +31,7 @@ public interface MusicDatabaseService {
     Observable<MusicApi.Track> getTrack(String trackUid);
     Observable<List<MusicApi.Album>> getAlbumList(String artistUid);
     void insertAlbums(List<MusicApi.Album> albumList);
+    void updateAlbumWithAlbumUid(List<MusicApi.Track> trackList, String albumUid);
+    Observable<MusicApi.Album> getAlbumByUid(String albumUid);
 
 }

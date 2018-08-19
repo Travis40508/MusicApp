@@ -72,4 +72,8 @@ public class AlbumsPresenter implements BasePresenter<AlbumsView> {
     public void artistRetrieved(String artistUid) {
         this.artistUid = artistUid;
     }
+
+    public void albumClicked(MusicApi.Album album) {
+        view.showAlbumTracks(album.getArtist().getArtistName(), album.getArtist().getArtistUID(), album.getAlbumName(), album.getAlbumUid());
+    }
 }

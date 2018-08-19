@@ -37,6 +37,9 @@ public interface MusicApi {
     @GET("2.0?method=artist.gettopalbums&format=json")
     Observable<AlbumResponse> getTopAlbums(@Query("api_key") String apiKey, @Query("mbid") String artistUid);
 
+    @GET("2.0/?method=album.getinfo&format=json")
+    Observable<AlbumInfoResponse> getAlbumInfo(@Query("api_key") String apiKey, @Query("mbid") String albumUid);
+
     class SearchResponse {
         @SerializedName("results")
         @Expose
@@ -405,7 +408,11 @@ public interface MusicApi {
         @Expose private String albumUid;
 
         @Embedded(prefix = "artist")
-        private Artist artist;
+        @Expose  private Artist artist;
+
+        @Embedded(prefix = "trackresponse")
+        @SerializedName("tracks")
+        @Expose private TracksResponse tracksResponse;
 
         public List<TrackImage> getTrackImage() {
             return trackImage;
@@ -437,6 +444,14 @@ public interface MusicApi {
 
         public void setPrimaryKey(int primaryKey) {
             this.primaryKey = primaryKey;
+        }
+
+        public TracksResponse getTracksResponse() {
+            return tracksResponse;
+        }
+
+        public void setTracksResponse(TracksResponse tracksResponse) {
+            this.tracksResponse = tracksResponse;
         }
 
         public Artist getArtist() {
@@ -506,6 +521,32 @@ public interface MusicApi {
 
         public List<Album> getAlbumList() {
             return albumList;
+        }
+    }
+
+    class AlbumInfoResponse {
+        @SerializedName("album")
+        @Expose private AlbumInfo albuminfo;
+
+        public AlbumInfo getAlbumInfo() {
+            return albuminfo;
+        }
+    }
+
+    class AlbumInfo {
+
+    }
+
+    class TracksResponse {
+        @SerializedName("track")
+        @Expose private List<Track> trackList;
+
+        public List<Track> getTrackList() {
+            return trackList;
+        }
+
+        public void setTrackList(List<Track> trackList) {
+            this.trackList = trackList;
         }
     }
 }

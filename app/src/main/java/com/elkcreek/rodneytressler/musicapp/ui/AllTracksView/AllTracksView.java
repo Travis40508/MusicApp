@@ -1,11 +1,11 @@
-package com.elkcreek.rodneytressler.musicapp.ui.TracksView;
+package com.elkcreek.rodneytressler.musicapp.ui.AllTracksView;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.utils.BaseView;
 
 import java.util.List;
 
-public interface TracksView extends BaseView {
+public interface AllTracksView extends BaseView {
     void showTopTracks(List<MusicApi.Track> trackList);
 
     void showArtistName(String artistName);
