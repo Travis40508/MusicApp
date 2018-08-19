@@ -22,6 +22,7 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
     private String artistUid;
     private String albumName;
     private String albumUid;
+    private String imageUrl;
 
     @Inject
     public AlbumTracksPresenter(RepositoryService repositoryService) {
@@ -45,9 +46,7 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
 
     private Consumer<List<MusicApi.Track>> updateUiWithTracks() {
         return trackList -> {
-          for(MusicApi.Track item : trackList) {
-              Log.d("@@@@", item.getTrackName());
-          }
+            view.showTrackListForAlbum(trackList, imageUrl);
         };
     }
 
@@ -63,8 +62,8 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
     }
 
     public void onScreenRotated(boolean savedInstanceStateIsNull, boolean albumTracksIsNull) {
-        if(!savedInstanceStateIsNull) {
-            if(!albumTracksIsNull) {
+        if (!savedInstanceStateIsNull) {
+            if (!albumTracksIsNull) {
                 view.reAttachAlbumTracksFragment();
             }
         }
@@ -75,8 +74,13 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
         this.artistUid = artistUid;
     }
 
-    public void albumRetrieved(String albumName, String albumUid) {
+    public void albumRetrieved(String albumName, String albumUid, String imageUrl) {
         this.albumName = albumName;
         this.albumUid = albumUid;
+        this.imageUrl = imageUrl;
+    }
+
+    public void albumClicked(MusicApi.Track track) {
+
     }
 }

@@ -11,6 +11,7 @@ public class Constants {
     public static final String TRACK_NAME_KEY = "track_name_key";
     public static final String ALBUM_NAME_KEY = "album_name_key";
     public static final String ALBUM_UID_KEY = "album_uid_key";
+    public static final String ALBUM_IMAGE_URL_KEY = "album_image_url_key";
     public static final String DATABASE_KEY = "database_key";
     public static final String SHAREDPREFKEY = "shared_pref_key";
     public static final String WEEKOFYEAR = "week_of_year";

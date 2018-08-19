@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUMS_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_IMAGE_URL_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_TRACKS_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_UID_KEY;
@@ -102,14 +103,15 @@ public class AlbumsFragment extends Fragment implements AlbumsView {
     }
 
     @Override
-    public void showAlbumTracks(String artistName, String artistUID, String albumName, String albumUid) {
+    public void showAlbumTracks(String artistName, String artistUID, String albumName, String albumUid, String imageUrl) {
         Bundle bundle = new Bundle();
         bundle.putString(ARTIST_NAME_KEY, artistName);
         bundle.putString(ARTIST_UID_KEY, artistUID);
         bundle.putString(ALBUM_NAME_KEY, albumName);
         bundle.putString(ALBUM_UID_KEY, albumUid);
+        bundle.putString(ALBUM_IMAGE_URL_KEY, imageUrl);
         AlbumTracksFragment albumTracksFragment = AlbumTracksFragment.newInstance();
         albumTracksFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, albumTracksFragment, ALBUM_TRACKS_TAG).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, albumTracksFragment, ALBUM_TRACKS_TAG).addToBackStack(null).commit();
     }
 }

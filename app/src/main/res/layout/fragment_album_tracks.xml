@@ -6,4 +6,11 @@
     android:focusable="true"
     android:background="@android:color/black">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_album_tracks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
 </android.support.constraint.ConstraintLayout>

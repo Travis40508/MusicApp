@@ -410,9 +410,9 @@ public interface MusicApi {
         @Embedded(prefix = "artist")
         @Expose  private Artist artist;
 
-        @Embedded(prefix = "trackresponse")
+        @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
         @SerializedName("tracks")
-        @Expose private TracksResponse tracksResponse;
+        @Expose private List<Track> trackList;
 
         public List<TrackImage> getTrackImage() {
             return trackImage;
@@ -446,12 +446,12 @@ public interface MusicApi {
             this.primaryKey = primaryKey;
         }
 
-        public TracksResponse getTracksResponse() {
-            return tracksResponse;
+        public List<Track> getTrackList() {
+            return trackList;
         }
 
-        public void setTracksResponse(TracksResponse tracksResponse) {
-            this.tracksResponse = tracksResponse;
+        public void setTrackList(List<Track> trackList) {
+            this.trackList = trackList;
         }
 
         public Artist getArtist() {
@@ -534,7 +534,33 @@ public interface MusicApi {
     }
 
     class AlbumInfo {
+        @SerializedName("name")
+        @Expose private String albumName;
 
+        @SerializedName("image")
+        @Expose private List<TrackImage> trackImageList;
+
+        @SerializedName("mbid")
+        @Expose private String artistUid;
+
+        @SerializedName("tracks")
+        @Expose private TracksResponse tracksResponse;
+
+        public String getAlbumName() {
+            return albumName;
+        }
+
+        public List<TrackImage> getTrackImageList() {
+            return trackImageList;
+        }
+
+        public TracksResponse getTracksResponse() {
+            return tracksResponse;
+        }
+
+        public String getArtistUid() {
+            return artistUid;
+        }
     }
 
     class TracksResponse {

@@ -6,6 +6,7 @@ import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -74,6 +75,6 @@ public class AlbumsPresenter implements BasePresenter<AlbumsView> {
     }
 
     public void albumClicked(MusicApi.Album album) {
-        view.showAlbumTracks(album.getArtist().getArtistName(), album.getArtist().getArtistUID(), album.getAlbumName(), album.getAlbumUid());
+        view.showAlbumTracks(album.getArtist().getArtistName(), album.getArtist().getArtistUID(), album.getAlbumName(), album.getAlbumUid(), album.getTrackImage().get(2).getImageUrl());
     }
 }
