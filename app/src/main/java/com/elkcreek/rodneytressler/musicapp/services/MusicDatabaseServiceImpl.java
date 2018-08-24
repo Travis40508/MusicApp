@@ -164,9 +164,9 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
 
     @Override
     public Observable<List<MusicApi.Album>> getAlbumList(String artistUid) {
-        return database.musicDao().getAlbumList(artistUid)
+        return database.musicDao().getAlbumList(artistUid).toObservable()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).toObservable();
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override

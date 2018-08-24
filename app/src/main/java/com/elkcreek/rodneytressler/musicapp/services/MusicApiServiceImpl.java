@@ -63,16 +63,16 @@ public class MusicApiServiceImpl implements MusicApiService {
     public Observable<List<MusicApi.Album>> getTopAlbums(String apiKey, String artistUid) {
         return musicApi.getTopAlbums(apiKey, artistUid)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(albumResponse -> albumResponse.getTopAlbums().getAlbumList());
+                .map(albumResponse -> albumResponse.getTopAlbums().getAlbumList())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<MusicApi.AlbumInfo> getAlbumInfo(String apiKey, String albumUid) {
         return musicApi.getAlbumInfo(apiKey, albumUid)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(MusicApi.AlbumInfoResponse::getAlbumInfo);
+                .map(MusicApi.AlbumInfoResponse::getAlbumInfo)
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override

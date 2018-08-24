@@ -6,6 +6,7 @@ import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class RepositoryServiceImpl implements RepositoryService {
 
@@ -24,12 +25,13 @@ public class RepositoryServiceImpl implements RepositoryService {
         return getArtistTopTracksFromDatabase(artistUid)
                 .flatMap(tracks -> tracks.isEmpty() ? Observable.error(Throwable::new) : Observable.just(tracks))
                 .onErrorResumeNext(Observable.empty())
-                .switchIfEmpty(getArtistTracksFromNetwork(artistUid));
+                .switchIfEmpty(getArtistTracksFromNetwork(artistUid))
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<List<MusicApi.Track>> getArtistTopTracksFromDatabase(String artistUid) {
-        return musicDatabaseService.getTrackList(artistUid);
+        return musicDatabaseService.getTrackList(artistUid).observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
@@ -37,7 +39,8 @@ public class RepositoryServiceImpl implements RepositoryService {
         return musicApiService.getTopTracks(artistUid, Constants.API_KEY)
                 .map(MusicApi.TopTracksResponse::getTopTracks)
                 .map(MusicApi.TopTracks::getTrackList)
-                .doOnNext(musicDatabaseService::insertTopTracks);
+                .doOnNext(musicDatabaseService::insertTopTracks)
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
 
@@ -46,12 +49,13 @@ public class RepositoryServiceImpl implements RepositoryService {
         return getArtistBioFromDatabase(artistUid)
                 .flatMap(artist -> artist.getArtistBio() == null ? Observable.error(Throwable::new) : Observable.just(artist))
                 .onErrorResumeNext(Observable.empty())
-                .switchIfEmpty(getArtistBioFromNetwork(artistUid));
+                .switchIfEmpty(getArtistBioFromNetwork(artistUid))
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<MusicApi.Artist> getArtistBioFromDatabase(String artistUid) {
-        return musicDatabaseService.getArtistBio(artistUid);
+        return musicDatabaseService.getArtistBio(artistUid).observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
@@ -59,7 +63,8 @@ public class RepositoryServiceImpl implements RepositoryService {
         return musicApiService.getArtistBio(artistUid, Constants.API_KEY)
                 .map(MusicApi.ArtistBioResponse::getArtist)
                 .doOnNext(musicDatabaseService::insertBioResponse)
-                .doOnNext(musicDatabaseService::updateTopArtist);
+                .doOnNext(musicDatabaseService::updateTopArtist)
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
@@ -67,31 +72,36 @@ public class RepositoryServiceImpl implements RepositoryService {
         return getArtistBioWithNameFromDatabase(artistName)
                 .flatMap(artist -> artist.getArtistBio() == null ? Observable.error(Throwable::new) : Observable.just(artist))
                 .onErrorResumeNext(Observable.empty())
-                .switchIfEmpty(getArtistBioWithNameFromNetwork(artistName));
+                .switchIfEmpty(getArtistBioWithNameFromNetwork(artistName))
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<MusicApi.Artist> getArtistBioWithNameFromDatabase(String artistName) {
-        return musicDatabaseService.getArtistBioWithName(artistName);
+        return musicDatabaseService.getArtistBioWithName(artistName)
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<MusicApi.Artist> getArtistBioWithNameFromNetwork(String artistName) {
         return musicApiService.getArtistBioWithName(artistName, Constants.API_KEY)
                 .map(MusicApi.ArtistBioResponse::getArtist)
-                .doOnNext(musicDatabaseService::insertBioResponse);
+                .doOnNext(musicDatabaseService::insertBioResponse)
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<List<MusicApi.Artist>> getTopArtists() {
         return getTopArtistsFromDatabase()
                 .onErrorResumeNext(Observable.empty())
-                .switchIfEmpty(getTopArtistsFromNetwork());
+                .switchIfEmpty(getTopArtistsFromNetwork())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<List<MusicApi.Artist>> getTopArtistsFromDatabase() {
-        return musicDatabaseService.getTopArtists();
+        return musicDatabaseService.getTopArtists()
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
@@ -99,7 +109,8 @@ public class RepositoryServiceImpl implements RepositoryService {
         return musicApiService.getTopArtists(Constants.API_KEY)
                 .map(topArtistsResponse -> topArtistsResponse.getArtists().getArtistList())
                 .doOnNext(artists -> Observable.fromIterable(artists)
-                .forEach(musicDatabaseService::insertTopArtist));
+                .forEach(musicDatabaseService::insertTopArtist))
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
@@ -112,32 +123,36 @@ public class RepositoryServiceImpl implements RepositoryService {
         return getTrackFromDatabase(trackUid)
                 .flatMap(track -> track.getWiki() == null ? Observable.error(Throwable::new) : Observable.just(track))
                 .onErrorResumeNext(Observable.empty())
-                .switchIfEmpty(getTrackFromNetwork(trackUid));
+                .switchIfEmpty(getTrackFromNetwork(trackUid))
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<MusicApi.Track> getTrackFromDatabase(String trackUid) {
-        return musicDatabaseService.getTrack(trackUid);
+        return musicDatabaseService.getTrack(trackUid).observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<String> getYoutubeVideoId(String trackUid, String searchQuery) {
         return getYoutubeVideoFromDatabase(trackUid)
                 .onErrorResumeNext(Observable.empty())
-                .switchIfEmpty(getYoutubeVideoFromNetwork(trackUid, searchQuery));
+                .switchIfEmpty(getYoutubeVideoFromNetwork(trackUid, searchQuery))
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<String> getYoutubeVideoFromDatabase(String trackUid) {
         return musicDatabaseService.getTrack(trackUid)
-                .map(MusicApi.Track::getYoutubeId);
+                .map(MusicApi.Track::getYoutubeId)
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<String> getYoutubeVideoFromNetwork(String trackUid, String searchQuery) {
         return youtubeApiService.getYoutubeVideo(Constants.YOUTUBE_API_KEY, searchQuery)
                 .map(youtubeResponse -> youtubeResponse.getYoutubeItemsList().get(0).getYoutubeItemId().getYoutubeVideoId())
-                .doOnNext(videoId -> musicDatabaseService.updateTrackWithYoutubeId(videoId, trackUid));
+                .doOnNext(videoId -> musicDatabaseService.updateTrackWithYoutubeId(videoId, trackUid))
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
@@ -145,18 +160,20 @@ public class RepositoryServiceImpl implements RepositoryService {
         return getAlbumsFromDatabase(artistUid)
                 .flatMap(albumList -> albumList.get(0) == null ? Observable.error(Throwable::new) : Observable.just(albumList))
                 .onErrorResumeNext(Observable.empty())
-                .switchIfEmpty(getAlbumsFromNetwork(artistUid));
+                .switchIfEmpty(getAlbumsFromNetwork(artistUid))
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<List<MusicApi.Album>> getAlbumsFromDatabase(String artistUid) {
-        return musicDatabaseService.getAlbumList(artistUid);
+        return musicDatabaseService.getAlbumList(artistUid).observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<List<MusicApi.Album>> getAlbumsFromNetwork(String artistUid) {
         return musicApiService.getTopAlbums(Constants.API_KEY, artistUid)
-                .doOnNext(musicDatabaseService::insertAlbums);
+                .doOnNext(musicDatabaseService::insertAlbums)
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
@@ -164,27 +181,31 @@ public class RepositoryServiceImpl implements RepositoryService {
         return getTracksFromAlbumFromDatabase(albumUid)
                 .flatMap(trackList -> trackList.get(0) == null ? Observable.error(Throwable::new) : Observable.just(trackList))
                 .onErrorResumeNext(Observable.empty())
-                .switchIfEmpty(getTracksFromAlbumFromNetwork(albumUid));
+                .switchIfEmpty(getTracksFromAlbumFromNetwork(albumUid))
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<List<MusicApi.Track>> getTracksFromAlbumFromDatabase(String albumUid) {
         return musicDatabaseService.getAlbumByUid(albumUid)
-                .map(MusicApi.Album::getTrackList);
+                .map(MusicApi.Album::getTrackList)
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<List<MusicApi.Track>> getTracksFromAlbumFromNetwork(String albumUid) {
         return musicApiService.getAlbumInfo(Constants.API_KEY, albumUid)
                 .map(albumInfo -> albumInfo.getTracksResponse().getTrackList())
-                .doOnNext(trackList -> musicDatabaseService.updateAlbumWithAlbumUid(trackList, albumUid));
+                .doOnNext(trackList -> musicDatabaseService.updateAlbumWithAlbumUid(trackList, albumUid))
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<MusicApi.Track> getTrackWithName(String trackName, String artistName) {
         return musicApiService.getTrackInfoWithName(trackName, artistName, Constants.API_KEY)
                 .map(MusicApi.TrackInfoResponse::getTrack)
-                .doOnNext(musicDatabaseService::updateTrackWithUid);
+                .doOnNext(musicDatabaseService::updateTrackWithUid)
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
 
@@ -192,6 +213,7 @@ public class RepositoryServiceImpl implements RepositoryService {
     public Observable<MusicApi.Track> getTrackFromNetwork(String trackUid) {
         return musicApiService.getTrackInfo(trackUid, Constants.API_KEY)
                 .map(MusicApi.TrackInfoResponse::getTrack)
-                .doOnNext(musicDatabaseService::updateTrack);
+                .doOnNext(musicDatabaseService::updateTrack)
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }
