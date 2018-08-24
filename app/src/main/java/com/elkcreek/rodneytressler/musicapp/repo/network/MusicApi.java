@@ -411,6 +411,7 @@ public interface MusicApi {
         @Expose private String albumUid;
 
         @Embedded(prefix = "artist")
+        @SerializedName("artist")
         @Expose  private Artist artistResponse;
 
         @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)

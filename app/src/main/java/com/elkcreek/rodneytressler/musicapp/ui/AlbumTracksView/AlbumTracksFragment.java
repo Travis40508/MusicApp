@@ -95,7 +95,7 @@ public class AlbumTracksFragment extends Fragment implements AlbumTracksView {
         adapter.setPlayCallback(new AlbumTracksAdapter.AlbumTracksCallback() {
             @Override
             public void onPlayClicked(MusicApi.Track track) {
-                presenter.albumClicked(track);
+                presenter.trackClicked(track);
             }
         });
         recyclerView.setAdapter(adapter);
