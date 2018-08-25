@@ -151,7 +151,6 @@ public class RepositoryServiceImpl implements RepositoryService {
     public Observable<String> getYoutubeVideoFromNetwork(String trackUid, String searchQuery) {
         return youtubeApiService.getYoutubeVideo(Constants.YOUTUBE_API_KEY, searchQuery)
                 .map(youtubeResponse -> youtubeResponse.getYoutubeItemsList().get(0).getYoutubeItemId().getYoutubeVideoId())
-                .doOnNext(videoId -> musicDatabaseService.updateTrackWithYoutubeId(videoId, trackUid))
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
