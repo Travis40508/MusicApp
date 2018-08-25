@@ -107,9 +107,9 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
                 String trackUid = track.getTrackUid();
                 String trackSummary = track.getWiki() != null ? track.getWiki().getTrackSummary() : "";
                 String trackContent = track.getWiki() != null ? track.getWiki().getTrackContent() : "";
-//                List<MusicApi.TrackImage> trackImage = track.getTrackAlbum().getTrackImage();
+                List<MusicApi.TrackImage> trackImage = track.getTrackAlbum().getTrackImage();
 
-                database.musicDao().updateTrack(trackUid, trackSummary, trackContent, null);
+                database.musicDao().updateTrack(trackUid, trackSummary, trackContent, trackImage);
             }
         });
     }

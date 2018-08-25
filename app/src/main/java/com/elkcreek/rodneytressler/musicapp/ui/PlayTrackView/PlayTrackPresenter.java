@@ -89,8 +89,8 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
                 view.showTrackContent(track.getWiki().getTrackContent());
             }
             view.hideLoadingLayout();
-//            view.showTrackAlbumCover(track.getTrackAlbum().getTrackImage().get(2).getImageUrl());
-//            view.showArtistName(track.getArtist().getArtistName());
+            view.showTrackAlbumCover(track.getTrackAlbum().getTrackImage().get(2).getImageUrl());
+            view.showArtistName(track.getArtistInfo().getArtistName());
             view.showTrackName(track.getTrackName());
         };
     }

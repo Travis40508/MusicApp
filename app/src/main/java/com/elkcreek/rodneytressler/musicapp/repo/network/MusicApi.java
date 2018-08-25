@@ -293,6 +293,7 @@ public interface MusicApi {
         @Expose private Wiki wiki;
 
         @Embedded(prefix = "trackalbum")
+        @SerializedName("album")
         @Expose private TrackAlbum trackAlbum;
 
         @Embedded(prefix = "artistinfo")
