@@ -295,6 +295,10 @@ public interface MusicApi {
         @Embedded(prefix = "trackalbum")
         @Expose private TrackAlbum trackAlbum;
 
+        @Embedded(prefix = "artistinfo")
+        @SerializedName("artist")
+        @Expose private ArtistInfo artistInfo;
+
         private String youtubeId;
 
 
@@ -352,6 +356,27 @@ public interface MusicApi {
 
         public void setTrackUrl(String trackUrl) {
             this.trackUrl = trackUrl;
+        }
+
+        public ArtistInfo getArtistInfo() {
+            return artistInfo;
+        }
+
+        public void setArtistInfo(ArtistInfo artistInfo) {
+            this.artistInfo = artistInfo;
+        }
+    }
+
+    class ArtistInfo {
+        @SerializedName("name")
+        @Expose private String artistName;
+
+        public String getArtistName() {
+            return artistName;
+        }
+
+        public void setArtistName(String artistName) {
+            this.artistName = artistName;
         }
     }
 
