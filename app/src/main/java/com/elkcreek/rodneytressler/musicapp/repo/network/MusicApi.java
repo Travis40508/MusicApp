@@ -293,7 +293,12 @@ public interface MusicApi {
         @Expose private Wiki wiki;
 
         @Embedded(prefix = "trackalbum")
+        @SerializedName("album")
         @Expose private TrackAlbum trackAlbum;
+
+        @Embedded(prefix = "artist")
+        @SerializedName("artist")
+        @Expose private TrackArtist trackArtist;
 
         private String youtubeId;
 
@@ -353,9 +358,31 @@ public interface MusicApi {
         public void setTrackUrl(String trackUrl) {
             this.trackUrl = trackUrl;
         }
+
+        public TrackArtist getTrackArtist() {
+            return trackArtist;
+        }
+
+        public void setTrackArtist(TrackArtist trackArtist) {
+            this.trackArtist = trackArtist;
+        }
+    }
+
+    class TrackArtist {
+        @SerializedName("name")
+        @Expose private String artistName;
+
+        public String getArtistName() {
+            return artistName;
+        }
+
+        public void setArtistName(String artistName) {
+            this.artistName = artistName;
+        }
     }
 
     class TrackAlbum {
+
         @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
         @SerializedName("image")
         @Expose
@@ -615,9 +642,6 @@ public interface MusicApi {
         }
     }
 
-    //TODO write logic to have this object stored in database, instead of arbitrarily trying to store an array of albums.
-    //TODO also figure out why you're unable to Update Tracks with their UID once obtained via name and artist name
-    //TODO TrackInfo can't return a regular track, but maybe we can use the mbid of what it does return to update our regular track and return that.
     @Entity
     class TopAlbums {
         @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
