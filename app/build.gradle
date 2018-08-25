@@ -30,6 +30,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    //Support
+    implementation 'com.android.support:design:28.0.0-rc01'
+
 
     //Butterknife
     implementation 'com.jakewharton:butterknife:8.8.1'
