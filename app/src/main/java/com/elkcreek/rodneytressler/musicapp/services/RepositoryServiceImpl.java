@@ -215,6 +215,7 @@ public class RepositoryServiceImpl implements RepositoryService {
         return musicApiService.getTrackInfo(trackUid, Constants.API_KEY)
                 .map(MusicApi.TrackInfoResponse::getTrackInfo)
                 .doOnNext(musicDatabaseService::updateTrack)
+                .doOnNext(musicDatabaseService::insertTrackInfo)
                 .observeOn(AndroidSchedulers.mainThread());
     }
 }
