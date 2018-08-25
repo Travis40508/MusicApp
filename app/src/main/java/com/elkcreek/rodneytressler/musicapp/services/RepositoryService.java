@@ -28,9 +28,9 @@ public interface RepositoryService {
     void deleteTopArtists();
 
     //Track
-    Observable<MusicApi.Track> getTrack(String trackUid);
-    Observable<MusicApi.Track> getTrackFromNetwork(String trackUid);
-    Observable<MusicApi.Track> getTrackFromDatabase(String trackUid);
+    Observable<MusicApi.TrackInfo> getTrack(String trackUid);
+    Observable<MusicApi.TrackInfo> getTrackFromNetwork(String trackUid);
+    Observable<MusicApi.TrackInfo> getTrackFromDatabase(String trackUid);
 
     //Youtube
     Observable<String> getYoutubeVideoId(String trackUid, String searchQuery);
@@ -45,5 +45,5 @@ public interface RepositoryService {
     Observable<List<MusicApi.Track>> getTracksFromAlbumFromDatabase(String albumUid);
     Observable<List<MusicApi.Track>> getTracksFromAlbumFromNetwork(String albumUid);
 
-    Observable<MusicApi.Track> getTrackWithName(String trackName, String artistName);
+    Observable<MusicApi.TrackInfo> getTrackWithName(String trackName, String artistName);
 }

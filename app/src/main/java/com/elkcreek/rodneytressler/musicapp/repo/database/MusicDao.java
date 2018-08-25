@@ -75,4 +75,10 @@ public interface MusicDao {
 
     @Query("SELECT * FROM Album WHERE albumUid LIKE :albumUid")
     Flowable<List<MusicApi.Album>> getAlbumByUid(String albumUid);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertTrackInfo(MusicApi.TrackInfo trackInfo);
+
+    @Query("SELECT * FROM TrackInfo WHERE trackUid LIKE :trackUid")
+    Flowable<List<MusicApi.TrackInfo>> getTrackInfo(String trackUid);
 }

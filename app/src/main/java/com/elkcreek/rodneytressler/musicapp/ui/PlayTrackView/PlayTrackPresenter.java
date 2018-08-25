@@ -81,7 +81,7 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
         compositeDisposable.add(repositoryService.getTrack(trackUid).subscribe(updateUiWithTrack(), updateUiOnError()));
     }
 
-    private Consumer<MusicApi.Track> updateUiWithTrack() {
+    private Consumer<MusicApi.TrackInfo> updateUiWithTrack() {
         return track -> {
             if (!isExpanded) {
                 view.showTrackSummary(track.getWiki().getTrackSummary());
@@ -89,8 +89,8 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
                 view.showTrackContent(track.getWiki().getTrackContent());
             }
             view.hideLoadingLayout();
-            view.showTrackAlbumCover(track.getAlbum().getTrackImage().get(2).getImageUrl());
-            view.showArtistName(track.getArtist().getArtistName());
+//            view.showTrackAlbumCover(track.getTrackAlbum().getTrackImage().get(2).getImageUrl());
+//            view.showArtistName(track.getArtist().getArtistName());
             view.showTrackName(track.getTrackName());
         };
     }

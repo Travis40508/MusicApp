@@ -273,6 +273,102 @@ public interface MusicApi {
         }
     }
 
+    @Entity
+    class TrackInfo {
+
+        @PrimaryKey(autoGenerate = true)
+        private int primaryKey;
+
+        @SerializedName("mbid")
+        @Expose private String trackUid;
+
+        @SerializedName("url")
+        @Expose private String trackUrl;
+
+        @SerializedName("name")
+        @Expose private String trackName;
+
+        @Embedded(prefix = "wiki")
+        @SerializedName("wiki")
+        @Expose private Wiki wiki;
+
+        @Embedded(prefix = "trackalbum")
+        @Expose private TrackAlbum trackAlbum;
+
+        private String youtubeId;
+
+
+        public String getYoutubeId() {
+            return youtubeId;
+        }
+
+        public void setYoutubeId(String youtubeId) {
+            this.youtubeId = youtubeId;
+        }
+
+        public String getTrackUid() {
+            return trackUid;
+        }
+
+        public String getTrackName() {
+            return trackName;
+        }
+
+        public Wiki getWiki() {
+            return wiki;
+        }
+
+        public TrackAlbum getTrackAlbum() {
+            return trackAlbum;
+        }
+
+        public void setTrackUid(String trackUid) {
+            this.trackUid = trackUid;
+        }
+
+        public void setTrackName(String trackName) {
+            this.trackName = trackName;
+        }
+
+        public void setWiki(Wiki wiki) {
+            this.wiki = wiki;
+        }
+
+        public void setTrackAlbum(TrackAlbum trackAlbum) {
+            this.trackAlbum = trackAlbum;
+        }
+
+        public int getPrimaryKey() {
+            return primaryKey;
+        }
+
+        public void setPrimaryKey(int primaryKey) {
+            this.primaryKey = primaryKey;
+        }
+
+        public String getTrackUrl() {
+            return trackUrl;
+        }
+
+        public void setTrackUrl(String trackUrl) {
+            this.trackUrl = trackUrl;
+        }
+    }
+
+    class TrackAlbum {
+        @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
+        @SerializedName("image")
+        @Expose
+        private List<TrackImage> trackImage;
+
+        public List<TrackImage> getTrackImage() {
+            return trackImage;
+        }
+
+        public void setTrackImage(List<TrackImage> trackImage) {
+            this.trackImage = trackImage;
+        }
+    }
 
     @Entity
     class Track {
@@ -386,12 +482,13 @@ public interface MusicApi {
 
     class TrackInfoResponse {
         @SerializedName("track")
-        @Expose private Track track;
+        @Expose private TrackInfo trackInfo;
 
-        public Track getTrack() {
-            return track;
+        public TrackInfo getTrackInfo() {
+            return trackInfo;
         }
     }
+
 
     @Entity
     class Album {
@@ -520,6 +617,7 @@ public interface MusicApi {
 
     //TODO write logic to have this object stored in database, instead of arbitrarily trying to store an array of albums.
     //TODO also figure out why you're unable to Update Tracks with their UID once obtained via name and artist name
+    //TODO TrackInfo can't return a regular track, but maybe we can use the mbid of what it does return to update our regular track and return that.
     @Entity
     class TopAlbums {
         @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)

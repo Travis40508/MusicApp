@@ -100,16 +100,16 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     }
 
     @Override
-    public void updateTrack(MusicApi.Track track) {
+    public void updateTrack(MusicApi.TrackInfo track) {
         Schedulers.io().scheduleDirect(new Runnable() {
             @Override
             public void run() {
                 String trackUid = track.getTrackUid();
                 String trackSummary = track.getWiki() != null ? track.getWiki().getTrackSummary() : "";
                 String trackContent = track.getWiki() != null ? track.getWiki().getTrackContent() : "";
-                List<MusicApi.TrackImage> trackImage = track.getAlbum().getTrackImage();
+//                List<MusicApi.TrackImage> trackImage = track.getTrackAlbum().getTrackImage();
 
-                database.musicDao().updateTrack(trackUid, trackSummary, trackContent, trackImage);
+                database.musicDao().updateTrack(trackUid, trackSummary, trackContent, null);
             }
         });
     }
@@ -198,7 +198,7 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     }
 
     @Override
-    public void updateTrackWithUid(MusicApi.Track track) {
+    public void updateTrackWithUid(MusicApi.TrackInfo track) {
         String trackUid = track.getTrackUid();
         String trackUrl = track.getTrackUrl();
 
@@ -208,5 +208,25 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
                 database.musicDao().updateTrackWithUid(trackUid, trackUrl);
             }
         });
+    }
+
+    @Override
+    public void insertTrackInfo(MusicApi.TrackInfo trackInfo) {
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                database.musicDao().insertTrackInfo(trackInfo);
+            }
+        });
+    }
+
+    //TODO figure out why this isn't being called and fix image NPEs (also stop passing in TESTING as the song name)
+
+    @Override
+    public Observable<MusicApi.TrackInfo> getTrackInfo(String trackUid) {
+        return database.musicDao().getTrackInfo(trackUid)
+                .subscribeOn(Schedulers.io())
+                .map(trackInfos -> trackInfos.get(0)).toObservable()
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

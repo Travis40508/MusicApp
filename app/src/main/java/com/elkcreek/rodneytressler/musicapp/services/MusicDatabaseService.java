@@ -22,7 +22,7 @@ public interface MusicDatabaseService {
     Observable<List<MusicApi.Artist>> getTopArtists();
 
     void updateTopArtist(MusicApi.Artist artist);
-    void updateTrack(MusicApi.Track track);
+    void updateTrack(MusicApi.TrackInfo trackInfo);
     void updateTrackWithYoutubeId(String youtubeId, String trackUid);
     void deleteTopArtists();
     void deleteTrack(String trackUid);
@@ -33,6 +33,8 @@ public interface MusicDatabaseService {
     void insertAlbums(List<MusicApi.Album> albumList);
     void updateAlbumWithAlbumUid(List<MusicApi.Track> trackList, String albumUid);
     Observable<MusicApi.Album> getAlbumByUid(String albumUid);
-    void updateTrackWithUid(MusicApi.Track track);
+    void updateTrackWithUid(MusicApi.TrackInfo trackInfo);
+    void insertTrackInfo(MusicApi.TrackInfo trackInfo);
+    Observable<MusicApi.TrackInfo> getTrackInfo(String trackUid);
 
 }

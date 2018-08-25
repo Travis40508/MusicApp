@@ -119,7 +119,7 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
-    public Observable<MusicApi.Track> getTrack(String trackUid) {
+    public Observable<MusicApi.TrackInfo> getTrack(String trackUid) {
         return getTrackFromDatabase(trackUid)
                 .flatMap(track -> track.getWiki() == null ? Observable.error(Throwable::new) : Observable.just(track))
                 .onErrorResumeNext(Observable.empty())
@@ -128,8 +128,8 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
-    public Observable<MusicApi.Track> getTrackFromDatabase(String trackUid) {
-        return musicDatabaseService.getTrack(trackUid).observeOn(AndroidSchedulers.mainThread());
+    public Observable<MusicApi.TrackInfo> getTrackFromDatabase(String trackUid) {
+        return musicDatabaseService.getTrackInfo(trackUid).observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
@@ -201,18 +201,19 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
-    public Observable<MusicApi.Track> getTrackWithName(String trackName, String artistName) {
+    public Observable<MusicApi.TrackInfo> getTrackWithName(String trackName, String artistName) {
         return musicApiService.getTrackInfoWithName(trackName, artistName, Constants.API_KEY)
-                .map(MusicApi.TrackInfoResponse::getTrack)
+                .map(MusicApi.TrackInfoResponse::getTrackInfo)
                 .doOnNext(musicDatabaseService::updateTrackWithUid)
+                .doOnNext(musicDatabaseService::insertTrackInfo)
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
 
     @Override
-    public Observable<MusicApi.Track> getTrackFromNetwork(String trackUid) {
+    public Observable<MusicApi.TrackInfo> getTrackFromNetwork(String trackUid) {
         return musicApiService.getTrackInfo(trackUid, Constants.API_KEY)
-                .map(MusicApi.TrackInfoResponse::getTrack)
+                .map(MusicApi.TrackInfoResponse::getTrackInfo)
                 .doOnNext(musicDatabaseService::updateTrack)
                 .observeOn(AndroidSchedulers.mainThread());
     }

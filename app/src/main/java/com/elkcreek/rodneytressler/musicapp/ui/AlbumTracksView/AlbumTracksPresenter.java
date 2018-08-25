@@ -88,9 +88,9 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
         }
     }
 
-    private Consumer<MusicApi.Track> updateUiWithTrack() {
+    private Consumer<MusicApi.TrackInfo> updateUiWithTrack() {
         return track -> {
-            view.showPlayTracksFragment(track.getTrackName(), track.getTrackUid(), track.getArtist().getArtistName());
+            view.showPlayTracksFragment(track.getTrackName(), track.getTrackUid(), "TESTING");
         };
     }
 }
