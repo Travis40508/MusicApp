@@ -201,10 +201,10 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
-    public Observable<MusicApi.TrackInfo> getTrackWithName(String trackName, String artistName) {
+    public Observable<MusicApi.TrackInfo> getTrackWithName(String trackName, String artistName, List<MusicApi.Track> trackList, String albumUid) {
         return musicApiService.getTrackInfoWithName(trackName, artistName, Constants.API_KEY)
                 .map(MusicApi.TrackInfoResponse::getTrackInfo)
-                .doOnNext(musicDatabaseService::updateTrackWithUid)
+                .doOnNext(trackInfo -> musicDatabaseService.updateTrackWithUid(trackInfo, trackList, albumUid))
                 .doOnNext(musicDatabaseService::insertTrackInfo)
                 .observeOn(AndroidSchedulers.mainThread());
     }
