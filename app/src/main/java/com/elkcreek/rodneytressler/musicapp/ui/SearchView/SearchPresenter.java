@@ -63,6 +63,7 @@ public class SearchPresenter implements BasePresenter<SearchView> {
     private Consumer<MusicApi.SearchResponse> getSearchResponse() {
         return searchResponse -> {
             view.hideProgressBar();
+            view.clearList();
             view.loadArtists(searchResponse.getSearchResults().getArtistMatches().getArtistList());
         };
     }
@@ -103,9 +104,11 @@ public class SearchPresenter implements BasePresenter<SearchView> {
             disposable = new CompositeDisposable();
         }
 
+
         if (!adapterHasItems) {
             view.showProgressBar();
         }
+
         if (!artistSearchText.isEmpty()) {
             view.showSearchTextValue(artistSearchText);
             disposable.add(getArtistSearchResults(artistSearchText)

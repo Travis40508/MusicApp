@@ -59,6 +59,11 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         notifyDataSetChanged();
     }
 
+    public void clearList() {
+        artistList.clear();
+        notifyDataSetChanged();
+    }
+
     public class ArtistViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.image_artist_item)
