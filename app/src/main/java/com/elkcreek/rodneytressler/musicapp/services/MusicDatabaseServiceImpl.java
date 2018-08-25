@@ -5,9 +5,7 @@ import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -198,14 +196,20 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     }
 
     @Override
-    public void updateTrackWithUid(MusicApi.TrackInfo track) {
+    public void updateTrackWithUid(MusicApi.TrackInfo track, List<MusicApi.Track> trackList, String albumUid) {
         String trackUid = track.getTrackUid();
         String trackUrl = track.getTrackUrl();
+
+        for(MusicApi.Track item : trackList) {
+            if(item.getTrackUrl().equals(trackUrl)) {
+                item.setTrackUid(trackUid);
+            }
+        }
 
         Schedulers.io().scheduleDirect(new Runnable() {
             @Override
             public void run() {
-                database.musicDao().updateTrackWithUid(trackUid, trackUrl);
+                database.musicDao().updateTrackWithUid(trackList, albumUid);
             }
         });
     }
@@ -219,7 +223,6 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
             }
         });
     }
-
 
     @Override
     public Observable<MusicApi.TrackInfo> getTrackInfo(String trackUid) {

@@ -23,6 +23,7 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
     private String albumName;
     private String albumUid;
     private String imageUrl;
+    private List<MusicApi.Track> albumTracks;
 
     @Inject
     public AlbumTracksPresenter(RepositoryService repositoryService) {
@@ -46,6 +47,7 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
 
     private Consumer<List<MusicApi.Track>> updateUiWithTracks() {
         return trackList -> {
+            this.albumTracks = trackList;
             view.showTrackListForAlbum(trackList, imageUrl);
         };
     }
@@ -82,7 +84,7 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
 
     public void trackClicked(MusicApi.Track track) {
         if(track.getTrackUid() == null) {
-            disposable.add(repositoryService.getTrackWithName(track.getTrackName(), track.getArtist().getArtistName()).subscribe(updateUiWithTrack(), updateUiWithError()));
+            disposable.add(repositoryService.getTrackWithName(track.getTrackName(), track.getArtist().getArtistName(), albumTracks, albumUid).subscribe(updateUiWithTrack(), updateUiWithError()));
         } else {
             view.showPlayTracksFragment(track.getTrackName(), track.getTrackUid(), track.getArtist().getArtistName());
         }
@@ -90,7 +92,7 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
 
     private Consumer<MusicApi.TrackInfo> updateUiWithTrack() {
         return track -> {
-            view.showPlayTracksFragment(track.getTrackName(), track.getTrackUid(), "TESTING");
+            view.showPlayTracksFragment(track.getTrackName(), track.getTrackUid(), track.getArtistInfo().getArtistName());
         };
     }
 }

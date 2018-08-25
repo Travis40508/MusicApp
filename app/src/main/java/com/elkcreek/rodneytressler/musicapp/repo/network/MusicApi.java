@@ -296,9 +296,9 @@ public interface MusicApi {
         @SerializedName("album")
         @Expose private TrackAlbum trackAlbum;
 
-        @Embedded(prefix = "artist")
+        @Embedded(prefix = "artistinfo")
         @SerializedName("artist")
-        @Expose private TrackArtist trackArtist;
+        @Expose private ArtistInfo artistInfo;
 
         private String youtubeId;
 
@@ -359,16 +359,16 @@ public interface MusicApi {
             this.trackUrl = trackUrl;
         }
 
-        public TrackArtist getTrackArtist() {
-            return trackArtist;
+        public ArtistInfo getArtistInfo() {
+            return artistInfo;
         }
 
-        public void setTrackArtist(TrackArtist trackArtist) {
-            this.trackArtist = trackArtist;
+        public void setArtistInfo(ArtistInfo artistInfo) {
+            this.artistInfo = artistInfo;
         }
     }
 
-    class TrackArtist {
+    class ArtistInfo {
         @SerializedName("name")
         @Expose private String artistName;
 
@@ -382,7 +382,6 @@ public interface MusicApi {
     }
 
     class TrackAlbum {
-
         @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
         @SerializedName("image")
         @Expose

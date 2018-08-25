@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,10 +48,10 @@ public class SearchFragment extends Fragment implements SearchView {
     protected RecyclerView recyclerView;
     @BindView(R.id.input_artist_search)
     protected EditText artistInput;
-    @BindView(R.id.progress_bar)
-    protected ProgressBar progressBar;
     @BindView(R.id.text_search_value)
     protected TextView searchText;
+    @BindView(R.id.loading_layout)
+    protected FrameLayout loadingLayout;
     private ArtistAdapter adapter;
     private AllTracksFragment allTracksFragment;
     private BioFragment bioFragment;
@@ -127,12 +128,12 @@ public class SearchFragment extends Fragment implements SearchView {
 
     @Override
     public void showProgressBar() {
-        progressBar.setVisibility(View.VISIBLE);
+        loadingLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgressBar() {
-        progressBar.setVisibility(View.GONE);
+        loadingLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -168,6 +169,11 @@ public class SearchFragment extends Fragment implements SearchView {
     @Override
     public void showErrorLoadingToast() {
         Toast.makeText(getContext(), R.string.network_error_text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void clearList() {
+        adapter.clearList();
     }
 
     @Override

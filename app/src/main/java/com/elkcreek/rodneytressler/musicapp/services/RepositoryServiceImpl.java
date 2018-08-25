@@ -151,7 +151,6 @@ public class RepositoryServiceImpl implements RepositoryService {
     public Observable<String> getYoutubeVideoFromNetwork(String trackUid, String searchQuery) {
         return youtubeApiService.getYoutubeVideo(Constants.YOUTUBE_API_KEY, searchQuery)
                 .map(youtubeResponse -> youtubeResponse.getYoutubeItemsList().get(0).getYoutubeItemId().getYoutubeVideoId())
-                .doOnNext(videoId -> musicDatabaseService.updateTrackWithYoutubeId(videoId, trackUid))
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
@@ -201,10 +200,10 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
-    public Observable<MusicApi.TrackInfo> getTrackWithName(String trackName, String artistName) {
+    public Observable<MusicApi.TrackInfo> getTrackWithName(String trackName, String artistName, List<MusicApi.Track> trackList, String albumUid) {
         return musicApiService.getTrackInfoWithName(trackName, artistName, Constants.API_KEY)
                 .map(MusicApi.TrackInfoResponse::getTrackInfo)
-                .doOnNext(musicDatabaseService::updateTrackWithUid)
+                .doOnNext(trackInfo -> musicDatabaseService.updateTrackWithUid(trackInfo, trackList, albumUid))
                 .doOnNext(musicDatabaseService::insertTrackInfo)
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -215,6 +214,7 @@ public class RepositoryServiceImpl implements RepositoryService {
         return musicApiService.getTrackInfo(trackUid, Constants.API_KEY)
                 .map(MusicApi.TrackInfoResponse::getTrackInfo)
                 .doOnNext(musicDatabaseService::updateTrack)
+                .doOnNext(musicDatabaseService::insertTrackInfo)
                 .observeOn(AndroidSchedulers.mainThread());
     }
 }

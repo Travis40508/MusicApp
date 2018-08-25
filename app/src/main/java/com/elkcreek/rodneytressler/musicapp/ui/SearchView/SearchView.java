@@ -23,4 +23,6 @@ public interface SearchView extends BaseView {
     void showErrorLoadingToast();
 
     void showMainArtistScreen(MusicApi.Artist artist);
+
+    void clearList();
 }
