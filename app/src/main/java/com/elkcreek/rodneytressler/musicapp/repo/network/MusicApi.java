@@ -641,9 +641,6 @@ public interface MusicApi {
         }
     }
 
-    //TODO write logic to have this object stored in database, instead of arbitrarily trying to store an array of albums.
-    //TODO also figure out why you're unable to Update Tracks with their UID once obtained via name and artist name
-    //TODO TrackInfo can't return a regular track, but maybe we can use the mbid of what it does return to update our regular track and return that.
     @Entity
     class TopAlbums {
         @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)

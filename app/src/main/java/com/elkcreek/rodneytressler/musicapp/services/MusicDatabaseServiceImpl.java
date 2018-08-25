@@ -224,8 +224,6 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
         });
     }
 
-    //TODO figure out why this isn't being called and fix image NPEs (also stop passing in TESTING as the song name)
-
     @Override
     public Observable<MusicApi.TrackInfo> getTrackInfo(String trackUid) {
         return database.musicDao().getTrackInfo(trackUid)
