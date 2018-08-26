@@ -9,8 +9,20 @@
     <FrameLayout
         android:id="@+id/youtube_fragment_holder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="200dp">
 
+
+        <TextView
+            android:id="@+id/image_no_preview_available"
+            android:layout_width="250dp"
+            android:layout_height="200dp"
+            android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:visibility="gone"
+            android:text="@string/no_preview_available"/>
     </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

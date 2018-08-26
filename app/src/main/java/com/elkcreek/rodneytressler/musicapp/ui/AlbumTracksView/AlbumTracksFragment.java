@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.PlayTrackView.PlayTrackFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.AlbumTracksAdapter;
 import com.elkcreek.rodneytressler.musicapp.utils.TracksAdapter;
 
@@ -32,6 +34,7 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_UID_KEY
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.PLAY_TRACK_FRAGMENT_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_MAIN_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_UID_KEY;
 
@@ -99,7 +102,7 @@ public class AlbumTracksFragment extends Fragment implements AlbumTracksView {
             }
         });
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         adapter.notifyDataSetChanged();
     }
 
@@ -109,8 +112,8 @@ public class AlbumTracksFragment extends Fragment implements AlbumTracksView {
         bundle.putString(TRACK_NAME_KEY, trackName);
         bundle.putString(ARTIST_NAME_KEY, artistName);
         bundle.putString(TRACK_UID_KEY, trackUid);
-        playTrackFragment = PlayTrackFragment.newInstance();
-        playTrackFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, playTrackFragment, PLAY_TRACK_FRAGMENT_TAG).addToBackStack(null).commit();
+        TrackMainFragment trackMainFragment = TrackMainFragment.newInstance();
+        trackMainFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, trackMainFragment, TRACK_MAIN_TAG).addToBackStack(null).commit();
     }
 }

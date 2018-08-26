@@ -30,8 +30,8 @@ public class AlbumBioFragment extends Fragment implements AlbumBioView {
     @Inject protected AlbumBioPresenter presenter;
     @BindView(R.id.image_album_bio)
     protected ImageView albumImage;
-    @BindView(R.id.text_bio_album_name)
-    protected TextView albumName;
+//    @BindView(R.id.text_bio_album_name)
+//    protected TextView albumName;
     @BindView(R.id.text_album_bio)
     protected TextView albumBio;
     @BindView(R.id.loading_layout)
@@ -98,7 +98,7 @@ public class AlbumBioFragment extends Fragment implements AlbumBioView {
 
     @Override
     public void showAlbumName(String albumName) {
-        this.albumName.setText(albumName);
+//        this.albumName.setText(albumName);
     }
 
     @Override

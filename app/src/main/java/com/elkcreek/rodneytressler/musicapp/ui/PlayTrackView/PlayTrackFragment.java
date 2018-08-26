@@ -38,10 +38,6 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     @Inject protected PlayTrackPresenter presenter;
     @BindView(R.id.loading_layout)
     protected FrameLayout loadingLayout;
-    @BindView(R.id.text_track_artist_name)
-    protected TextView trackArtistName;
-    @BindView(R.id.text_track_name)
-    protected TextView trackName;
     @BindView(R.id.image_album_cover)
     protected ImageView albumCover;
     @BindView(R.id.text_track_bio)
@@ -50,8 +46,6 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     protected LinearLayout readMoreLayout;
     @BindView(R.id.text_read_more)
     protected TextView readMoreText;
-    @BindView(R.id.image_no_preview_available)
-    protected TextView noPreviewAvailable;
     private YouTubePlayerSupportFragment youTubePlayerSupportFragment;
 
 //    @OnClick(R.id.image_home_button)
@@ -63,8 +57,8 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     @OnClick(R.id.image_album_cover)
     protected void onImageAlbumCoverClicked(View view) {presenter.imageAlbumCoverClicked();}
 
-    @OnClick(R.id.image_no_preview_available)
-    protected void onNoPreviewAvailableClicked(View view) {presenter.imageAlbumCoverClicked();}
+//    @OnClick(R.id.image_no_preview_available)
+//    protected void onNoPreviewAvailableClicked(View view) {presenter.imageAlbumCoverClicked();}
 
     private PlayTrackFragment playTrackFragment;
 
@@ -137,12 +131,12 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
 
     @Override
     public void showArtistName(String artistName) {
-        trackArtistName.setText(artistName);
+//        trackArtistName.setText(artistName);
     }
 
     @Override
     public void showTrackName(String trackName) {
-        this.trackName.setText(trackName);
+//        this.trackName.setText(trackName);
     }
 
     @Override
@@ -152,24 +146,24 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
 
     @Override
     public void showVideo(String videoId) {
-        youTubePlayerSupportFragment = YouTubePlayerSupportFragment.newInstance();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.youtube_fragment_holder, youTubePlayerSupportFragment, YOUTUBE_TAG).commit();
-        youTubePlayerSupportFragment.initialize(Constants.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
-            @Override
-            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
-                if(!wasRestored) {
-                    youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
-                    youTubePlayer.loadVideo(videoId);
-                    youTubePlayer.play();
-                }
-
-            }
-
-            @Override
-            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-
-            }
-        });
+//        youTubePlayerSupportFragment = YouTubePlayerSupportFragment.newInstance();
+//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.youtube_fragment_holder, youTubePlayerSupportFragment, YOUTUBE_TAG).commit();
+//        youTubePlayerSupportFragment.initialize(Constants.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+//            @Override
+//            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
+//                if(!wasRestored) {
+//                    youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+//                    youTubePlayer.loadVideo(videoId);
+//                    youTubePlayer.play();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+//
+//            }
+//        });
     }
 
     @Override
@@ -204,7 +198,7 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
 
     @Override
     public void showNoPreviewAvailable() {
-        noPreviewAvailable.setVisibility(View.VISIBLE);
+//        noPreviewAvailable.setVisibility(View.VISIBLE);
     }
 
     @Override

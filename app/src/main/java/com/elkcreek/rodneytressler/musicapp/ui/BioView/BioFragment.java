@@ -45,8 +45,8 @@ public class BioFragment extends Fragment implements BioView {
     protected ImageView artistBioImage;
     @BindView(R.id.text_artist_bio)
     protected TextView artistBioText;
-    @BindView(R.id.text_bio_artist_name)
-    protected TextView artistName;
+//    @BindView(R.id.text_bio_artist_name)
+//    protected TextView artistName;
     @BindView(R.id.loading_layout)
     protected FrameLayout loadingLayout;
     @BindView(R.id.text_read_more)
@@ -62,10 +62,10 @@ public class BioFragment extends Fragment implements BioView {
         presenter.readMoreClicked(readMoreText.getText().toString());
     }
 
-    @OnClick(R.id.bio_text_view_tracks)
-    protected void onViewTracksClicked(View view) {
-        presenter.viewTracksClicked();
-    }
+//    @OnClick(R.id.bio_text_view_tracks)
+//    protected void onViewTracksClicked(View view) {
+//        presenter.viewTracksClicked();
+//    }
 
 //    @OnClick(R.id.image_home_button)
 //    protected void homeButtonClicked(View view) {
@@ -134,7 +134,7 @@ public class BioFragment extends Fragment implements BioView {
 
     @Override
     public void showArtistName(String artistName) {
-        this.artistName.setText(artistName);
+//        this.artistName.setText(artistName);
     }
 
 

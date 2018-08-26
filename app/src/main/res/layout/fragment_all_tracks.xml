@@ -16,15 +16,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/text_tracks_artist"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="24sp"
-        android:textColor="@android:color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/input_track_search"
@@ -35,21 +26,11 @@
         android:layout_margin="10dp"
         android:textColorHint="@android:color/white"
         android:textColor="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@id/text_tracks_artist"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/text_view_bio"
-        app:layout_constraintTop_toBottomOf="@id/input_track_search"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="20sp"
-        android:textColor="@android:color/white"
-        android:text="View Artist Bio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/tracks_search_value"
@@ -60,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/text_view_bio"
+        app:layout_constraintTop_toBottomOf="@id/input_track_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

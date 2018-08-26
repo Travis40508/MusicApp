@@ -91,7 +91,7 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
                 if(!wasRestored) {
                     youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
                     youTubePlayer.loadVideo(videoId);
-                    youTubePlayer.play();
+                    youTubePlayer.pause();
                 }
 
             }
