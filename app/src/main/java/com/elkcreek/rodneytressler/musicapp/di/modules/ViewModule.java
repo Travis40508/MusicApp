@@ -10,6 +10,7 @@ import com.elkcreek.rodneytressler.musicapp.ui.BioView.BioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity;
 import com.elkcreek.rodneytressler.musicapp.ui.PlayTrackView.PlayTrackFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.SearchView.SearchFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.YoutubeView.YoutubeFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -46,4 +47,7 @@ public abstract class ViewModule {
 
     @ContributesAndroidInjector
     abstract AlbumBioFragment contributesAlbumBioFragmentInjector();
+
+    @ContributesAndroidInjector
+    abstract YoutubeFragment contributesYoutubeFragmentInjector();
 }
