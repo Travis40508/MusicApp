@@ -231,4 +231,22 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
                 .map(trackInfos -> trackInfos.get(0)).toObservable()
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    @Override
+    public Observable<MusicApi.AlbumInfo> getAlbumInfo(String albumUid) {
+        return database.musicDao().getAlbumInfo(albumUid)
+                .subscribeOn(Schedulers.io())
+                .map(albumInfos -> albumInfos.get(0)).toObservable()
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void insertAlbumInfo(MusicApi.AlbumInfo albumInfo) {
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                database.musicDao().insertAlbumInfo(albumInfo);
+            }
+        });
+    }
 }

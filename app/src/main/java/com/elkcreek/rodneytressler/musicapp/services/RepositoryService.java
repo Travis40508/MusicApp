@@ -46,4 +46,9 @@ public interface RepositoryService {
     Observable<List<MusicApi.Track>> getTracksFromAlbumFromNetwork(String albumUid);
 
     Observable<MusicApi.TrackInfo> getTrackWithName(String trackName, String artistName, List<MusicApi.Track> trackList, String albumUid);
+
+    //AlbumInfo
+    Observable<MusicApi.AlbumInfo> getAlbumInfo(String albumUid);
+    Observable<MusicApi.AlbumInfo> getAlbumInfoFromDatabase(String albumUid);
+    Observable<MusicApi.AlbumInfo> getAlbumInfoFromNetwork(String albumUid);
 }

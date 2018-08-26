@@ -27,6 +27,8 @@ public class Constants {
     public static final String YOUTUBE_TAG = "youtube_tag";
     public static final String ALBUM_TRACKS_TAG = "album_tracks_tag";
     public static final String ARTIST_MAIN_TAG = "artist_main_tag";
+    public static final String ALBUM_MAIN_TAG = "album_main_tag";
+    public static final String ALBUM_BIO_TAG = "album_bio_tag";
 
     //Retrofit
     public static final String MUSIC_RETROFIT = "music_retrofit";

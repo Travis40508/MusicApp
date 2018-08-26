@@ -12,7 +12,6 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface MusicApi {
@@ -610,17 +609,17 @@ public interface MusicApi {
 
     class Wiki {
         @SerializedName("summary")
-        @Expose private String trackSummary;
+        @Expose private String tracksummary;
 
         @SerializedName("content")
         @Expose private String trackContent;
 
         public String getTrackSummary() {
-            return trackSummary;
+            return tracksummary;
         }
 
         public void setTrackSummary(String trackSummary) {
-            this.trackSummary = trackSummary;
+            this.tracksummary = trackSummary;
         }
 
         public String getTrackContent() {
@@ -661,6 +660,7 @@ public interface MusicApi {
         }
     }
 
+    @Entity
     class AlbumInfo {
         @SerializedName("name")
         @Expose private String albumName;
@@ -669,10 +669,13 @@ public interface MusicApi {
         @Expose private List<TrackImage> trackImageList;
 
         @SerializedName("mbid")
-        @Expose private String artistUid;
+        @Expose private String albumUid;
 
         @SerializedName("tracks")
         @Expose private TracksResponse tracksResponse;
+
+        @SerializedName("wiki")
+        @Expose private Wiki wiki;
 
         public String getAlbumName() {
             return albumName;
@@ -686,8 +689,34 @@ public interface MusicApi {
             return tracksResponse;
         }
 
-        public String getArtistUid() {
-            return artistUid;
+
+
+        public void setAlbumName(String albumName) {
+            this.albumName = albumName;
+        }
+
+        public void setTrackImageList(List<TrackImage> trackImageList) {
+            this.trackImageList = trackImageList;
+        }
+
+        public String getAlbumUid() {
+            return albumUid;
+        }
+
+        public void setAlbumUid(String albumUid) {
+            this.albumUid = albumUid;
+        }
+
+        public void setTracksResponse(TracksResponse tracksResponse) {
+            this.tracksResponse = tracksResponse;
+        }
+
+        public Wiki getWiki() {
+            return wiki;
+        }
+
+        public void setWiki(Wiki wiki) {
+            this.wiki = wiki;
         }
     }
 
