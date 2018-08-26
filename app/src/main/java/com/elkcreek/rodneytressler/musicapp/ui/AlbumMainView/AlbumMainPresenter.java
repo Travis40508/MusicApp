@@ -29,6 +29,7 @@ public class AlbumMainPresenter implements BasePresenter<AlbumMainView> {
     @Override
     public void subscribe() {
         disposable = new CompositeDisposable();
+        view.setActionBarTitle(artistName + " - " + albumName);
         view.showScreens(artistName, artistUid, albumName, albumUid, albumImage);
     }
 

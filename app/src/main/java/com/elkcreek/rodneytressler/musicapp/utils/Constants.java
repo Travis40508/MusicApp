@@ -38,4 +38,7 @@ public class Constants {
     public static final String UNABLE_TO_LOAD_VIDEO = "Unable to load video. Please try again";
     public static final String NO_SUMMARY_AVAILABLE_TEXT = "No summary available.";
     public static final String NO_CONTENT_AVAILABLE_TEXT = "No content available.";
+
+    //Action Bar Default Titles
+    public static final String ARTISTS_TITLE = "Artists";
 }

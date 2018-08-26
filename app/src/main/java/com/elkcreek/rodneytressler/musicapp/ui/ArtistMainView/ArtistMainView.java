@@ -6,4 +6,6 @@ public interface ArtistMainView extends BaseView {
     void showScreens(String artistUid, String artistName);
 
     void reAttachFragment();
+
+    void setActionBarTitle(String artistName);
 }

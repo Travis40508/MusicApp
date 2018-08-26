@@ -177,6 +177,11 @@ public class SearchFragment extends Fragment implements SearchView {
     }
 
     @Override
+    public void setActionBarTitle(String artistsTitle) {
+        getActivity().setTitle(artistsTitle);
+    }
+
+    @Override
     public void showMainArtistScreen(MusicApi.Artist artist) {
         Bundle bundle = new Bundle();
         bundle.putString(ARTIST_NAME_KEY, artist.getArtistName());

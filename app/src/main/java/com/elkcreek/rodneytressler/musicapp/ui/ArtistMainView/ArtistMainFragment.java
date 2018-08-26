@@ -87,4 +87,9 @@ public class ArtistMainFragment extends Fragment implements ArtistMainView {
         artistMainFragment = (ArtistMainFragment) getActivity().getSupportFragmentManager().findFragmentByTag(ARTIST_MAIN_TAG);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, artistMainFragment, ARTIST_MAIN_TAG).commit();
     }
+
+    @Override
+    public void setActionBarTitle(String artistName) {
+        getActivity().setTitle(artistName);
+    }
 }

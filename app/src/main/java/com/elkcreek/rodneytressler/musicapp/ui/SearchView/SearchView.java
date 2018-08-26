@@ -25,4 +25,6 @@ public interface SearchView extends BaseView {
     void showMainArtistScreen(MusicApi.Artist artist);
 
     void clearList();
+
+    void setActionBarTitle(String artistsTitle);
 }

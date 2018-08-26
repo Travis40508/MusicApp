@@ -26,6 +26,7 @@ public class ArtistMainPresenter implements BasePresenter<ArtistMainView> {
     @Override
     public void subscribe() {
         disposable = new CompositeDisposable();
+        view.setActionBarTitle(artistName);
         view.showScreens(artistUid, artistName);
     }
 

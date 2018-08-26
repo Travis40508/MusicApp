@@ -90,4 +90,9 @@ public class AlbumMainFragment extends Fragment implements AlbumMainView {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }
+
+    @Override
+    public void setActionBarTitle(String title) {
+        getActivity().setTitle(title);
+    }
 }
