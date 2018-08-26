@@ -46,12 +46,14 @@ public class TrackMainFragment extends Fragment implements TrackMainView {
         presenter.trackRetrieved(getArguments().getString(TRACK_UID_KEY));
         presenter.searchRetrieved(getArguments().getString(Constants.TRACK_NAME_KEY), getArguments().getString(Constants.ARTIST_NAME_KEY));
         presenter.subscribe();
+        presenter.screenRestored();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         presenter.unsubscribe();
+        presenter.screenPaused(viewPager.getCurrentItem());
     }
 
     @Nullable
@@ -90,5 +92,10 @@ public class TrackMainFragment extends Fragment implements TrackMainView {
         adapter = new TrackViewPagerAdapter(getChildFragmentManager(), trackUid, trackName, artistName);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public void setViewPagerItem(int currentItem) {
+        viewPager.setCurrentItem(currentItem);
     }
 }

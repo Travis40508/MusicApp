@@ -13,6 +13,7 @@ public class TrackMainPresenter implements BasePresenter<TrackMainView> {
     private String trackUid;
     private String trackName;
     private String artistName;
+    private int currentItem;
 
     @Inject
     public TrackMainPresenter() {
@@ -49,5 +50,15 @@ public class TrackMainPresenter implements BasePresenter<TrackMainView> {
     public void searchRetrieved(String trackName, String artistName) {
         this.trackName = trackName;
         this.artistName = artistName;
+    }
+
+    public void screenPaused(int currentItem) {
+        this.currentItem = currentItem;
+    }
+
+    public void screenRestored() {
+        if(currentItem != 0) {
+            view.setViewPagerItem(currentItem);
+        }
     }
 }

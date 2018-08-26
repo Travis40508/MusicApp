@@ -29,6 +29,7 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
 
     @Inject protected YoutubePresenter presenter;
     private YoutubeFragment youtubeFragment;
+    private YouTubePlayerSupportFragment youTubePlayerSupportFragment;
 
     @Override
     public void onAttach(Context context) {
@@ -40,12 +41,14 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     public void onResume() {
         super.onResume();
         presenter.subscribe();
+        presenter.onResume(youTubePlayerSupportFragment == null);
     }
 
     @Override
     public void onPause() {
-        super.onPause();
         presenter.unsubscribe();
+        presenter.onPause(youTubePlayerSupportFragment == null);
+        super.onPause();
     }
 
     @Nullable
@@ -83,7 +86,7 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
 
     @Override
     public void showVideo(String videoId) {
-        YouTubePlayerSupportFragment youTubePlayerSupportFragment = YouTubePlayerSupportFragment.newInstance();
+        youTubePlayerSupportFragment = YouTubePlayerSupportFragment.newInstance();
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.youtube_fragment_holder, youTubePlayerSupportFragment, YOUTUBE_VIDEO_TAG).commit();
         youTubePlayerSupportFragment.initialize(Constants.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
             @Override
@@ -101,5 +104,26 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
 
             }
         });
+    }
+
+    @Override
+    public void pauseVideo() {
+        youTubePlayerSupportFragment.onPause();
+    }
+
+    @Override
+    public void resumeVideo() {
+        youTubePlayerSupportFragment.onResume();
+    }
+
+    @Override
+    public void destroyVideo() {
+        youTubePlayerSupportFragment.onDestroy();
+    }
+
+    @Override
+    public void onDestroy() {
+        presenter.onDestroy(youTubePlayerSupportFragment == null);
+        super.onDestroy();
     }
 }

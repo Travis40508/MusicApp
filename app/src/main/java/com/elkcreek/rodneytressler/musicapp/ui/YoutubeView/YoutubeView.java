@@ -8,4 +8,10 @@ public interface YoutubeView extends BaseView {
     void toastUnableToLoadVideo(String unableToLoadVideo);
 
     void showVideo(String videoId);
+
+    void pauseVideo();
+
+    void resumeVideo();
+
+    void destroyVideo();
 }

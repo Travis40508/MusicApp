@@ -49,12 +49,14 @@ public class AlbumMainFragment extends Fragment implements AlbumMainView {
         presenter.artistRetrieved(getArguments().getString(ARTIST_NAME_KEY), getArguments().getString(ARTIST_UID_KEY));
         presenter.albumRetrieved(getArguments().getString(ALBUM_NAME_KEY), getArguments().getString(ALBUM_UID_KEY), getArguments().getString(ALBUM_IMAGE_URL_KEY));
         presenter.subscribe();
+        presenter.screenRestored();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         presenter.unsubscribe();
+        presenter.screenPaused(viewPager.getCurrentItem());
     }
 
     @Nullable
@@ -94,5 +96,10 @@ public class AlbumMainFragment extends Fragment implements AlbumMainView {
     @Override
     public void setActionBarTitle(String title) {
         getActivity().setTitle(title);
+    }
+
+    @Override
+    public void setViewPagerItem(int currentItem) {
+        viewPager.setCurrentItem(currentItem);
     }
 }

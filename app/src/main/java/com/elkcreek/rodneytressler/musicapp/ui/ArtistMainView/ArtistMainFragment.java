@@ -47,12 +47,14 @@ public class ArtistMainFragment extends Fragment implements ArtistMainView {
         presenter.artistRetrieved(getArguments().getString(Constants.ARTIST_UID_KEY));
         presenter.artistNameRetrieved(getArguments().getString(Constants.ARTIST_NAME_KEY));
         presenter.subscribe();
+        presenter.screenRestored();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         presenter.unsubscribe();
+        presenter.screenPaused(viewPager.getCurrentItem());
     }
 
     @Nullable
@@ -91,5 +93,10 @@ public class ArtistMainFragment extends Fragment implements ArtistMainView {
     @Override
     public void setActionBarTitle(String artistName) {
         getActivity().setTitle(artistName);
+    }
+
+    @Override
+    public void setViewPagerItem(int currentItem) {
+        viewPager.setCurrentItem(currentItem);
     }
 }

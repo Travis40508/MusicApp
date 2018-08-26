@@ -15,6 +15,7 @@ public class AlbumMainPresenter implements BasePresenter<AlbumMainView> {
     private String albumName;
     private String albumUid;
     private String albumImage;
+    private int currentItem;
 
     @Inject
     public AlbumMainPresenter() {
@@ -55,5 +56,15 @@ public class AlbumMainPresenter implements BasePresenter<AlbumMainView> {
         this.albumName = albumName;
         this.albumUid = albumUid;
         this.albumImage = albumImage;
+    }
+
+    public void screenPaused(int currentItem) {
+        this.currentItem = currentItem;
+    }
+
+    public void screenRestored() {
+        if(currentItem != 0) {
+            view.setViewPagerItem(currentItem);
+        }
     }
 }

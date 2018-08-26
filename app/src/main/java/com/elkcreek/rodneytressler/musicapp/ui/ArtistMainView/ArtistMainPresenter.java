@@ -12,6 +12,7 @@ public class ArtistMainPresenter implements BasePresenter<ArtistMainView> {
     private ArtistMainView view;
     private String artistUid;
     private String artistName;
+    private int currentItem;
 
     @Inject
     public ArtistMainPresenter() {
@@ -48,6 +49,16 @@ public class ArtistMainPresenter implements BasePresenter<ArtistMainView> {
             if(!artistMainFragmentIsNull) {
                 view.reAttachFragment();
             }
+        }
+    }
+
+    public void screenPaused(int currentItem) {
+        this.currentItem = currentItem;
+    }
+
+    public void screenRestored() {
+        if(currentItem != 0) {
+            view.setViewPagerItem(currentItem);
         }
     }
 }

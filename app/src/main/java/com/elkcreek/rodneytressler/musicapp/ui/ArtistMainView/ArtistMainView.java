@@ -8,4 +8,6 @@ public interface ArtistMainView extends BaseView {
     void reAttachFragment();
 
     void setActionBarTitle(String artistName);
+
+    void setViewPagerItem(int currentItem);
 }

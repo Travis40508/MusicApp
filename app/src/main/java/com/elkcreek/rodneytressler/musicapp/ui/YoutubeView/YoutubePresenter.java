@@ -69,4 +69,22 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
         this.trackName = trackName;
         this.artistName = artistName;
     }
+
+    public void onPause(boolean youtubeSupportFragmentIsNull) {
+        if(!youtubeSupportFragmentIsNull) {
+            view.pauseVideo();
+        }
+    }
+
+    public void onResume(boolean youtubeSupportFragmentIsNull) {
+        if(!youtubeSupportFragmentIsNull) {
+            view.resumeVideo();
+        }
+    }
+
+    public void onDestroy(boolean youtubeSupportFragmentIsNull) {
+        if(!youtubeSupportFragmentIsNull) {
+            view.destroyVideo();
+        }
+    }
 }

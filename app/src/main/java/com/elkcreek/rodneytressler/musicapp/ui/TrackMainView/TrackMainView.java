@@ -8,4 +8,6 @@ public interface TrackMainView extends BaseView {
     void setActionBarTitle(String title);
 
     void showScreens(String trackUid, String trackName, String artistName);
+
+    void setViewPagerItem(int currentItem);
 }
