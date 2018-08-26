@@ -98,4 +98,5 @@ public class TrackMainFragment extends Fragment implements TrackMainView {
     public void setViewPagerItem(int currentItem) {
         viewPager.setCurrentItem(currentItem);
     }
+
 }

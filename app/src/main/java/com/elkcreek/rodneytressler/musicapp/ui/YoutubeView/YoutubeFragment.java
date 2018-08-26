@@ -92,9 +92,10 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
                 if(!wasRestored) {
-                    youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+                    youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
                     youTubePlayer.loadVideo(videoId);
-                    youTubePlayer.pause();
+                } else {
+                    youTubePlayer.play();
                 }
 
             }

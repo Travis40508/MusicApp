@@ -40,6 +40,7 @@ public class TrackMainPresenter implements BasePresenter<TrackMainView> {
     public void screenRotated(boolean screenRotated) {
         if(screenRotated) {
             view.reAttachFragment();
+            view.setViewPagerItem(currentItem);
         }
     }
 
