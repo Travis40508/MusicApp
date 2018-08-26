@@ -8,4 +8,6 @@ public interface MainView extends BaseView {
     void detachImmediateFragment();
 
     void closeApp();
+
+    void returnHome();
 }

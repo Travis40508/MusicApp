@@ -54,8 +54,8 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     protected TextView noPreviewAvailable;
     private YouTubePlayerSupportFragment youTubePlayerSupportFragment;
 
-    @OnClick(R.id.image_home_button)
-    protected void onHomeButtonClicked(View view) {presenter.homeButtonClicked();}
+//    @OnClick(R.id.image_home_button)
+//    protected void onHomeButtonClicked(View view) {presenter.homeButtonClicked();}
 
     @OnClick(R.id.read_more_layout)
     protected void onReadMoreLayoutClicked(View view) {presenter.onReadMoreClicked(readMoreText.getText().toString());}

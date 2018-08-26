@@ -39,4 +39,7 @@ public class MainPresenter implements BasePresenter<MainView> {
         }
     }
 
+    public void homeClicked() {
+        view.returnHome();
+    }
 }

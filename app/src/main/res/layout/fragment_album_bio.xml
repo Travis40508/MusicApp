@@ -7,22 +7,12 @@
     android:clickable="true"
     android:focusable="true">
 
-    <ImageView
-        android:id="@+id/image_home_button"
-        android:src="@drawable/ic_home"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:elevation="10dp"
-        android:layout_margin="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
 
     <ScrollView
         android:id="@+id/bio_scroll_view"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:fillViewport="false"
         app:layout_constraintTop_toTopOf="parent"

@@ -67,10 +67,10 @@ public class BioFragment extends Fragment implements BioView {
         presenter.viewTracksClicked();
     }
 
-    @OnClick(R.id.image_home_button)
-    protected void homeButtonClicked(View view) {
-        presenter.homeClicked();
-    }
+//    @OnClick(R.id.image_home_button)
+//    protected void homeButtonClicked(View view) {
+//        presenter.homeClicked();
+//    }
 
     @Override
     public void onAttach(Context context) {

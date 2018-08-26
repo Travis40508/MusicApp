@@ -57,10 +57,10 @@ public class AllTracksFragment extends Fragment implements AllTracksView {
     private PlayTrackFragment playTrackFragment;
     private AllTracksFragment allTracksFragment;
 
-    @OnClick(R.id.image_home_button)
-    protected void homeButtonClicked(View view) {
-        presenter.homeClicked();
-    }
+//    @OnClick(R.id.image_home_button)
+//    protected void homeButtonClicked(View view) {
+//        presenter.homeClicked();
+//    }
 
     @OnClick(R.id.text_view_bio)
     protected void viewBioClicked(View view) {presenter.viewBioClicked();}
