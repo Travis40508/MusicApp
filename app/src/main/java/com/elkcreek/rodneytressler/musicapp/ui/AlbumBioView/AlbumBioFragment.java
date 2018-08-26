@@ -8,20 +8,42 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_BIO_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_UID_KEY;
 
 public class AlbumBioFragment extends Fragment implements AlbumBioView {
 
     @Inject protected AlbumBioPresenter presenter;
+    @BindView(R.id.image_album_bio)
+    protected ImageView albumImage;
+    @BindView(R.id.text_bio_album_name)
+    protected TextView albumName;
+    @BindView(R.id.text_album_bio)
+    protected TextView albumBio;
+    @BindView(R.id.loading_layout)
+    protected FrameLayout loadingLayout;
+    @BindView(R.id.text_read_more)
+    protected TextView readMoreText;
     private AlbumBioFragment albumBioFragment;
+
+    @OnClick(R.id.read_more_layout)
+    protected void onReadMoreClicked(View view) {
+        presenter.readMoreClicked(readMoreText.getText().toString());
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -32,6 +54,7 @@ public class AlbumBioFragment extends Fragment implements AlbumBioView {
     @Override
     public void onResume() {
         super.onResume();
+        presenter.albumUidRetrieved(getArguments().getString(ALBUM_UID_KEY));
         presenter.subscribe();
     }
 
@@ -66,5 +89,30 @@ public class AlbumBioFragment extends Fragment implements AlbumBioView {
     public void reAttachFragment() {
         albumBioFragment = (AlbumBioFragment) getActivity().getSupportFragmentManager().findFragmentByTag(ALBUM_BIO_TAG);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, albumBioFragment, ALBUM_BIO_TAG).commit();
+    }
+
+    @Override
+    public void showAlbumImage(String trackImageUrl) {
+        Glide.with(getContext()).load(trackImageUrl).into(albumImage);
+    }
+
+    @Override
+    public void showAlbumName(String albumName) {
+        this.albumName.setText(albumName);
+    }
+
+    @Override
+    public void showAlbumBio(String trackSummary) {
+        this.albumBio.setText(trackSummary);
+    }
+
+    @Override
+    public void hideLoadingLayout() {
+        loadingLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setReadMoreText(String readMoreText) {
+        this.readMoreText.setText(readMoreText);
     }
 }

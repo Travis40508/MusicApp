@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.elkcreek.rodneytressler.musicapp.ui.AlbumBioView.AlbumBioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.AlbumTracksView.AlbumTracksFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.AlbumsView.AlbumsFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.AllTracksView.AllTracksFragment;
@@ -27,7 +28,7 @@ public class AlbumViewPagerAdapter extends FragmentPagerAdapter {
 
     public AlbumViewPagerAdapter(FragmentManager fm, String artistName, String artistUid, String albumName, String albumUid, String imageUrl) {
         super(fm);
-        this.artistName = albumName;
+        this.artistName = artistName;
         this.artistUid = artistUid;
         this.albumName = albumName;
         this.albumUid = albumUid;
@@ -39,7 +40,11 @@ public class AlbumViewPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         if (position == 0) {
             //Album Bio
-            return null;
+            Bundle bundle = new Bundle();
+            bundle.putString(ALBUM_UID_KEY, albumUid);
+            AlbumBioFragment albumBioFragment = AlbumBioFragment.newInstance();
+            albumBioFragment.setArguments(bundle);
+            return albumBioFragment;
         } else if (position == 1){
             //Album Tracks
             Bundle bundle = new Bundle();

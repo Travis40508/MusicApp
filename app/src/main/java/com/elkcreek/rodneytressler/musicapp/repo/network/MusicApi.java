@@ -609,18 +609,11 @@ public interface MusicApi {
 
     class Wiki {
         @SerializedName("summary")
-        @Expose private String tracksummary;
+        @Expose private String trackSummary;
 
         @SerializedName("content")
         @Expose private String trackContent;
 
-        public String getTrackSummary() {
-            return tracksummary;
-        }
-
-        public void setTrackSummary(String trackSummary) {
-            this.tracksummary = trackSummary;
-        }
 
         public String getTrackContent() {
             return trackContent;
@@ -628,6 +621,14 @@ public interface MusicApi {
 
         public void setTrackContent(String trackContent) {
             this.trackContent = trackContent;
+        }
+
+        public String getTrackSummary() {
+            return trackSummary;
+        }
+
+        public void setTrackSummary(String tracksummary) {
+            this.trackSummary = tracksummary;
         }
     }
 
@@ -662,18 +663,25 @@ public interface MusicApi {
 
     @Entity
     class AlbumInfo {
+
+        @PrimaryKey(autoGenerate = true)
+        private int primaryKey;
+
         @SerializedName("name")
         @Expose private String albumName;
 
+        @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
         @SerializedName("image")
         @Expose private List<TrackImage> trackImageList;
 
         @SerializedName("mbid")
         @Expose private String albumUid;
 
+        @Embedded(prefix = "tracks")
         @SerializedName("tracks")
         @Expose private TracksResponse tracksResponse;
 
+        @Embedded(prefix = "wiki")
         @SerializedName("wiki")
         @Expose private Wiki wiki;
 
@@ -717,6 +725,14 @@ public interface MusicApi {
 
         public void setWiki(Wiki wiki) {
             this.wiki = wiki;
+        }
+
+        public int getPrimaryKey() {
+            return primaryKey;
+        }
+
+        public void setPrimaryKey(int primaryKey) {
+            this.primaryKey = primaryKey;
         }
     }
 
