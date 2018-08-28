@@ -9,7 +9,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/bio_scroll_view"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
@@ -71,6 +71,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/bio_similar_artist_recycler_view"
                 android:layout_width="match_parent"
+                android:nestedScrollingEnabled="false"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp">
 
@@ -78,7 +79,7 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 
     <FrameLayout

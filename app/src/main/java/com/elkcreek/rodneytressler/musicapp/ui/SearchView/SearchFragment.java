@@ -188,6 +188,7 @@ public class SearchFragment extends Fragment implements SearchView {
         bundle.putString(ARTIST_UID_KEY, artist.getArtistUID());
         ArtistMainFragment artistMainFragment = ArtistMainFragment.newInstance();
         artistMainFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, artistMainFragment, ARTIST_MAIN_TAG).addToBackStack(null).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().
+                replace(R.id.fragment_holder, artistMainFragment, ARTIST_MAIN_TAG).addToBackStack(null).commit();
     }
 }

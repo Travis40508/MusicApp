@@ -49,6 +49,7 @@ public class TrackMainFragment extends Fragment implements TrackMainView {
         presenter.screenRestored();
     }
 
+
     @Override
     public void onPause() {
         super.onPause();

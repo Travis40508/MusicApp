@@ -1,5 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.ui.TrackMainView;
 
+import android.os.Bundle;
+
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
 
 import javax.inject.Inject;
@@ -14,6 +16,7 @@ public class TrackMainPresenter implements BasePresenter<TrackMainView> {
     private String trackName;
     private String artistName;
     private int currentItem;
+    private Bundle outState;
 
     @Inject
     public TrackMainPresenter() {
@@ -61,5 +64,9 @@ public class TrackMainPresenter implements BasePresenter<TrackMainView> {
         if(currentItem != 0) {
             view.setViewPagerItem(currentItem);
         }
+    }
+
+    public void viewDestroyed(Bundle outState) {
+        this.outState = outState;
     }
 }

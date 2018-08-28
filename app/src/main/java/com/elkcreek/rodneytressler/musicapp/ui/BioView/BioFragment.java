@@ -171,7 +171,8 @@ public class BioFragment extends Fragment implements BioView {
         bundle.putString(ARTIST_NAME_KEY, artistName);
         ArtistMainFragment artistMainFragment = ArtistMainFragment.newInstance();
         artistMainFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, artistMainFragment, ARTIST_MAIN_TAG).addToBackStack(null).commit();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_holder, artistMainFragment, ARTIST_MAIN_TAG).addToBackStack(null).commit();
     }
 
     @Override

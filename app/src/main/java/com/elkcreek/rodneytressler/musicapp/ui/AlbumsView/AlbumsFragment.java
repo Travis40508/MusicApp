@@ -115,6 +115,7 @@ public class AlbumsFragment extends Fragment implements AlbumsView {
         bundle.putString(ALBUM_IMAGE_URL_KEY, imageUrl);
         AlbumMainFragment albumMainFragment = AlbumMainFragment.newInstance();
         albumMainFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, albumMainFragment, ALBUM_MAIN_TAG).addToBackStack(null).commit();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_holder, albumMainFragment, ALBUM_MAIN_TAG).addToBackStack(null).commit();
     }
 }

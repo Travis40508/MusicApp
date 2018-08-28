@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
@@ -43,6 +44,8 @@ public class AlbumTracksFragment extends Fragment implements AlbumTracksView {
     @Inject protected AlbumTracksPresenter presenter;
     @BindView(R.id.recycler_view_album_tracks)
     protected RecyclerView recyclerView;
+    @BindView(R.id.loading_layout)
+    protected FrameLayout loadingLayout;
     private AlbumTracksFragment albumTracksFragment;
     private AlbumTracksAdapter adapter;
     private PlayTrackFragment playTrackFragment;
@@ -114,6 +117,12 @@ public class AlbumTracksFragment extends Fragment implements AlbumTracksView {
         bundle.putString(TRACK_UID_KEY, trackUid);
         TrackMainFragment trackMainFragment = TrackMainFragment.newInstance();
         trackMainFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, trackMainFragment, TRACK_MAIN_TAG).addToBackStack(null).commit();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_holder, trackMainFragment, TRACK_MAIN_TAG).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void showLoadingLayout() {
+        loadingLayout.setVisibility(View.VISIBLE);
     }
 }
