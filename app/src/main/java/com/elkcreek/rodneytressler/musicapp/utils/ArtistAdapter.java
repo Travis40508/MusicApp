@@ -72,12 +72,6 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         @BindView(R.id.text_artist_name)
         protected TextView artistText;
 
-//        @BindView(R.id.button_info)
-//        protected ImageView infoButton;
-
-//        @BindView(R.id.button_music)
-//        protected ImageView musicButton;
-
         public ArtistViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

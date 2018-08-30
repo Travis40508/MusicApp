@@ -9,5 +9,5 @@ public interface TrackMainView extends BaseView {
 
     void showScreens(String trackUid, String trackName, String artistName);
 
-    void setViewPagerItem(int currentItem);
+    void setViewPagerState(int currentItem);
 }

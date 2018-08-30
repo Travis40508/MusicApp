@@ -46,7 +46,6 @@ public class TrackMainFragment extends Fragment implements TrackMainView {
         presenter.trackRetrieved(getArguments().getString(TRACK_UID_KEY));
         presenter.searchRetrieved(getArguments().getString(Constants.TRACK_NAME_KEY), getArguments().getString(Constants.ARTIST_NAME_KEY));
         presenter.subscribe();
-        presenter.screenRestored();
     }
 
 
@@ -54,7 +53,7 @@ public class TrackMainFragment extends Fragment implements TrackMainView {
     public void onPause() {
         super.onPause();
         presenter.unsubscribe();
-        presenter.screenPaused(viewPager.getCurrentItem());
+        presenter.storeViewPagerState(viewPager.getCurrentItem());
     }
 
     @Nullable
@@ -78,6 +77,18 @@ public class TrackMainFragment extends Fragment implements TrackMainView {
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        presenter.saveState(outState, viewPager.getCurrentItem());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter.getState(savedInstanceState);
+    }
+
+    @Override
     public void reAttachFragment() {
         trackMainFragment = (TrackMainFragment) getActivity().getSupportFragmentManager().findFragmentByTag(TRACK_MAIN_TAG);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, trackMainFragment, TRACK_MAIN_TAG).commit();
@@ -93,10 +104,11 @@ public class TrackMainFragment extends Fragment implements TrackMainView {
         adapter = new TrackViewPagerAdapter(getChildFragmentManager(), trackUid, trackName, artistName);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+        presenter.viewPagerCreated();
     }
 
     @Override
-    public void setViewPagerItem(int currentItem) {
+    public void setViewPagerState(int currentItem) {
         viewPager.setCurrentItem(currentItem);
     }
 

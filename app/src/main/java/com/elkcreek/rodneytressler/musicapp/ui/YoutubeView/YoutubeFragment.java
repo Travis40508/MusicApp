@@ -1,6 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.ui.YoutubeView;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,6 +31,7 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     @Inject protected YoutubePresenter presenter;
     private YoutubeFragment youtubeFragment;
     private YouTubePlayerSupportFragment youTubePlayerSupportFragment;
+    private YouTubePlayer youTubePlayer;
 
     @Override
     public void onAttach(Context context) {
@@ -41,13 +43,13 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     public void onResume() {
         super.onResume();
         presenter.subscribe();
-        presenter.onResume(youTubePlayerSupportFragment == null);
     }
 
     @Override
     public void onPause() {
         presenter.unsubscribe();
         presenter.onPause(youTubePlayerSupportFragment == null);
+        presenter.storeYouTubeVideoState(youTubePlayer.getCurrentTimeMillis());
         super.onPause();
     }
 
@@ -85,19 +87,39 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     }
 
     @Override
-    public void showVideo(String videoId) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        presenter.saveInstanceState(outState, youTubePlayer.getCurrentTimeMillis());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter.getState(savedInstanceState);
+    }
+
+    @Override
+    public void pauseVideo() {
+        youTubePlayerSupportFragment.onPause();
+    }
+
+
+    @Override
+    public void destroyVideo() {
+        youTubePlayerSupportFragment.onDestroy();
+    }
+
+    @Override
+    public void initializeYouTubeVideo() {
         youTubePlayerSupportFragment = YouTubePlayerSupportFragment.newInstance();
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.youtube_fragment_holder, youTubePlayerSupportFragment, YOUTUBE_VIDEO_TAG).commit();
         youTubePlayerSupportFragment.initialize(Constants.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+
+
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
-                if(!wasRestored) {
-                    youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
-                    youTubePlayer.loadVideo(videoId);
-                } else {
-                    youTubePlayer.play();
-                }
-
+                YoutubeFragment.this.youTubePlayer = youTubePlayer;
+                presenter.youTubePlayerInitializeSuccess(wasRestored);
             }
 
             @Override
@@ -108,18 +130,25 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     }
 
     @Override
-    public void pauseVideo() {
-        youTubePlayerSupportFragment.onPause();
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        presenter.setConfiguration(newConfig);
     }
 
     @Override
-    public void resumeVideo() {
-        youTubePlayerSupportFragment.onResume();
+    public void setYouTubePlayerStyle() {
+        youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
     }
 
     @Override
-    public void destroyVideo() {
-        youTubePlayerSupportFragment.onDestroy();
+    public void loadYouTubeVideo(String videoId, int currentVideoTime) {
+        youTubePlayer.loadVideo(videoId, currentVideoTime);
+    }
+
+    @Override
+    public void playYoutubeVideo(boolean isFullScreen) {
+        youTubePlayer.setFullscreen(isFullScreen);
+        youTubePlayer.play();
     }
 
     @Override

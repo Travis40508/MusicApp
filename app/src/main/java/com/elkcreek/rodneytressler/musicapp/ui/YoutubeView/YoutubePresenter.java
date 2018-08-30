@@ -1,5 +1,8 @@
 package com.elkcreek.rodneytressler.musicapp.ui.YoutubeView;
 
+import android.content.res.Configuration;
+import android.os.Bundle;
+
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
@@ -17,6 +20,10 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
     private String trackName;
     private String artistName;
     private String trackUid;
+    private String videoId;
+    private boolean isFullScreen;
+    private static final String STATE_YOUTUBE_VIDEO_POSITION = "state_youtube_video_position";
+    private int currentVideoTime;
 
     @Inject
     public YoutubePresenter(RepositoryService repositoryService) {
@@ -39,7 +46,10 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
     }
 
     private Consumer<String> storeYoutubeVideoId() {
-        return view::showVideo;
+        return videoId -> {
+            this.videoId = videoId;
+            view.initializeYouTubeVideo();
+        };
     }
 
     private Consumer<Throwable> throwErrorWhenNoYoutubeVideoId() {
@@ -54,8 +64,8 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
     }
 
     public void screenRotated(boolean onSavedInstanceStateIsNull, boolean youtubeFragmentIsNull) {
-        if(!onSavedInstanceStateIsNull) {
-            if(!youtubeFragmentIsNull) {
+        if (!onSavedInstanceStateIsNull) {
+            if (!youtubeFragmentIsNull) {
                 view.reAttachYoutubeFragment();
             }
         }
@@ -71,20 +81,41 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
     }
 
     public void onPause(boolean youtubeSupportFragmentIsNull) {
-        if(!youtubeSupportFragmentIsNull) {
+        if (!youtubeSupportFragmentIsNull) {
             view.pauseVideo();
         }
     }
 
-    public void onResume(boolean youtubeSupportFragmentIsNull) {
-        if(!youtubeSupportFragmentIsNull) {
-            view.resumeVideo();
-        }
-    }
 
     public void onDestroy(boolean youtubeSupportFragmentIsNull) {
-        if(!youtubeSupportFragmentIsNull) {
+        if (!youtubeSupportFragmentIsNull) {
             view.destroyVideo();
         }
     }
+
+    public void youTubePlayerInitializeSuccess(boolean wasRestored) {
+        view.setYouTubePlayerStyle();
+        view.loadYouTubeVideo(videoId, currentVideoTime);
+        view.playYoutubeVideo(isFullScreen);
+    }
+
+    public void setConfiguration(Configuration newConfig) {
+        isFullScreen = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE;
+    }
+
+    public void saveInstanceState(Bundle outState, int currentTimeMillis) {
+        outState.putInt(STATE_YOUTUBE_VIDEO_POSITION, currentTimeMillis);
+    }
+
+    public void getState(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            int currentTimeMillis = savedInstanceState.getInt(STATE_YOUTUBE_VIDEO_POSITION);
+            this.currentVideoTime = currentTimeMillis;
+        }
+    }
+
+    public void storeYouTubeVideoState(int currentTimeMillis) {
+        this.currentVideoTime = currentTimeMillis;
+    }
+
 }

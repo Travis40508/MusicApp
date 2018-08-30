@@ -7,11 +7,15 @@ public interface YoutubeView extends BaseView {
 
     void toastUnableToLoadVideo(String unableToLoadVideo);
 
-    void showVideo(String videoId);
-
     void pauseVideo();
 
-    void resumeVideo();
-
     void destroyVideo();
+
+    void initializeYouTubeVideo();
+
+    void setYouTubePlayerStyle();
+
+    void loadYouTubeVideo(String videoId, int currentVideoTime);
+
+    void playYoutubeVideo(boolean isFullScreen);
 }

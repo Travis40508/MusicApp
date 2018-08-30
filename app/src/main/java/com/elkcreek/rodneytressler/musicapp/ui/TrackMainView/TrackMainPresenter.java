@@ -16,7 +16,7 @@ public class TrackMainPresenter implements BasePresenter<TrackMainView> {
     private String trackName;
     private String artistName;
     private int currentItem;
-    private Bundle outState;
+    private static final String STATE_VIEW_PAGER_POSITION = "state_view_pager_position";
 
     @Inject
     public TrackMainPresenter() {
@@ -43,7 +43,6 @@ public class TrackMainPresenter implements BasePresenter<TrackMainView> {
     public void screenRotated(boolean screenRotated) {
         if(screenRotated) {
             view.reAttachFragment();
-            view.setViewPagerItem(currentItem);
         }
     }
 
@@ -56,17 +55,22 @@ public class TrackMainPresenter implements BasePresenter<TrackMainView> {
         this.artistName = artistName;
     }
 
-    public void screenPaused(int currentItem) {
-        this.currentItem = currentItem;
+    public void saveState(Bundle outState, int currentItem) {
+        outState.putInt(STATE_VIEW_PAGER_POSITION, currentItem);
     }
 
-    public void screenRestored() {
-        if(currentItem != 0) {
-            view.setViewPagerItem(currentItem);
+    public void getState(Bundle savedInstanceState) {
+        if(savedInstanceState != null) {
+            int currentItem = savedInstanceState.getInt(STATE_VIEW_PAGER_POSITION);
+            this.currentItem = currentItem;
         }
     }
 
-    public void viewDestroyed(Bundle outState) {
-        this.outState = outState;
+    public void viewPagerCreated() {
+        view.setViewPagerState(currentItem);
+    }
+
+    public void storeViewPagerState(int currentItem) {
+        this.currentItem = currentItem;
     }
 }
