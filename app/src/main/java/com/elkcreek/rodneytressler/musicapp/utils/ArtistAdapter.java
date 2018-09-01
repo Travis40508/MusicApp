@@ -28,7 +28,6 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         this.artistList = artistList;
     }
 
-
     @NonNull
     @Override
     public ArtistViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -39,9 +38,7 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
     @Override
     public void onBindViewHolder(@NonNull ArtistViewHolder artistViewHolder, int position) {
         artistViewHolder.bindArtist(artistList.get(position));
-//        artistViewHolder.infoButton.setOnClickListener(artistViewHolder.onInfoButtonClicked(artistList.get(position)));
         artistViewHolder.artistImage.setOnClickListener(artistViewHolder.onInfoButtonClicked(artistList.get(position)));
-//        artistViewHolder.musicButton.setOnClickListener(artistViewHolder.onMusicButtonClicked(artistList.get(position)));
     }
 
 
@@ -90,19 +87,9 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
                 }
             };
         }
-
-        public View.OnClickListener onMusicButtonClicked(MusicApi.Artist artist) {
-            return new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    callback.onArtistMusicClicked(artist);
-                }
-            };
-        }
     }
 
     public interface Callback {
         void onArtistInfoClicked(MusicApi.Artist artist);
-        void onArtistMusicClicked(MusicApi.Artist artist);
     }
 }

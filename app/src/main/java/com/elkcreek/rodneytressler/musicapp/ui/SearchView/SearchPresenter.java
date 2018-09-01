@@ -76,7 +76,6 @@ public class SearchPresenter implements BasePresenter<SearchView> {
 
         if (!isSearching) {
             if (repositoryService.isSameWeekSinceLastLaunch()) {
-//                repositoryService.deleteTopArtists();
                 repositoryService.clearCache();
                 disposable.add(repositoryService.getTopArtistsFromNetwork().subscribe(updateViewWithTopArtist(), updateUiWithError()));
                 repositoryService.saveDate();
@@ -102,7 +101,6 @@ public class SearchPresenter implements BasePresenter<SearchView> {
             disposable = new CompositeDisposable();
         }
 
-
         if (!adapterHasItems) {
             view.showProgressBar();
         }
@@ -117,14 +115,6 @@ public class SearchPresenter implements BasePresenter<SearchView> {
             disposable.add(repositoryService.getTopArtists().subscribe(updateViewWithTopArtist(), updateUiWithError()));
         }
 
-    }
-
-    public void onArtistInfoClicked(MusicApi.Artist artist) {
-        view.showBioFragment(artist);
-    }
-
-    public void onArtistMusicClicked(MusicApi.Artist artist) {
-        view.showArtistTracks(artist);
     }
 
     public void onArtistClicked(MusicApi.Artist artist) {

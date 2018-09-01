@@ -52,10 +52,6 @@ public class SearchFragment extends Fragment implements SearchView {
     @BindView(R.id.loading_layout)
     protected FrameLayout loadingLayout;
     private ArtistAdapter adapter;
-    private AllTracksFragment allTracksFragment;
-    private ArtistBioFragment artistBioFragment;
-    private AlbumsFragment albumsFragment;
-
 
     @OnTextChanged(value = R.id.input_artist_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void onArtistSearchChange(Editable editable) {
@@ -117,11 +113,6 @@ public class SearchFragment extends Fragment implements SearchView {
             public void onArtistInfoClicked(MusicApi.Artist artist) {
                 presenter.onArtistClicked(artist);
             }
-
-            @Override
-            public void onArtistMusicClicked(MusicApi.Artist artist) {
-                presenter.onArtistMusicClicked(artist);
-            }
         });
     }
 
@@ -133,26 +124,6 @@ public class SearchFragment extends Fragment implements SearchView {
     @Override
     public void hideProgressBar() {
         loadingLayout.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showBioFragment(MusicApi.Artist artist) {
-        Bundle bundle = new Bundle();
-        bundle.putString(ARTIST_UID_KEY, artist.getArtistUID());
-        bundle.putString(ARTIST_NAME_KEY, artist.getArtistName());
-        artistBioFragment = ArtistBioFragment.newInstance();
-        artistBioFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, artistBioFragment, BIO_FRAGMENT_TAG).addToBackStack(null).commit();
-    }
-
-    @Override
-    public void showArtistTracks(MusicApi.Artist artist) {
-        Bundle bundle = new Bundle();
-        bundle.putString(ARTIST_UID_KEY, artist.getArtistUID());
-        bundle.putString(ARTIST_NAME_KEY, artist.getArtistName());
-        albumsFragment = AlbumsFragment.newInstance();
-        albumsFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, albumsFragment, ALBUMS_TAG).addToBackStack(null).commit();
     }
 
     @Override
