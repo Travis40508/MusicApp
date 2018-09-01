@@ -1,5 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.services;
 
+import android.util.Log;
+
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
@@ -135,15 +137,14 @@ public class RepositoryServiceImpl implements RepositoryService {
 
     @Override
     public Observable<String> getYoutubeVideoId(String trackUid, String searchQuery) {
-        return getTrackInfoYoutubeId(trackUid)
-                .flatMap(id -> id.isEmpty() ? Observable.error(Throwable::new) : Observable.just(id))
+        return getTrackInfoYoutubeIdFromDatabase(trackUid)
                 .onErrorResumeNext(Observable.empty())
                 .switchIfEmpty(getYoutubeVideoFromNetwork(trackUid, searchQuery))
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
-    public Observable<String> getTrackInfoYoutubeId(String trackUid) {
+    public Observable<String> getTrackInfoYoutubeIdFromDatabase(String trackUid) {
         return musicDatabaseService.getTrackInfoYoutubeId(trackUid);
     }
 

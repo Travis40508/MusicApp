@@ -12,6 +12,7 @@ import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 @Dao
 public interface MusicDao {
@@ -86,7 +87,7 @@ public interface MusicDao {
     void updateTrackInfoWithYoutubeIdViaTrackUid(String youtubeId, String trackUid);
 
     @Query("SELECT youtubeId FROM TrackInfo WHERE trackUid = :trackUid")
-    Flowable<String> getTrackInfoYoutubeId(String trackUid);
+    Single<String> getTrackInfoYoutubeId(String trackUid);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAlbumInfo(MusicApi.AlbumInfo albumInfo);
