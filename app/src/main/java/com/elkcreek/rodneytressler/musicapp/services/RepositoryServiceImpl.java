@@ -135,23 +135,23 @@ public class RepositoryServiceImpl implements RepositoryService {
 
     @Override
     public Observable<String> getYoutubeVideoId(String trackUid, String searchQuery) {
-        return getYoutubeVideoFromDatabase(trackUid)
+        return getTrackInfoYoutubeId(trackUid)
+                .flatMap(id -> id.isEmpty() ? Observable.error(Throwable::new) : Observable.just(id))
                 .onErrorResumeNext(Observable.empty())
                 .switchIfEmpty(getYoutubeVideoFromNetwork(trackUid, searchQuery))
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
-    public Observable<String> getYoutubeVideoFromDatabase(String trackUid) {
-        return musicDatabaseService.getTrack(trackUid)
-                .map(MusicApi.Track::getYoutubeId)
-                .observeOn(AndroidSchedulers.mainThread());
+    public Observable<String> getTrackInfoYoutubeId(String trackUid) {
+        return musicDatabaseService.getTrackInfoYoutubeId(trackUid);
     }
 
     @Override
     public Observable<String> getYoutubeVideoFromNetwork(String trackUid, String searchQuery) {
         return youtubeApiService.getYoutubeVideo(Constants.YOUTUBE_API_KEY, searchQuery)
                 .map(youtubeResponse -> youtubeResponse.getYoutubeItemsList().get(0).getYoutubeItemId().getYoutubeVideoId())
+                .doOnNext(id -> musicDatabaseService.updateTrackInfoWithYoutubeIdViaTrackUid(id, trackUid))
                 .observeOn(AndroidSchedulers.mainThread());
     }
 

@@ -34,7 +34,7 @@ public interface RepositoryService {
 
     //Youtube
     Observable<String> getYoutubeVideoId(String trackUid, String searchQuery);
-    Observable<String> getYoutubeVideoFromDatabase(String trackUid);
+    Observable<String> getTrackInfoYoutubeId(String trackUid);
     Observable<String> getYoutubeVideoFromNetwork(String trackUid, String searchQuery);
 
     //Albums

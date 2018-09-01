@@ -82,6 +82,12 @@ public interface MusicDao {
     @Query("SELECT * FROM TrackInfo WHERE trackUid LIKE :trackUid")
     Flowable<List<MusicApi.TrackInfo>> getTrackInfo(String trackUid);
 
+    @Query("UPDATE TrackInfo SET youtubeId = :youtubeId WHERE trackUid = :trackUid")
+    void updateTrackInfoWithYoutubeIdViaTrackUid(String youtubeId, String trackUid);
+
+    @Query("SELECT youtubeId FROM TrackInfo WHERE trackUid = :trackUid")
+    Flowable<String> getTrackInfoYoutubeId(String trackUid);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAlbumInfo(MusicApi.AlbumInfo albumInfo);
 

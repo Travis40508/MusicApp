@@ -35,6 +35,8 @@ public interface MusicDatabaseService {
     void updateTrackWithUid(MusicApi.TrackInfo trackInfo, List<MusicApi.Track> trackList, String albumUid);
     void insertTrackInfo(MusicApi.TrackInfo trackInfo);
     Observable<MusicApi.TrackInfo> getTrackInfo(String trackUid);
+    void updateTrackInfoWithYoutubeIdViaTrackUid(String youtubeId, String trackUid);
     Observable<MusicApi.AlbumInfo> getAlbumInfo(String albumUid);
     void insertAlbumInfo(MusicApi.AlbumInfo albumInfo);
+    Observable<String> getTrackInfoYoutubeId(String trackUid);
 }

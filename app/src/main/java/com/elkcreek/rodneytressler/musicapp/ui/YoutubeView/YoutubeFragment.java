@@ -49,7 +49,7 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     public void onPause() {
         presenter.unsubscribe();
         presenter.onPause(youTubePlayerSupportFragment == null);
-        presenter.storeYouTubeVideoState(youTubePlayer.getCurrentTimeMillis());
+//        presenter.storeYouTubeVideoState(youTubePlayer.getCurrentTimeMillis());
         super.onPause();
     }
 

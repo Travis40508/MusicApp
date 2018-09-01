@@ -233,6 +233,16 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     }
 
     @Override
+    public void updateTrackInfoWithYoutubeIdViaTrackUid(String youtubeId, String trackUid) {
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                database.musicDao().updateTrackInfoWithYoutubeIdViaTrackUid(youtubeId, trackUid);
+            }
+        });
+    }
+
+    @Override
     public Observable<MusicApi.AlbumInfo> getAlbumInfo(String albumUid) {
         return database.musicDao().getAlbumInfo(albumUid)
                 .subscribeOn(Schedulers.io())
@@ -248,5 +258,11 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
                 database.musicDao().insertAlbumInfo(albumInfo);
             }
         });
+    }
+
+    @Override
+    public Observable<String> getTrackInfoYoutubeId(String trackUid) {
+        return database.musicDao().getTrackInfoYoutubeId(trackUid)
+                .subscribeOn(Schedulers.io()).toObservable();
     }
 }
