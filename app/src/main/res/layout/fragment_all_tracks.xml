@@ -50,9 +50,10 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_tracks"
         app:layout_constraintTop_toBottomOf="@id/tracks_search_value"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp">
 
     </android.support.v7.widget.RecyclerView>
 
