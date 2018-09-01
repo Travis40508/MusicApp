@@ -64,7 +64,6 @@ public class AlbumMainFragment extends Fragment implements AlbumMainView {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_album_main, container, false);
         ButterKnife.bind(this, view);
-
         presenter.attachView(this);
         presenter.checkSavedInstanceState(savedInstanceState == null,
                 getActivity().getSupportFragmentManager().findFragmentByTag(ALBUM_MAIN_TAG) == null);
