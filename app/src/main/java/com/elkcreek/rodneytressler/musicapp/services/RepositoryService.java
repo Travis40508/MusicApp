@@ -1,5 +1,6 @@
 package com.elkcreek.rodneytressler.musicapp.services;
 
+import com.elkcreek.rodneytressler.musicapp.repo.network.LyricsApi;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 
 import java.util.List;
@@ -51,6 +52,11 @@ public interface RepositoryService {
     Observable<MusicApi.AlbumInfo> getAlbumInfo(String albumUid);
     Observable<MusicApi.AlbumInfo> getAlbumInfoFromDatabase(String albumUid);
     Observable<MusicApi.AlbumInfo> getAlbumInfoFromNetwork(String albumUid);
+
+    //Lyrics
+    Observable<String> getLyrics(String artistName, String songTitle, String trackUid);
+    Observable<String> getLyricsFromDatabase(String trackUid);
+    Observable<String> getLyricsFromNetwork(String artistName, String songTitle, String trackUid);
 
     //Clear Cache
 

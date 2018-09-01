@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.elkcreek.rodneytressler.musicapp.R;
@@ -19,6 +20,7 @@ import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
@@ -32,6 +34,8 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     private YoutubeFragment youtubeFragment;
     private YouTubePlayerSupportFragment youTubePlayerSupportFragment;
     private YouTubePlayer youTubePlayer;
+    @BindView(R.id.text_lyrics)
+    protected TextView songLyrics;
 
     @Override
     public void onAttach(Context context) {
@@ -136,6 +140,11 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     @Override
     public void loadYouTubeVideo(String videoId, int currentVideoTime) {
         youTubePlayer.loadVideo(videoId, currentVideoTime);
+    }
+
+    @Override
+    public void showSongLyrics(String lyrics) {
+        songLyrics.setText(lyrics);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.elkcreek.rodneytressler.musicapp.ui.YoutubeView;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
@@ -38,10 +39,15 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
     public void subscribe() {
         disposable = new CompositeDisposable();
         fetchVideoId();
+        fetchSongLyrics();
     }
 
     private void fetchVideoId() {
         disposable.add(repositoryService.getYoutubeVideoId(trackUid, artistName + trackName).subscribe(storeYoutubeVideoId(), throwErrorWhenNoYoutubeVideoId()));
+    }
+
+    private void fetchSongLyrics() {
+        disposable.add(repositoryService.getLyrics(artistName, trackName, trackUid).subscribe(updateViewWithLyrics(), throwErrorWhenLyricsNotAvailable()));
     }
 
     private Consumer<String> storeYoutubeVideoId() {
@@ -54,6 +60,19 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
     private Consumer<Throwable> throwErrorWhenNoYoutubeVideoId() {
         return throwable -> {
             view.toastUnableToLoadVideo(Constants.UNABLE_TO_LOAD_VIDEO);
+        };
+    }
+
+    private Consumer<String> updateViewWithLyrics() {
+        return lyrics -> {
+          view.showSongLyrics(lyrics);
+        };
+    }
+
+    private Consumer<Throwable> throwErrorWhenLyricsNotAvailable() {
+        return throwable -> {
+          view.showSongLyrics(Constants.NO_LYRICS_AVAILABLE);
+          Log.d("@@@@-YoutubePresenter", throwable.getMessage());
         };
     }
 

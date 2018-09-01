@@ -1,7 +1,10 @@
 package com.elkcreek.rodneytressler.musicapp.di.modules;
 
+import com.elkcreek.rodneytressler.musicapp.repo.network.LyricsApi;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.repo.network.YoutubeApi;
+import com.elkcreek.rodneytressler.musicapp.services.LyricsApiService;
+import com.elkcreek.rodneytressler.musicapp.services.LyricsApiServiceImpl;
 import com.elkcreek.rodneytressler.musicapp.services.MusicApiService;
 import com.elkcreek.rodneytressler.musicapp.services.MusicApiServiceImpl;
 import com.elkcreek.rodneytressler.musicapp.services.YoutubeApiService;
@@ -23,10 +26,12 @@ public class NetworkModule {
 
     private final String baseUrl;
     private final String youtubeBaseUrl;
+    private final String lyricsBaseUrl;
 
-    public NetworkModule(String baseUrl, String youtubeBaseUrl) {
+    public NetworkModule(String baseUrl, String youtubeBaseUrl, String lyricsBaseUrl) {
         this.baseUrl = baseUrl;
         this.youtubeBaseUrl = youtubeBaseUrl;
+        this.lyricsBaseUrl = lyricsBaseUrl;
     }
 
     @Provides
@@ -65,6 +70,19 @@ public class NetworkModule {
     }
 
     @Provides
+    @Named(Constants.LYRICS_RETROFIT)
+    Retrofit providesLyricsRetrofit(OkHttpClient okHttpClient) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(lyricsBaseUrl)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+
+        return retrofit;
+    }
+
+    @Provides
     MusicApi providesMusicApi(@Named(Constants.MUSIC_RETROFIT) Retrofit retrofit) {
         MusicApi musicApi = retrofit.create(MusicApi.class);
 
@@ -85,6 +103,18 @@ public class NetworkModule {
 
     @Provides
     YoutubeApiService providesYoutubeApiService(YoutubeApi youtubeApi) {
-        return  new YoutubeApiServiceImpl(youtubeApi);
+        return new YoutubeApiServiceImpl(youtubeApi);
+    }
+
+    @Provides
+    LyricsApi providesLyricsApi(@Named(Constants.LYRICS_RETROFIT) Retrofit retrofit) {
+        LyricsApi lyricsApi = retrofit.create(LyricsApi.class);
+
+        return lyricsApi;
+    }
+
+    @Provides
+    LyricsApiService providesLyricsApiService(LyricsApi lyricsApi) {
+        return new LyricsApiServiceImpl(lyricsApi);
     }
 }

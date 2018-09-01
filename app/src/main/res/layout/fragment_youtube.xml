@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/black"
     android:clickable="true"
     android:focusable="true">
 
     <FrameLayout
         android:id="@+id/youtube_fragment_holder"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="200dp">
 
@@ -24,5 +26,24 @@
             android:visibility="gone"
             android:text="@string/no_preview_available"/>
     </FrameLayout>
+
+    <ScrollView
+        android:id="@+id/youtube_scroll_view"
+        app:layout_constraintTop_toBottomOf="@id/youtube_fragment_holder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_height="0dp"
+        android:paddingBottom="100dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_lyrics"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

@@ -301,6 +301,7 @@ public interface MusicApi {
 
         private String youtubeId;
 
+        private String lyrics;
 
         public String getYoutubeId() {
             return youtubeId;
@@ -364,6 +365,14 @@ public interface MusicApi {
 
         public void setArtistInfo(ArtistInfo artistInfo) {
             this.artistInfo = artistInfo;
+        }
+
+        public String getLyrics() {
+            return lyrics;
+        }
+
+        public void setLyrics(String lyrics) {
+            this.lyrics = lyrics;
         }
     }
 

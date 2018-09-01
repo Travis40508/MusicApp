@@ -3,6 +3,7 @@ package com.elkcreek.rodneytressler.musicapp.utils;
 public class Constants {
     public static final String BASE_URL = "https://ws.audioscrobbler.com";
     public static final String YOUTUBE_BASE_URL = "https://www.googleapis.com/youtube/";
+    public static final String LYRICS_BASE_URL = "https://api.lyrics.ovh/v1/";
     public static final String API_KEY = "a8960a28bf9866251a301af8c95b234c";
     public static final String YOUTUBE_API_KEY = "AIzaSyCbS_9gcgFNop0nSaV9bBddviOXUUQShAc";
     public static final String ARTIST_UID_KEY = "artist_uid_key";
@@ -35,11 +36,13 @@ public class Constants {
     //Retrofit
     public static final String MUSIC_RETROFIT = "music_retrofit";
     public static final String YOUTUBE_RETROFIT = "youtube_retrofit";
+    public static final String LYRICS_RETROFIT = "lyrics_retrofit";
 
     //Error Message
     public static final String UNABLE_TO_LOAD_VIDEO = "Unable to load video. Please try again";
     public static final String NO_SUMMARY_AVAILABLE_TEXT = "No summary available.";
     public static final String NO_CONTENT_AVAILABLE_TEXT = "No content available.";
+    public static final String NO_LYRICS_AVAILABLE = "Sorry, no lyrics available for this particular track! Please try again at a later time";
 
     //Action Bar Default Titles
     public static final String ARTISTS_TITLE = "Artists";

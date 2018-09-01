@@ -1,6 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.di.modules;
 
 
+import com.elkcreek.rodneytressler.musicapp.services.LyricsApiService;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryServiceImpl;
 import com.elkcreek.rodneytressler.musicapp.services.MusicApiService;
@@ -14,7 +15,7 @@ import dagger.Provides;
 public class CacheModule {
 
     @Provides
-    RepositoryService providesCacheService(MusicApiService musicApiService, MusicDatabaseService musicDatabaseService, YoutubeApiService youtubeApiService) {
-        return new RepositoryServiceImpl(musicApiService, musicDatabaseService, youtubeApiService);
+    RepositoryService providesCacheService(MusicApiService musicApiService, MusicDatabaseService musicDatabaseService, YoutubeApiService youtubeApiService, LyricsApiService lyricsApiService) {
+        return new RepositoryServiceImpl(musicApiService, musicDatabaseService, youtubeApiService, lyricsApiService);
     }
 }

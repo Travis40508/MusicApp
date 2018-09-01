@@ -16,4 +16,6 @@ public interface YoutubeView extends BaseView {
     void setYouTubePlayerStyle();
 
     void loadYouTubeVideo(String videoId, int currentVideoTime);
+
+    void showSongLyrics(String lyrics);
 }

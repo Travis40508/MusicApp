@@ -273,6 +273,22 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     }
 
     @Override
+    public void updateTrackInfoWithSongLyrics(String lyrics, String trackUid) {
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                database.musicDao().updateTrackInfoWithLyrics(lyrics, trackUid);
+            }
+        });
+    }
+
+    @Override
+    public Observable<String> getSongLyrics(String trackUid) {
+        return database.musicDao().getTrackInfoSongLyrics(trackUid)
+                .subscribeOn(Schedulers.io()).toObservable();
+    }
+
+    @Override
     public void clearCache() {
         Schedulers.io().scheduleDirect(new Runnable() {
             @Override

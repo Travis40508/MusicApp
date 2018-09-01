@@ -30,7 +30,7 @@ public class MusicApplication extends Application implements HasActivityInjector
         super.onCreate();
         DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
-                .networkModule(new NetworkModule(Constants.BASE_URL, Constants.YOUTUBE_BASE_URL))
+                .networkModule(new NetworkModule(Constants.BASE_URL, Constants.YOUTUBE_BASE_URL, Constants.LYRICS_BASE_URL))
                 .musicDatabaseModule(new MusicDatabaseModule())
                 .cacheModule(new CacheModule())
                 .build()

@@ -2,6 +2,7 @@ package com.elkcreek.rodneytressler.musicapp.services;
 
 import android.util.Log;
 
+import com.elkcreek.rodneytressler.musicapp.repo.network.LyricsApi;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
@@ -15,11 +16,13 @@ public class RepositoryServiceImpl implements RepositoryService {
     private final MusicApiService musicApiService;
     private final MusicDatabaseService musicDatabaseService;
     private final YoutubeApiService youtubeApiService;
+    private final LyricsApiService lyricsApiService;
 
-    public RepositoryServiceImpl(MusicApiService musicApiService, MusicDatabaseService musicDatabaseService, YoutubeApiService youtubeApiService) {
+    public RepositoryServiceImpl(MusicApiService musicApiService, MusicDatabaseService musicDatabaseService, YoutubeApiService youtubeApiService, LyricsApiService lyricsApiService) {
         this.musicApiService = musicApiService;
         this.musicDatabaseService = musicDatabaseService;
         this.youtubeApiService = youtubeApiService;
+        this.lyricsApiService = lyricsApiService;
     }
 
     @Override
@@ -227,6 +230,25 @@ public class RepositoryServiceImpl implements RepositoryService {
     public Observable<MusicApi.AlbumInfo> getAlbumInfoFromNetwork(String albumUid) {
         return musicApiService.getAlbumInfo(Constants.API_KEY, albumUid)
                 .doOnNext(musicDatabaseService::insertAlbumInfo);
+    }
+
+    @Override
+    public Observable<String> getLyrics(String artistName, String songTitle, String trackUid) {
+        return getLyricsFromDatabase(trackUid)
+                .onErrorResumeNext(getLyricsFromNetwork(artistName, songTitle, trackUid))
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<String> getLyricsFromDatabase(String trackUid) {
+        return musicDatabaseService.getSongLyrics(trackUid);
+    }
+
+    @Override
+    public Observable<String> getLyricsFromNetwork(String artistName, String songTitle, String trackUid) {
+        return lyricsApiService.getLyrics(artistName, songTitle)
+                .map(LyricsApi.LyricsResponse::getSongLyrics)
+                .doOnNext(lyrics -> musicDatabaseService.updateTrackInfoWithSongLyrics(lyrics, trackUid));
     }
 
     @Override

@@ -89,6 +89,12 @@ public interface MusicDao {
     @Query("SELECT youtubeId FROM TrackInfo WHERE trackUid = :trackUid")
     Single<String> getTrackInfoYoutubeId(String trackUid);
 
+    @Query("UPDATE TrackInfo SET lyrics = :lyrics WHERE trackUid = :trackUid")
+    void updateTrackInfoWithLyrics(String lyrics, String trackUid);
+
+    @Query("SELECT lyrics FROM TrackInfo WHERE trackUid = :trackUid")
+    Single<String> getTrackInfoSongLyrics(String trackUid);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAlbumInfo(MusicApi.AlbumInfo albumInfo);
 
