@@ -48,7 +48,6 @@ public class AlbumTracksFragment extends Fragment implements AlbumTracksView {
     protected FrameLayout loadingLayout;
     private AlbumTracksFragment albumTracksFragment;
     private AlbumTracksAdapter adapter;
-    private PlayTrackFragment playTrackFragment;
 
     @Override
     public void onAttach(Context context) {
@@ -74,9 +73,7 @@ public class AlbumTracksFragment extends Fragment implements AlbumTracksView {
         View view = inflater.inflate(R.layout.fragment_album_tracks, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
-        presenter.artistRetrieved(getArguments().getString(ARTIST_NAME_KEY), getArguments().getString(ARTIST_UID_KEY));
-        presenter.albumRetrieved(getArguments().getString(ALBUM_NAME_KEY), getArguments().getString(ALBUM_UID_KEY), getArguments().getString(ALBUM_IMAGE_URL_KEY));
-        presenter.onScreenRotated(savedInstanceState == null, getActivity().getSupportFragmentManager().findFragmentByTag(ALBUM_TRACKS_TAG) == null);
+        presenter.albumRetrieved(getArguments().getString(ALBUM_UID_KEY), getArguments().getString(ALBUM_IMAGE_URL_KEY));
         return view;
     }
 
@@ -87,12 +84,6 @@ public class AlbumTracksFragment extends Fragment implements AlbumTracksView {
         AlbumTracksFragment fragment = new AlbumTracksFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void reAttachAlbumTracksFragment() {
-        albumTracksFragment = (AlbumTracksFragment) getActivity().getSupportFragmentManager().findFragmentByTag(ALBUM_TRACKS_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, albumTracksFragment, ALBUM_TRACKS_TAG).commit();
     }
 
     @Override

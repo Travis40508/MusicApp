@@ -18,9 +18,6 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
     private final RepositoryService repositoryService;
     private CompositeDisposable disposable;
     private AlbumTracksView view;
-    private String artistName;
-    private String artistUid;
-    private String albumName;
     private String albumUid;
     private String imageUrl;
     private List<MusicApi.Track> albumTracks;
@@ -63,21 +60,9 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
         disposable.dispose();
     }
 
-    public void onScreenRotated(boolean savedInstanceStateIsNull, boolean albumTracksIsNull) {
-        if (!savedInstanceStateIsNull) {
-            if (!albumTracksIsNull) {
-                view.reAttachAlbumTracksFragment();
-            }
-        }
-    }
 
-    public void artistRetrieved(String artistName, String artistUid) {
-        this.artistName = artistName;
-        this.artistUid = artistUid;
-    }
 
-    public void albumRetrieved(String albumName, String albumUid, String imageUrl) {
-        this.albumName = albumName;
+    public void albumRetrieved(String albumUid, String imageUrl) {
         this.albumUid = albumUid;
         this.imageUrl = imageUrl;
     }
