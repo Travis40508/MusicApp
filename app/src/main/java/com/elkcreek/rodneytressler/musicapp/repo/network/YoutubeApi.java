@@ -11,7 +11,7 @@ import retrofit2.http.Query;
 
 public interface YoutubeApi {
 
-    @GET("v3/search?part=snippet")
+    @GET("v3/search?part=snippet&chart=mostPopular")
     Observable<YoutubeResponse> getYoutubeVideo(@Query("key") String youtubeApiKey, @Query("q") String searchQuery);
 
 

@@ -41,7 +41,7 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
     }
 
     private void fetchVideoId() {
-        disposable.add(repositoryService.getYoutubeVideoId(trackUid, trackName + artistName).subscribe(storeYoutubeVideoId(), throwErrorWhenNoYoutubeVideoId()));
+        disposable.add(repositoryService.getYoutubeVideoId(trackUid, artistName + trackName).subscribe(storeYoutubeVideoId(), throwErrorWhenNoYoutubeVideoId()));
     }
 
     private Consumer<String> storeYoutubeVideoId() {
