@@ -19,8 +19,6 @@ public class BioPresenter implements BasePresenter<BioView> {
     private CompositeDisposable disposable;
     private String artistUid;
     private boolean isExpanded;
-    private static final String READ_MORE_TEXT_COLLAPSE = "Collapse";
-    private static final String READ_MORE_TEXT_EXPAND = "Read More";
     private String artistName;
 
     @Inject
@@ -55,7 +53,6 @@ public class BioPresenter implements BasePresenter<BioView> {
             }
             view.hideLoadingLayout();
             view.showArtistImage(artist.getArtistImages().get(2).getImageUrl());
-            view.showArtistName(artist.getArtistName());
             view.showSimilarArtists(artist.getSimilar().getArtistList());
         };
     }
@@ -68,8 +65,7 @@ public class BioPresenter implements BasePresenter<BioView> {
 
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
-            view.detachFragment();
-            view.showNoBioToast();
+            Log.d("@@@@", throwable.getMessage());
         };
     }
 
@@ -79,15 +75,14 @@ public class BioPresenter implements BasePresenter<BioView> {
 
     public void artistNameRetrieved(String artistName) {
         this.artistName = artistName;
-        view.showArtistName(artistName);
     }
 
     public void readMoreClicked(String readMoreText) {
         isExpanded = !isExpanded;
-        if (readMoreText.equalsIgnoreCase("Read More")) {
-            view.setReadMoreText(READ_MORE_TEXT_COLLAPSE);
+        if (readMoreText.equalsIgnoreCase(Constants.READ_MORE)) {
+            view.setReadMoreText(Constants.COLLAPSE);
         } else {
-            view.setReadMoreText(READ_MORE_TEXT_EXPAND);
+            view.setReadMoreText(Constants.READ_MORE);
         }
         fetchBio();
     }
@@ -98,23 +93,9 @@ public class BioPresenter implements BasePresenter<BioView> {
         disposable.add(repositoryService.getArtistBioWithName(artist.getArtistName(), Constants.API_KEY).subscribe(
                 similarArtist -> {
                     view.showSimilarArtistScreen(similarArtist.getArtistUID(), similarArtist.getArtistName());
+                }, throwable -> {
+                    Log.d("@@@@", throwable.getMessage());
                 }
         ));
-    }
-
-    public void viewTracksClicked() {
-        view.showTracksFragment(artistUid, artistName);
-    }
-
-    public void checkSavedInstanceState(boolean saveInstanceStateIsNull, boolean bioFragmentIsNull) {
-        if (!saveInstanceStateIsNull) {
-            if (!bioFragmentIsNull) {
-                view.reAttachBioFragment();
-            }
-        }
-    }
-
-    public void homeClicked() {
-        view.clearBackStack();
     }
 }

@@ -10,12 +10,6 @@ public interface BioView extends BaseView {
 
     void showArtistBio(String artistBio);
 
-    void detachFragment();
-
-    void showNoBioToast();
-
-    void showArtistName(String artistName);
-
     void hideLoadingLayout();
 
     void setReadMoreText(String readMoreTextCollapse);
@@ -23,12 +17,6 @@ public interface BioView extends BaseView {
     void showSimilarArtists(List<MusicApi.Artist> artistList);
 
     void showSimilarArtistScreen(String artistUID, String artistName);
-
-    void showTracksFragment(String artistUid, String artistName);
-
-    void clearBackStack();
-
-    void reAttachBioFragment();
 
     void showLoadingLayout();
 

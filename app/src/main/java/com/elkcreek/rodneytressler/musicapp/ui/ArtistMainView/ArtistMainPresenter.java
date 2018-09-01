@@ -14,6 +14,11 @@ public class ArtistMainPresenter implements BasePresenter<ArtistMainView> {
     private String artistName;
     private int currentItem;
 
+    @Inject
+    public ArtistMainPresenter() {
+
+    }
+
     @Override
     public void attachView(ArtistMainView view) {
         this.view = view;
