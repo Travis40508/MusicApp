@@ -46,27 +46,15 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_UID_KEY
 
 public class AllTracksFragment extends Fragment implements AllTracksView {
     @Inject
-    AllTracksPresenter presenter;
+    protected AllTracksPresenter presenter;
     @BindView(R.id.recycler_view_tracks)
     protected RecyclerView recyclerView;
-//    @BindView(R.id.text_tracks_artist)
-//    protected TextView artistName;
     @BindView(R.id.progress_bar_tracks)
     protected ProgressBar progressBar;
     @BindView(R.id.tracks_search_value)
     protected TextView searchedTracksText;
-
     private TracksAdapter adapter;
-    private PlayTrackFragment playTrackFragment;
     private AllTracksFragment allTracksFragment;
-
-//    @OnClick(R.id.image_home_button)
-//    protected void homeButtonClicked(View view) {
-//        presenter.homeClicked();
-//    }
-
-//    @OnClick(R.id.text_view_bio)
-//    protected void viewBioClicked(View view) {presenter.viewBioClicked();}
 
 
     @OnTextChanged(value = R.id.input_track_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -101,9 +89,6 @@ public class AllTracksFragment extends Fragment implements AllTracksView {
         presenter.attachView(this);
         presenter.artistNameRetrieved(getArguments().getString(Constants.ARTIST_NAME_KEY));
         presenter.artistRetrieved(getArguments().getString(Constants.ARTIST_UID_KEY));
-        presenter.screenRotated(
-                savedInstanceState == null,
-                getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG) == null);
         return view;
     }
 
@@ -130,13 +115,9 @@ public class AllTracksFragment extends Fragment implements AllTracksView {
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void showArtistName(String artistName) {
-//        this.artistName.setText(artistName);
-    }
 
     @Override
-    public void showPlayTrackFragment(String trackName, String artistName, String trackUid) {
+    public void showTrackMainFragment(String trackName, String artistName, String trackUid) {
         Bundle bundle = new Bundle();
         bundle.putString(TRACK_NAME_KEY, trackName);
         bundle.putString(ARTIST_NAME_KEY, artistName);
@@ -145,11 +126,6 @@ public class AllTracksFragment extends Fragment implements AllTracksView {
         trackMainFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().
                 replace(R.id.fragment_holder, trackMainFragment, TRACK_MAIN_TAG).addToBackStack(null).commit();
-    }
-
-    @Override
-    public void removeFragment() {
-        getActivity().getSupportFragmentManager().popBackStack();
     }
 
     @Override
@@ -180,26 +156,5 @@ public class AllTracksFragment extends Fragment implements AllTracksView {
     @Override
     public void showAllTracksText() {
         searchedTracksText.setText("Showing All Tracks");
-    }
-
-    @Override
-    public void clearBackStack() {
-        getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-    }
-
-    @Override
-    public void reattachTracksFragment() {
-        allTracksFragment = (AllTracksFragment) getActivity().getSupportFragmentManager().findFragmentByTag(TRACKS_FRAGMENT_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, allTracksFragment, TRACKS_FRAGMENT_TAG).commit();
-    }
-
-    @Override
-    public void showBio(String artistName, String artistUid) {
-        Bundle bundle = new Bundle();
-        bundle.putString(ARTIST_NAME_KEY, artistName);
-        bundle.putString(ARTIST_UID_KEY, artistUid);
-        BioFragment bioFragment = BioFragment.newInstance();
-        bioFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, bioFragment, BIO_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 }

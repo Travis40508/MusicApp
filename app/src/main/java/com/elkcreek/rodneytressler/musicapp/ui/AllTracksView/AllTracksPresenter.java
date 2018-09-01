@@ -38,7 +38,6 @@ public class AllTracksPresenter implements BasePresenter<AllTracksView> {
 
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
-            view.removeFragment();
             view.toastNoTracksError();
         };
     }
@@ -60,19 +59,10 @@ public class AllTracksPresenter implements BasePresenter<AllTracksView> {
 
     public void artistNameRetrieved(String artistName) {
         this.artistName = artistName;
-        view.showArtistName(artistName);
     }
 
     public void onPlayClicked(MusicApi.Track track) {
-        view.showPlayTrackFragment(track.getTrackName(), artistName, track.getTrackUid());
-    }
-
-    public void screenRotated(boolean savedInstanceStateIsNull, boolean tracksFragmentIsNull) {
-        if(!savedInstanceStateIsNull) {
-            if(!tracksFragmentIsNull) {
-                view.reattachTracksFragment();
-            }
-        }
+        view.showTrackMainFragment(track.getTrackName(), artistName, track.getTrackUid());
     }
 
     public void trackSearchTextChanged(String searchText, boolean adapterHasItems) {
@@ -92,13 +82,5 @@ public class AllTracksPresenter implements BasePresenter<AllTracksView> {
                     .subscribe(updateUiWithTopTracks(), updateUiOnError()));
             view.showAllTracksText();
         }
-    }
-
-    public void homeClicked() {
-        view.clearBackStack();
-    }
-
-    public void viewBioClicked() {
-        view.showBio(artistName, artistUid);
     }
 }

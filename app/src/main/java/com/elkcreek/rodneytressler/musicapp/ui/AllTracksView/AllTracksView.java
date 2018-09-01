@@ -8,10 +8,6 @@ import java.util.List;
 public interface AllTracksView extends BaseView {
     void showTopTracks(List<MusicApi.Track> trackList);
 
-    void showArtistName(String artistName);
-
-    void removeFragment();
-
     void toastNoTracksError();
 
     void hideProgressBar();
@@ -24,11 +20,5 @@ public interface AllTracksView extends BaseView {
 
     void showAllTracksText();
 
-    void clearBackStack();
-
-    void reattachTracksFragment();
-
-    void showBio(String artistName, String artistUid);
-
-    void showPlayTrackFragment(String trackName, String artistName, String trackUid);
+    void showTrackMainFragment(String trackName, String artistName, String trackUid);
 }
