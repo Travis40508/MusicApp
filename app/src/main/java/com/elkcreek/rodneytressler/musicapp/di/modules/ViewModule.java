@@ -5,10 +5,10 @@ import com.elkcreek.rodneytressler.musicapp.ui.AlbumMainView.AlbumMainFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.AlbumTracksView.AlbumTracksFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.AlbumsView.AlbumsFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.AllTracksView.AllTracksFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.ArtistBioView.ArtistBioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.ArtistMainView.ArtistMainFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.BioView.BioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity;
-import com.elkcreek.rodneytressler.musicapp.ui.PlayTrackView.PlayTrackFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.TrackBioView.TrackBioBioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.SearchView.SearchFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.YoutubeView.YoutubeFragment;
@@ -23,7 +23,7 @@ public abstract class ViewModule {
     abstract MainActivity contributesMainActivityInjector();
 
     @ContributesAndroidInjector
-    abstract BioFragment contributesBioFragmentInjector();
+    abstract ArtistBioFragment contributesBioFragmentInjector();
 
     @ContributesAndroidInjector
     abstract SearchFragment contributesSearchFragmentInjector();
@@ -32,7 +32,7 @@ public abstract class ViewModule {
     abstract AllTracksFragment contributesTracksFragmentInjector();
 
     @ContributesAndroidInjector
-    abstract PlayTrackFragment contributesPlayTrackFragmentInjector();
+    abstract TrackBioBioFragment contributesPlayTrackFragmentInjector();
 
     @ContributesAndroidInjector
     abstract AlbumsFragment contributesAlbumsFragmentInjector();

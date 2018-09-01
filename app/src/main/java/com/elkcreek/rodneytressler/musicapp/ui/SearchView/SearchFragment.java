@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,8 +20,8 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.AlbumsView.AlbumsFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.AllTracksView.AllTracksFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.ArtistBioView.ArtistBioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.ArtistMainView.ArtistMainFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.BioView.BioFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.ArtistAdapter;
 
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class SearchFragment extends Fragment implements SearchView {
     protected FrameLayout loadingLayout;
     private ArtistAdapter adapter;
     private AllTracksFragment allTracksFragment;
-    private BioFragment bioFragment;
+    private ArtistBioFragment artistBioFragment;
     private AlbumsFragment albumsFragment;
 
 
@@ -141,9 +140,9 @@ public class SearchFragment extends Fragment implements SearchView {
         Bundle bundle = new Bundle();
         bundle.putString(ARTIST_UID_KEY, artist.getArtistUID());
         bundle.putString(ARTIST_NAME_KEY, artist.getArtistName());
-        bioFragment = BioFragment.newInstance();
-        bioFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, bioFragment, BIO_FRAGMENT_TAG).addToBackStack(null).commit();
+        artistBioFragment = ArtistBioFragment.newInstance();
+        artistBioFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, artistBioFragment, BIO_FRAGMENT_TAG).addToBackStack(null).commit();
     }
 
     @Override

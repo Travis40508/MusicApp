@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.view.LayoutInflater;
@@ -19,8 +17,6 @@ import android.widget.Toast;
 
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
-import com.elkcreek.rodneytressler.musicapp.ui.BioView.BioFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.PlayTrackView.PlayTrackFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import com.elkcreek.rodneytressler.musicapp.utils.TracksAdapter;
@@ -31,15 +27,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import dagger.android.support.AndroidSupportInjection;
 
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
-import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
-import static com.elkcreek.rodneytressler.musicapp.utils.Constants.BIO_FRAGMENT_TAG;
-import static com.elkcreek.rodneytressler.musicapp.utils.Constants.PLAY_TRACK_FRAGMENT_TAG;
-import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACKS_FRAGMENT_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_MAIN_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_UID_KEY;

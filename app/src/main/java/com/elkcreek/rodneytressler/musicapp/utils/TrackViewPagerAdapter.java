@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.elkcreek.rodneytressler.musicapp.ui.PlayTrackView.PlayTrackFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.TrackBioView.TrackBioBioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.YoutubeView.YoutubeFragment;
 
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
@@ -32,9 +32,9 @@ public class TrackViewPagerAdapter extends FragmentPagerAdapter {
             //Track Bio
             Bundle bundle = new Bundle();
             bundle.putString(TRACK_UID_KEY, trackUid);
-            PlayTrackFragment playTrackFragment = PlayTrackFragment.newInstance();
-            playTrackFragment.setArguments(bundle);
-            return playTrackFragment;
+            TrackBioBioFragment trackBioFragment = TrackBioBioFragment.newInstance();
+            trackBioFragment.setArguments(bundle);
+            return trackBioFragment;
         } else if (position == 1){
             //Youtube Screen
             Bundle bundle = new Bundle();

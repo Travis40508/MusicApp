@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.elkcreek.rodneytressler.musicapp.ui.AlbumsView.AlbumsFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.AllTracksView.AllTracksFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.BioView.BioFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.ArtistBioView.ArtistBioFragment;
 
 public class ArtistViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -27,9 +27,9 @@ public class ArtistViewPagerAdapter extends FragmentPagerAdapter {
             Bundle bundle = new Bundle();
             bundle.putString(Constants.ARTIST_NAME_KEY, artistName);
             bundle.putString(Constants.ARTIST_UID_KEY, artistUid);
-            BioFragment bioFragment = BioFragment.newInstance();
-            bioFragment.setArguments(bundle);
-            return bioFragment;
+            ArtistBioFragment artistBioFragment = ArtistBioFragment.newInstance();
+            artistBioFragment.setArguments(bundle);
+            return artistBioFragment;
         } else if (position == 1){
             Bundle bundle = new Bundle();
             bundle.putString(Constants.ARTIST_NAME_KEY, artistName);
