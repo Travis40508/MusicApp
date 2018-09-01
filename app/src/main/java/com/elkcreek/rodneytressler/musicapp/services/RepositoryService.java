@@ -51,4 +51,13 @@ public interface RepositoryService {
     Observable<MusicApi.AlbumInfo> getAlbumInfo(String albumUid);
     Observable<MusicApi.AlbumInfo> getAlbumInfoFromDatabase(String albumUid);
     Observable<MusicApi.AlbumInfo> getAlbumInfoFromNetwork(String albumUid);
+
+    //Clear Cache
+
+    void clearCache();
+
+    //Date
+    void saveDate();
+    boolean isSameWeekSinceLastLaunch();
+    void resetDate();
 }

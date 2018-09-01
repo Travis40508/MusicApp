@@ -21,7 +21,6 @@ import io.reactivex.functions.Consumer;
 public class SearchPresenter implements BasePresenter<SearchView> {
 
     private final MusicApiService musicApiService;
-    private final SharedPreferences sharedPreferences;
     private final RepositoryService repositoryService;
     private SearchView view;
     private CompositeDisposable disposable;
@@ -29,9 +28,8 @@ public class SearchPresenter implements BasePresenter<SearchView> {
     private String searchText;
 
     @Inject
-    public SearchPresenter(MusicApiService musicApiService, SharedPreferences sharedPreferences, RepositoryService repositoryService) {
+    public SearchPresenter(MusicApiService musicApiService, RepositoryService repositoryService) {
         this.musicApiService = musicApiService;
-        this.sharedPreferences = sharedPreferences;
         this.repositoryService = repositoryService;
     }
 
@@ -55,9 +53,7 @@ public class SearchPresenter implements BasePresenter<SearchView> {
     private Consumer<Throwable> updateUiWithError() {
         return throwable -> {
             view.showErrorLoadingToast();
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt(Constants.WEEKOFYEAR, 0);
-            editor.apply();
+            repositoryService.resetDate();
             subscribe();
         };
     }
@@ -77,19 +73,13 @@ public class SearchPresenter implements BasePresenter<SearchView> {
             view.showProgressBar();
         }
         disposable = new CompositeDisposable();
-        int weekOfYear = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-        int savedWeek = sharedPreferences.getInt(Constants.WEEKOFYEAR, 0);
-        int savedYear = sharedPreferences.getInt(Constants.YEAR, 0);
 
         if (!isSearching) {
-            if (savedYear == 0 || (weekOfYear != savedWeek && year != savedYear)) {
-                repositoryService.deleteTopArtists();
+            if (repositoryService.isSameWeekSinceLastLaunch()) {
+//                repositoryService.deleteTopArtists();
+                repositoryService.clearCache();
                 disposable.add(repositoryService.getTopArtistsFromNetwork().subscribe(updateViewWithTopArtist(), updateUiWithError()));
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt(Constants.WEEKOFYEAR, weekOfYear);
-                editor.putInt(Constants.YEAR, year);
-                editor.apply();
+                repositoryService.saveDate();
             } else {
                 disposable.add(repositoryService.getTopArtists().subscribe(
                         updateViewWithTopArtist()

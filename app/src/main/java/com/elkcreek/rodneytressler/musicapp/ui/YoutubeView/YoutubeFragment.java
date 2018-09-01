@@ -130,12 +130,6 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        presenter.setConfiguration(newConfig);
-    }
-
-    @Override
     public void setYouTubePlayerStyle() {
         youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
     }
@@ -146,8 +140,7 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     }
 
     @Override
-    public void playYoutubeVideo(boolean isFullScreen) {
-        youTubePlayer.setFullscreen(isFullScreen);
+    public void playYoutubeVideo() {
         youTubePlayer.play();
     }
 

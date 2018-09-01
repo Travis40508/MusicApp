@@ -17,5 +17,5 @@ public interface YoutubeView extends BaseView {
 
     void loadYouTubeVideo(String videoId, int currentVideoTime);
 
-    void playYoutubeVideo(boolean isFullScreen);
+    void playYoutubeVideo();
 }

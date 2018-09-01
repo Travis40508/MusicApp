@@ -229,6 +229,26 @@ public class RepositoryServiceImpl implements RepositoryService {
                 .doOnNext(musicDatabaseService::insertAlbumInfo);
     }
 
+    @Override
+    public void clearCache() {
+        musicDatabaseService.clearCache();
+    }
+
+    @Override
+    public void saveDate() {
+        musicDatabaseService.saveDate();
+    }
+
+    @Override
+    public boolean isSameWeekSinceLastLaunch() {
+        return musicDatabaseService.isSameWeekSinceLastLaunch();
+    }
+
+    @Override
+    public void resetDate() {
+        musicDatabaseService.resetDate();
+    }
+
 
     @Override
     public Observable<MusicApi.TrackInfo> getTrackFromNetwork(String trackUid) {

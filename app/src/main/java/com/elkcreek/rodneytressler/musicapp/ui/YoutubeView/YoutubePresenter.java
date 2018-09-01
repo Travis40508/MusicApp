@@ -96,11 +96,7 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
     public void youTubePlayerInitializeSuccess(boolean wasRestored) {
         view.setYouTubePlayerStyle();
         view.loadYouTubeVideo(videoId, currentVideoTime);
-        view.playYoutubeVideo(isFullScreen);
-    }
 
-    public void setConfiguration(Configuration newConfig) {
-        isFullScreen = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
     public void saveInstanceState(Bundle outState, int currentTimeMillis) {

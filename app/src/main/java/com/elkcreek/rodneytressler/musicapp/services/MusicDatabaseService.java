@@ -39,4 +39,8 @@ public interface MusicDatabaseService {
     Observable<MusicApi.AlbumInfo> getAlbumInfo(String albumUid);
     void insertAlbumInfo(MusicApi.AlbumInfo albumInfo);
     Observable<String> getTrackInfoYoutubeId(String trackUid);
+    void clearCache();
+    void saveDate();
+    boolean isSameWeekSinceLastLaunch();
+    void resetDate();
 }

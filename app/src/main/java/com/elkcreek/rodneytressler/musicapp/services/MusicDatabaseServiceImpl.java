@@ -1,8 +1,12 @@
 package com.elkcreek.rodneytressler.musicapp.services;
 
+import android.content.SharedPreferences;
+
 import com.elkcreek.rodneytressler.musicapp.repo.database.MusicDatabase;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
+import java.util.Calendar;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -14,9 +18,11 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
 
     private final MusicDatabase database;
     private CompositeDisposable disposable;
+    private SharedPreferences sharedPreferences;
 
-    public MusicDatabaseServiceImpl(MusicDatabase database) {
+    public MusicDatabaseServiceImpl(MusicDatabase database, SharedPreferences sharedPreferences) {
         this.database = database;
+        this.sharedPreferences = sharedPreferences;
         disposable = new CompositeDisposable();
     }
 
@@ -264,5 +270,46 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     public Observable<String> getTrackInfoYoutubeId(String trackUid) {
         return database.musicDao().getTrackInfoYoutubeId(trackUid)
                 .subscribeOn(Schedulers.io()).toObservable();
+    }
+
+    @Override
+    public void clearCache() {
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                database.musicDao().deleteAllTracks();
+                database.musicDao().deleteAllArtists();
+                database.musicDao().deleteAllAlbums();
+                database.musicDao().deleteAllAlbumInfo();
+                database.musicDao().deleteAllTrackInfo();
+            }
+        });
+    }
+
+    @Override
+    public void saveDate() {
+        int weekOfYear = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(Constants.WEEKOFYEAR, weekOfYear);
+        editor.putInt(Constants.YEAR, year);
+        editor.apply();
+    }
+
+    @Override
+    public boolean isSameWeekSinceLastLaunch() {
+        int weekOfYear = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        int savedWeek = sharedPreferences.getInt(Constants.WEEKOFYEAR, 0);
+        int savedYear = sharedPreferences.getInt(Constants.YEAR, 0);
+        return savedYear == 0 || (weekOfYear != savedWeek || year != savedYear);
+    }
+
+    @Override
+    public void resetDate() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(Constants.WEEKOFYEAR, 0);
+        editor.putInt(Constants.YEAR, 0);
+        editor.apply();
     }
 }

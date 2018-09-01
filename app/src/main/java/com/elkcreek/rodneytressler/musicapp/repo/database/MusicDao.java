@@ -94,4 +94,22 @@ public interface MusicDao {
 
     @Query("SELECT * FROM AlbumInfo WHERE albumUid = :albumUid")
     Flowable<List<MusicApi.AlbumInfo>> getAlbumInfo(String albumUid);
+
+    //Clearing Cache
+    @Query("DELETE FROM Track")
+    void deleteAllTracks();
+
+    @Query("DELETE FROM Artist")
+    void deleteAllArtists();
+
+    @Query("DELETE FROM Album")
+    void deleteAllAlbums();
+
+    @Query("DELETE FROM AlbumInfo")
+    void deleteAllAlbumInfo();
+
+    @Query("DELETE FROM TrackInfo")
+    void deleteAllTrackInfo();
+
+
 }
