@@ -46,21 +46,9 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     protected LinearLayout readMoreLayout;
     @BindView(R.id.text_read_more)
     protected TextView readMoreText;
-    private YouTubePlayerSupportFragment youTubePlayerSupportFragment;
-
-//    @OnClick(R.id.image_home_button)
-//    protected void onHomeButtonClicked(View view) {presenter.homeButtonClicked();}
 
     @OnClick(R.id.read_more_layout)
     protected void onReadMoreLayoutClicked(View view) {presenter.onReadMoreClicked(readMoreText.getText().toString());}
-
-    @OnClick(R.id.image_album_cover)
-    protected void onImageAlbumCoverClicked(View view) {presenter.imageAlbumCoverClicked();}
-
-//    @OnClick(R.id.image_no_preview_available)
-//    protected void onNoPreviewAvailableClicked(View view) {presenter.imageAlbumCoverClicked();}
-
-    private PlayTrackFragment playTrackFragment;
 
     @Override
     public void onAttach(Context context) {
@@ -73,8 +61,6 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
         super.onResume();
         presenter.subscribe();
         presenter.trackRetrieved(getArguments().getString(TRACK_UID_KEY));
-        presenter.getVideoId(getArguments().getString(Constants.TRACK_NAME_KEY), getArguments().getString(Constants.ARTIST_NAME_KEY));
-        presenter.onResume(youTubePlayerSupportFragment == null);
     }
 
     @Nullable
@@ -83,9 +69,6 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
         View view = inflater.inflate(R.layout.fragment_play_track, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
-        presenter.screenRotated(
-                savedInstanceState == null,
-                getActivity().getSupportFragmentManager().findFragmentByTag(PLAY_TRACK_FRAGMENT_TAG) == null);
         return view;
     }
 
@@ -96,12 +79,6 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
         PlayTrackFragment fragment = new PlayTrackFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void reAttachPlayTracksFragment() {
-        playTrackFragment = (PlayTrackFragment) getActivity().getSupportFragmentManager().findFragmentByTag(PLAY_TRACK_FRAGMENT_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, playTrackFragment, PLAY_TRACK_FRAGMENT_TAG).commit();
     }
 
     @Override
@@ -130,60 +107,8 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     }
 
     @Override
-    public void showArtistName(String artistName) {
-//        trackArtistName.setText(artistName);
-    }
-
-    @Override
-    public void showTrackName(String trackName) {
-//        this.trackName.setText(trackName);
-    }
-
-    @Override
     public void setReadMoreText(String readMoreText) {
         this.readMoreText.setText(readMoreText);
-    }
-
-    @Override
-    public void showVideo(String videoId) {
-//        youTubePlayerSupportFragment = YouTubePlayerSupportFragment.newInstance();
-//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.youtube_fragment_holder, youTubePlayerSupportFragment, YOUTUBE_TAG).commit();
-//        youTubePlayerSupportFragment.initialize(Constants.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
-//            @Override
-//            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
-//                if(!wasRestored) {
-//                    youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
-//                    youTubePlayer.loadVideo(videoId);
-//                    youTubePlayer.play();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-//
-//            }
-//        });
-    }
-
-    @Override
-    public void pauseYoutubeFragment() {
-        youTubePlayerSupportFragment.onPause();
-    }
-
-    @Override
-    public void resumeYoutubeFragment() {
-        youTubePlayerSupportFragment.onResume();
-    }
-
-    @Override
-    public void destroyYoutubeFragment() {
-        youTubePlayerSupportFragment.onDestroy();
-    }
-
-    @Override
-    public void toastUnableToLoadVideo(String unableToLoadVideo) {
-        Toast.makeText(getContext(), unableToLoadVideo, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -194,28 +119,5 @@ public class PlayTrackFragment extends Fragment implements PlayTrackView {
     @Override
     public void showNoContentAvailableText(String noContentAvailableText) {
         this.trackBio.setText(noContentAvailableText);
-    }
-
-    @Override
-    public void showNoPreviewAvailable() {
-//        noPreviewAvailable.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void takeUserHome() {
-        getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-    }
-
-
-    @Override
-    public void onPause() {
-        presenter.onPause(youTubePlayerSupportFragment == null);
-        super.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        presenter.onDestroy(youTubePlayerSupportFragment == null);
-        super.onDestroy();
     }
 }

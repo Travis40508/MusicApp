@@ -16,9 +16,7 @@ import io.reactivex.functions.Consumer;
 
 public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
 
-    private final YoutubeApiService youtubeApiService;
     private final RepositoryService repositoryService;
-    private final MusicApiService musicApiService;
     private PlayTrackView view;
     private CompositeDisposable compositeDisposable;
     private boolean isExpanded;
@@ -28,10 +26,8 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
     private String videoId;
 
     @Inject
-    public PlayTrackPresenter(YoutubeApiService youtubeApiService, RepositoryService repositoryService, MusicApiService musicApiService) {
-        this.youtubeApiService = youtubeApiService;
+    public PlayTrackPresenter(RepositoryService repositoryService) {
         this.repositoryService = repositoryService;
-        this.musicApiService = musicApiService;
     }
 
     @Override
@@ -48,28 +44,6 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
     @Override
     public void unsubscribe() {
         compositeDisposable.dispose();
-    }
-
-    public void screenRotated(boolean savedInstanceStateIsNull, boolean playTracksFragmentIsNull) {
-        if (!savedInstanceStateIsNull) {
-            if (!playTracksFragmentIsNull) {
-                view.reAttachPlayTracksFragment();
-            }
-        }
-    }
-
-    public void getVideoId(String trackName, String artistName) {
-//        compositeDisposable.add(repositoryService.getYoutubeVideoId(trackUid, trackName + artistName).subscribe(storeYoutubeVideoId(), throwErrorWhenNoYoutubeVideoId()));
-    }
-
-    private Consumer<String> storeYoutubeVideoId() {
-        return videoId -> this.videoId = videoId;
-    }
-
-    private Consumer<Throwable> throwErrorWhenNoYoutubeVideoId() {
-        return throwable -> {
-            view.toastUnableToLoadVideo(Constants.UNABLE_TO_LOAD_VIDEO);
-        };
     }
 
     public void trackRetrieved(String trackUid) {
@@ -90,8 +64,6 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
             }
             view.hideLoadingLayout();
             view.showTrackAlbumCover(track.getTrackAlbum().getTrackImage().get(2).getImageUrl());
-            view.showArtistName(track.getArtistInfo().getArtistName());
-            view.showTrackName(track.getTrackName());
         };
     }
 
@@ -100,7 +72,7 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
             Log.d("@@@@", throwable.getMessage());
             view.hideLoadingLayout();
             view.showTrackSummary(Constants.NO_CONTENT_AVAILABLE_TEXT);
-            view.showNoPreviewAvailable();
+//           Maybe later -  view.showNoPreviewAvailable();
         };
     }
 
@@ -112,31 +84,5 @@ public class PlayTrackPresenter implements BasePresenter<PlayTrackView> {
             view.setReadMoreText(READ_MORE_TEXT_EXPAND);
         }
         fetchTrack();
-    }
-
-    public void imageAlbumCoverClicked() {
-        view.showVideo(videoId);
-    }
-
-    public void onPause(boolean youtubeFragmentIsNull) {
-        if (!youtubeFragmentIsNull) {
-            view.pauseYoutubeFragment();
-        }
-    }
-
-    public void onResume(boolean youtubeFragmentIsNull) {
-        if (!youtubeFragmentIsNull) {
-            view.resumeYoutubeFragment();
-        }
-    }
-
-    public void onDestroy(boolean youtubeFragmentIsNull) {
-        if (!youtubeFragmentIsNull) {
-            view.destroyYoutubeFragment();
-        }
-    }
-
-    public void homeButtonClicked() {
-        view.takeUserHome();
     }
 }

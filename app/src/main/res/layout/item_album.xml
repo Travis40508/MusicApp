@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="275dp"
-    android:background="@android:color/transparent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="#111111"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
@@ -10,31 +11,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="180dp" />
 
     <TextView
         android:id="@+id/text_album_name"
-        android:maxLines="1"
+        android:maxLines="2"
         android:ellipsize="end"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/image_album_item"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textColor="@android:color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
-
-    <View
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_album_name"
-        android:layout_margin="10dp"
-        android:background="@android:color/white"
-        android:layout_width="match_parent"
-        android:layout_height=".5dp"/>
 
 </android.support.constraint.ConstraintLayout>
