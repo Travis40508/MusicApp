@@ -58,14 +58,6 @@ public class AlbumsPresenter implements BasePresenter<AlbumsView> {
         disposable.dispose();
     }
 
-    public void screenRotated(boolean savedInstanceStateIsNull, boolean albumsFragmentIsNull) {
-        if(!savedInstanceStateIsNull) {
-            if(!albumsFragmentIsNull) {
-                view.reAttachAlbumsFragment();
-            }
-        }
-    }
-
     public void artistNameRetrieved(String artistName) {
         this.artistName = artistName;
     }

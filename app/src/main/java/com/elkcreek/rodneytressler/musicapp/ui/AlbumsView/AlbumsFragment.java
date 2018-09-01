@@ -70,9 +70,6 @@ public class AlbumsFragment extends Fragment implements AlbumsView {
         presenter.attachView(this);
         presenter.artistNameRetrieved(getArguments().getString(Constants.ARTIST_NAME_KEY));
         presenter.artistRetrieved(getArguments().getString(Constants.ARTIST_UID_KEY));
-        presenter.screenRotated(
-                savedInstanceState == null,
-                getActivity().getSupportFragmentManager().findFragmentByTag(ALBUMS_TAG) == null);
         return view;
     }
 
@@ -85,11 +82,6 @@ public class AlbumsFragment extends Fragment implements AlbumsView {
         return fragment;
     }
 
-    @Override
-    public void reAttachAlbumsFragment() {
-        albumsFragment = (AlbumsFragment) getActivity().getSupportFragmentManager().findFragmentByTag(ALBUMS_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, albumsFragment, ALBUMS_TAG).commit();
-    }
 
     @Override
     public void showTopAlbums(List<MusicApi.Album> albumList) {
