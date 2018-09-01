@@ -58,7 +58,7 @@ public class TrackBioFragment extends Fragment implements TrackBioView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_play_track, container, false);
+        View view = inflater.inflate(R.layout.fragment_track_bio, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
         return view;

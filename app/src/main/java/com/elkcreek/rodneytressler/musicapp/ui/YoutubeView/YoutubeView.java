@@ -16,6 +16,4 @@ public interface YoutubeView extends BaseView {
     void setYouTubePlayerStyle();
 
     void loadYouTubeVideo(String videoId, int currentVideoTime);
-
-    void playYoutubeVideo();
 }

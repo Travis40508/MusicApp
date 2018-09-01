@@ -21,7 +21,6 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
     private String artistName;
     private String trackUid;
     private String videoId;
-    private boolean isFullScreen;
     private static final String STATE_YOUTUBE_VIDEO_POSITION = "state_youtube_video_position";
     private int currentVideoTime;
 
@@ -109,9 +108,4 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
             this.currentVideoTime = currentTimeMillis;
         }
     }
-
-    public void storeYouTubeVideoState(int currentTimeMillis) {
-        this.currentVideoTime = currentTimeMillis;
-    }
-
 }

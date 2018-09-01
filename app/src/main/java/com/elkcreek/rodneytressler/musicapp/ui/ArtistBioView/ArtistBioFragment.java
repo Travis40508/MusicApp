@@ -81,7 +81,7 @@ public class ArtistBioFragment extends Fragment implements ArtistBioView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_bio, container, false);
+        View view = inflater.inflate(R.layout.fragment_artist_bio, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
         return view;
