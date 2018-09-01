@@ -43,4 +43,8 @@ public class Constants {
 
     //Action Bar Default Titles
     public static final String ARTISTS_TITLE = "Artists";
+
+    //String Values
+    public static final String READ_MORE = "Read More";
+    public static final String COLLAPSE = "Collapse";
 }

@@ -30,8 +30,6 @@ public class AlbumBioFragment extends Fragment implements AlbumBioView {
     @Inject protected AlbumBioPresenter presenter;
     @BindView(R.id.image_album_bio)
     protected ImageView albumImage;
-//    @BindView(R.id.text_bio_album_name)
-//    protected TextView albumName;
     @BindView(R.id.text_album_bio)
     protected TextView albumBio;
     @BindView(R.id.loading_layout)
@@ -70,9 +68,6 @@ public class AlbumBioFragment extends Fragment implements AlbumBioView {
         View view = inflater.inflate(R.layout.fragment_album_bio, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
-        presenter.screenRotated(
-                savedInstanceState == null,
-                getActivity().getSupportFragmentManager().findFragmentByTag(ALBUM_BIO_TAG) == null);
         return view;
     }
 
@@ -85,20 +80,10 @@ public class AlbumBioFragment extends Fragment implements AlbumBioView {
         return fragment;
     }
 
-    @Override
-    public void reAttachFragment() {
-        albumBioFragment = (AlbumBioFragment) getActivity().getSupportFragmentManager().findFragmentByTag(ALBUM_BIO_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, albumBioFragment, ALBUM_BIO_TAG).commit();
-    }
 
     @Override
     public void showAlbumImage(String trackImageUrl) {
         Glide.with(getContext()).load(trackImageUrl).into(albumImage);
-    }
-
-    @Override
-    public void showAlbumName(String albumName) {
-//        this.albumName.setText(albumName);
     }
 
     @Override

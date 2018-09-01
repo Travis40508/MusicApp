@@ -5,6 +5,7 @@ import android.util.Log;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
+import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 import javax.inject.Inject;
 
@@ -18,8 +19,6 @@ public class AlbumBioPresenter implements BasePresenter<AlbumBioView> {
     private AlbumBioView view;
     private String albumUid;
     private boolean isExpanded;
-    private static final String READ_MORE_TEXT_COLLAPSE = "Collapse";
-    private static final String READ_MORE_TEXT_EXPAND = "Read More";
 
     @Inject
     public AlbumBioPresenter(RepositoryService repositoryService) {
@@ -50,7 +49,6 @@ public class AlbumBioPresenter implements BasePresenter<AlbumBioView> {
             }
             view.hideLoadingLayout();
             view.showAlbumImage(albumInfo.getTrackImageList().get(2).getImageUrl());
-            view.showAlbumName(albumInfo.getAlbumName());
         };
     }
 
@@ -65,24 +63,16 @@ public class AlbumBioPresenter implements BasePresenter<AlbumBioView> {
         disposable.dispose();
     }
 
-    public void screenRotated(boolean savedInstanceStateIsNull, boolean albumBioFragmentIsNull) {
-        if(!savedInstanceStateIsNull) {
-            if(!albumBioFragmentIsNull) {
-                view.reAttachFragment();
-            }
-        }
-    }
-
     public void albumUidRetrieved(String albumUid) {
         this.albumUid = albumUid;
     }
 
     public void readMoreClicked(String readMoreText) {
         isExpanded = !isExpanded;
-        if (readMoreText.equalsIgnoreCase("Read More")) {
-            view.setReadMoreText(READ_MORE_TEXT_COLLAPSE);
+        if (readMoreText.equalsIgnoreCase(Constants.READ_MORE)) {
+            view.setReadMoreText(Constants.COLLAPSE);
         } else {
-            view.setReadMoreText(READ_MORE_TEXT_EXPAND);
+            view.setReadMoreText(Constants.READ_MORE);
         }
         fetchAlbumInfo();
     }
