@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.AllTracksView.AllTracksFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.ArtistMainView.ArtistMainFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import com.elkcreek.rodneytressler.musicapp.utils.SimilarArtistAdapter;
 
@@ -32,6 +33,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_MAIN_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.BIO_FRAGMENT_TAG;
@@ -45,8 +47,8 @@ public class BioFragment extends Fragment implements BioView {
     protected ImageView artistBioImage;
     @BindView(R.id.text_artist_bio)
     protected TextView artistBioText;
-    @BindView(R.id.text_bio_artist_name)
-    protected TextView artistName;
+//    @BindView(R.id.text_bio_artist_name)
+//    protected TextView artistName;
     @BindView(R.id.loading_layout)
     protected FrameLayout loadingLayout;
     @BindView(R.id.text_read_more)
@@ -62,15 +64,15 @@ public class BioFragment extends Fragment implements BioView {
         presenter.readMoreClicked(readMoreText.getText().toString());
     }
 
-    @OnClick(R.id.bio_text_view_tracks)
-    protected void onViewTracksClicked(View view) {
-        presenter.viewTracksClicked();
-    }
+//    @OnClick(R.id.bio_text_view_tracks)
+//    protected void onViewTracksClicked(View view) {
+//        presenter.viewTracksClicked();
+//    }
 
-    @OnClick(R.id.image_home_button)
-    protected void homeButtonClicked(View view) {
-        presenter.homeClicked();
-    }
+//    @OnClick(R.id.image_home_button)
+//    protected void homeButtonClicked(View view) {
+//        presenter.homeClicked();
+//    }
 
     @Override
     public void onAttach(Context context) {
@@ -134,7 +136,7 @@ public class BioFragment extends Fragment implements BioView {
 
     @Override
     public void showArtistName(String artistName) {
-        this.artistName.setText(artistName);
+//        this.artistName.setText(artistName);
     }
 
 
@@ -167,9 +169,10 @@ public class BioFragment extends Fragment implements BioView {
         Bundle bundle = new Bundle();
         bundle.putString(ARTIST_UID_KEY, artistUID);
         bundle.putString(ARTIST_NAME_KEY, artistName);
-        bioFragment = BioFragment.newInstance();
-        bioFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, bioFragment, BIO_FRAGMENT_TAG).addToBackStack(null).commit();
+        ArtistMainFragment artistMainFragment = ArtistMainFragment.newInstance();
+        artistMainFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_holder, artistMainFragment, ARTIST_MAIN_TAG).addToBackStack(null).commit();
     }
 
     @Override
@@ -198,5 +201,10 @@ public class BioFragment extends Fragment implements BioView {
     @Override
     public void showLoadingLayout() {
         loadingLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setTitle(String artistName) {
+        getActivity().setTitle(artistName);
     }
 }

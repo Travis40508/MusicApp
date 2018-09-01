@@ -21,15 +21,15 @@ import io.reactivex.functions.Consumer;
 public class SearchPresenter implements BasePresenter<SearchView> {
 
     private final MusicApiService musicApiService;
-    private final SharedPreferences sharedPreferences;
     private final RepositoryService repositoryService;
     private SearchView view;
     private CompositeDisposable disposable;
+    private boolean isSearching;
+    private String searchText;
 
     @Inject
-    public SearchPresenter(MusicApiService musicApiService, SharedPreferences sharedPreferences, RepositoryService repositoryService) {
+    public SearchPresenter(MusicApiService musicApiService, RepositoryService repositoryService) {
         this.musicApiService = musicApiService;
-        this.sharedPreferences = sharedPreferences;
         this.repositoryService = repositoryService;
     }
 
@@ -45,17 +45,15 @@ public class SearchPresenter implements BasePresenter<SearchView> {
 
     private Consumer<List<MusicApi.Artist>> updateViewWithTopArtist() {
         return topArtists -> {
-                view.loadArtists(topArtists);
-                view.hideProgressBar();
+            view.loadArtists(topArtists);
+            view.hideProgressBar();
         };
     }
 
     private Consumer<Throwable> updateUiWithError() {
         return throwable -> {
             view.showErrorLoadingToast();
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt(Constants.WEEKOFYEAR, 0);
-            editor.apply();
+            repositoryService.resetDate();
             subscribe();
         };
     }
@@ -70,28 +68,26 @@ public class SearchPresenter implements BasePresenter<SearchView> {
 
     @Override
     public void subscribe() {
+        view.setActionBarTitle(Constants.ARTISTS_TITLE);
         if (disposable == null) {
             view.showProgressBar();
         }
         disposable = new CompositeDisposable();
-        int weekOfYear = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-        int savedWeek = sharedPreferences.getInt(Constants.WEEKOFYEAR, 0);
-        int savedYear = sharedPreferences.getInt(Constants.YEAR, 0);
 
-        if (savedYear == 0 || (weekOfYear != savedWeek && year != savedYear)) {
-            repositoryService.deleteTopArtists();
-            disposable.add(repositoryService.getTopArtistsFromNetwork().subscribe(updateViewWithTopArtist(), updateUiWithError()));
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt(Constants.WEEKOFYEAR, weekOfYear);
-            editor.putInt(Constants.YEAR, year);
-            editor.apply();
+        if (!isSearching) {
+            if (repositoryService.isSameWeekSinceLastLaunch()) {
+//                repositoryService.deleteTopArtists();
+                repositoryService.clearCache();
+                disposable.add(repositoryService.getTopArtistsFromNetwork().subscribe(updateViewWithTopArtist(), updateUiWithError()));
+                repositoryService.saveDate();
+            } else {
+                disposable.add(repositoryService.getTopArtists().subscribe(
+                        updateViewWithTopArtist()
+                ));
+            }
         } else {
-            disposable.add(repositoryService.getTopArtists().subscribe(
-                    updateViewWithTopArtist()
-            ));
+            artistSearchTextChanged(searchText, true);
         }
-
     }
 
     @Override
@@ -100,6 +96,8 @@ public class SearchPresenter implements BasePresenter<SearchView> {
     }
 
     public void artistSearchTextChanged(String artistSearchText, boolean adapterHasItems) {
+        this.isSearching = artistSearchText.length() > 0;
+        this.searchText = artistSearchText;
         if (disposable == null) {
             disposable = new CompositeDisposable();
         }
@@ -129,4 +127,8 @@ public class SearchPresenter implements BasePresenter<SearchView> {
         view.showArtistTracks(artist);
     }
 
+    public void onArtistClicked(MusicApi.Artist artist) {
+        view.showProgressBar();
+        view.showMainArtistScreen(artist);
+    }
 }

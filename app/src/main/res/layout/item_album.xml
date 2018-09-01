@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="275dp"
     android:background="@android:color/transparent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -11,17 +11,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginLeft="10dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="180dp" />
 
     <TextView
         android:id="@+id/text_album_name"
-        app:layout_constraintTop_toTopOf="parent"
         android:maxLines="1"
         android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/image_album_item"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:textSize="20sp"
         android:textColor="@android:color/white"
         android:layout_width="wrap_content"
@@ -32,7 +31,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_album_item"
+        app:layout_constraintTop_toBottomOf="@id/text_album_name"
         android:layout_margin="10dp"
         android:background="@android:color/white"
         android:layout_width="match_parent"

@@ -34,7 +34,7 @@ public interface RepositoryService {
 
     //Youtube
     Observable<String> getYoutubeVideoId(String trackUid, String searchQuery);
-    Observable<String> getYoutubeVideoFromDatabase(String trackUid);
+    Observable<String> getTrackInfoYoutubeIdFromDatabase(String trackUid);
     Observable<String> getYoutubeVideoFromNetwork(String trackUid, String searchQuery);
 
     //Albums
@@ -46,4 +46,18 @@ public interface RepositoryService {
     Observable<List<MusicApi.Track>> getTracksFromAlbumFromNetwork(String albumUid);
 
     Observable<MusicApi.TrackInfo> getTrackWithName(String trackName, String artistName, List<MusicApi.Track> trackList, String albumUid);
+
+    //AlbumInfo
+    Observable<MusicApi.AlbumInfo> getAlbumInfo(String albumUid);
+    Observable<MusicApi.AlbumInfo> getAlbumInfoFromDatabase(String albumUid);
+    Observable<MusicApi.AlbumInfo> getAlbumInfoFromNetwork(String albumUid);
+
+    //Clear Cache
+
+    void clearCache();
+
+    //Date
+    void saveDate();
+    boolean isSameWeekSinceLastLaunch();
+    void resetDate();
 }

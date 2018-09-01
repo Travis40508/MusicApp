@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="275dp"
     android:background="@android:color/transparent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -11,37 +11,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="10dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="180dp" />
 
     <TextView
         android:id="@+id/text_artist_name"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/image_artist_item"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_artist_item"
         android:textSize="20sp"
         android:textColor="@android:color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 
-    <ImageView
-        android:id="@+id/button_music"
-        android:src="@drawable/ic_music_button"
-        app:layout_constraintStart_toEndOf="@id/image_artist_item"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="50dp"
-        android:layout_height="50dp" />
-
     <View
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_artist_item"
-        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="20dp"
         android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height=".5dp"/>

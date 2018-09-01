@@ -12,11 +12,10 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface MusicApi {
-    @GET("/2.0?method=artist.search&format=json&limit=5")
+    @GET("/2.0?method=artist.search&format=json&limit=6")
     Observable<SearchResponse> getArtistSearchResults(@Query("artist") String artist, @Query("api_key") String apiKey);
 
     @GET("/2.0?method=artist.getinfo&format=json")
@@ -25,7 +24,7 @@ public interface MusicApi {
     @GET("/2.0?method=artist.getinfo&format=json")
     Observable<ArtistBioResponse> getArtistBioWithName(@Query("artist") String artistName, @Query("api_key") String apiKey);
 
-    @GET("/2.0?method=chart.gettopartists&format=json&limit=12")
+    @GET("/2.0?method=chart.gettopartists&format=json&limit=24")
     Observable<TopArtistsResponse> getTopArtists(@Query("api_key") String apiKey);
 
     @GET("/2.0?method=artist.gettoptracks&format=json")
@@ -615,13 +614,6 @@ public interface MusicApi {
         @SerializedName("content")
         @Expose private String trackContent;
 
-        public String getTrackSummary() {
-            return trackSummary;
-        }
-
-        public void setTrackSummary(String trackSummary) {
-            this.trackSummary = trackSummary;
-        }
 
         public String getTrackContent() {
             return trackContent;
@@ -629,6 +621,14 @@ public interface MusicApi {
 
         public void setTrackContent(String trackContent) {
             this.trackContent = trackContent;
+        }
+
+        public String getTrackSummary() {
+            return trackSummary;
+        }
+
+        public void setTrackSummary(String tracksummary) {
+            this.trackSummary = tracksummary;
         }
     }
 
@@ -661,18 +661,29 @@ public interface MusicApi {
         }
     }
 
+    @Entity
     class AlbumInfo {
+
+        @PrimaryKey(autoGenerate = true)
+        private int primaryKey;
+
         @SerializedName("name")
         @Expose private String albumName;
 
+        @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
         @SerializedName("image")
         @Expose private List<TrackImage> trackImageList;
 
         @SerializedName("mbid")
-        @Expose private String artistUid;
+        @Expose private String albumUid;
 
+        @Embedded(prefix = "tracks")
         @SerializedName("tracks")
         @Expose private TracksResponse tracksResponse;
+
+        @Embedded(prefix = "wiki")
+        @SerializedName("wiki")
+        @Expose private Wiki wiki;
 
         public String getAlbumName() {
             return albumName;
@@ -686,8 +697,42 @@ public interface MusicApi {
             return tracksResponse;
         }
 
-        public String getArtistUid() {
-            return artistUid;
+
+
+        public void setAlbumName(String albumName) {
+            this.albumName = albumName;
+        }
+
+        public void setTrackImageList(List<TrackImage> trackImageList) {
+            this.trackImageList = trackImageList;
+        }
+
+        public String getAlbumUid() {
+            return albumUid;
+        }
+
+        public void setAlbumUid(String albumUid) {
+            this.albumUid = albumUid;
+        }
+
+        public void setTracksResponse(TracksResponse tracksResponse) {
+            this.tracksResponse = tracksResponse;
+        }
+
+        public Wiki getWiki() {
+            return wiki;
+        }
+
+        public void setWiki(Wiki wiki) {
+            this.wiki = wiki;
+        }
+
+        public int getPrimaryKey() {
+            return primaryKey;
+        }
+
+        public void setPrimaryKey(int primaryKey) {
+            this.primaryKey = primaryKey;
         }
     }
 

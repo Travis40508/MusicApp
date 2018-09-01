@@ -1,5 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.services;
 
+import android.util.Log;
+
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
@@ -118,6 +120,7 @@ public class RepositoryServiceImpl implements RepositoryService {
         musicDatabaseService.deleteTopArtists();
     }
 
+    //TODO make sure that wiki is what we should be null-checking here
     @Override
     public Observable<MusicApi.TrackInfo> getTrack(String trackUid) {
         return getTrackFromDatabase(trackUid)
@@ -134,23 +137,22 @@ public class RepositoryServiceImpl implements RepositoryService {
 
     @Override
     public Observable<String> getYoutubeVideoId(String trackUid, String searchQuery) {
-        return getYoutubeVideoFromDatabase(trackUid)
+        return getTrackInfoYoutubeIdFromDatabase(trackUid)
                 .onErrorResumeNext(Observable.empty())
                 .switchIfEmpty(getYoutubeVideoFromNetwork(trackUid, searchQuery))
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
-    public Observable<String> getYoutubeVideoFromDatabase(String trackUid) {
-        return musicDatabaseService.getTrack(trackUid)
-                .map(MusicApi.Track::getYoutubeId)
-                .observeOn(AndroidSchedulers.mainThread());
+    public Observable<String> getTrackInfoYoutubeIdFromDatabase(String trackUid) {
+        return musicDatabaseService.getTrackInfoYoutubeId(trackUid);
     }
 
     @Override
     public Observable<String> getYoutubeVideoFromNetwork(String trackUid, String searchQuery) {
         return youtubeApiService.getYoutubeVideo(Constants.YOUTUBE_API_KEY, searchQuery)
                 .map(youtubeResponse -> youtubeResponse.getYoutubeItemsList().get(0).getYoutubeItemId().getYoutubeVideoId())
+                .doOnNext(id -> musicDatabaseService.updateTrackInfoWithYoutubeIdViaTrackUid(id, trackUid))
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
@@ -206,6 +208,45 @@ public class RepositoryServiceImpl implements RepositoryService {
                 .doOnNext(trackInfo -> musicDatabaseService.updateTrackWithUid(trackInfo, trackList, albumUid))
                 .doOnNext(musicDatabaseService::insertTrackInfo)
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<MusicApi.AlbumInfo> getAlbumInfo(String albumUid) {
+        return getAlbumInfoFromDatabase(albumUid)
+                .flatMap(albumInfo -> albumInfo.getAlbumName() == null ? Observable.error(Throwable::new) : Observable.just(albumInfo))
+                .onErrorResumeNext(Observable.empty())
+                .switchIfEmpty(getAlbumInfoFromNetwork(albumUid));
+    }
+
+    @Override
+    public Observable<MusicApi.AlbumInfo> getAlbumInfoFromDatabase(String albumUid) {
+        return musicDatabaseService.getAlbumInfo(albumUid);
+    }
+
+    @Override
+    public Observable<MusicApi.AlbumInfo> getAlbumInfoFromNetwork(String albumUid) {
+        return musicApiService.getAlbumInfo(Constants.API_KEY, albumUid)
+                .doOnNext(musicDatabaseService::insertAlbumInfo);
+    }
+
+    @Override
+    public void clearCache() {
+        musicDatabaseService.clearCache();
+    }
+
+    @Override
+    public void saveDate() {
+        musicDatabaseService.saveDate();
+    }
+
+    @Override
+    public boolean isSameWeekSinceLastLaunch() {
+        return musicDatabaseService.isSameWeekSinceLastLaunch();
+    }
+
+    @Override
+    public void resetDate() {
+        musicDatabaseService.resetDate();
     }
 
 

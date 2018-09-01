@@ -31,4 +31,6 @@ public interface BioView extends BaseView {
     void reAttachBioFragment();
 
     void showLoadingLayout();
+
+    void setTitle(String artistName);
 }

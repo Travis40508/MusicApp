@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -20,6 +21,7 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.BioView.BioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.PlayTrackView.PlayTrackFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import com.elkcreek.rodneytressler.musicapp.utils.TracksAdapter;
 
@@ -38,6 +40,7 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KE
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.BIO_FRAGMENT_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.PLAY_TRACK_FRAGMENT_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACKS_FRAGMENT_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_MAIN_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_UID_KEY;
 
@@ -46,8 +49,8 @@ public class AllTracksFragment extends Fragment implements AllTracksView {
     AllTracksPresenter presenter;
     @BindView(R.id.recycler_view_tracks)
     protected RecyclerView recyclerView;
-    @BindView(R.id.text_tracks_artist)
-    protected TextView artistName;
+//    @BindView(R.id.text_tracks_artist)
+//    protected TextView artistName;
     @BindView(R.id.progress_bar_tracks)
     protected ProgressBar progressBar;
     @BindView(R.id.tracks_search_value)
@@ -57,13 +60,13 @@ public class AllTracksFragment extends Fragment implements AllTracksView {
     private PlayTrackFragment playTrackFragment;
     private AllTracksFragment allTracksFragment;
 
-    @OnClick(R.id.image_home_button)
-    protected void homeButtonClicked(View view) {
-        presenter.homeClicked();
-    }
+//    @OnClick(R.id.image_home_button)
+//    protected void homeButtonClicked(View view) {
+//        presenter.homeClicked();
+//    }
 
-    @OnClick(R.id.text_view_bio)
-    protected void viewBioClicked(View view) {presenter.viewBioClicked();}
+//    @OnClick(R.id.text_view_bio)
+//    protected void viewBioClicked(View view) {presenter.viewBioClicked();}
 
 
     @OnTextChanged(value = R.id.input_track_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -123,13 +126,13 @@ public class AllTracksFragment extends Fragment implements AllTracksView {
             }
         });
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void showArtistName(String artistName) {
-        this.artistName.setText(artistName);
+//        this.artistName.setText(artistName);
     }
 
     @Override
@@ -138,9 +141,10 @@ public class AllTracksFragment extends Fragment implements AllTracksView {
         bundle.putString(TRACK_NAME_KEY, trackName);
         bundle.putString(ARTIST_NAME_KEY, artistName);
         bundle.putString(TRACK_UID_KEY, trackUid);
-        playTrackFragment = PlayTrackFragment.newInstance();
-        playTrackFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, playTrackFragment, PLAY_TRACK_FRAGMENT_TAG).addToBackStack(null).commit();
+        TrackMainFragment trackMainFragment = TrackMainFragment.newInstance();
+        trackMainFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().
+                replace(R.id.fragment_holder, trackMainFragment, TRACK_MAIN_TAG).addToBackStack(null).commit();
     }
 
     @Override

@@ -31,8 +31,8 @@ public class MusicDatabaseModule {
     }
 
     @Provides
-    MusicDatabaseService providesMusicDatabaseService(MusicDatabase musicDatabase) {
-        return new MusicDatabaseServiceImpl(musicDatabase);
+    MusicDatabaseService providesMusicDatabaseService(MusicDatabase musicDatabase, SharedPreferences sharedPreferences) {
+        return new MusicDatabaseServiceImpl(musicDatabase, sharedPreferences);
     }
 
     @Provides

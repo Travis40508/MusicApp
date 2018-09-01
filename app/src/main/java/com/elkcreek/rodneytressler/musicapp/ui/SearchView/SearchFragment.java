@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.view.LayoutInflater;
@@ -21,6 +21,7 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.AlbumsView.AlbumsFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.AllTracksView.AllTracksFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.ArtistMainView.ArtistMainFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.BioView.BioFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.ArtistAdapter;
 
@@ -35,6 +36,7 @@ import butterknife.OnTextChanged;
 import dagger.android.support.AndroidSupportInjection;
 
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUMS_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_MAIN_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.BIO_FRAGMENT_TAG;
@@ -88,7 +90,7 @@ public class SearchFragment extends Fragment implements SearchView {
         presenter.attachView(this);
         adapter = new ArtistAdapter(new ArrayList<>());
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         return view;
     }
 
@@ -114,7 +116,7 @@ public class SearchFragment extends Fragment implements SearchView {
         adapter.setAdapterCallback(new ArtistAdapter.Callback() {
             @Override
             public void onArtistInfoClicked(MusicApi.Artist artist) {
-                presenter.onArtistInfoClicked(artist);
+                presenter.onArtistClicked(artist);
             }
 
             @Override
@@ -172,5 +174,21 @@ public class SearchFragment extends Fragment implements SearchView {
     @Override
     public void clearList() {
         adapter.clearList();
+    }
+
+    @Override
+    public void setActionBarTitle(String artistsTitle) {
+        getActivity().setTitle(artistsTitle);
+    }
+
+    @Override
+    public void showMainArtistScreen(MusicApi.Artist artist) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ARTIST_NAME_KEY, artist.getArtistName());
+        bundle.putString(ARTIST_UID_KEY, artist.getArtistUID());
+        ArtistMainFragment artistMainFragment = ArtistMainFragment.newInstance();
+        artistMainFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().
+                replace(R.id.fragment_holder, artistMainFragment, ARTIST_MAIN_TAG).addToBackStack(null).commit();
     }
 }

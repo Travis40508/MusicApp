@@ -12,6 +12,7 @@ import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 @Dao
 public interface MusicDao {
@@ -81,4 +82,34 @@ public interface MusicDao {
 
     @Query("SELECT * FROM TrackInfo WHERE trackUid LIKE :trackUid")
     Flowable<List<MusicApi.TrackInfo>> getTrackInfo(String trackUid);
+
+    @Query("UPDATE TrackInfo SET youtubeId = :youtubeId WHERE trackUid = :trackUid")
+    void updateTrackInfoWithYoutubeIdViaTrackUid(String youtubeId, String trackUid);
+
+    @Query("SELECT youtubeId FROM TrackInfo WHERE trackUid = :trackUid")
+    Single<String> getTrackInfoYoutubeId(String trackUid);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAlbumInfo(MusicApi.AlbumInfo albumInfo);
+
+    @Query("SELECT * FROM AlbumInfo WHERE albumUid = :albumUid")
+    Flowable<List<MusicApi.AlbumInfo>> getAlbumInfo(String albumUid);
+
+    //Clearing Cache
+    @Query("DELETE FROM Track")
+    void deleteAllTracks();
+
+    @Query("DELETE FROM Artist")
+    void deleteAllArtists();
+
+    @Query("DELETE FROM Album")
+    void deleteAllAlbums();
+
+    @Query("DELETE FROM AlbumInfo")
+    void deleteAllAlbumInfo();
+
+    @Query("DELETE FROM TrackInfo")
+    void deleteAllTrackInfo();
+
+
 }

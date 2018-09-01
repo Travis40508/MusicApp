@@ -93,9 +93,10 @@ public class BioPresenter implements BasePresenter<BioView> {
     }
 
     public void similarArtistClicked(MusicApi.Artist artist) {
+        view.showLoadingLayout();
+        view.setTitle(artist.getArtistName());
         disposable.add(repositoryService.getArtistBioWithName(artist.getArtistName(), Constants.API_KEY).subscribe(
                 similarArtist -> {
-                    view.showLoadingLayout();
                     view.showSimilarArtistScreen(similarArtist.getArtistUID(), similarArtist.getArtistName());
                 }
         ));

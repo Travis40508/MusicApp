@@ -26,6 +26,11 @@ public class Constants {
     public static final String ALBUMS_TAG = "albums_tag";
     public static final String YOUTUBE_TAG = "youtube_tag";
     public static final String ALBUM_TRACKS_TAG = "album_tracks_tag";
+    public static final String ARTIST_MAIN_TAG = "artist_main_tag";
+    public static final String ALBUM_MAIN_TAG = "album_main_tag";
+    public static final String ALBUM_BIO_TAG = "album_bio_tag";
+    public static final String YOUTUBE_VIDEO_TAG = "youtube_video_tag";
+    public static final String TRACK_MAIN_TAG = "track_main_tag";
 
     //Retrofit
     public static final String MUSIC_RETROFIT = "music_retrofit";
@@ -35,4 +40,7 @@ public class Constants {
     public static final String UNABLE_TO_LOAD_VIDEO = "Unable to load video. Please try again";
     public static final String NO_SUMMARY_AVAILABLE_TEXT = "No summary available.";
     public static final String NO_CONTENT_AVAILABLE_TEXT = "No content available.";
+
+    //Action Bar Default Titles
+    public static final String ARTISTS_TITLE = "Artists";
 }

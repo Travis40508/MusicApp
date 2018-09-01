@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.ui.AlbumMainView.AlbumMainFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.AlbumTracksView.AlbumTracksFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.AlbumsAdapter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
@@ -27,6 +29,7 @@ import dagger.android.support.AndroidSupportInjection;
 
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUMS_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_IMAGE_URL_KEY;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_MAIN_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_TRACKS_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_UID_KEY;
@@ -98,7 +101,7 @@ public class AlbumsFragment extends Fragment implements AlbumsView {
             }
         });
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         adapter.notifyDataSetChanged();
     }
 
@@ -110,8 +113,9 @@ public class AlbumsFragment extends Fragment implements AlbumsView {
         bundle.putString(ALBUM_NAME_KEY, albumName);
         bundle.putString(ALBUM_UID_KEY, albumUid);
         bundle.putString(ALBUM_IMAGE_URL_KEY, imageUrl);
-        AlbumTracksFragment albumTracksFragment = AlbumTracksFragment.newInstance();
-        albumTracksFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, albumTracksFragment, ALBUM_TRACKS_TAG).addToBackStack(null).commit();
+        AlbumMainFragment albumMainFragment = AlbumMainFragment.newInstance();
+        albumMainFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_holder, albumMainFragment, ALBUM_MAIN_TAG).addToBackStack(null).commit();
     }
 }
