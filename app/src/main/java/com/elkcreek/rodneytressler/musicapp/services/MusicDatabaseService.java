@@ -45,4 +45,6 @@ public interface MusicDatabaseService {
     void saveDate();
     boolean isSameWeekSinceLastLaunch();
     void resetDate();
+    Observable<List<MusicApi.Track>> getSimilarTracks(String trackUid);
+    void updateTrackInfoWithSimilarArtists(List<MusicApi.Track> similarTrackList, String trackUid);
 }

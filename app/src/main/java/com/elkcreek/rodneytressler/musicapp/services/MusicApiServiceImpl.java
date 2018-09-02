@@ -1,6 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.services;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 import java.util.List;
 
@@ -80,5 +81,13 @@ public class MusicApiServiceImpl implements MusicApiService {
         return musicApi.getTrackInfoWithName(trackName, artistName, apiKey)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<List<MusicApi.Track>> getListOfSimilarTracks(String trackUid) {
+        return musicApi.getSimilarTracks(trackUid, Constants.API_KEY)
+                .subscribeOn(Schedulers.io())
+                .map(MusicApi.SimilarTrackResponse::getSimilarTracks)
+                .map(MusicApi.SimilarTracks::getSimilarTrackList);
     }
 }

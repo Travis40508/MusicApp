@@ -95,6 +95,9 @@ public interface MusicDao {
     @Query("SELECT lyrics FROM TrackInfo WHERE trackUid = :trackUid")
     Single<String> getTrackInfoSongLyrics(String trackUid);
 
+    @Query("UPDATE TrackInfo SET similarTrackList = :similarTrackList WHERE trackUid = :trackUid")
+    void updateTrackInfoWithSimilarTracksList(List<MusicApi.Track> similarTrackList, String trackUid);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAlbumInfo(MusicApi.AlbumInfo albumInfo);
 

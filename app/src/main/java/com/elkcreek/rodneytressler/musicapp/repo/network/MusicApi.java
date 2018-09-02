@@ -33,6 +33,9 @@ public interface MusicApi {
     @GET("/2.0/?method=track.getInfo&format=json")
     Observable<TrackInfoResponse> getTrackInfo(@Query("mbid") String trackUid, @Query("api_key") String apiKey);
 
+    @GET("/2.0/?method=track.getSimilar&format=json")
+    Observable<SimilarTrackResponse> getSimilarTracks(@Query("mbid") String trackUid, @Query("api_key") String apiKey);
+
     @GET("/2.0/?method=track.getInfo&format=json")
     Observable<TrackInfoResponse> getTrackInfoWithName(@Query("track") String trackName, @Query("artist") String artistName, @Query("api_key") String apiKey);
 
@@ -303,6 +306,9 @@ public interface MusicApi {
 
         private String lyrics;
 
+        @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
+        private List<Track> similarTrackList;
+
         public String getYoutubeId() {
             return youtubeId;
         }
@@ -373,6 +379,14 @@ public interface MusicApi {
 
         public void setLyrics(String lyrics) {
             this.lyrics = lyrics;
+        }
+
+        public List<Track> getSimilarTrackList() {
+            return similarTrackList;
+        }
+
+        public void setSimilarTrackList(List<Track> similarTrackList) {
+            this.similarTrackList = similarTrackList;
         }
     }
 
@@ -755,6 +769,24 @@ public interface MusicApi {
 
         public void setTrackList(List<Track> trackList) {
             this.trackList = trackList;
+        }
+    }
+
+    class SimilarTrackResponse {
+        @SerializedName("similartracks")
+        @Expose private SimilarTracks similarTracks;
+
+        public SimilarTracks getSimilarTracks() {
+            return similarTracks;
+        }
+    }
+
+    class SimilarTracks {
+        @SerializedName("track")
+        @Expose private List<Track> similarTrackList;
+
+        public List<Track> getSimilarTrackList() {
+            return similarTrackList;
         }
     }
 }

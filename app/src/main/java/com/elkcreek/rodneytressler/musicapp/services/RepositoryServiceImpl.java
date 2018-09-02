@@ -10,6 +10,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class RepositoryServiceImpl implements RepositoryService {
 
@@ -249,6 +250,27 @@ public class RepositoryServiceImpl implements RepositoryService {
         return lyricsApiService.getLyrics(artistName, songTitle)
                 .map(LyricsApi.LyricsResponse::getSongLyrics)
                 .doOnNext(lyrics -> musicDatabaseService.updateTrackInfoWithSongLyrics(lyrics, trackUid));
+    }
+
+    @Override
+    public Observable<List<MusicApi.Track>> getSimilarTrackList(String trackUid) {
+        return getSimilarTrackListFromDatabase(trackUid)
+                .flatMap(trackList -> trackList.get(0) == null ? Observable.error(Throwable::new) : Observable.just(trackList))
+                .onErrorResumeNext(Observable.empty())
+                .switchIfEmpty(getSimilarTrackListFromNetwork(trackUid))
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<List<MusicApi.Track>> getSimilarTrackListFromDatabase(String trackUid) {
+        return musicDatabaseService.getSimilarTracks(trackUid);
+    }
+
+    @Override
+    public Observable<List<MusicApi.Track>> getSimilarTrackListFromNetwork(String trackUid) {
+        return musicApiService.getListOfSimilarTracks(trackUid)
+                .subscribeOn(Schedulers.io())
+                .doOnNext(trackList -> musicDatabaseService.updateTrackInfoWithSimilarArtists(trackList, trackUid));
     }
 
     @Override

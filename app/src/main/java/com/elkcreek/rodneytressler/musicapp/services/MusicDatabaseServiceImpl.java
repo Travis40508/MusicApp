@@ -328,4 +328,22 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
         editor.putInt(Constants.YEAR, 0);
         editor.apply();
     }
+
+    @Override
+    public Observable<List<MusicApi.Track>> getSimilarTracks(String trackUid) {
+        return database.musicDao().getTrackInfo(trackUid)
+                .subscribeOn(Schedulers.io())
+                .map(trackInfos -> trackInfos.get(0))
+                .map(MusicApi.TrackInfo::getSimilarTrackList).toObservable();
+    }
+
+    @Override
+    public void updateTrackInfoWithSimilarArtists(List<MusicApi.Track> similarTrackList, String trackUid) {
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                database.musicDao().updateTrackInfoWithSimilarTracksList(similarTrackList, trackUid);
+            }
+        });
+    }
 }

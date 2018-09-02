@@ -7,6 +7,8 @@ import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -51,6 +53,7 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
 
     private void fetchTrack() {
         compositeDisposable.add(repositoryService.getTrack(trackUid).subscribe(updateUiWithTrack(), updateUiOnError()));
+        compositeDisposable.add(repositoryService.getSimilarTrackList(trackUid).subscribe(updateUiWithSimilarTracks(), updateUiWithSimilarTrackError()));
     }
 
     private Consumer<MusicApi.TrackInfo> updateUiWithTrack() {
@@ -71,6 +74,20 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
             view.hideLoadingLayout();
             view.showTrackSummary(Constants.NO_CONTENT_AVAILABLE_TEXT);
 //           Maybe later -  view.showNoPreviewAvailable();
+        };
+    }
+
+    private Consumer<List<MusicApi.Track>> updateUiWithSimilarTracks() {
+        return trackList -> {
+            for (MusicApi.Track item : trackList) {
+                Log.d("@@@@-track", item.getTrackName());
+            }
+        };
+    }
+
+    private Consumer<Throwable> updateUiWithSimilarTrackError() {
+        return throwable -> {
+            Log.d("@@@@-TrackBioPresenter", throwable.getMessage());
         };
     }
 
