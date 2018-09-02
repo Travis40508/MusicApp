@@ -118,7 +118,7 @@ public class TrackBioFragment extends Fragment implements TrackBioView {
 
     @Override
     public void showSimilarTracks(List<MusicApi.Track> trackList) {
-        adapter = new SimilarTracksAdapter(trackList);
+        adapter = new SimilarTracksAdapter(Glide.with(this), trackList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         adapter.notifyDataSetChanged();

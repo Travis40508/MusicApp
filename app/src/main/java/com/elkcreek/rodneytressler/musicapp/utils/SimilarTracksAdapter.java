@@ -1,5 +1,6 @@
 package com.elkcreek.rodneytressler.musicapp.utils;
 
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.BitmapEncoder;
+import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 
@@ -17,13 +22,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
+
 public class SimilarTracksAdapter extends RecyclerView.Adapter<SimilarTracksAdapter.SimilarTracksViewHolder> {
 
+    private final RequestManager glide;
     private List<MusicApi.Track> similarTracks;
     private SimilarTracksAdapterCallback callback;
 
-    public SimilarTracksAdapter(List<MusicApi.Track> similarTracks) {
+    public SimilarTracksAdapter(RequestManager glide, List<MusicApi.Track> similarTracks) {
         this.similarTracks = similarTracks;
+        this.glide = glide;
     }
 
     @NonNull
@@ -65,7 +74,12 @@ public class SimilarTracksAdapter extends RecyclerView.Adapter<SimilarTracksAdap
         }
 
         public void bindSimilarTrack(MusicApi.Track track) {
-            Glide.with(itemView.getContext()).load(track.getArtistImage().get(2).getImageUrl()).into(similarTrackImage);
+            glide.asBitmap()
+                    .load(track.getArtistImage().get(2).getImageUrl())
+                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                    .apply(RequestOptions.circleCropTransform())
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                    .into(similarTrackImage);
             similarTrackArtistName.setText(track.getArtist().getArtistName());
             similarTrackName.setText(track.getTrackName());
         }

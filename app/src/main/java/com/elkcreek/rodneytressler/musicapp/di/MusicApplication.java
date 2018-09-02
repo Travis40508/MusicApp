@@ -10,6 +10,7 @@ import com.elkcreek.rodneytressler.musicapp.di.modules.CacheModule;
 import com.elkcreek.rodneytressler.musicapp.di.modules.MusicDatabaseModule;
 import com.elkcreek.rodneytressler.musicapp.di.modules.NetworkModule;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
+import com.squareup.leakcanary.LeakCanary;
 
 import javax.inject.Inject;
 
@@ -28,6 +29,10 @@ public class MusicApplication extends Application implements HasActivityInjector
     @Override
     public void onCreate() {
         super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
         DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .networkModule(new NetworkModule(Constants.BASE_URL, Constants.YOUTUBE_BASE_URL, Constants.LYRICS_BASE_URL))
