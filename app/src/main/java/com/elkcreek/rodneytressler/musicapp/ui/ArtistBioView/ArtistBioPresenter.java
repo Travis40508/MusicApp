@@ -90,6 +90,8 @@ public class ArtistBioPresenter implements BasePresenter<ArtistBioView> {
     public void similarArtistClicked(MusicApi.Artist artist) {
         view.showLoadingLayout();
         view.setTitle(artist.getArtistName());
+
+        //TODO is this necessary? Can't I just pass the information to the viewpager and let it handle the rest?
         disposable.add(repositoryService.getArtistBioWithName(artist.getArtistName(), Constants.API_KEY).subscribe(
                 similarArtist -> {
                     view.showSimilarArtistScreen(similarArtist.getArtistUID(), similarArtist.getArtistName());

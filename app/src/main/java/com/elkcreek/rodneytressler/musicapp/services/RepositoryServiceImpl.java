@@ -255,6 +255,7 @@ public class RepositoryServiceImpl implements RepositoryService {
     @Override
     public Observable<List<MusicApi.Track>> getSimilarTrackList(String trackUid) {
         return getSimilarTrackListFromDatabase(trackUid)
+                .subscribeOn(Schedulers.io())
                 .flatMap(trackList -> trackList.get(0) == null ? Observable.error(Throwable::new) : Observable.just(trackList))
                 .onErrorResumeNext(Observable.empty())
                 .switchIfEmpty(getSimilarTrackListFromNetwork(trackUid))

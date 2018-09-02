@@ -33,7 +33,7 @@ public interface MusicApi {
     @GET("/2.0/?method=track.getInfo&format=json")
     Observable<TrackInfoResponse> getTrackInfo(@Query("mbid") String trackUid, @Query("api_key") String apiKey);
 
-    @GET("/2.0/?method=track.getSimilar&format=json")
+    @GET("/2.0/?method=track.getSimilar&format=json&limit=12")
     Observable<SimilarTrackResponse> getSimilarTracks(@Query("mbid") String trackUid, @Query("api_key") String apiKey);
 
     @GET("/2.0/?method=track.getInfo&format=json")

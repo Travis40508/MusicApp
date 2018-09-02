@@ -92,7 +92,9 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        presenter.saveInstanceState(outState, youTubePlayer.getCurrentTimeMillis());
+
+        //TODO re-implement later.
+//        presenter.saveInstanceState(outState, youTubePlayer.getCurrentTimeMillis());
     }
 
     @Override

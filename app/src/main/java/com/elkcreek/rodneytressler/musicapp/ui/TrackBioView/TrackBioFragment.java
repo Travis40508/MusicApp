@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
+import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
+import com.elkcreek.rodneytressler.musicapp.utils.SimilarTracksAdapter;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,6 +30,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_MAIN_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_UID_KEY;
 
 public class TrackBioFragment extends Fragment implements TrackBioView {
@@ -38,6 +48,9 @@ public class TrackBioFragment extends Fragment implements TrackBioView {
     protected LinearLayout readMoreLayout;
     @BindView(R.id.text_read_more)
     protected TextView readMoreText;
+    @BindView(R.id.bio_similar_tracks_recycler_view)
+    protected RecyclerView recyclerView;
+    private SimilarTracksAdapter adapter;
 
     @OnClick(R.id.read_more_layout)
     protected void onReadMoreLayoutClicked(View view) {presenter.onReadMoreClicked(readMoreText.getText().toString());}
@@ -101,5 +114,36 @@ public class TrackBioFragment extends Fragment implements TrackBioView {
     @Override
     public void setReadMoreText(String readMoreText) {
         this.readMoreText.setText(readMoreText);
+    }
+
+    @Override
+    public void showSimilarTracks(List<MusicApi.Track> trackList) {
+        adapter = new SimilarTracksAdapter(trackList);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        adapter.notifyDataSetChanged();
+        adapter.setCallback(new SimilarTracksAdapter.SimilarTracksAdapterCallback() {
+            @Override
+            public void similarTrackClicked(MusicApi.Track track) {
+                presenter.similarTrackClicked(track);
+            }
+        });
+    }
+
+    @Override
+    public void setTitle(String trackTitle) {
+        getActivity().setTitle(trackTitle);
+    }
+
+    @Override
+    public void showSimilarArtistScreen(String trackUid, String trackName, String artistName) {
+        Bundle bundle = new Bundle();
+        bundle.putString(TRACK_NAME_KEY, trackName);
+        bundle.putString(ARTIST_NAME_KEY, artistName);
+        bundle.putString(TRACK_UID_KEY, trackUid);
+        TrackMainFragment trackMainFragment = TrackMainFragment.newInstance();
+        trackMainFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().
+                replace(R.id.fragment_holder, trackMainFragment, TRACK_MAIN_TAG).addToBackStack(null).commit();
     }
 }

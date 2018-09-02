@@ -63,7 +63,6 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
             } else {
                 view.showTrackContent(track.getWiki().getTrackContent());
             }
-            view.hideLoadingLayout();
             view.showTrackAlbumCover(track.getTrackAlbum().getTrackImage().get(2).getImageUrl());
         };
     }
@@ -79,9 +78,8 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
 
     private Consumer<List<MusicApi.Track>> updateUiWithSimilarTracks() {
         return trackList -> {
-            for (MusicApi.Track item : trackList) {
-                Log.d("@@@@-track", item.getTrackName());
-            }
+            view.showSimilarTracks(trackList);
+            view.hideLoadingLayout();
         };
     }
 
@@ -99,5 +97,11 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
             view.setReadMoreText(READ_MORE_TEXT_EXPAND);
         }
         fetchTrack();
+    }
+
+    public void similarTrackClicked(MusicApi.Track track) {
+        view.showLoadingLayout();
+        view.setTitle(track.getArtist().getArtistName() + " - " + track.getTrackName());
+        view.showSimilarArtistScreen(track.getTrackUid(), track.getTrackName(), track.getArtist().getArtistName());
     }
 }
