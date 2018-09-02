@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
@@ -81,7 +82,7 @@ public class AlbumTracksFragment extends Fragment implements AlbumTracksView {
 
     @Override
     public void showTrackListForAlbum(List<MusicApi.Track> trackList, String imageUrl) {
-        adapter = new AlbumTracksAdapter(trackList, imageUrl);
+        adapter = new AlbumTracksAdapter(Glide.with(this), trackList, imageUrl);
         adapter.setPlayCallback(new AlbumTracksAdapter.AlbumTracksCallback() {
             @Override
             public void onPlayClicked(MusicApi.Track track) {

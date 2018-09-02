@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
@@ -94,7 +95,7 @@ public class AllTracksFragment extends Fragment implements AllTracksView {
 
     @Override
     public void showTopTracks(List<MusicApi.Track> trackList) {
-        adapter = new TracksAdapter(trackList);
+        adapter = new TracksAdapter(Glide.with(this), trackList);
         adapter.setPlayCallback(new TracksAdapter.TracksCallback() {
             @Override
             public void onPlayClicked(MusicApi.Track track) {

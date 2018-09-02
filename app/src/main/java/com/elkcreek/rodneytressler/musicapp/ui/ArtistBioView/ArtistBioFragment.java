@@ -118,7 +118,7 @@ public class ArtistBioFragment extends Fragment implements ArtistBioView {
 
     @Override
     public void showSimilarArtists(List<MusicApi.Artist> artistList) {
-        adapter = new SimilarArtistAdapter(artistList);
+        adapter = new SimilarArtistAdapter(Glide.with(this), artistList);
         similarArtistRecyclerView.setAdapter(adapter);
         similarArtistRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         adapter.notifyDataSetChanged();

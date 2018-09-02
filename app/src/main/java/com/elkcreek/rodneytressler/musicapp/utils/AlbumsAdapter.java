@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 
@@ -17,13 +20,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
+
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsViewHolder> {
 
+    private final RequestManager glide;
     private List<MusicApi.Album> albumList;
     private AlbumCallback callback;
 
-    public AlbumsAdapter(List<MusicApi.Album> albumList) {
+    public AlbumsAdapter(RequestManager glide, List<MusicApi.Album> albumList) {
         this.albumList = albumList;
+        this.glide = glide;
     }
 
     @NonNull
@@ -62,7 +69,11 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsView
         }
 
         public void bindView(MusicApi.Album album) {
-            Glide.with(itemView.getContext()).load(album.getTrackImage().get(2).getImageUrl()).into(albumCover);
+            glide.asBitmap()
+                    .load(album.getTrackImage().get(2).getImageUrl())
+                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                    .into(albumCover);
             albumName.setText(album.getAlbumName());
         }
 

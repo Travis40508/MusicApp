@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 
@@ -17,13 +20,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
+
 public class SimilarArtistAdapter extends RecyclerView.Adapter<SimilarArtistAdapter.SimilarArtistViewHolder> {
 
+    private final RequestManager glide;
     private List<MusicApi.Artist> similarArtistList;
     private BiosCallback biosCallback;
 
-    public SimilarArtistAdapter(List<MusicApi.Artist> similarArtistList) {
+    public SimilarArtistAdapter(RequestManager glide, List<MusicApi.Artist> similarArtistList) {
         this.similarArtistList = similarArtistList;
+        this.glide = glide;
     }
 
     @NonNull
@@ -62,7 +69,11 @@ public class SimilarArtistAdapter extends RecyclerView.Adapter<SimilarArtistAdap
         }
 
         public void bindSimilarArtist(MusicApi.Artist artist) {
-            Glide.with(itemView.getContext()).load(artist.getArtistImages().get(2).getImageUrl()).into(similarArtistImage);
+            glide.asBitmap()
+                    .load(artist.getArtistImages().get(2).getImageUrl())
+                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                    .into(similarArtistImage);
             similarArtistName.setText(artist.getArtistName());
         }
 

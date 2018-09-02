@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.AlbumMainView.AlbumMainFragment;
@@ -85,7 +86,7 @@ public class AlbumsFragment extends Fragment implements AlbumsView {
 
     @Override
     public void showTopAlbums(List<MusicApi.Album> albumList) {
-        adapter = new AlbumsAdapter(albumList);
+        adapter = new AlbumsAdapter(Glide.with(this), albumList);
         adapter.setAlbumCallback(new AlbumsAdapter.AlbumCallback() {
             @Override
             public void albumClicked(MusicApi.Album album) {
