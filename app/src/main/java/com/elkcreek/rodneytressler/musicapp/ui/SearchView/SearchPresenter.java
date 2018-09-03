@@ -15,8 +15,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class SearchPresenter implements BasePresenter<SearchView> {
 
@@ -40,7 +42,10 @@ public class SearchPresenter implements BasePresenter<SearchView> {
 
 
     private Observable<MusicApi.SearchResponse> getArtistSearchResults(String artistSearchText) {
-        return musicApiService.getArtistSearchResults(artistSearchText, Constants.API_KEY).onErrorResumeNext(Observable.empty());
+        return musicApiService.getArtistSearchResults(artistSearchText, Constants.API_KEY)
+                .subscribeOn(Schedulers.io())
+                .onErrorResumeNext(Observable.empty())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     private Consumer<List<MusicApi.Artist>> updateViewWithTopArtist() {
