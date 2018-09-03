@@ -23,7 +23,6 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
     private static final String READ_MORE_TEXT_COLLAPSE = "Collapse";
     private static final String READ_MORE_TEXT_EXPAND = "Read More";
     private String trackUid;
-    private String videoId;
 
     @Inject
     public TrackBioPresenter(RepositoryService repositoryService) {

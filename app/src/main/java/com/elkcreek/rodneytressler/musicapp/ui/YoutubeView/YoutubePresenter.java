@@ -117,10 +117,6 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
 
     }
 
-    public void saveInstanceState(Bundle outState, int currentTimeMillis) {
-        outState.putInt(STATE_YOUTUBE_VIDEO_POSITION, currentTimeMillis);
-    }
-
     public void getState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             int currentTimeMillis = savedInstanceState.getInt(STATE_YOUTUBE_VIDEO_POSITION);

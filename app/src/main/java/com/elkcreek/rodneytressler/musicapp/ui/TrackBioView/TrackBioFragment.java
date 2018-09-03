@@ -68,6 +68,12 @@ public class TrackBioFragment extends Fragment implements TrackBioView {
         presenter.trackRetrieved(getArguments().getString(TRACK_UID_KEY));
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.unsubscribe();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
