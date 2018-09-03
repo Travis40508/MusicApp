@@ -1,5 +1,6 @@
 package com.elkcreek.rodneytressler.musicapp.utils;
 
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -71,6 +72,8 @@ public class SimilarArtistAdapter extends RecyclerView.Adapter<SimilarArtistAdap
         public void bindSimilarArtist(MusicApi.Artist artist) {
             glide.asBitmap()
                     .load(artist.getArtistImages().get(2).getImageUrl())
+                    .apply(RequestOptions.overrideOf(100, 150))
+                    .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
                     .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
                     .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
                     .into(similarArtistImage);

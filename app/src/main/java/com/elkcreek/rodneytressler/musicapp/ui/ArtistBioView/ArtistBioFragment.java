@@ -1,6 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.ui.ArtistBioView;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.AllTracksView.AllTracksFragment;
@@ -31,6 +34,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 
+import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_MAIN_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
@@ -98,7 +102,14 @@ public class ArtistBioFragment extends Fragment implements ArtistBioView {
 
     @Override
     public void showArtistImage(String imageUrl) {
-        Glide.with(getContext()).load(imageUrl).into(artistBioImage);
+        Glide.with(this)
+                .asBitmap()
+                .load(imageUrl)
+                .apply(RequestOptions.overrideOf(250, 300))
+                .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
+                .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                .into(artistBioImage);
     }
 
     @Override
