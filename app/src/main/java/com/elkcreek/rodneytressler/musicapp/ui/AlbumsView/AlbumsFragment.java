@@ -94,7 +94,7 @@ public class AlbumsFragment extends Fragment implements AlbumsView {
             }
         });
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter.notifyDataSetChanged();
     }
 

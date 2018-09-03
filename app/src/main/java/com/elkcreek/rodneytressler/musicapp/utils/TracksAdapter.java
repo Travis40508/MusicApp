@@ -87,7 +87,8 @@ public class TracksAdapter extends RecyclerView.Adapter<TracksAdapter.TracksView
             if(track.getArtistImage() != null) {
                 glide.asBitmap()
                         .load(track.getArtistImage().get(2).getImageUrl())
-                        .apply(RequestOptions.overrideOf(250, 300))
+                        .apply(RequestOptions.circleCropTransform())
+                        .apply(RequestOptions.overrideOf(100, 150))
                         .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
                         .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
                         .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))

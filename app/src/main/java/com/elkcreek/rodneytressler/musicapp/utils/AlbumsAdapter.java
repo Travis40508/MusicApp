@@ -72,7 +72,8 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsView
         public void bindView(MusicApi.Album album) {
             glide.asBitmap()
                     .load(album.getTrackImage().get(2).getImageUrl())
-                    .apply(RequestOptions.overrideOf(250, 300))
+                    .apply(RequestOptions.overrideOf(100, 150))
+                    .apply(RequestOptions.circleCropTransform())
                     .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
                     .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
                     .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))

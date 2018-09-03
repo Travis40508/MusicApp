@@ -11,18 +11,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="180dp" />
+        android:layout_width="80dp"
+        android:layout_height="80dp" />
 
     <TextView
         android:id="@+id/text_album_name"
         android:maxLines="2"
         android:ellipsize="end"
         android:gravity="center"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/image_album_item"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image_album_item"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:textSize="16sp"
         android:textColor="@android:color/white"
         android:layout_width="wrap_content"

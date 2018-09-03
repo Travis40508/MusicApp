@@ -72,6 +72,7 @@ public class SimilarArtistAdapter extends RecyclerView.Adapter<SimilarArtistAdap
         public void bindSimilarArtist(MusicApi.Artist artist) {
             glide.asBitmap()
                     .load(artist.getArtistImages().get(2).getImageUrl())
+                    .apply(RequestOptions.circleCropTransform())
                     .apply(RequestOptions.overrideOf(100, 150))
                     .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
                     .apply(RequestOptions.formatOf(PREFER_ARGB_8888))

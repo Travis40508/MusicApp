@@ -89,6 +89,7 @@ public class AlbumTracksAdapter extends RecyclerView.Adapter<AlbumTracksAdapter.
             glide.asBitmap()
                     .load(imageUrl)
                     .apply(RequestOptions.overrideOf(250, 300))
+                    .apply(RequestOptions.circleCropTransform())
                     .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
                     .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
                     .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
