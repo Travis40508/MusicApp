@@ -18,4 +18,8 @@ public interface YoutubeView extends BaseView {
     void loadYouTubeVideo(String videoId, int currentVideoTime);
 
     void showSongLyrics(String lyrics);
+
+    void destroyYouTubeSupportFragmentView();
+
+    void releaseYouTubePlayer();
 }

@@ -116,9 +116,9 @@ public class RepositoryServiceImpl implements RepositoryService {
     public Observable<List<MusicApi.Artist>> getTopArtistsFromNetwork() {
         return musicApiService.getTopArtists(Constants.API_KEY)
                 .subscribeOn(Schedulers.io())
-                .map(topArtistsResponse -> topArtistsResponse.getArtists().getArtistList())
-                .doOnNext(artists -> Observable.fromIterable(artists)
-                .forEach(musicDatabaseService::insertTopArtist));
+                .map(MusicApi.TopArtistsResponse::getTopArtists)
+                .doOnNext(musicDatabaseService::insertTopArtist)
+                .map(MusicApi.TopArtists::getTopArtistList);
     }
 
     @Override

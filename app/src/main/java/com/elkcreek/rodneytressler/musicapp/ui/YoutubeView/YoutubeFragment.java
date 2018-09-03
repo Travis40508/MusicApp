@@ -108,6 +108,11 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
         youTubePlayerSupportFragment.onPause();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.viewDestroyed(youTubePlayerSupportFragment == null);
+    }
 
     @Override
     public void destroyVideo() {
@@ -147,6 +152,23 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     @Override
     public void showSongLyrics(String lyrics) {
         songLyrics.setText(lyrics);
+    }
+
+    @Override
+    public void destroyYouTubeSupportFragmentView() {
+        youTubePlayerSupportFragment.onDestroy();
+    }
+
+    @Override
+    public void releaseYouTubePlayer() {
+        youTubePlayer.release();
+        youTubePlayer = null;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        presenter.onDetach();
     }
 
     @Override

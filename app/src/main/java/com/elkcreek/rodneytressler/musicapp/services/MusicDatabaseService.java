@@ -17,7 +17,7 @@ public interface MusicDatabaseService {
     Observable<MusicApi.Artist> getArtistBio(String artistUid);
     Observable<MusicApi.Artist> getArtistBioWithName(String artistName);
 
-    void insertTopArtist(MusicApi.Artist artist);
+    void insertTopArtist(MusicApi.TopArtists topArtists);
     Observable<List<MusicApi.Artist>> getTopArtists();
 
     void updateTopArtist(MusicApi.Artist artist);
@@ -45,6 +45,7 @@ public interface MusicDatabaseService {
     void saveDate();
     boolean isSameWeekSinceLastLaunch();
     void resetDate();
+
     Observable<List<MusicApi.Track>> getSimilarTracks(String trackUid);
     void updateTrackInfoWithSimilarArtists(List<MusicApi.Track> similarTrackList, String trackUid);
 }

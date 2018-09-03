@@ -7,7 +7,7 @@ import android.arch.persistence.room.TypeConverters;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 
 @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
-@Database(version = 1, entities = {MusicApi.Track.class, MusicApi.Artist.class, MusicApi.Album.class, MusicApi.TrackInfo.class, MusicApi.AlbumInfo.class}, exportSchema = false)
+@Database(version = 1, entities = {MusicApi.Track.class, MusicApi.Artist.class, MusicApi.Album.class, MusicApi.TrackInfo.class, MusicApi.AlbumInfo.class, MusicApi.TopArtists.class}, exportSchema = false)
 public abstract class MusicDatabase extends RoomDatabase{
 
     public abstract MusicDao musicDao();

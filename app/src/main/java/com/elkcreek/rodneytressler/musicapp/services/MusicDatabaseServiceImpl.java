@@ -69,21 +69,21 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     }
 
     @Override
-    public void insertTopArtist(MusicApi.Artist artist) {
+    public void insertTopArtist(MusicApi.TopArtists topArtists) {
         Schedulers.io().scheduleDirect(new Runnable() {
             @Override
             public void run() {
-                artist.setTopArtist(true);
-                database.musicDao().insertTopArtist(artist);
+                database.musicDao().insertTopArtists(topArtists);
             }
         });
     }
 
     @Override
     public Observable<List<MusicApi.Artist>> getTopArtists() {
-        return database.musicDao().getTopArtists(true)
-                .subscribeOn(Schedulers.io())
-                .toObservable();
+        return database.musicDao().getTopArtists()
+                .subscribeOn(Schedulers.io()).toObservable()
+                .map(topArtists -> topArtists.get(0))
+                .map(MusicApi.TopArtists::getTopArtistList);
     }
 
     @Override

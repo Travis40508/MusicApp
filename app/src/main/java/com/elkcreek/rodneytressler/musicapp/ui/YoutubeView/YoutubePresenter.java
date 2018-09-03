@@ -123,4 +123,14 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
             this.currentVideoTime = currentTimeMillis;
         }
     }
+
+    public void viewDestroyed(boolean youTubeSupportFragmentIsNull) {
+        if(!youTubeSupportFragmentIsNull) {
+            view.destroyYouTubeSupportFragmentView();
+        }
+    }
+
+    public void onDetach() {
+        view.releaseYouTubePlayer();
+    }
 }

@@ -237,20 +237,38 @@ public interface MusicApi {
     class TopArtistsResponse {
         @SerializedName("artists")
         @Expose
-        private Artists artists;
+        private TopArtists topArtists;
 
-        public Artists getArtists() {
-            return artists;
+        public TopArtists getTopArtists() {
+            return topArtists;
         }
     }
 
-    class Artists {
+    @Entity
+    class TopArtists {
+
+        @PrimaryKey(autoGenerate = true)
+        private int primaryKey;
+
+        @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
         @SerializedName("artist")
         @Expose
-        private List<Artist> artistList;
+        private List<Artist> topArtistList;
 
-        public List<Artist> getArtistList() {
-            return artistList;
+        public void setTopArtistList(List<Artist> artistList) {
+            this.topArtistList = artistList;
+        }
+
+        public List<Artist> getTopArtistList() {
+            return topArtistList;
+        }
+
+        public int getPrimaryKey() {
+            return primaryKey;
+        }
+
+        public void setPrimaryKey(int primaryKey) {
+            this.primaryKey = primaryKey;
         }
     }
 
