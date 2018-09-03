@@ -139,6 +139,14 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
         });
     }
 
+
+    //TODO improve this to avoid a crash.
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        presenter.checkFragmentVisibility(isVisibleToUser);
+    }
+
     @Override
     public void setYouTubePlayerStyle() {
         youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);

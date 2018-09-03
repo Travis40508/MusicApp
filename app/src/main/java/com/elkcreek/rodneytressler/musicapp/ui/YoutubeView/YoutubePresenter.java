@@ -53,7 +53,6 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
     private Consumer<String> storeYoutubeVideoId() {
         return videoId -> {
             this.videoId = videoId;
-            view.initializeYouTubeVideo();
         };
     }
 
@@ -132,5 +131,11 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
 
     public void onDetach() {
         view.releaseYouTubePlayer();
+    }
+
+    public void checkFragmentVisibility(boolean isVisibleToUser) {
+        if(isVisibleToUser) {
+            view.initializeYouTubeVideo();
+        }
     }
 }
