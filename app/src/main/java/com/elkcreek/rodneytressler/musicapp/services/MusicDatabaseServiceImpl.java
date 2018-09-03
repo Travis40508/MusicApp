@@ -39,8 +39,7 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     @Override
     public Observable<List<MusicApi.Track>> getTrackList(String artistUid) {
         return database.musicDao().getTrackList(artistUid).toObservable()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io());
     }
 
 
@@ -58,14 +57,14 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     public Observable<MusicApi.Artist> getArtistBio(String artistUid) {
         return database.musicDao().getArtistBios(artistUid)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).toObservable().map(artists -> artists.get(0));
+                .toObservable().map(artists -> artists.get(0));
     }
 
     @Override
     public Observable<MusicApi.Artist> getArtistBioWithName(String artistName) {
         return database.musicDao().getArtistBioWithName(artistName)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).toObservable()
+                .toObservable()
                 .map(artists -> artists.get(0));
     }
 
@@ -84,7 +83,6 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     public Observable<List<MusicApi.Artist>> getTopArtists() {
         return database.musicDao().getTopArtists(true)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .toObservable();
     }
 
@@ -162,15 +160,14 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     public Observable<MusicApi.Track> getTrack(String trackUid) {
         return database.musicDao().getTrack(trackUid)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).toObservable()
+                .toObservable()
                 .map(trackList -> trackList.get(0));
     }
 
     @Override
     public Observable<List<MusicApi.Album>> getAlbumList(String artistUid) {
         return database.musicDao().getAlbumList(artistUid).toObservable()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
@@ -197,7 +194,7 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     public Observable<MusicApi.Album> getAlbumByUid(String albumUid) {
         return database.musicDao().getAlbumByUid(albumUid)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).toObservable()
+                .toObservable()
                 .map(albumList -> albumList.get(0));
     }
 
@@ -234,8 +231,7 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     public Observable<MusicApi.TrackInfo> getTrackInfo(String trackUid) {
         return database.musicDao().getTrackInfo(trackUid)
                 .subscribeOn(Schedulers.io())
-                .map(trackInfos -> trackInfos.get(0)).toObservable()
-                .observeOn(AndroidSchedulers.mainThread());
+                .map(trackInfos -> trackInfos.get(0)).toObservable();
     }
 
     @Override
@@ -252,8 +248,7 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     public Observable<MusicApi.AlbumInfo> getAlbumInfo(String albumUid) {
         return database.musicDao().getAlbumInfo(albumUid)
                 .subscribeOn(Schedulers.io())
-                .map(albumInfos -> albumInfos.get(0)).toObservable()
-                .observeOn(AndroidSchedulers.mainThread());
+                .map(albumInfos -> albumInfos.get(0)).toObservable();
     }
 
     @Override

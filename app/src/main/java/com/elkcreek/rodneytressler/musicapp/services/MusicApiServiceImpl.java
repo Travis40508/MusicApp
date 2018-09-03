@@ -21,66 +21,57 @@ public class MusicApiServiceImpl implements MusicApiService {
     @Override
     public Observable<MusicApi.SearchResponse> getArtistSearchResults(String artist, String apiKey) {
         return musicApi.getArtistSearchResults(artist, apiKey)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.computation());
     }
 
     @Override
     public Observable<MusicApi.ArtistBioResponse> getArtistBio(String artistUid, String apiKey) {
         return musicApi.getArtistBio(artistUid, apiKey)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
     public Observable<MusicApi.TopArtistsResponse> getTopArtists(String apiKey) {
         return musicApi.getTopArtists(apiKey)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
     public Observable<MusicApi.TopTracksResponse> getTopTracks(String artistUid, String apiKey) {
         return musicApi.getTopTracks(artistUid, apiKey)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
     public Observable<MusicApi.ArtistBioResponse> getArtistBioWithName(String artistName, String apiKey) {
         return musicApi.getArtistBioWithName(artistName, apiKey)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
     public Observable<MusicApi.TrackInfoResponse> getTrackInfo(String trackUid, String apiKey) {
         return musicApi.getTrackInfo(trackUid, apiKey)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
     public Observable<List<MusicApi.Album>> getTopAlbums(String apiKey, String artistUid) {
         return musicApi.getTopAlbums(apiKey, artistUid)
                 .subscribeOn(Schedulers.io())
-                .map(albumResponse -> albumResponse.getTopAlbums().getAlbumList())
-                .observeOn(AndroidSchedulers.mainThread());
+                .map(albumResponse -> albumResponse.getTopAlbums().getAlbumList());
     }
 
     @Override
     public Observable<MusicApi.AlbumInfo> getAlbumInfo(String apiKey, String albumUid) {
         return musicApi.getAlbumInfo(apiKey, albumUid)
                 .subscribeOn(Schedulers.io())
-                .map(MusicApi.AlbumInfoResponse::getAlbumInfo)
-                .observeOn(AndroidSchedulers.mainThread());
+                .map(MusicApi.AlbumInfoResponse::getAlbumInfo);
     }
 
     @Override
     public Observable<MusicApi.TrackInfoResponse> getTrackInfoWithName(String trackName, String artistName, String apiKey) {
         return musicApi.getTrackInfoWithName(trackName, artistName, apiKey)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io());
     }
 
     @Override

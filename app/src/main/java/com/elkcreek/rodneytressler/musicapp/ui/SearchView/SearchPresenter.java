@@ -77,7 +77,7 @@ public class SearchPresenter implements BasePresenter<SearchView> {
         if (!isSearching) {
             if (repositoryService.isSameWeekSinceLastLaunch()) {
                 repositoryService.clearCache();
-                disposable.add(repositoryService.getTopArtistsFromNetwork().subscribe(updateViewWithTopArtist(), updateUiWithError()));
+                disposable.add(repositoryService.getTopArtists().subscribe(updateViewWithTopArtist(), updateUiWithError()));
                 repositoryService.saveDate();
             } else {
                 disposable.add(repositoryService.getTopArtists().subscribe(
