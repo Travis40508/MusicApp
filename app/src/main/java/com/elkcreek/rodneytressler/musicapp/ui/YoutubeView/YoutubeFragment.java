@@ -141,7 +141,7 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
 
     @Override
     public void setYouTubePlayerStyle() {
-        youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+        youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
     }
 
     @Override
