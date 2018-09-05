@@ -29,10 +29,10 @@ public class MusicApplication extends Application implements HasActivityInjector
     @Override
     public void onCreate() {
         super.onCreate();
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return;
-        }
-        LeakCanary.install(this);
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            return;
+//        }
+//        LeakCanary.install(this);
         DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .networkModule(new NetworkModule(Constants.BASE_URL, Constants.YOUTUBE_BASE_URL, Constants.LYRICS_BASE_URL))
