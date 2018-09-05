@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.ui.SearchView.SearchFragment;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 
@@ -21,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Inject
     protected MainPresenter presenter;
+    @BindView(R.id.main_loading_layout)
+    protected FrameLayout loadingLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,5 +78,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void showLoadingLayout() {
+        loadingLayout.setVisibility(View.VISIBLE);
     }
 }
