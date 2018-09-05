@@ -74,8 +74,8 @@ public class AlbumTracksAdapter extends RecyclerView.Adapter<AlbumTracksAdapter.
 
     public class AlbumTracksViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.image_track_item)
-        protected ImageView trackImage;
+        @BindView(R.id.position_track_item)
+        protected TextView trackPosition;
 
         @BindView(R.id.text_track_name)
         protected TextView trackName;
@@ -86,14 +86,8 @@ public class AlbumTracksAdapter extends RecyclerView.Adapter<AlbumTracksAdapter.
         }
 
         public void bindTrack(MusicApi.Track track) {
-            glide.asBitmap()
-                    .load(imageUrl)
-                    .apply(RequestOptions.overrideOf(250, 300))
-                    .apply(RequestOptions.circleCropTransform())
-                    .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
-                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
-                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
-                    .into(trackImage);
+            String position = String.valueOf(trackList.indexOf(track) + 1);
+            trackPosition.setText(position);
             trackName.setText(track.getTrackName());
         }
 
