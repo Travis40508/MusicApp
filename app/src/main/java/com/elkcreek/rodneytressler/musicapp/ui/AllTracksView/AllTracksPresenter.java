@@ -62,6 +62,7 @@ public class AllTracksPresenter implements BasePresenter<AllTracksView> {
     }
 
     public void onPlayClicked(MusicApi.Track track) {
+        view.showParentLoadingLayout();
         view.showTrackMainFragment(track.getTrackName(), artistName, track.getTrackUid());
     }
 

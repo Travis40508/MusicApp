@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.AlbumTracksAdapter;
 
@@ -34,7 +35,7 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_MAIN_TA
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_UID_KEY;
 
-public class AlbumTracksFragment extends Fragment implements AlbumTracksView {
+public class AlbumTracksFragment extends BaseFragment implements AlbumTracksView {
 
     @Inject protected AlbumTracksPresenter presenter;
     @BindView(R.id.recycler_view_album_tracks)
@@ -110,5 +111,10 @@ public class AlbumTracksFragment extends Fragment implements AlbumTracksView {
     @Override
     public void showLoadingLayout() {
         loadingLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showParentLoadingLayout() {
+        showMainLoadingLayout();
     }
 }

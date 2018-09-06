@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import com.elkcreek.rodneytressler.musicapp.utils.TracksAdapter;
@@ -37,7 +38,7 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_MAIN_TA
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_UID_KEY;
 
-public class AllTracksFragment extends Fragment implements AllTracksView {
+public class AllTracksFragment extends BaseFragment implements AllTracksView {
     @Inject
     protected AllTracksPresenter presenter;
     @BindView(R.id.recycler_view_tracks)
@@ -119,6 +120,11 @@ public class AllTracksFragment extends Fragment implements AllTracksView {
         trackMainFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().
                 replace(R.id.fragment_holder, trackMainFragment, TRACK_MAIN_TAG).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void showParentLoadingLayout() {
+        showMainLoadingLayout();
     }
 
     @Override

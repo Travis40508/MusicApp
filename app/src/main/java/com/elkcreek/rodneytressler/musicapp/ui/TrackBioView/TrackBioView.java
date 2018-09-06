@@ -6,13 +6,10 @@ import com.elkcreek.rodneytressler.musicapp.utils.BaseView;
 import java.util.List;
 
 public interface TrackBioView extends BaseView {
-    void showLoadingLayout();
 
     void showTrackSummary(String trackSummary);
 
     void showTrackContent(String trackContent);
-
-    void hideLoadingLayout();
 
     void showTrackAlbumCover(String imageUrl);
 
@@ -23,4 +20,8 @@ public interface TrackBioView extends BaseView {
     void setTitle(String trackTitle);
 
     void showSimilarArtistScreen(String trackUid, String trackName, String artistName);
+
+    void hideParentLoadingLayout();
+
+    void showParentLoadingLayout();
 }

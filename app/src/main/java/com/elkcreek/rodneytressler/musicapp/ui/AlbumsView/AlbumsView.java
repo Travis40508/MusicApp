@@ -9,4 +9,6 @@ public interface AlbumsView extends BaseView {
     void showTopAlbums(List<MusicApi.Album> albumList);
 
     void showAlbumTracks(String artistName, String artistUID, String albumName, String albumUid, String imageUrl);
+
+    void showParentLoadingLayout();
 }

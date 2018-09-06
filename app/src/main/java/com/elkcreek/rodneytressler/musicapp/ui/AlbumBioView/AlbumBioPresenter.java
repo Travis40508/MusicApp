@@ -47,13 +47,14 @@ public class AlbumBioPresenter implements BasePresenter<AlbumBioView> {
             } else {
                 view.showAlbumBio(albumInfo.getWiki().getTrackSummary());
             }
-            view.hideLoadingLayout();
+            view.hideParentLoadingLayout();
             view.showAlbumImage(albumInfo.getTrackImageList().get(2).getImageUrl());
         };
     }
 
     private Consumer<Throwable> updateUiWithError() {
         return throwable -> {
+            view.hideParentLoadingLayout();
             Log.d("@@@@", throwable.getMessage());
         };
     }

@@ -8,6 +8,16 @@
     android:background="@android:color/black">
 
 
+    <ProgressBar
+        android:id="@+id/progress_bar_tracks"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
     <EditText
         android:id="@+id/input_track_search"
         android:hint="Enter Track Name"

@@ -17,6 +17,7 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.AlbumMainView.AlbumMainFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.AlbumTracksView.AlbumTracksFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.AlbumsAdapter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
@@ -37,7 +38,7 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_UID_KEY
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
 
-public class AlbumsFragment extends Fragment implements AlbumsView {
+public class AlbumsFragment extends BaseFragment implements AlbumsView {
 
     @Inject protected AlbumsPresenter presenter;
     private AlbumsFragment albumsFragment;
@@ -110,5 +111,10 @@ public class AlbumsFragment extends Fragment implements AlbumsView {
         albumMainFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_holder, albumMainFragment, ALBUM_MAIN_TAG).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void showParentLoadingLayout() {
+        showMainLoadingLayout();
     }
 }

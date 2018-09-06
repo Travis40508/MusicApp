@@ -21,6 +21,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.SimilarTracksAdapter;
 
@@ -39,11 +40,9 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_MAIN_TA
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_UID_KEY;
 
-public class TrackBioFragment extends Fragment implements TrackBioView {
+public class TrackBioFragment extends BaseFragment implements TrackBioView {
 
     @Inject protected TrackBioPresenter presenter;
-    @BindView(R.id.loading_layout)
-    protected FrameLayout loadingLayout;
     @BindView(R.id.image_album_cover)
     protected ImageView albumCover;
     @BindView(R.id.text_track_bio)
@@ -97,11 +96,6 @@ public class TrackBioFragment extends Fragment implements TrackBioView {
     }
 
     @Override
-    public void showLoadingLayout() {
-        loadingLayout.setVisibility(View.VISIBLE);
-    }
-
-    @Override
     public void showTrackSummary(String trackSummary) {
         trackBio.setText(trackSummary);
     }
@@ -109,11 +103,6 @@ public class TrackBioFragment extends Fragment implements TrackBioView {
     @Override
     public void showTrackContent(String trackContent) {
         trackBio.setText(trackContent);
-    }
-
-    @Override
-    public void hideLoadingLayout() {
-        loadingLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -162,5 +151,15 @@ public class TrackBioFragment extends Fragment implements TrackBioView {
         trackMainFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().
                 replace(R.id.fragment_holder, trackMainFragment, TRACK_MAIN_TAG).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void hideParentLoadingLayout() {
+        hideMainLoadingLayout();
+    }
+
+    @Override
+    public void showParentLoadingLayout() {
+        showMainLoadingLayout();
     }
 }

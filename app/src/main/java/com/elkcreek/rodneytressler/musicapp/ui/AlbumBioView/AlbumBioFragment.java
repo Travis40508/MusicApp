@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
+import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
 
 import javax.inject.Inject;
 
@@ -29,15 +30,13 @@ import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_BIO_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_UID_KEY;
 
-public class AlbumBioFragment extends Fragment implements AlbumBioView {
+public class AlbumBioFragment extends BaseFragment implements AlbumBioView {
 
     @Inject protected AlbumBioPresenter presenter;
     @BindView(R.id.image_album_bio)
     protected ImageView albumImage;
     @BindView(R.id.text_album_bio)
     protected TextView albumBio;
-    @BindView(R.id.loading_layout)
-    protected FrameLayout loadingLayout;
     @BindView(R.id.text_read_more)
     protected TextView readMoreText;
     private AlbumBioFragment albumBioFragment;
@@ -102,13 +101,14 @@ public class AlbumBioFragment extends Fragment implements AlbumBioView {
         this.albumBio.setText(trackSummary);
     }
 
-    @Override
-    public void hideLoadingLayout() {
-        loadingLayout.setVisibility(View.GONE);
-    }
 
     @Override
     public void setReadMoreText(String readMoreText) {
         this.readMoreText.setText(readMoreText);
+    }
+
+    @Override
+    public void hideParentLoadingLayout() {
+        hideMainLoadingLayout();
     }
 }

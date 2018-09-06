@@ -37,7 +37,6 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
     @Override
     public void subscribe() {
         compositeDisposable = new CompositeDisposable();
-        view.showLoadingLayout();
     }
 
     @Override
@@ -63,14 +62,15 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
                 view.showTrackContent(track.getWiki().getTrackContent());
             }
             view.showTrackAlbumCover(track.getTrackAlbum().getTrackImage().get(2).getImageUrl());
+            view.hideParentLoadingLayout();
         };
     }
 
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
             Log.d("@@@@", throwable.getMessage());
-            view.hideLoadingLayout();
             view.showTrackSummary(Constants.NO_CONTENT_AVAILABLE_TEXT);
+            view.hideParentLoadingLayout();
 //           Maybe later -  view.showNoPreviewAvailable();
         };
     }
@@ -78,7 +78,6 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
     private Consumer<List<MusicApi.Track>> updateUiWithSimilarTracks() {
         return trackList -> {
             view.showSimilarTracks(trackList);
-            view.hideLoadingLayout();
         };
     }
 
@@ -99,7 +98,7 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
     }
 
     public void similarTrackClicked(MusicApi.Track track) {
-        view.showLoadingLayout();
+        view.showParentLoadingLayout();
         view.setTitle(track.getArtist().getArtistName() + " - " + track.getTrackName());
         view.showSimilarArtistScreen(track.getTrackUid(), track.getTrackName(), track.getArtist().getArtistName());
     }

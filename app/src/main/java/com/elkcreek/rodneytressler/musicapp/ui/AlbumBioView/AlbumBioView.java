@@ -7,7 +7,7 @@ public interface AlbumBioView extends BaseView {
 
     void showAlbumBio(String trackSummary);
 
-    void hideLoadingLayout();
-
     void setReadMoreText(String readMoreTextCollapse);
+
+    void hideParentLoadingLayout();
 }

@@ -21,4 +21,6 @@ public interface AllTracksView extends BaseView {
     void showAllTracksText();
 
     void showTrackMainFragment(String trackName, String artistName, String trackUid);
+
+    void showParentLoadingLayout();
 }

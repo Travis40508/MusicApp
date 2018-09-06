@@ -11,4 +11,6 @@ public interface AlbumTracksView extends BaseView {
     void showPlayTracksFragment(String trackName, String trackUid, String artistName);
 
     void showLoadingLayout();
+
+    void showParentLoadingLayout();
 }
