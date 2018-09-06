@@ -23,6 +23,7 @@ import com.elkcreek.rodneytressler.musicapp.ui.AlbumsView.AlbumsFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.AllTracksView.AllTracksFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.ArtistBioView.ArtistBioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.ArtistMainView.ArtistMainFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity;
 import com.elkcreek.rodneytressler.musicapp.utils.ArtistAdapter;
 
@@ -42,7 +43,7 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_K
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.BIO_FRAGMENT_TAG;
 
-public class SearchFragment extends Fragment implements SearchView {
+public class SearchFragment extends BaseFragment implements SearchView {
 
     @Inject protected SearchPresenter presenter;
     @BindView(R.id.recycler_view)
@@ -121,6 +122,11 @@ public class SearchFragment extends Fragment implements SearchView {
     @Override
     public void showProgressBar() {
         loadingLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showMainProgressBar() {
+        showMainLoadingLayout();
     }
 
     @Override

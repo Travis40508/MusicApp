@@ -10,6 +10,8 @@ public interface SearchView extends BaseView {
 
     void showProgressBar();
 
+    void showMainProgressBar();
+
     void hideProgressBar();
 
     void showSearchTextValue(String s);

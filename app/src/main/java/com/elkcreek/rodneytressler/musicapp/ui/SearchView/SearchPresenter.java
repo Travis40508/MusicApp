@@ -123,7 +123,7 @@ public class SearchPresenter implements BasePresenter<SearchView> {
     }
 
     public void onArtistClicked(MusicApi.Artist artist) {
-        view.showProgressBar();
+        view.showMainProgressBar();
         view.showMainArtistScreen(artist);
     }
 }

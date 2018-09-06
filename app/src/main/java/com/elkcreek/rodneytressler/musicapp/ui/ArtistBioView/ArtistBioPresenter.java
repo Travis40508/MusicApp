@@ -35,7 +35,6 @@ public class ArtistBioPresenter implements BasePresenter<ArtistBioView> {
     public void subscribe() {
         disposable = new CompositeDisposable();
         isExpanded = false;
-        view.showLoadingLayout();
         fetchBio();
     }
 
@@ -51,7 +50,8 @@ public class ArtistBioPresenter implements BasePresenter<ArtistBioView> {
             } else {
                 view.showArtistBio(artist.getArtistBio().getBioContent());
             }
-            view.hideLoadingLayout();
+//            view.hideLoadingLayout();
+            view.hideMainProgressBar();
             view.showArtistImage(artist.getArtistImages().get(2).getImageUrl());
             view.showSimilarArtists(artist.getSimilar().getArtistList());
         };
@@ -66,6 +66,7 @@ public class ArtistBioPresenter implements BasePresenter<ArtistBioView> {
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
             Log.d("@@@@", throwable.getMessage());
+            view.hideMainProgressBar();
         };
     }
 

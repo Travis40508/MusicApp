@@ -6,10 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainView.MainActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:titleTextColor="@android:color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
+
     <FrameLayout
         android:id="@+id/fragment_holder"
+        app:layout_constraintTop_toBottomOf="@id/my_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
     </FrameLayout>
 
@@ -17,8 +30,9 @@
     <FrameLayout
         android:id="@+id/main_loading_layout"
         android:background="@android:color/black"
-        android:visibility="gone"
         android:layout_width="match_parent"
+        android:elevation="5dp"
+        android:visibility="gone"
         android:layout_height="match_parent">
 
         <ProgressBar

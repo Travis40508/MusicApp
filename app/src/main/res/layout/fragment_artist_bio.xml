@@ -82,19 +82,4 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-
-    <FrameLayout
-        android:id="@+id/loading_layout"
-        android:background="@android:color/black"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ProgressBar
-            android:id="@+id/bio_progress_bar"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </FrameLayout>
-
 </android.support.constraint.ConstraintLayout>

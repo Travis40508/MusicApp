@@ -10,15 +10,15 @@ public interface ArtistBioView extends BaseView {
 
     void showArtistBio(String artistBio);
 
-    void hideLoadingLayout();
-
     void setReadMoreText(String readMoreTextCollapse);
 
     void showSimilarArtists(List<MusicApi.Artist> artistList);
 
     void showSimilarArtistScreen(String artistUID, String artistName);
 
-    void showLoadingLayout();
-
     void setTitle(String artistName);
+
+    void hideMainProgressBar();
+
+    void showLoadingLayout();
 }

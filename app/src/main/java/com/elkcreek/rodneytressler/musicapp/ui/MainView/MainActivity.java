@@ -3,11 +3,13 @@ package com.elkcreek.rodneytressler.musicapp.ui.MainView;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+
 
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.ui.SearchView.SearchFragment;
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
     protected MainPresenter presenter;
     @BindView(R.id.main_loading_layout)
     protected FrameLayout loadingLayout;
+    @BindView(R.id.my_toolbar)
+    protected Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
 
         presenter.attachView(this);
     }
@@ -82,5 +87,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     public void showLoadingLayout() {
         loadingLayout.setVisibility(View.VISIBLE);
+    }
+
+    public void hideLoadingLayout() {
+        loadingLayout.setVisibility(View.GONE);
     }
 }

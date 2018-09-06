@@ -22,6 +22,7 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.AllTracksView.AllTracksFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.ArtistMainView.ArtistMainFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import com.elkcreek.rodneytressler.musicapp.utils.SimilarArtistAdapter;
 
@@ -39,7 +40,7 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_MAIN_T
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
 
-public class ArtistBioFragment extends Fragment implements ArtistBioView {
+public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
 
     @Inject
     protected ArtistBioPresenter presenter;
@@ -47,15 +48,11 @@ public class ArtistBioFragment extends Fragment implements ArtistBioView {
     protected ImageView artistBioImage;
     @BindView(R.id.text_artist_bio)
     protected TextView artistBioText;
-    @BindView(R.id.loading_layout)
-    protected FrameLayout loadingLayout;
     @BindView(R.id.text_read_more)
     protected TextView readMoreText;
     @BindView(R.id.bio_similar_artist_recycler_view)
     protected RecyclerView similarArtistRecyclerView;
     private SimilarArtistAdapter adapter;
-    private AllTracksFragment allTracksFragment;
-    private ArtistBioFragment artistBioFragment;
 
     @OnClick(R.id.read_more_layout)
     protected void onReadMoreClicked(View view) {
@@ -118,11 +115,6 @@ public class ArtistBioFragment extends Fragment implements ArtistBioView {
     }
 
     @Override
-    public void hideLoadingLayout() {
-        loadingLayout.setVisibility(View.GONE);
-    }
-
-    @Override
     public void setReadMoreText(String readMoreText) {
         this.readMoreText.setText(readMoreText);
     }
@@ -153,12 +145,17 @@ public class ArtistBioFragment extends Fragment implements ArtistBioView {
     }
 
     @Override
-    public void showLoadingLayout() {
-        loadingLayout.setVisibility(View.VISIBLE);
+    public void setTitle(String artistName) {
+        getActivity().setTitle(artistName);
     }
 
     @Override
-    public void setTitle(String artistName) {
-        getActivity().setTitle(artistName);
+    public void hideMainProgressBar() {
+        hideMainLoadingLayout();
+    }
+
+    @Override
+    public void showLoadingLayout() {
+        this.showMainLoadingLayout();
     }
 }
