@@ -117,4 +117,9 @@ public class AlbumTracksFragment extends BaseFragment implements AlbumTracksView
     public void showParentLoadingLayout() {
         showMainLoadingLayout();
     }
+
+    @Override
+    public void hideLoadingLayout() {
+        loadingLayout.setVisibility(View.GONE);
+    }
 }

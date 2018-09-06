@@ -45,12 +45,14 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
     private Consumer<List<MusicApi.Track>> updateUiWithTracks() {
         return trackList -> {
             this.albumTracks = trackList;
+            view.hideLoadingLayout();
             view.showTrackListForAlbum(trackList, imageUrl);
         };
     }
 
     private Consumer<Throwable> updateUiWithError() {
         return throwable -> {
+            view.hideLoadingLayout();
             Log.d("@@@@", throwable.getMessage());
         };
     }
