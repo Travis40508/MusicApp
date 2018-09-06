@@ -11,4 +11,6 @@ public interface AlbumsView extends BaseView {
     void showAlbumTracks(String artistName, String artistUID, String albumName, String albumUid, String imageUrl);
 
     void showParentLoadingLayout();
+
+    void hideLoadingLayout();
 }

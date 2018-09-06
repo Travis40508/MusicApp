@@ -22,4 +22,6 @@ public interface YoutubeView extends BaseView {
     void destroyYouTubeSupportFragmentView();
 
     void releaseYouTubePlayer();
+
+    void hideLoadingLayout();
 }

@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,12 +44,12 @@ public class AllTracksFragment extends BaseFragment implements AllTracksView {
     protected AllTracksPresenter presenter;
     @BindView(R.id.recycler_view_tracks)
     protected RecyclerView recyclerView;
-    @BindView(R.id.progress_bar_tracks)
-    protected ProgressBar progressBar;
     @BindView(R.id.tracks_search_value)
     protected TextView searchedTracksText;
+    @BindView(R.id.loading_layout)
+    protected FrameLayout loadingLayout;
     private TracksAdapter adapter;
-    private AllTracksFragment allTracksFragment;
+
 
 
     @OnTextChanged(value = R.id.input_track_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -134,12 +135,12 @@ public class AllTracksFragment extends BaseFragment implements AllTracksView {
 
     @Override
     public void hideProgressBar() {
-        progressBar.setVisibility(View.GONE);
+        loadingLayout.setVisibility(View.GONE);
     }
 
     @Override
     public void showProgressBar() {
-        progressBar.setVisibility(View.VISIBLE);
+        loadingLayout.setVisibility(View.VISIBLE);
     }
 
     @Override

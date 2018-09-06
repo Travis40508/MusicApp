@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,8 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     private YouTubePlayer youTubePlayer;
     @BindView(R.id.text_lyrics)
     protected TextView songLyrics;
+    @BindView(R.id.loading_layout)
+    protected FrameLayout loadingLayout;
 
     @Override
     public void onAttach(Context context) {
@@ -163,6 +166,11 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     public void releaseYouTubePlayer() {
 //        youTubePlayer.release();
 //        youTubePlayer = null;
+    }
+
+    @Override
+    public void hideLoadingLayout() {
+        loadingLayout.setVisibility(View.GONE);
     }
 
     @Override

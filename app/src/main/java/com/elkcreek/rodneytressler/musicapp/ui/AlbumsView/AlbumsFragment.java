@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
@@ -44,6 +45,8 @@ public class AlbumsFragment extends BaseFragment implements AlbumsView {
     private AlbumsFragment albumsFragment;
     @BindView(R.id.recycler_view_albums)
     protected RecyclerView recyclerView;
+    @BindView(R.id.loading_layout)
+    protected FrameLayout loadingLayout;
     private AlbumsAdapter adapter;
 
     @Override
@@ -116,5 +119,10 @@ public class AlbumsFragment extends BaseFragment implements AlbumsView {
     @Override
     public void showParentLoadingLayout() {
         showMainLoadingLayout();
+    }
+
+    @Override
+    public void hideLoadingLayout() {
+        loadingLayout.setVisibility(View.GONE);
     }
 }

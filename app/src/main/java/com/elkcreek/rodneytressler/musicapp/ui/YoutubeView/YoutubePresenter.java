@@ -65,14 +65,16 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
 
     private Consumer<String> updateViewWithLyrics() {
         return lyrics -> {
-          view.showSongLyrics(lyrics);
+            view.showSongLyrics(lyrics);
+            view.hideLoadingLayout();
         };
     }
 
     private Consumer<Throwable> throwErrorWhenLyricsNotAvailable() {
         return throwable -> {
-          view.showSongLyrics(Constants.NO_LYRICS_AVAILABLE);
-          Log.d("@@@@-YoutubePresenter", throwable.getMessage());
+            view.showSongLyrics(Constants.NO_LYRICS_AVAILABLE);
+            view.hideLoadingLayout();
+            Log.d("@@@@-YoutubePresenter", throwable.getMessage());
         };
     }
 
@@ -125,7 +127,7 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
     }
 
     public void viewDestroyed(boolean youTubeSupportFragmentIsNull) {
-        if(!youTubeSupportFragmentIsNull) {
+        if (!youTubeSupportFragmentIsNull) {
             view.destroyYouTubeSupportFragmentView();
         }
     }

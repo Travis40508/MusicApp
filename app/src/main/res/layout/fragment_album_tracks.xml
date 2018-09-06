@@ -19,7 +19,6 @@
 
     <FrameLayout
         android:id="@+id/loading_layout"
-        android:visibility="gone"
         android:background="@android:color/black"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
