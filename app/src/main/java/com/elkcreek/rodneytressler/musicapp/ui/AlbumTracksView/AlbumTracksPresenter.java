@@ -45,15 +45,20 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
     private Consumer<List<MusicApi.Track>> updateUiWithTracks() {
         return trackList -> {
             this.albumTracks = trackList;
+            if (trackList != null) {
+                view.showTrackListForAlbum(trackList, imageUrl);
+            } else {
+                view.showNoTracksAvailableMessage();
+            }
             view.hideLoadingLayout();
-            view.showTrackListForAlbum(trackList, imageUrl);
         };
     }
 
     private Consumer<Throwable> updateUiWithError() {
         return throwable -> {
-            view.hideLoadingLayout();
             Log.d("@@@@", throwable.getMessage());
+            view.showNoTracksAvailableMessage();
+            view.hideLoadingLayout();
         };
     }
 
@@ -63,7 +68,6 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
     }
 
 
-
     public void albumRetrieved(String albumUid, String imageUrl) {
         this.albumUid = albumUid;
         this.imageUrl = imageUrl;
@@ -71,7 +75,7 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
 
     public void trackClicked(MusicApi.Track track) {
         view.showParentLoadingLayout();
-        if(track.getTrackUid() == null) {
+        if (track.getTrackUid() == null) {
             disposable.add(repositoryService.getTrackWithName(track.getTrackName(), track.getArtist().getArtistName(), albumTracks, albumUid).subscribe(updateUiWithTrack(), updateUiWithError()));
         } else {
             view.showPlayTracksFragment(track.getTrackName(), track.getTrackUid(), track.getArtist().getArtistName());

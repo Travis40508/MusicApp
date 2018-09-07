@@ -15,4 +15,6 @@ public interface AlbumTracksView extends BaseView {
     void showParentLoadingLayout();
 
     void hideLoadingLayout();
+
+    void showNoTracksAvailableMessage();
 }

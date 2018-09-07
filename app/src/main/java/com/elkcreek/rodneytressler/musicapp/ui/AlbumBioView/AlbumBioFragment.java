@@ -2,6 +2,7 @@ package com.elkcreek.rodneytressler.musicapp.ui.AlbumBioView;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -110,5 +111,22 @@ public class AlbumBioFragment extends BaseFragment implements AlbumBioView {
     @Override
     public void hideParentLoadingLayout() {
         hideMainLoadingLayout();
+    }
+
+    @Override
+    public void showGenericAlbumImage() {
+        Glide.with(this)
+                .asBitmap()
+                .load(R.drawable.generic_album)
+                .apply(RequestOptions.overrideOf(250, 300))
+                .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
+                .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                .into(albumImage);
+    }
+
+    @Override
+    public void setImageBackgroundWhite() {
+        albumImage.setBackgroundColor(Color.WHITE);
     }
 }

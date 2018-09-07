@@ -54,6 +54,7 @@ public class ArtistBioPresenter implements BasePresenter<ArtistBioView> {
             if(artist.getArtistImages() != null) {
                 view.showArtistImage(artist.getArtistImages().get(2).getImageUrl());
             } else {
+                view.setImageBackgroundWhite();
                 view.showGenericArtistImage();
             }
 
@@ -77,8 +78,8 @@ public class ArtistBioPresenter implements BasePresenter<ArtistBioView> {
         return throwable -> {
             Log.d("@@@@", throwable.getMessage());
             view.showArtistBio(Constants.NO_ARTIST_BIO_AVAILABLE);
-            view.showGenericArtistImage();
             view.setImageBackgroundWhite();
+            view.showGenericArtistImage();
             view.showNoSimilarArtistText();
             view.hideMainProgressBar();
         };

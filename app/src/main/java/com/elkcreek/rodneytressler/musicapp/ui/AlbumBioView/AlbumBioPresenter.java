@@ -42,20 +42,29 @@ public class AlbumBioPresenter implements BasePresenter<AlbumBioView> {
 
     private Consumer<MusicApi.AlbumInfo> updateUiWithAlbumInfo() {
         return albumInfo -> {
-            if(isExpanded) {
-                view.showAlbumBio(albumInfo.getWiki().getTrackContent());
+            if (isExpanded) {
+                view.showAlbumBio(albumInfo.getWiki() != null ? albumInfo.getWiki().getTrackContent() : Constants.NO_ALBUM_BIO_AVAILABLE);
             } else {
-                view.showAlbumBio(albumInfo.getWiki().getTrackSummary());
+                view.showAlbumBio(albumInfo.getWiki() != null ? albumInfo.getWiki().getTrackSummary() : Constants.NO_ALBUM_BIO_AVAILABLE);
+            }
+
+            if (albumInfo.getTrackImageList() != null) {
+                view.showAlbumImage(albumInfo.getTrackImageList().get(2).getImageUrl());
+            } else {
+                view.setImageBackgroundWhite();
+                view.showGenericAlbumImage();
             }
             view.hideParentLoadingLayout();
-            view.showAlbumImage(albumInfo.getTrackImageList().get(2).getImageUrl());
         };
     }
 
     private Consumer<Throwable> updateUiWithError() {
         return throwable -> {
-            view.hideParentLoadingLayout();
             Log.d("@@@@", throwable.getMessage());
+            view.showAlbumBio(Constants.NO_ALBUM_BIO_AVAILABLE);
+            view.setImageBackgroundWhite();
+            view.showGenericAlbumImage();
+            view.hideParentLoadingLayout();
         };
     }
 

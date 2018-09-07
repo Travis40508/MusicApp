@@ -10,4 +10,8 @@ public interface AlbumBioView extends BaseView {
     void setReadMoreText(String readMoreTextCollapse);
 
     void hideParentLoadingLayout();
+
+    void showGenericAlbumImage();
+
+    void setImageBackgroundWhite();
 }

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
@@ -42,6 +43,8 @@ public class AlbumTracksFragment extends BaseFragment implements AlbumTracksView
     protected RecyclerView recyclerView;
     @BindView(R.id.loading_layout)
     protected FrameLayout loadingLayout;
+    @BindView(R.id.no_tracks_text)
+    protected TextView noTracksText;
     private AlbumTracksFragment albumTracksFragment;
     private AlbumTracksAdapter adapter;
 
@@ -121,5 +124,10 @@ public class AlbumTracksFragment extends BaseFragment implements AlbumTracksView
     @Override
     public void hideLoadingLayout() {
         loadingLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showNoTracksAvailableMessage() {
+        noTracksText.setVisibility(View.VISIBLE);
     }
 }
