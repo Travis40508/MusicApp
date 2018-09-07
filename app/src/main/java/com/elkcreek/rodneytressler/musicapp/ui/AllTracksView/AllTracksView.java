@@ -23,4 +23,10 @@ public interface AllTracksView extends BaseView {
     void showTrackMainFragment(String trackName, String artistName, String trackUid);
 
     void showParentLoadingLayout();
+
+    void showNoTracksAvailableMessage();
+
+    void hideTrackSearch();
+
+    void hideShowingTracks();
 }

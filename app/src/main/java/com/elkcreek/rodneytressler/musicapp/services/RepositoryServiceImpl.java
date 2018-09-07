@@ -168,7 +168,7 @@ public class RepositoryServiceImpl implements RepositoryService {
     public Observable<List<MusicApi.Album>> getAlbums(String artistUid) {
         return getAlbumsFromDatabase(artistUid)
                 .subscribeOn(Schedulers.io())
-                .flatMap(albumList -> albumList.get(0) == null ? Observable.error(Throwable::new) : Observable.just(albumList))
+                .flatMap(albumList -> albumList == null ? Observable.error(Throwable::new) : Observable.just(albumList))
                 .onErrorResumeNext(Observable.empty())
                 .switchIfEmpty(getAlbumsFromNetwork(artistUid))
                 .observeOn(AndroidSchedulers.mainThread());

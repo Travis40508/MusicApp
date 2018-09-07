@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -48,6 +49,10 @@ public class AllTracksFragment extends BaseFragment implements AllTracksView {
     protected TextView searchedTracksText;
     @BindView(R.id.loading_layout)
     protected FrameLayout loadingLayout;
+    @BindView(R.id.no_tracks_text)
+    protected TextView noTracksText;
+    @BindView(R.id.input_track_search)
+    protected EditText trackInput;
     private TracksAdapter adapter;
 
 
@@ -126,6 +131,21 @@ public class AllTracksFragment extends BaseFragment implements AllTracksView {
     @Override
     public void showParentLoadingLayout() {
         showMainLoadingLayout();
+    }
+
+    @Override
+    public void showNoTracksAvailableMessage() {
+        noTracksText.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideTrackSearch() {
+        trackInput.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideShowingTracks() {
+        searchedTracksText.setVisibility(View.GONE);
     }
 
     @Override

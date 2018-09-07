@@ -21,4 +21,10 @@ public interface ArtistBioView extends BaseView {
     void hideMainProgressBar();
 
     void showLoadingLayout();
+
+    void showGenericArtistImage();
+
+    void showNoSimilarArtistText();
+
+    void setImageBackgroundWhite();
 }

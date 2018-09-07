@@ -62,7 +62,6 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
                 view.showTrackContent(track.getWiki().getTrackContent());
             }
             view.showTrackAlbumCover(track.getTrackAlbum().getTrackImage().get(2).getImageUrl());
-            view.hideParentLoadingLayout();
         };
     }
 
@@ -78,6 +77,7 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
     private Consumer<List<MusicApi.Track>> updateUiWithSimilarTracks() {
         return trackList -> {
             view.showSimilarTracks(trackList);
+            view.hideParentLoadingLayout();
         };
     }
 

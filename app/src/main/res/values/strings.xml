@@ -7,4 +7,6 @@
     <string name="similar_artists_text">Similar Artists</string>
     <string name="no_preview_available">No Preview Available</string>
     <string name="similar_tracks_text">Similar Tracks</string>
+    <string name="no_albums_available_text">No Albums Available \n:(</string>
+    <string name="no_tracks_available_text">No Tracks Available \n:(</string>
 </resources>

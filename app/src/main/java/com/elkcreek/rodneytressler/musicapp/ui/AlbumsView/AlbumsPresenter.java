@@ -43,15 +43,21 @@ public class AlbumsPresenter implements BasePresenter<AlbumsView> {
 
     private Consumer<List<MusicApi.Album>> updateUiWithAlbum() {
         return albumList -> {
+            if (!albumList.isEmpty()) {
+                view.showTopAlbums(albumList);
+            } else {
+                view.showNoAlbumsMessage();
+            }
+
             view.hideLoadingLayout();
-            view.showTopAlbums(albumList);
         };
     }
 
     private Consumer<Throwable> updateUiWithError() {
         return throwable -> {
-            view.hideLoadingLayout();
             Log.d("@@@@", throwable.getMessage());
+            view.showNoAlbumsMessage();
+            view.hideLoadingLayout();
         };
     }
 

@@ -38,7 +38,10 @@ public class AllTracksPresenter implements BasePresenter<AllTracksView> {
 
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
-            view.toastNoTracksError();
+            view.showNoTracksAvailableMessage();
+            view.hideTrackSearch();
+            view.hideShowingTracks();
+            view.hideProgressBar();
         };
     }
 

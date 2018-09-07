@@ -50,4 +50,19 @@ public class Constants {
     //String Values
     public static final String READ_MORE = "Read More";
     public static final String COLLAPSE = "Collapse";
+
+    //Null Values
+    public static final String NO_ARTIST_BIO_AVAILABLE = "Sorry, no biography available for this artist. :(";
+    public static final String NO_ALBUM_BIO_AVAILABLE = "Sorry, no biography available for this album. :(";
+    public static final String NO_TRACK_BIO_AVAILABLE = "Sorry, no biography available for this track. :(";
+    //Albums no Albums Available
+    //All Tracks no Tracks Available
+    //Album Tracks no Tracks available for this album
+    public static final String NO_SIMILAR_ARTISTS = "No similar artists found.";
+    //No Similar Tracks
+    //No Artist Bio Image
+    //No Album Bio Image
+    //No Track Bio Image
+    //No Youtube Video
+    //No Lyrics
 }

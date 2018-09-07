@@ -13,4 +13,6 @@ public interface AlbumsView extends BaseView {
     void showParentLoadingLayout();
 
     void hideLoadingLayout();
+
+    void showNoAlbumsMessage();
 }

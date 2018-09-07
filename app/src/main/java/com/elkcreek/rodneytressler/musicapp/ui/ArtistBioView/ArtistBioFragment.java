@@ -2,6 +2,7 @@ package com.elkcreek.rodneytressler.musicapp.ui.ArtistBioView;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -52,6 +53,8 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
     protected TextView readMoreText;
     @BindView(R.id.bio_similar_artist_recycler_view)
     protected RecyclerView similarArtistRecyclerView;
+    @BindView(R.id.text_similar_artists)
+    protected TextView similarArtistText;
     private SimilarArtistAdapter adapter;
 
     @OnClick(R.id.read_more_layout)
@@ -157,5 +160,27 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
     @Override
     public void showLoadingLayout() {
         this.showMainLoadingLayout();
+    }
+
+    @Override
+    public void showGenericArtistImage() {
+        Glide.with(this)
+                .asBitmap()
+                .load(R.drawable.generic_band)
+                .apply(RequestOptions.overrideOf(250, 300))
+                .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
+                .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                .into(artistBioImage);
+    }
+
+    @Override
+    public void showNoSimilarArtistText() {
+        similarArtistText.setText(Constants.NO_SIMILAR_ARTISTS);
+    }
+
+    @Override
+    public void setImageBackgroundWhite() {
+        artistBioImage.setBackgroundColor(Color.WHITE);
     }
 }

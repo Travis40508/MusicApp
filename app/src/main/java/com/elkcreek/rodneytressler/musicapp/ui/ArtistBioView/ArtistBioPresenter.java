@@ -46,14 +46,24 @@ public class ArtistBioPresenter implements BasePresenter<ArtistBioView> {
     private Consumer<MusicApi.Artist> updateUiWithArtist() {
         return artist -> {
             if (!isExpanded) {
-                view.showArtistBio(artist.getArtistBio().getBioSummary());
+                view.showArtistBio(artist.getArtistBio() != null ? artist.getArtistBio().getBioSummary() : Constants.NO_ARTIST_BIO_AVAILABLE);
             } else {
-                view.showArtistBio(artist.getArtistBio().getBioContent());
+                view.showArtistBio(artist.getArtistBio() != null ? artist.getArtistBio().getBioContent() : Constants.NO_ARTIST_BIO_AVAILABLE);
             }
-//            view.hideLoadingLayout();
+
+            if(artist.getArtistImages() != null) {
+                view.showArtistImage(artist.getArtistImages().get(2).getImageUrl());
+            } else {
+                view.showGenericArtistImage();
+            }
+
+            if(artist.getSimilar() != null) {
+                view.showSimilarArtists(artist.getSimilar().getArtistList());
+            } else {
+                view.showNoSimilarArtistText();
+            }
+
             view.hideMainProgressBar();
-            view.showArtistImage(artist.getArtistImages().get(2).getImageUrl());
-            view.showSimilarArtists(artist.getSimilar().getArtistList());
         };
     }
 
@@ -66,6 +76,10 @@ public class ArtistBioPresenter implements BasePresenter<ArtistBioView> {
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
             Log.d("@@@@", throwable.getMessage());
+            view.showArtistBio(Constants.NO_ARTIST_BIO_AVAILABLE);
+            view.showGenericArtistImage();
+            view.setImageBackgroundWhite();
+            view.showNoSimilarArtistText();
             view.hideMainProgressBar();
         };
     }
