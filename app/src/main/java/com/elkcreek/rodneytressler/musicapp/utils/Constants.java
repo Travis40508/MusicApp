@@ -59,10 +59,10 @@ public class Constants {
     //All Tracks no Tracks Available
     //Album Tracks no Tracks available for this album
     public static final String NO_SIMILAR_ARTISTS = "No similar artists found.";
-    //No Similar Tracks
+    public static final String NO_SIMILAR_TRACKS = "No similar tracks found.";
     //No Artist Bio Image
     //No Album Bio Image
     //No Track Bio Image
     //No Youtube Video
-    //No Lyrics
+    public static final String NO_LYRICS = "No lyrics found";
 }

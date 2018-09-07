@@ -59,22 +59,26 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
 
     private Consumer<Throwable> throwErrorWhenNoYoutubeVideoId() {
         return throwable -> {
-            view.toastUnableToLoadVideo(Constants.UNABLE_TO_LOAD_VIDEO);
+            Log.d("@@@@", throwable.getMessage());
         };
     }
 
     private Consumer<String> updateViewWithLyrics() {
         return lyrics -> {
-            view.showSongLyrics(lyrics);
+            if (lyrics != null) {
+                view.showSongLyrics(lyrics);
+            } else {
+                view.showNoLyricsAvailableTitle(Constants.NO_LYRICS);
+            }
             view.hideLoadingLayout();
         };
     }
 
     private Consumer<Throwable> throwErrorWhenLyricsNotAvailable() {
         return throwable -> {
-            view.showSongLyrics(Constants.NO_LYRICS_AVAILABLE);
-            view.hideLoadingLayout();
             Log.d("@@@@-YoutubePresenter", throwable.getMessage());
+            view.showNoLyricsAvailableTitle(Constants.NO_LYRICS);
+            view.hideLoadingLayout();
         };
     }
 

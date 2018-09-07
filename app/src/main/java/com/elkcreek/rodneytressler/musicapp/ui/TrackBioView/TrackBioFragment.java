@@ -2,6 +2,7 @@ package com.elkcreek.rodneytressler.musicapp.ui.TrackBioView;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -53,6 +54,8 @@ public class TrackBioFragment extends BaseFragment implements TrackBioView {
     protected TextView readMoreText;
     @BindView(R.id.bio_similar_tracks_recycler_view)
     protected RecyclerView recyclerView;
+    @BindView(R.id.text_similar_tracks)
+    protected TextView similarTracksText;
     private SimilarTracksAdapter adapter;
 
     @OnClick(R.id.read_more_layout)
@@ -161,5 +164,27 @@ public class TrackBioFragment extends BaseFragment implements TrackBioView {
     @Override
     public void showParentLoadingLayout() {
         showMainLoadingLayout();
+    }
+
+    @Override
+    public void showGenericTrackImage() {
+        Glide.with(this)
+                .asBitmap()
+                .load(R.drawable.generic_track)
+                .apply(RequestOptions.overrideOf(250, 300))
+                .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
+                .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                .into(albumCover);
+    }
+
+    @Override
+    public void setImageBackgroundColorWhite() {
+        albumCover.setBackgroundColor(Color.WHITE);
+    }
+
+    @Override
+    public void showNoSimilarTracksText(String noSimilarTracks) {
+        similarTracksText.setText(noSimilarTracks);
     }
 }

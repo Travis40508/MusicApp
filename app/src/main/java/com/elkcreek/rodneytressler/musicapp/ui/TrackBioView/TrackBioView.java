@@ -24,4 +24,10 @@ public interface TrackBioView extends BaseView {
     void hideParentLoadingLayout();
 
     void showParentLoadingLayout();
+
+    void showGenericTrackImage();
+
+    void setImageBackgroundColorWhite();
+
+    void showNoSimilarTracksText(String noSimilarTracks);
 }

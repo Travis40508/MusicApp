@@ -39,6 +39,8 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     protected TextView songLyrics;
     @BindView(R.id.loading_layout)
     protected FrameLayout loadingLayout;
+    @BindView(R.id.text_lyrics_title)
+    protected TextView lyricsTitle;
 
     @Override
     public void onAttach(Context context) {
@@ -171,6 +173,11 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     @Override
     public void hideLoadingLayout() {
         loadingLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showNoLyricsAvailableTitle(String noLyrics) {
+        lyricsTitle.setText(noLyrics);
     }
 
     @Override

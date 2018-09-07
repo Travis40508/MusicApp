@@ -57,26 +57,35 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
     private Consumer<MusicApi.TrackInfo> updateUiWithTrack() {
         return track -> {
             if (!isExpanded) {
-                view.showTrackSummary(track.getWiki().getTrackSummary());
+                view.showTrackSummary(track.getWiki() != null ? track.getWiki().getTrackSummary() : Constants.NO_TRACK_BIO_AVAILABLE);
             } else {
-                view.showTrackContent(track.getWiki().getTrackContent());
+                view.showTrackContent(track.getWiki() != null ? track.getWiki().getTrackContent() : Constants.NO_TRACK_BIO_AVAILABLE);
             }
-            view.showTrackAlbumCover(track.getTrackAlbum().getTrackImage().get(2).getImageUrl());
+            if(track.getTrackAlbum() != null && track.getTrackAlbum().getTrackImage() != null) {
+                view.showTrackAlbumCover(track.getTrackAlbum().getTrackImage().get(2).getImageUrl());
+            } else {
+                view.setImageBackgroundColorWhite();
+                view.showGenericTrackImage();
+            }
         };
     }
 
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
             Log.d("@@@@", throwable.getMessage());
-            view.showTrackSummary(Constants.NO_CONTENT_AVAILABLE_TEXT);
-            view.hideParentLoadingLayout();
-//           Maybe later -  view.showNoPreviewAvailable();
+            view.showTrackSummary(Constants.NO_TRACK_BIO_AVAILABLE);
+            view.setImageBackgroundColorWhite();
+            view.showGenericTrackImage();
         };
     }
 
     private Consumer<List<MusicApi.Track>> updateUiWithSimilarTracks() {
         return trackList -> {
-            view.showSimilarTracks(trackList);
+            if(trackList != null) {
+                view.showSimilarTracks(trackList);
+            } else {
+                view.showNoSimilarTracksText(Constants.NO_SIMILAR_TRACKS);
+            }
             view.hideParentLoadingLayout();
         };
     }
@@ -84,6 +93,8 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
     private Consumer<Throwable> updateUiWithSimilarTrackError() {
         return throwable -> {
             Log.d("@@@@-TrackBioPresenter", throwable.getMessage());
+            view.showNoSimilarTracksText(Constants.NO_SIMILAR_TRACKS);
+            view.hideParentLoadingLayout();
         };
     }
 

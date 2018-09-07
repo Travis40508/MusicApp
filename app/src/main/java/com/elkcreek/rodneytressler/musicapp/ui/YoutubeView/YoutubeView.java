@@ -24,4 +24,6 @@ public interface YoutubeView extends BaseView {
     void releaseYouTubePlayer();
 
     void hideLoadingLayout();
+
+    void showNoLyricsAvailableTitle(String noLyrics);
 }
