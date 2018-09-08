@@ -1,6 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.ui.MainView;
 
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void enterPipMode() {
         enterPictureInPictureMode();
@@ -120,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     protected void onUserLeaveHint() {
         super.onUserLeaveHint();
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(Constants.TRACK_MAIN_TAG);
-        presenter.systemHomeButtonPressed(Build.VERSION.SDK_INT, fragment == null);
+//        Fragment fragment = getSupportFragmentManager().findFragmentByTag(Constants.TRACK_MAIN_TAG);
+//        presenter.systemHomeButtonPressed(Build.VERSION.SDK_INT, fragment == null);
     }
 }

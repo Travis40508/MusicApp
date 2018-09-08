@@ -24,6 +24,7 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
     private String videoId;
     private static final String STATE_YOUTUBE_VIDEO_POSITION = "state_youtube_video_position";
     private int currentVideoTime;
+    private boolean isInPictureInPictureMode;
 
     @Inject
     public YoutubePresenter(RepositoryService repositoryService) {
@@ -108,6 +109,10 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
         if (!youtubeSupportFragmentIsNull) {
             view.pauseVideo();
         }
+
+        if(isInPictureInPictureMode) {
+            view.resumeVideoInPipMode();
+        }
     }
 
 
@@ -138,5 +143,23 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
 
     public void onDetach() {
         view.releaseYouTubePlayer();
+    }
+
+    public void pictureInPictureModeChanged(boolean isInPictureInPictureMode) {
+        if (isInPictureInPictureMode) {
+            this.isInPictureInPictureMode = true;
+            prepareViewForPictureInPictureMode();
+        } else {
+            this.isInPictureInPictureMode = false;
+            restoreViewFromPictureInPictureMode();
+        }
+    }
+
+    private void restoreViewFromPictureInPictureMode() {
+        view.resetYoutubeLayoutParams();
+    }
+
+    private void prepareViewForPictureInPictureMode() {
+        view.makeYoutubeLayoutFullScreen();
     }
 }

@@ -5,11 +5,13 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +43,8 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     protected FrameLayout loadingLayout;
     @BindView(R.id.text_lyrics_title)
     protected TextView lyricsTitle;
+    @BindView(R.id.youtube_fragment_holder)
+    protected FrameLayout youtubeVideoLayout;
 
     @Override
     public void onAttach(Context context) {
@@ -157,7 +161,7 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     @Override
     public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
         super.onPictureInPictureModeChanged(isInPictureInPictureMode);
-        
+        presenter.pictureInPictureModeChanged(isInPictureInPictureMode);
     }
 
     @Override
@@ -185,6 +189,25 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     public void showNoLyricsAvailableTitle(String noLyrics) {
         lyricsTitle.setText(noLyrics);
     }
+
+    @Override
+    public void resetYoutubeLayoutParams() {
+        getParentFragment().getView().findViewById(R.id.tab_layout_track_main).setVisibility(View.VISIBLE);
+        getActivity().findViewById(R.id.my_toolbar).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void makeYoutubeLayoutFullScreen() {
+        getParentFragment().getView().findViewById(R.id.tab_layout_track_main).setVisibility(View.GONE);
+        getActivity().findViewById(R.id.my_toolbar).setVisibility(View.GONE);
+        youtubeVideoLayout.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT));
+    }
+
+    @Override
+    public void resumeVideoInPipMode() {
+        youTubePlayer.play();
+    }
+
 
     @Override
     public void onDetach() {
