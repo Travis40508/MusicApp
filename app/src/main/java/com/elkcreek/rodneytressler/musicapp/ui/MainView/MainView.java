@@ -10,4 +10,8 @@ public interface MainView extends BaseView {
     void closeApp();
 
     void returnHome();
+
+    void enterPipMode();
+
+    void hideMainLoadingLayout();
 }

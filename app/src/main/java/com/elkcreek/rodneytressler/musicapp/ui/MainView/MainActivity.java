@@ -1,5 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.ui.MainView;
 
+import android.os.Build;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import android.widget.FrameLayout;
 
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.ui.SearchView.SearchFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.YoutubeView.YoutubeFragment;
 
 import javax.inject.Inject;
 
@@ -63,6 +67,16 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
+    public void enterPipMode() {
+        enterPictureInPictureMode();
+    }
+
+    @Override
+    public void hideMainLoadingLayout() {
+        loadingLayout.setVisibility(View.GONE);
+    }
+
+    @Override
     public void onBackPressed() {
         presenter.backPressed(getSupportFragmentManager().getBackStackEntryCount());
     }
@@ -91,5 +105,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     public void hideLoadingLayout() {
         loadingLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onUserLeaveHint() {
+        super.onUserLeaveHint();
+//        presenter.systemHomeButtonPressed(Build.VERSION.SDK_INT);
     }
 }

@@ -155,6 +155,12 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     }
 
     @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode);
+        
+    }
+
+    @Override
     public void showSongLyrics(String lyrics) {
         songLyrics.setText(lyrics);
     }

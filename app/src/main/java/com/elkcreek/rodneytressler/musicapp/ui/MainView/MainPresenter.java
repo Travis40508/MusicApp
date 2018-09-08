@@ -34,6 +34,7 @@ public class MainPresenter implements BasePresenter<MainView> {
     public void backPressed(int backStackEntryCount) {
         if(backStackEntryCount > 0) {
             view.detachImmediateFragment();
+            view.hideMainLoadingLayout();
         } else {
             view.closeApp();
         }
@@ -41,5 +42,11 @@ public class MainPresenter implements BasePresenter<MainView> {
 
     public void homeClicked() {
         view.returnHome();
+    }
+
+    public void systemHomeButtonPressed(int sdkInt) {
+        if(sdkInt >= 24) {
+            view.enterPipMode();
+        }
     }
 }
