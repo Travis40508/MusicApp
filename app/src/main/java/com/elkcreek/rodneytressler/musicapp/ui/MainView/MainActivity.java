@@ -70,22 +70,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    public void enterPipMode() {
-        enterPictureInPictureMode();
-    }
-
     @Override
     public void hideMainLoadingLayout() {
         loadingLayout.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void registerActiveViewPagerFragment() {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(Constants.TRACK_MAIN_TAG);
-        Fragment childFragment = fragment.getChildFragmentManager().findFragmentByTag(getYoutubeFragmentTag(R.id.view_pager_track_main));
-        presenter.determineIfPipModeShouldBeEntered(childFragment != null && childFragment.getUserVisibleHint());
     }
 
     @Override
@@ -119,10 +106,5 @@ public class MainActivity extends AppCompatActivity implements MainView {
         loadingLayout.setVisibility(View.GONE);
     }
 
-    @Override
-    protected void onUserLeaveHint() {
-        super.onUserLeaveHint();
-//        Fragment fragment = getSupportFragmentManager().findFragmentByTag(Constants.TRACK_MAIN_TAG);
-//        presenter.systemHomeButtonPressed(Build.VERSION.SDK_INT, fragment == null);
-    }
+
 }

@@ -158,11 +158,6 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
         youTubePlayer.loadVideo(videoId, currentVideoTime);
     }
 
-    @Override
-    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
-        super.onPictureInPictureModeChanged(isInPictureInPictureMode);
-        presenter.pictureInPictureModeChanged(isInPictureInPictureMode);
-    }
 
     @Override
     public void showSongLyrics(String lyrics) {
@@ -189,25 +184,6 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     public void showNoLyricsAvailableTitle(String noLyrics) {
         lyricsTitle.setText(noLyrics);
     }
-
-    @Override
-    public void resetYoutubeLayoutParams() {
-        getParentFragment().getView().findViewById(R.id.tab_layout_track_main).setVisibility(View.VISIBLE);
-        getActivity().findViewById(R.id.my_toolbar).setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void makeYoutubeLayoutFullScreen() {
-        getParentFragment().getView().findViewById(R.id.tab_layout_track_main).setVisibility(View.GONE);
-        getActivity().findViewById(R.id.my_toolbar).setVisibility(View.GONE);
-        youtubeVideoLayout.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT));
-    }
-
-    @Override
-    public void resumeVideoInPipMode() {
-        youTubePlayer.play();
-    }
-
 
     @Override
     public void onDetach() {

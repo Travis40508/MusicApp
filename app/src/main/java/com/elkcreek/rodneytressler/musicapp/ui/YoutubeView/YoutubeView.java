@@ -27,9 +27,4 @@ public interface YoutubeView extends BaseView {
 
     void showNoLyricsAvailableTitle(String noLyrics);
 
-    void resetYoutubeLayoutParams();
-
-    void makeYoutubeLayoutFullScreen();
-
-    void resumeVideoInPipMode();
 }
