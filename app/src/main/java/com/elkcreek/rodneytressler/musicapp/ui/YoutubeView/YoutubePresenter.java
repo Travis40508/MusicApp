@@ -1,6 +1,5 @@
 package com.elkcreek.rodneytressler.musicapp.ui.YoutubeView;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -88,13 +87,13 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
         disposable.clear();
     }
 
-    public void screenRotated(boolean onSavedInstanceStateIsNull, boolean youtubeFragmentIsNull) {
-        if (!onSavedInstanceStateIsNull) {
-            if (!youtubeFragmentIsNull) {
-                view.reAttachYoutubeFragment();
-            }
-        }
-    }
+//    public void screenRotated(boolean onSavedInstanceStateIsNull, boolean youtubeFragmentIsNull) {
+//        if (!onSavedInstanceStateIsNull) {
+//            if (!youtubeFragmentIsNull) {
+//                view.reAttachYoutubeFragment();
+//            }
+//        }
+//    }
 
     public void trackRetrieved(String trackUid) {
         this.trackUid = trackUid;
@@ -139,5 +138,15 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
 
     public void onDetach() {
         view.releaseYouTubePlayer();
+    }
+
+    public void configurationChanged(boolean isInLandScapeMode, boolean youtubePlayerIsVisible) {
+        if (youtubePlayerIsVisible) {
+            if (isInLandScapeMode) {
+                view.enterFullScreenMode();
+            } else {
+                view.exitFullScreenMode();
+            }
+        }
     }
 }

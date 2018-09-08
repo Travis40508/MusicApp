@@ -73,8 +73,7 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
         presenter.attachView(this);
         presenter.trackRetrieved(getArguments().getString(TRACK_UID_KEY));
         presenter.getVideoId(getArguments().getString(Constants.TRACK_NAME_KEY), getArguments().getString(Constants.ARTIST_NAME_KEY));
-
-        presenter.screenRotated(savedInstanceState == null, getActivity().getSupportFragmentManager().findFragmentByTag(YOUTUBE_TAG) == null);
+//        presenter.screenRotated(savedInstanceState == null, getActivity().getSupportFragmentManager().findFragmentByTag(YOUTUBE_TAG) == null);
         return view;
     }
 
@@ -138,6 +137,7 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
                 YoutubeFragment.this.youTubePlayer = youTubePlayer;
+                presenter.configurationChanged(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE, getUserVisibleHint());
                 presenter.youTubePlayerInitializeSuccess(wasRestored);
             }
 
@@ -183,6 +183,16 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
     @Override
     public void showNoLyricsAvailableTitle(String noLyrics) {
         lyricsTitle.setText(noLyrics);
+    }
+
+    @Override
+    public void enterFullScreenMode() {
+        youTubePlayer.setFullscreen(true);
+    }
+
+    @Override
+    public void exitFullScreenMode() {
+        youTubePlayer.setFullscreen(false);
     }
 
     @Override
