@@ -76,6 +76,7 @@ public class SimilarTracksAdapter extends RecyclerView.Adapter<SimilarTracksAdap
         public void bindSimilarTrack(MusicApi.Track track) {
             glide.asBitmap()
                     .load(track.getArtistImage().get(2).getImageUrl())
+                    .apply(RequestOptions.errorOf(R.drawable.no_image_available))
                     .apply(RequestOptions.overrideOf(100, 150))
                     .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
                     .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
