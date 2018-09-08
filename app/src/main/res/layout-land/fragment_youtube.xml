@@ -37,13 +37,31 @@
         android:paddingBottom="100dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/text_lyrics"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:textColor="@android:color/white"
+        <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_lyrics_title"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
+                android:layout_margin="5dp"
+                android:textColor="@android:color/white"
+                android:text="@string/song_lyrics_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/text_lyrics"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </ScrollView>
 
     <FrameLayout
