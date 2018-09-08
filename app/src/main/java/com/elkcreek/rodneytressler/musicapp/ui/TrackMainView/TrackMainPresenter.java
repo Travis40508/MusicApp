@@ -37,7 +37,7 @@ public class TrackMainPresenter implements BasePresenter<TrackMainView> {
 
     @Override
     public void unsubscribe() {
-        disposable.dispose();
+        disposable.clear();
     }
 
     public void screenRotated(boolean screenRotated) {

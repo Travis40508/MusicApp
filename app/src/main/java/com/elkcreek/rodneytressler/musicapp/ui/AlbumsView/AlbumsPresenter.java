@@ -63,7 +63,7 @@ public class AlbumsPresenter implements BasePresenter<AlbumsView> {
 
     @Override
     public void unsubscribe() {
-        disposable.dispose();
+        disposable.clear();
     }
 
     public void artistNameRetrieved(String artistName) {

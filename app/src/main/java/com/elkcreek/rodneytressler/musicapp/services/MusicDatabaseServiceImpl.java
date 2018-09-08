@@ -17,13 +17,11 @@ import io.reactivex.schedulers.Schedulers;
 public class MusicDatabaseServiceImpl implements MusicDatabaseService {
 
     private final MusicDatabase database;
-    private CompositeDisposable disposable;
     private SharedPreferences sharedPreferences;
 
     public MusicDatabaseServiceImpl(MusicDatabase database, SharedPreferences sharedPreferences) {
         this.database = database;
         this.sharedPreferences = sharedPreferences;
-        disposable = new CompositeDisposable();
     }
 
     @Override

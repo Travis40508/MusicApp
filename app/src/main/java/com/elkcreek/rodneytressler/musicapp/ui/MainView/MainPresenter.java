@@ -44,8 +44,14 @@ public class MainPresenter implements BasePresenter<MainView> {
         view.returnHome();
     }
 
-    public void systemHomeButtonPressed(int sdkInt) {
-        if(sdkInt >= 24) {
+    public void systemHomeButtonPressed(int sdkInt, boolean mainTrackFragmentIsNull) {
+        if(sdkInt >= 24 && !mainTrackFragmentIsNull) {
+            view.registerActiveViewPagerFragment();
+        }
+    }
+
+    public void determineIfPipModeShouldBeEntered(boolean appShouldEnterPipMode) {
+        if(appShouldEnterPipMode) {
             view.enterPipMode();
         }
     }

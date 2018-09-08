@@ -14,4 +14,6 @@ public interface MainView extends BaseView {
     void enterPipMode();
 
     void hideMainLoadingLayout();
+
+    void registerActiveViewPagerFragment();
 }

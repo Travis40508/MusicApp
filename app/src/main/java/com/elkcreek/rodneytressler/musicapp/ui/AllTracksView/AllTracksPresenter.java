@@ -53,7 +53,7 @@ public class AllTracksPresenter implements BasePresenter<AllTracksView> {
 
     @Override
     public void unsubscribe() {
-        disposable.dispose();
+        disposable.clear();
     }
 
     public void artistRetrieved(String artistUid) {

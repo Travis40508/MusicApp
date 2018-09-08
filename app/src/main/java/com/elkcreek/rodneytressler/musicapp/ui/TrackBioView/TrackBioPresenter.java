@@ -41,7 +41,7 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
 
     @Override
     public void unsubscribe() {
-        compositeDisposable.dispose();
+        compositeDisposable.clear();
     }
 
     public void trackRetrieved(String trackUid) {

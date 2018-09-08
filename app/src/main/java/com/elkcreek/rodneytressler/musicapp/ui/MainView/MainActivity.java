@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.ui.SearchView.SearchFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.YoutubeView.YoutubeFragment;
+import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 import javax.inject.Inject;
 
@@ -25,6 +27,7 @@ import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.SEARCH_FRAGMENT_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.getYoutubeFragmentTag;
 
 public class MainActivity extends AppCompatActivity implements MainView {
 
@@ -77,6 +80,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
+    public void registerActiveViewPagerFragment() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(Constants.TRACK_MAIN_TAG);
+        Fragment childFragment = fragment.getChildFragmentManager().findFragmentByTag(getYoutubeFragmentTag(R.id.view_pager_track_main));
+        presenter.determineIfPipModeShouldBeEntered(childFragment != null && childFragment.getUserVisibleHint());
+    }
+
+    @Override
     public void onBackPressed() {
         presenter.backPressed(getSupportFragmentManager().getBackStackEntryCount());
     }
@@ -110,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     protected void onUserLeaveHint() {
         super.onUserLeaveHint();
-//        presenter.systemHomeButtonPressed(Build.VERSION.SDK_INT);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(Constants.TRACK_MAIN_TAG);
+        presenter.systemHomeButtonPressed(Build.VERSION.SDK_INT, fragment == null);
     }
 }

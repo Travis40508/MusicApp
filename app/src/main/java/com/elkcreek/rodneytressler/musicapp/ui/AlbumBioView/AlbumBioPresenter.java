@@ -70,7 +70,7 @@ public class AlbumBioPresenter implements BasePresenter<AlbumBioView> {
 
     @Override
     public void unsubscribe() {
-        disposable.dispose();
+        disposable.clear();
     }
 
     public void albumUidRetrieved(String albumUid) {

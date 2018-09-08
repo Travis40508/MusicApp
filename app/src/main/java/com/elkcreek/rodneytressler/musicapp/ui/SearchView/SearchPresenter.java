@@ -96,7 +96,7 @@ public class SearchPresenter implements BasePresenter<SearchView> {
 
     @Override
     public void unsubscribe() {
-        disposable.dispose();
+        disposable.clear();
     }
 
     public void artistSearchTextChanged(String artistSearchText, boolean adapterHasItems) {

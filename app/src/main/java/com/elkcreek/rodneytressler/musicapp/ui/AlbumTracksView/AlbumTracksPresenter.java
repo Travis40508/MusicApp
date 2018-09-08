@@ -64,7 +64,7 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
 
     @Override
     public void unsubscribe() {
-        disposable.dispose();
+        disposable.clear();
     }
 
 

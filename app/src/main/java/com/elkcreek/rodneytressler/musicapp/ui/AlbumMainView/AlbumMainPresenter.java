@@ -36,7 +36,7 @@ public class AlbumMainPresenter implements BasePresenter<AlbumMainView> {
 
     @Override
     public void unsubscribe() {
-        disposable.dispose();
+        disposable.clear();
     }
 
     public void checkSavedInstanceState(boolean savedInstanceStateIsNull, boolean albumMainFragmentIsNull) {

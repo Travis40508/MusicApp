@@ -70,7 +70,7 @@ public class ArtistBioPresenter implements BasePresenter<ArtistBioView> {
 
     @Override
     public void unsubscribe() {
-        disposable.dispose();
+        disposable.clear();
     }
 
 
