@@ -9,4 +9,6 @@ public interface TrackSearchView extends BaseView {
     void showTracks(List<MusicApi.Track> trackList);
 
     void hideLoadingLayout();
+
+    void showPlayTracksFragment(String trackName, String trackUid, String artistName);
 }

@@ -357,4 +357,19 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
                 .map(topChartTracks -> topChartTracks.get(0))
                 .toObservable();
     }
+
+    @Override
+    public void updateTopTracksList(String artistName, String trackName, String trackUid, List<MusicApi.Track> trackList) {
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                for(MusicApi.Track item : trackList) {
+                    if(item.getTrackName().equals(trackName) && item.getArtist().getArtistName().equals(artistName)) {
+                        item.setTrackUid(trackUid);
+                    }
+                }
+                database.musicDao().updateTopTracks(trackList);
+            }
+        });
+    }
 }

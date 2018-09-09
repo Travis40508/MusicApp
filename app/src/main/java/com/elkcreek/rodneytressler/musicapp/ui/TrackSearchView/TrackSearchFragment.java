@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.TracksAdapter;
 
 import java.util.List;
@@ -24,6 +25,11 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
+
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_MAIN_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_NAME_KEY;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_UID_KEY;
 
 public class TrackSearchFragment extends BaseFragment implements TrackSearchView{
 
@@ -89,5 +95,17 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
     @Override
     public void hideLoadingLayout() {
         loadingLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showPlayTracksFragment(String trackName, String trackUid, String artistName) {
+        Bundle bundle = new Bundle();
+        bundle.putString(TRACK_NAME_KEY, trackName);
+        bundle.putString(ARTIST_NAME_KEY, artistName);
+        bundle.putString(TRACK_UID_KEY, trackUid);
+        TrackMainFragment trackMainFragment = TrackMainFragment.newInstance();
+        trackMainFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_holder, trackMainFragment, TRACK_MAIN_TAG).addToBackStack(null).commit();
     }
 }

@@ -43,6 +43,9 @@ public interface MusicDao {
     @Query("SELECT * FROM TopChartTracks")
     Flowable<List<MusicApi.TopChartTracks>> getTopChartTracks();
 
+    @Query("UPDATE TopChartTracks SET trackList = :trackList")
+    void updateTopTracks(List<MusicApi.Track> trackList);
+
     @Query("SELECT * FROM Track WHERE trackUid LIKE :trackUid")
     Flowable<List<MusicApi.Track>> getTrack(String trackUid);
 

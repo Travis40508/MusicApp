@@ -50,4 +50,5 @@ public interface MusicDatabaseService {
     void updateTrackInfoWithSimilarArtists(List<MusicApi.Track> similarTrackList, String trackUid);
     void insertTopTracks(MusicApi.TopChartTracks topChartTracks);
     Observable<MusicApi.TopChartTracks> getTopChartTracks();
+    void updateTopTracksList(String artistName, String trackName, String trackUid, List<MusicApi.Track> trackList);
 }

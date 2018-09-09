@@ -18,6 +18,7 @@ public class TrackSearchPresenter implements BasePresenter<TrackSearchView> {
     private final RepositoryService repositoryService;
     private CompositeDisposable disposable;
     private TrackSearchView view;
+    private List<MusicApi.Track> trackList;
 
     @Inject
     public TrackSearchPresenter(RepositoryService repositoryService) {
@@ -41,6 +42,7 @@ public class TrackSearchPresenter implements BasePresenter<TrackSearchView> {
 
     private Consumer<List<MusicApi.Track>> updateUiWithTracks() {
         return trackList -> {
+            this.trackList = trackList;
             view.showTracks(trackList);
             view.hideLoadingLayout();
         };
@@ -53,6 +55,12 @@ public class TrackSearchPresenter implements BasePresenter<TrackSearchView> {
         };
     }
 
+    private Consumer<MusicApi.TrackInfo> updateUiWithTrack() {
+        return trackInfo -> {
+          view.showPlayTracksFragment(trackInfo.getTrackName(), trackInfo.getTrackUid(), trackInfo.getArtistInfo().getArtistName());
+        };
+    }
+
     @Override
     public void unsubscribe() {
         disposable.clear();
@@ -60,9 +68,9 @@ public class TrackSearchPresenter implements BasePresenter<TrackSearchView> {
 
     public void trackClicked(MusicApi.Track track) {
         if (track.getTrackUid() == null) {
-//            disposable.add(repositoryService.getTrackWithName(track.getTrackName(), track.getArtist().getArtistName(), albumTracks, albumUid).subscribe(updateUiWithTrack(), updateUiWithError()));
+            disposable.add(repositoryService.getTrackWithName(track, trackList).subscribe(updateUiWithTrack(), updateUiWithError()));
         } else {
-//            view.showPlayTracksFragment(track.getTrackName(), track.getTrackUid(), track.getArtist().getArtistName());
+            view.showPlayTracksFragment(track.getTrackName(), track.getTrackUid(), track.getArtist().getArtistName());
         }
     }
 }

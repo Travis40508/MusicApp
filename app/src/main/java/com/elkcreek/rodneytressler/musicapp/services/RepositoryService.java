@@ -32,7 +32,7 @@ public interface RepositoryService {
     Observable<List<MusicApi.Track>> getTopTracks();
     Observable<List<MusicApi.Track>> getTopTracksFromDatabase();
     Observable<List<MusicApi.Track>> getTopTracksFromNetwork();
-    Observable<MusicApi.TrackInfo> getTrackWithName(MusicApi.Track track);
+    Observable<MusicApi.TrackInfo> getTrackWithName(MusicApi.Track track, List<MusicApi.Track> trackList);
 
     //Track
     Observable<MusicApi.TrackInfo> getTrack(String trackUid);
