@@ -1,13 +1,9 @@
 package com.elkcreek.rodneytressler.musicapp.ui.MainView;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,10 +12,7 @@ import android.widget.FrameLayout;
 
 
 import com.elkcreek.rodneytressler.musicapp.R;
-import com.elkcreek.rodneytressler.musicapp.ui.SearchView.SearchFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.YoutubeView.YoutubeFragment;
-import com.elkcreek.rodneytressler.musicapp.utils.Constants;
+import com.elkcreek.rodneytressler.musicapp.ui.ArtistSearchView.ArtistSearchFragment;
 
 import javax.inject.Inject;
 
@@ -28,7 +21,6 @@ import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.SEARCH_FRAGMENT_TAG;
-import static com.elkcreek.rodneytressler.musicapp.utils.Constants.getYoutubeFragmentTag;
 
 public class MainActivity extends AppCompatActivity implements MainView {
 
@@ -52,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     public void attachSearchFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, SearchFragment.newInstance(), SEARCH_FRAGMENT_TAG).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, ArtistSearchFragment.newInstance(), SEARCH_FRAGMENT_TAG).commit();
     }
 
     @Override

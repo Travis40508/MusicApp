@@ -7,9 +7,9 @@ import com.elkcreek.rodneytressler.musicapp.ui.AlbumsView.AlbumsFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.AllTracksView.AllTracksFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.ArtistBioView.ArtistBioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.ArtistMainView.ArtistMainFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.ArtistSearchView.ArtistSearchFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackBioView.TrackBioFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.SearchView.SearchFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.YoutubeView.YoutubeFragment;
 
@@ -26,7 +26,7 @@ public abstract class ViewModule {
     abstract ArtistBioFragment contributesBioFragmentInjector();
 
     @ContributesAndroidInjector
-    abstract SearchFragment contributesSearchFragmentInjector();
+    abstract ArtistSearchFragment contributesSearchFragmentInjector();
 
     @ContributesAndroidInjector
     abstract AllTracksFragment contributesTracksFragmentInjector();

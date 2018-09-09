@@ -64,9 +64,9 @@ public class ArtistViewPagerAdapter extends FragmentPagerAdapter {
             case 0 :
                 return "Bio";
             case 1 :
-                return "Albums";
+                return "Top Albums";
             case 2 :
-                return "All Tracks";
+                return "Top Tracks";
                 default :
                     return null;
         }
