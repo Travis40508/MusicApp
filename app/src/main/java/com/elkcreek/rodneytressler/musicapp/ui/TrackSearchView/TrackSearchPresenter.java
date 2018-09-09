@@ -19,6 +19,8 @@ public class TrackSearchPresenter implements BasePresenter<TrackSearchView> {
     private CompositeDisposable disposable;
     private TrackSearchView view;
     private List<MusicApi.Track> trackList;
+    private boolean isSearching;
+    private Object searchText;
 
     @Inject
     public TrackSearchPresenter(RepositoryService repositoryService) {
@@ -69,10 +71,39 @@ public class TrackSearchPresenter implements BasePresenter<TrackSearchView> {
 
     public void trackClicked(MusicApi.Track track) {
         view.showParentLoadingLayout();
-        if(track.getTrackUid() == null || track.getTrackUid().isEmpty()) {
+        if (track.getTrackUid() == null || track.getTrackUid().isEmpty()) {
             view.showPlayTracksFragment(track.getTrackName(), track.getArtist().getArtistName(), track.getTrackUid());
         } else {
             disposable.add(repositoryService.getTrack(track.getTrackUid()).subscribe());
         }
+    }
+
+    public void trackSearchTextChanged(String searchedText, boolean adapterHasItems) {
+        this.isSearching = searchedText.length() > 0;
+        this.searchText = searchedText;
+        if (disposable == null) {
+            disposable = new CompositeDisposable();
+        }
+
+        if (!adapterHasItems) {
+            view.showProgressBar();
+        }
+
+        if (!searchedText.isEmpty()) {
+            view.showSearchTextValue(searchedText);
+            disposable.add(repositoryService.getSearchedTracksFromNetwork((searchedText))
+                    .subscribe(getSearchResponse(), updateUiWithError()));
+
+        } else {
+            view.showSearchTextTopArtists();
+            disposable.add(repositoryService.getTopTracks().subscribe(updateUiWithTracks(), updateUiWithError()));
+        }
+    }
+
+    private Consumer<List<MusicApi.Track>> getSearchResponse() {
+        return trackList -> {
+            view.hideLoadingLayout();
+            view.showTracks(trackList);
+        };
     }
 }

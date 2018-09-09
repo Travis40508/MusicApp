@@ -30,6 +30,9 @@ public interface MusicApi {
     @GET("/2.0?method=chart.gettoptracks&format=json&limit=24")
     Observable<TopChartTracksResponse> getTopChartTracks(@Query("api_key") String apiKey);
 
+    @GET("/2.0?method=track.search&format=json&limit=24")
+    Observable<TrackSearchResult> getSearchedTracks(@Query("track") String searchedTrack, @Query("api_key") String apiKey);
+
     @GET("/2.0?method=artist.gettoptracks&format=json")
     Observable<TopTracksResponse> getTopTracks(@Query("mbid") String mbid, @Query("api_key") String apiKey);
 
@@ -55,6 +58,24 @@ public interface MusicApi {
 
         public SearchResults getSearchResults() {
             return searchResults;
+        }
+    }
+
+    class TrackSearchResult {
+        @SerializedName("results")
+        @Expose private TrackSearchResults trackSearchResults;
+
+        public TrackSearchResults getTrackSearchResults() {
+            return trackSearchResults;
+        }
+    }
+
+    class TrackSearchResults {
+        @SerializedName("trackmatches")
+        @Expose private TracksResponse tracksResponse;
+
+        public TracksResponse getTracksResponse() {
+            return tracksResponse;
         }
     }
 
@@ -794,6 +815,19 @@ public interface MusicApi {
     }
 
     class TracksResponse {
+        @SerializedName("track")
+        @Expose private List<Track> trackList;
+
+        public List<Track> getTrackList() {
+            return trackList;
+        }
+
+        public void setTrackList(List<Track> trackList) {
+            this.trackList = trackList;
+        }
+    }
+
+    class SearchedTracksResponse {
         @SerializedName("track")
         @Expose private List<Track> trackList;
 

@@ -18,4 +18,5 @@ public interface MusicApiService {
     Observable<MusicApi.TrackInfoResponse> getTrackInfoWithName(String trackName, String artistName, String apiKey);
     Observable<List<MusicApi.Track>> getListOfSimilarTracks(String trackUid);
     Observable<MusicApi.TopChartTracks> getTopTracksList(String apiKey);
+    Observable<List<MusicApi.Track>> getSearchedTracks(String searchedTrack);
 }

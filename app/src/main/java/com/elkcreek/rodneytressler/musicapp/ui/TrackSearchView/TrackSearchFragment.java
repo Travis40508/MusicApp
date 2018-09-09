@@ -6,10 +6,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
@@ -24,6 +26,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
 import dagger.android.support.AndroidSupportInjection;
 
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
@@ -38,7 +41,14 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
     protected RecyclerView recyclerView;
     @BindView(R.id.loading_layout)
     protected FrameLayout loadingLayout;
+    @BindView(R.id.text_search_value)
+    protected TextView searchedText;
     private TopTracksAdapter adapter;
+
+    @OnTextChanged(value = R.id.input_track_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void onArtistSearchChange(Editable editable) {
+        presenter.trackSearchTextChanged(editable.toString(), adapter != null && adapter.getItemCount() > 0);
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -112,5 +122,20 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
     @Override
     public void showParentLoadingLayout() {
         showMainLoadingLayout();
+    }
+
+    @Override
+    public void showProgressBar() {
+        loadingLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showSearchTextValue(String searchedText) {
+        this.searchedText.setText(searchedText);
+    }
+
+    @Override
+    public void showSearchTextTopArtists() {
+        searchedText.setText("Today's Top Artists");
     }
 }

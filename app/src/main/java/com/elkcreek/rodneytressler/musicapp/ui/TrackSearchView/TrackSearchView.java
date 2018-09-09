@@ -13,4 +13,10 @@ public interface TrackSearchView extends BaseView {
     void showPlayTracksFragment(String trackName, String artistName, String trackUid);
 
     void showParentLoadingLayout();
+
+    void showProgressBar();
+
+    void showSearchTextValue(String searchedText);
+
+    void showSearchTextTopArtists();
 }

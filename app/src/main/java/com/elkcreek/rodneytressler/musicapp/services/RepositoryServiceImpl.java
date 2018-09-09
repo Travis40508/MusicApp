@@ -50,6 +50,13 @@ public class RepositoryServiceImpl implements RepositoryService {
                 .doOnNext(musicDatabaseService::insertTopTracks);
     }
 
+    @Override
+    public Observable<List<MusicApi.Track>> getSearchedTracksFromNetwork(String searchedTrack) {
+        return musicApiService.getSearchedTracks(searchedTrack)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 
     @Override
     public Observable<MusicApi.Artist> getArtistBio(String artistUid, String artistName) {
