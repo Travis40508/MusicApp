@@ -70,7 +70,7 @@ public class ArtistSearchPresenter implements BasePresenter<ArtistSearchView> {
 
     @Override
     public void subscribe() {
-        view.setActionBarTitle(Constants.ARTISTS_TITLE);
+        view.setActionBarTitle(Constants.SEARCH_TITLE);
         if (disposable == null) {
             view.showProgressBar();
         }

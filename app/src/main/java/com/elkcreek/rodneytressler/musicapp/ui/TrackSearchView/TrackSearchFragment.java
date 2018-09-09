@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.TopTracksAdapter;
-import com.elkcreek.rodneytressler.musicapp.utils.TracksAdapter;
 
 import java.util.List;
 
@@ -100,10 +98,11 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
     }
 
     @Override
-    public void showPlayTracksFragment(String trackName, String artistName) {
+    public void showPlayTracksFragment(String trackName, String artistName, String trackUid) {
         Bundle bundle = new Bundle();
         bundle.putString(TRACK_NAME_KEY, trackName);
         bundle.putString(ARTIST_NAME_KEY, artistName);
+        bundle.putString(TRACK_UID_KEY, trackUid);
         TrackMainFragment trackMainFragment = TrackMainFragment.newInstance();
         trackMainFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction()

@@ -46,7 +46,7 @@ public class Constants {
     public static final String NO_LYRICS_AVAILABLE = "Sorry, no lyrics available for this particular track! Please try again at a later time";
 
     //Action Bar Default Titles
-    public static final String ARTISTS_TITLE = "Artists";
+    public static final String SEARCH_TITLE = "Search";
 
     //String Values
     public static final String READ_MORE = "Read More";

@@ -55,6 +55,12 @@ public class TrackSearchPresenter implements BasePresenter<TrackSearchView> {
         };
     }
 
+    private Consumer<MusicApi.TrackInfo> updateUiWithTrack() {
+        return track -> {
+
+        };
+    }
+
 
     @Override
     public void unsubscribe() {
@@ -63,6 +69,10 @@ public class TrackSearchPresenter implements BasePresenter<TrackSearchView> {
 
     public void trackClicked(MusicApi.Track track) {
         view.showParentLoadingLayout();
-        view.showPlayTracksFragment(track.getTrackName(), track.getArtist().getArtistName());
+        if(track.getTrackUid() == null || track.getTrackUid().isEmpty()) {
+            view.showPlayTracksFragment(track.getTrackName(), track.getArtist().getArtistName(), track.getTrackUid());
+        } else {
+            disposable.add(repositoryService.getTrack(track.getTrackUid()).subscribe());
+        }
     }
 }
