@@ -50,16 +50,11 @@ public class TrackSearchPresenter implements BasePresenter<TrackSearchView> {
 
     private Consumer<Throwable> updateUiWithError() {
         return throwable -> {
-            Log.d("@@@@@", throwable.getMessage());
+            Log.d("@@@@-TrackSearchPres", throwable.getMessage());
             view.hideLoadingLayout();
         };
     }
 
-    private Consumer<MusicApi.TrackInfo> updateUiWithTrack() {
-        return trackInfo -> {
-          view.showPlayTracksFragment(trackInfo.getTrackName(), trackInfo.getTrackUid(), trackInfo.getArtistInfo().getArtistName());
-        };
-    }
 
     @Override
     public void unsubscribe() {
@@ -67,10 +62,7 @@ public class TrackSearchPresenter implements BasePresenter<TrackSearchView> {
     }
 
     public void trackClicked(MusicApi.Track track) {
-        if (track.getTrackUid() == null) {
-            disposable.add(repositoryService.getTrackWithName(track, trackList).subscribe(updateUiWithTrack(), updateUiWithError()));
-        } else {
-            view.showPlayTracksFragment(track.getTrackName(), track.getTrackUid(), track.getArtist().getArtistName());
-        }
+        view.showParentLoadingLayout();
+        view.showPlayTracksFragment(track.getTrackName(), track.getArtist().getArtistName());
     }
 }

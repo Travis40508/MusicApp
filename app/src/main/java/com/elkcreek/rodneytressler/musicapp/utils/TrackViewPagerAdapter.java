@@ -32,6 +32,8 @@ public class TrackViewPagerAdapter extends FragmentPagerAdapter {
             //Track Bio
             Bundle bundle = new Bundle();
             bundle.putString(TRACK_UID_KEY, trackUid);
+            bundle.putString(TRACK_NAME_KEY, trackName);
+            bundle.putString(ARTIST_NAME_KEY, artistName);
             TrackBioFragment trackBioFragment = TrackBioFragment.newInstance();
             trackBioFragment.setArguments(bundle);
             return trackBioFragment;

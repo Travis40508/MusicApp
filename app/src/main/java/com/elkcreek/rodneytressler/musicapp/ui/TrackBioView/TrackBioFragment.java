@@ -70,8 +70,9 @@ public class TrackBioFragment extends BaseFragment implements TrackBioView {
     @Override
     public void onResume() {
         super.onResume();
-        presenter.subscribe();
         presenter.trackRetrieved(getArguments().getString(TRACK_UID_KEY));
+        presenter.namesRetrieved(getArguments().getString(TRACK_NAME_KEY), getArguments().getString(ARTIST_NAME_KEY));
+        presenter.subscribe();
     }
 
     @Override

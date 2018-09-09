@@ -23,6 +23,8 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
     private static final String READ_MORE_TEXT_COLLAPSE = "Collapse";
     private static final String READ_MORE_TEXT_EXPAND = "Read More";
     private String trackUid;
+    private String trackName;
+    private String artistName;
 
     @Inject
     public TrackBioPresenter(RepositoryService repositoryService) {
@@ -37,6 +39,7 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
     @Override
     public void subscribe() {
         compositeDisposable = new CompositeDisposable();
+        fetchTrack();
     }
 
     @Override
@@ -46,11 +49,15 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
 
     public void trackRetrieved(String trackUid) {
         this.trackUid = trackUid;
-        fetchTrack();
     }
 
     private void fetchTrack() {
-        compositeDisposable.add(repositoryService.getTrack(trackUid).subscribe(updateUiWithTrack(), updateUiOnError()));
+        if(trackUid != null && !trackUid.isEmpty()) {
+            compositeDisposable.add(repositoryService.getTrack(trackUid).subscribe(updateUiWithTrack(), updateUiOnError()));
+        } else {
+            compositeDisposable.add(repositoryService.getTrackWithName(trackName, artistName).subscribe(updateUiWithTrack(), updateUiOnError()));
+        }
+        //TODO make this call with names for top tracks
         compositeDisposable.add(repositoryService.getSimilarTrackList(trackUid).subscribe(updateUiWithSimilarTracks(), updateUiWithSimilarTrackError()));
     }
 
@@ -72,7 +79,7 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
 
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
-            Log.d("@@@@", throwable.getMessage());
+            Log.d("@@@@-TrackBioPresenter", throwable.getMessage());
             view.showTrackSummary(Constants.NO_TRACK_BIO_AVAILABLE);
             view.setImageBackgroundColorWhite();
             view.showGenericTrackImage();
@@ -112,5 +119,10 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
         view.showParentLoadingLayout();
         view.setTitle(track.getArtist().getArtistName() + " - " + track.getTrackName());
         view.showSimilarArtistScreen(track.getTrackUid(), track.getTrackName(), track.getArtist().getArtistName());
+    }
+
+    public void namesRetrieved(String trackName, String artistName) {
+        this.trackName = trackName;
+        this.artistName = artistName;
     }
 }

@@ -151,11 +151,12 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
-    public Observable<MusicApi.TrackInfo> getTrackWithName(MusicApi.Track track, List<MusicApi.Track> trackList) {
-        return musicApiService.getTrackInfoWithName(track.getTrackName(), track.getArtist().getArtistName(), Constants.API_KEY)
+    public Observable<MusicApi.TrackInfo> getTrackWithName(String trackName, String artistName) {
+        return musicApiService.getTrackInfoWithName(trackName, artistName, Constants.API_KEY)
                 .subscribeOn(Schedulers.io())
                 .map(MusicApi.TrackInfoResponse::getTrackInfo)
-                .doOnNext(trackInfo -> musicDatabaseService.updateTopTracksList(trackInfo.getArtistInfo().getArtistName(), trackInfo.getTrackName(), trackInfo.getTrackUid(), trackList));
+                .observeOn(AndroidSchedulers.mainThread());
+//                .doOnNext(trackInfo -> musicDatabaseService.updateTopTracksList(trackInfo.getArtistInfo().getArtistName(), trackInfo.getTrackName(), trackInfo.getTrackUid(), trackList));
     }
 
     //TODO make sure that wiki is what we should be null-checking here
