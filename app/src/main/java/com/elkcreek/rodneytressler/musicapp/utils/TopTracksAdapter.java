@@ -74,6 +74,7 @@ public class TopTracksAdapter extends RecyclerView.Adapter<TopTracksAdapter.TopT
         public void bindTrack(MusicApi.Track track) {
             glide.asBitmap()
                     .load(track.getArtistImage().get(2).getImageUrl())
+                    .apply(RequestOptions.circleCropTransform())
                     .apply(RequestOptions.overrideOf(250, 300))
                     .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
                     .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
