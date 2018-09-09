@@ -47,6 +47,7 @@ public class Constants {
 
     //Action Bar Default Titles
     public static final String SEARCH_TITLE = "Search";
+    public static final String EMPTY_TEXT = "";
 
     //String Values
     public static final String READ_MORE = "Read More";

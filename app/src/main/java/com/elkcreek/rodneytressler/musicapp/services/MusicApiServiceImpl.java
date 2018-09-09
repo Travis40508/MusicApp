@@ -90,11 +90,11 @@ public class MusicApiServiceImpl implements MusicApiService {
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getSearchedTracks(String searchedTrack) {
+    public Observable<List<MusicApi.SearchedTrack>> getSearchedTracks(String searchedTrack) {
         return musicApi.getSearchedTracks(searchedTrack, Constants.API_KEY)
                 .subscribeOn(Schedulers.io())
                 .map(MusicApi.TrackSearchResult::getTrackSearchResults)
-                .map(MusicApi.TrackSearchResults::getTracksResponse)
-                .map(MusicApi.TracksResponse::getTrackList);
+                .map(MusicApi.TrackSearchResults::getSearchedTracksResponse)
+                .map(MusicApi.SearchedTracksResponse::getTrackList);
     }
 }

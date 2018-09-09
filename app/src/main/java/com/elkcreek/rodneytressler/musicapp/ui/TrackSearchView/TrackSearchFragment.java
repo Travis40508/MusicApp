@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -18,6 +19,8 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
+import com.elkcreek.rodneytressler.musicapp.utils.Constants;
+import com.elkcreek.rodneytressler.musicapp.utils.SearchedTracksAdapter;
 import com.elkcreek.rodneytressler.musicapp.utils.TopTracksAdapter;
 
 import java.util.List;
@@ -43,7 +46,10 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
     protected FrameLayout loadingLayout;
     @BindView(R.id.text_search_value)
     protected TextView searchedText;
+    @BindView(R.id.input_track_search)
+    protected EditText searchInput;
     private TopTracksAdapter adapter;
+    private SearchedTracksAdapter searchAdapter;
 
     @OnTextChanged(value = R.id.input_track_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void onArtistSearchChange(Editable editable) {
@@ -137,5 +143,25 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
     @Override
     public void showSearchTextTopArtists() {
         searchedText.setText("Today's Top Artists");
+    }
+
+    @Override
+    public void showSearchedTracks(List<MusicApi.SearchedTrack> trackList) {
+        searchAdapter = new SearchedTracksAdapter(trackList, Glide.with(this));
+        searchAdapter.setSearchedCallback(new SearchedTracksAdapter.SearchedTrackCallback() {
+            @Override
+            public void onSearchedTrackClicked(MusicApi.SearchedTrack track) {
+                presenter.searchedTrackClicked(track);
+            }
+        });
+
+        recyclerView.setAdapter(searchAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void clearSearch() {
+        searchInput.setText(Constants.EMPTY_TEXT);
     }
 }

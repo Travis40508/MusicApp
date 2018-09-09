@@ -51,7 +51,7 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getSearchedTracksFromNetwork(String searchedTrack) {
+    public Observable<List<MusicApi.SearchedTrack>> getSearchedTracksFromNetwork(String searchedTrack) {
         return musicApiService.getSearchedTracks(searchedTrack)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

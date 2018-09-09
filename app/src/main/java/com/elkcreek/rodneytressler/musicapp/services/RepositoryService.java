@@ -13,7 +13,7 @@ public interface RepositoryService {
     Observable<List<MusicApi.Track>> getArtistTopTracks(String artistUid);
     Observable<List<MusicApi.Track>> getArtistTopTracksFromDatabase(String artistUid);
     Observable<List<MusicApi.Track>> getArtistTracksFromNetwork(String artistUid);
-    Observable<List<MusicApi.Track>> getSearchedTracksFromNetwork(String searchedTrack);
+    Observable<List<MusicApi.SearchedTrack>> getSearchedTracksFromNetwork(String searchedTrack);
 
     //Bio
     Observable<MusicApi.Artist> getArtistBio(String artistUid, String artistName);

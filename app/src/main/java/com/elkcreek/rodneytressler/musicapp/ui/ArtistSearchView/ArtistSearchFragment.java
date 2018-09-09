@@ -21,6 +21,7 @@ import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.ArtistMainView.ArtistMainFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.ArtistAdapter;
+import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,6 +151,11 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     @Override
     public void setActionBarTitle(String artistsTitle) {
         getActivity().setTitle(artistsTitle);
+    }
+
+    @Override
+    public void clearSearchText() {
+        artistInput.setText(Constants.EMPTY_TEXT);
     }
 
     @Override

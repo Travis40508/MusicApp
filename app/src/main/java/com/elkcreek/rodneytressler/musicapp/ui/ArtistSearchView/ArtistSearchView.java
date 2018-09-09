@@ -25,4 +25,6 @@ public interface ArtistSearchView extends BaseView {
     void clearList();
 
     void setActionBarTitle(String artistsTitle);
+
+    void clearSearchText();
 }

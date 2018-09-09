@@ -72,10 +72,10 @@ public interface MusicApi {
 
     class TrackSearchResults {
         @SerializedName("trackmatches")
-        @Expose private TracksResponse tracksResponse;
+        @Expose private SearchedTracksResponse searchedTracksResponse;
 
-        public TracksResponse getTracksResponse() {
-            return tracksResponse;
+        public SearchedTracksResponse getSearchedTracksResponse() {
+            return searchedTracksResponse;
         }
     }
 
@@ -829,14 +829,80 @@ public interface MusicApi {
 
     class SearchedTracksResponse {
         @SerializedName("track")
-        @Expose private List<Track> trackList;
+        @Expose private List<SearchedTrack> trackList;
 
-        public List<Track> getTrackList() {
+        public List<SearchedTrack> getTrackList() {
             return trackList;
         }
+    }
 
-        public void setTrackList(List<Track> trackList) {
-            this.trackList = trackList;
+    class SearchedTrack {
+        @SerializedName("name")
+        @Expose
+        private String trackName;
+
+        @SerializedName("url")
+        @Expose
+        private String trackUrl;
+
+        @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
+        @SerializedName("image")
+        @Expose
+        private List<ArtistImage> artistImage;
+
+        @SerializedName("artist")
+        @Expose private String artist;
+
+        @Embedded(prefix = "album")
+        @SerializedName("album")
+        @Expose private Album album;
+
+        @Embedded(prefix = "wiki")
+        @SerializedName("wiki")
+        @Expose private Wiki wiki;
+
+        @SerializedName("mbid")
+        @Expose private String trackUid;
+
+        @PrimaryKey(autoGenerate = true)
+        private int primaryKey;
+
+        private String youtubeId;
+
+        public String getTrackName() {
+            return trackName;
+        }
+
+        public String getTrackUrl() {
+            return trackUrl;
+        }
+
+        public List<ArtistImage> getArtistImage() {
+            return artistImage;
+        }
+
+        public String getArtist() {
+            return artist;
+        }
+
+        public Album getAlbum() {
+            return album;
+        }
+
+        public Wiki getWiki() {
+            return wiki;
+        }
+
+        public String getTrackUid() {
+            return trackUid;
+        }
+
+        public int getPrimaryKey() {
+            return primaryKey;
+        }
+
+        public String getYoutubeId() {
+            return youtubeId;
         }
     }
 

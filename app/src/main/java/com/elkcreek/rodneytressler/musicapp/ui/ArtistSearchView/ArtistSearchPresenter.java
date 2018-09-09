@@ -120,6 +120,7 @@ public class ArtistSearchPresenter implements BasePresenter<ArtistSearchView> {
     }
 
     public void onArtistClicked(MusicApi.Artist artist) {
+        view.clearSearchText();
         view.showMainProgressBar();
         view.showMainArtistScreen(artist);
     }
