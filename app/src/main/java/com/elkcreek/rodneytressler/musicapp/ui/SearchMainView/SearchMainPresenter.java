@@ -21,11 +21,19 @@ public class SearchMainPresenter implements BasePresenter<SearchMainView> {
 
     @Override
     public void subscribe() {
-
+        view.showScreens();
     }
 
     @Override
     public void unsubscribe() {
 
+    }
+
+    public void checkSavedInstanceState(boolean savedInstanceStateIsNull, boolean fragmentIsNull) {
+        if(!savedInstanceStateIsNull) {
+            if(!fragmentIsNull) {
+                view.reAttachFragment();
+            }
+        }
     }
 }

@@ -16,7 +16,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
-public class TrackSearchFragment extends BaseFragment {
+public class TrackSearchFragment extends BaseFragment implements TrackSearchView{
 
     @Inject protected TrackSearchPresenter presenter;
 
@@ -43,6 +43,17 @@ public class TrackSearchFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_track_search, container, false);
         ButterKnife.bind(this, view);
+        presenter.attachView(this);
+
         return view;
+    }
+
+    public static TrackSearchFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        TrackSearchFragment fragment = new TrackSearchFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 }

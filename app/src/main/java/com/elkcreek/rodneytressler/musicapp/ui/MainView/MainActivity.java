@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.ui.ArtistSearchView.ArtistSearchFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.SearchMainView.SearchMainFragment;
 
 import javax.inject.Inject;
 
@@ -21,6 +22,7 @@ import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.SEARCH_FRAGMENT_TAG;
+import static com.elkcreek.rodneytressler.musicapp.utils.Constants.SEARCH_MAIN_TAG;
 
 public class MainActivity extends AppCompatActivity implements MainView {
 
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     public void attachSearchFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, ArtistSearchFragment.newInstance(), SEARCH_FRAGMENT_TAG).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, SearchMainFragment.newInstance(), SEARCH_MAIN_TAG).commit();
     }
 
     @Override
