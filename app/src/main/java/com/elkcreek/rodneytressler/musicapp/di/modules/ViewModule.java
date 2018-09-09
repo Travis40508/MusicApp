@@ -9,8 +9,10 @@ import com.elkcreek.rodneytressler.musicapp.ui.ArtistBioView.ArtistBioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.ArtistMainView.ArtistMainFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.ArtistSearchView.ArtistSearchFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity;
+import com.elkcreek.rodneytressler.musicapp.ui.SearchMainView.SearchMainFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackBioView.TrackBioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.TrackSearchView.TrackSearchFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.YoutubeView.YoutubeFragment;
 
 import dagger.Module;
@@ -54,4 +56,10 @@ public abstract class ViewModule {
 
     @ContributesAndroidInjector
     abstract TrackMainFragment contributesTrackMainFragmentInjector();
+
+    @ContributesAndroidInjector
+    abstract TrackSearchFragment contributesTrackSearchFragmentInjector();
+
+    @ContributesAndroidInjector
+    abstract SearchMainFragment contributesSearchMainFragmentInjector();
 }

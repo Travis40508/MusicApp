@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -19,12 +18,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
-import com.elkcreek.rodneytressler.musicapp.ui.AlbumsView.AlbumsFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.AllTracksView.AllTracksFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.ArtistBioView.ArtistBioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.ArtistMainView.ArtistMainFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.MainView.MainActivity;
 import com.elkcreek.rodneytressler.musicapp.utils.ArtistAdapter;
 
 import java.util.ArrayList;
@@ -37,11 +32,9 @@ import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
 import dagger.android.support.AndroidSupportInjection;
 
-import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUMS_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_MAIN_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
-import static com.elkcreek.rodneytressler.musicapp.utils.Constants.BIO_FRAGMENT_TAG;
 
 public class SearchFragment extends BaseFragment implements SearchView {
 
@@ -83,7 +76,7 @@ public class SearchFragment extends BaseFragment implements SearchView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_artist_search, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
         adapter = new ArtistAdapter(Glide.with(this), new ArrayList<>());

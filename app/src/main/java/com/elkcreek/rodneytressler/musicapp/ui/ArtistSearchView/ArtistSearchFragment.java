@@ -76,7 +76,7 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_artist_search, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
         adapter = new ArtistAdapter(Glide.with(this), new ArrayList<>());
