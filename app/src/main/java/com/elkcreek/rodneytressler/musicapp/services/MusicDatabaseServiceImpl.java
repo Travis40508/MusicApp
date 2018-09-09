@@ -339,4 +339,22 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
             }
         });
     }
+
+    @Override
+    public void insertTopTracks(MusicApi.TopChartTracks topChartTracks) {
+        Schedulers.io().scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                database.musicDao().insertTopTracks(topChartTracks);
+            }
+        });
+    }
+
+    @Override
+    public Observable<MusicApi.TopChartTracks> getTopChartTracks() {
+        return database.musicDao().getTopChartTracks()
+                .subscribeOn(Schedulers.io())
+                .map(topChartTracks -> topChartTracks.get(0))
+                .toObservable();
+    }
 }

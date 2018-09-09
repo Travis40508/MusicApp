@@ -126,6 +126,35 @@ public class RepositoryServiceImpl implements RepositoryService {
         musicDatabaseService.deleteTopArtists();
     }
 
+    @Override
+    public Observable<List<MusicApi.Track>> getTopTracks() {
+        return getTopTracksFromDatabase()
+                .flatMap(trackList -> trackList.get(0) == null ? Observable.error(Throwable::new) : Observable.just(trackList))
+                .onErrorResumeNext(Observable.empty())
+                .switchIfEmpty(getTopTracksFromNetwork())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<List<MusicApi.Track>> getTopTracksFromDatabase() {
+        return musicDatabaseService.getTopChartTracks()
+                .subscribeOn(Schedulers.io())
+                .map(MusicApi.TopChartTracks::getTrackList);
+    }
+
+    @Override
+    public Observable<List<MusicApi.Track>> getTopTracksFromNetwork() {
+        return musicApiService.getTopTracksList(Constants.API_KEY)
+                .subscribeOn(Schedulers.io())
+                .doOnNext(musicDatabaseService::insertTopTracks)
+                .map(MusicApi.TopChartTracks::getTrackList);
+    }
+
+    @Override
+    public Observable<MusicApi.TrackInfo> getTrackWithName(MusicApi.Track track) {
+        return null;
+    }
+
     //TODO make sure that wiki is what we should be null-checking here
     @Override
     public Observable<MusicApi.TrackInfo> getTrack(String trackUid) {

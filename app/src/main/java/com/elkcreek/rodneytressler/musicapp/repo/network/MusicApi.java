@@ -27,6 +27,9 @@ public interface MusicApi {
     @GET("/2.0?method=chart.gettopartists&format=json&limit=24")
     Observable<TopArtistsResponse> getTopArtists(@Query("api_key") String apiKey);
 
+    @GET("/2.0?method=chart.gettoptracks&format=json&limit=24")
+    Observable<TopChartTracksResponse> getTopChartTracks(@Query("api_key") String apiKey);
+
     @GET("/2.0?method=artist.gettoptracks&format=json")
     Observable<TopTracksResponse> getTopTracks(@Query("mbid") String mbid, @Query("api_key") String apiKey);
 
@@ -52,6 +55,19 @@ public interface MusicApi {
 
         public SearchResults getSearchResults() {
             return searchResults;
+        }
+    }
+
+    class TopChartTracksResponse {
+        @SerializedName("tracks")
+        @Expose private TopChartTracks topChartTracks;
+
+        public TopChartTracks getTopChartTracks() {
+            return topChartTracks;
+        }
+
+        public void setTopChartTracks(TopChartTracks topChartTracks) {
+            this.topChartTracks = topChartTracks;
         }
     }
 
@@ -787,6 +803,33 @@ public interface MusicApi {
 
         public void setTrackList(List<Track> trackList) {
             this.trackList = trackList;
+        }
+    }
+
+    @Entity
+    class TopChartTracks {
+
+        @PrimaryKey(autoGenerate = true)
+        private int primaryKey;
+
+        @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
+        @SerializedName("track")
+        @Expose private List<Track> trackList;
+
+        public List<Track> getTrackList() {
+            return trackList;
+        }
+
+        public void setTrackList(List<Track> trackList) {
+            this.trackList = trackList;
+        }
+
+        public int getPrimaryKey() {
+            return primaryKey;
+        }
+
+        public void setPrimaryKey(int primaryKey) {
+            this.primaryKey = primaryKey;
         }
     }
 

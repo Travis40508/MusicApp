@@ -11,6 +11,8 @@ import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 
@@ -34,6 +36,12 @@ public interface MusicDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTopArtists(MusicApi.TopArtists topArtists);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertTopTracks(MusicApi.TopChartTracks topChartTracks);
+
+    @Query("SELECT * FROM TopChartTracks")
+    Flowable<List<MusicApi.TopChartTracks>> getTopChartTracks();
 
     @Query("SELECT * FROM Track WHERE trackUid LIKE :trackUid")
     Flowable<List<MusicApi.Track>> getTrack(String trackUid);

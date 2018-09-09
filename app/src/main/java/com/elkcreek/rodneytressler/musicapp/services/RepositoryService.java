@@ -28,6 +28,12 @@ public interface RepositoryService {
     Observable<List<MusicApi.Artist>> getTopArtistsFromNetwork();
     void deleteTopArtists();
 
+    //TopTracks
+    Observable<List<MusicApi.Track>> getTopTracks();
+    Observable<List<MusicApi.Track>> getTopTracksFromDatabase();
+    Observable<List<MusicApi.Track>> getTopTracksFromNetwork();
+    Observable<MusicApi.TrackInfo> getTrackWithName(MusicApi.Track track);
+
     //Track
     Observable<MusicApi.TrackInfo> getTrack(String trackUid);
     Observable<MusicApi.TrackInfo> getTrackFromNetwork(String trackUid);

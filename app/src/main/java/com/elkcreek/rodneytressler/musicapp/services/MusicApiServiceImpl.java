@@ -81,4 +81,11 @@ public class MusicApiServiceImpl implements MusicApiService {
                 .map(MusicApi.SimilarTrackResponse::getSimilarTracks)
                 .map(MusicApi.SimilarTracks::getSimilarTrackList);
     }
+
+    @Override
+    public Observable<MusicApi.TopChartTracks> getTopTracksList(String apiKey) {
+        return musicApi.getTopChartTracks(Constants.API_KEY)
+                .subscribeOn(Schedulers.io())
+                .map(MusicApi.TopChartTracksResponse::getTopChartTracks);
+    }
 }
