@@ -31,12 +31,16 @@ public class MainPresenter implements BasePresenter<MainView> {
 
     }
 
-    public void backPressed(int backStackEntryCount) {
-        if(backStackEntryCount > 0) {
-            view.detachImmediateFragment();
-            view.hideMainLoadingLayout();
+    public void backPressed(int backStackEntryCount, boolean toolBarIsGone) {
+        if(!toolBarIsGone) {
+            if (backStackEntryCount > 0) {
+                view.detachImmediateFragment();
+                view.hideMainLoadingLayout();
+            } else {
+                view.closeApp();
+            }
         } else {
-            view.closeApp();
+            view.setOrientationToPortait();
         }
     }
 

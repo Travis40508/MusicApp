@@ -12,4 +12,6 @@ public interface MainView extends BaseView {
     void returnHome();
 
     void hideMainLoadingLayout();
+
+    void setOrientationToPortait();
 }

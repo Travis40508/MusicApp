@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -138,7 +139,7 @@ public class YoutubeFragment extends Fragment implements YoutubeView{
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
                 YoutubeFragment.this.youTubePlayer = youTubePlayer;
-                presenter.configurationChanged(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE, getUserVisibleHint());
+                presenter.configurationChanged( getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE, getUserVisibleHint());
                 presenter.youTubePlayerInitializeSuccess(wasRestored);
             }
 
@@ -188,12 +189,14 @@ public class YoutubeFragment extends Fragment implements YoutubeView{
 
     @Override
     public void enterFullScreenMode() {
-        youTubePlayer.setFullscreen(true);
+        getActivity().findViewById(R.id.my_toolbar).setVisibility(View.GONE);
+        getParentFragment().getView().findViewById(R.id.tab_layout_track_main).setVisibility(View.GONE);
     }
 
     @Override
     public void exitFullScreenMode() {
-        youTubePlayer.setFullscreen(false);
+        getActivity().findViewById(R.id.my_toolbar).setVisibility(View.VISIBLE);
+        getParentFragment().getView().findViewById(R.id.tab_layout_track_main).setVisibility(View.VISIBLE);
     }
 
 
