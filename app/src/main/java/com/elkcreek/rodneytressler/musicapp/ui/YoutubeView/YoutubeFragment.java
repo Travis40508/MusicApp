@@ -1,6 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.ui.YoutubeView;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,7 +32,7 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_UID_KEY
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.YOUTUBE_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.YOUTUBE_VIDEO_TAG;
 
-public class YoutubeFragment extends Fragment implements YoutubeView {
+public class YoutubeFragment extends Fragment implements YoutubeView{
 
     @Inject protected YoutubePresenter presenter;
     private YoutubeFragment youtubeFragment;
@@ -195,6 +196,7 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
         youTubePlayer.setFullscreen(false);
     }
 
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -206,4 +208,5 @@ public class YoutubeFragment extends Fragment implements YoutubeView {
         presenter.onDestroy(youTubePlayerSupportFragment == null);
         super.onDestroy();
     }
+    
 }

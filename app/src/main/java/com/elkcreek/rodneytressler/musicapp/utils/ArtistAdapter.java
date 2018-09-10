@@ -90,6 +90,7 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         public void bindArtist(MusicApi.Artist artist) {
             glide.asBitmap()
                     .load(artist.getArtistImages().get(2).getImageUrl())
+                    .apply(RequestOptions.circleCropTransform())
                     .apply(RequestOptions.overrideOf(250, 300))
                     .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
                     .apply(RequestOptions.formatOf(PREFER_ARGB_8888))

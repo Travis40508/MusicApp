@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="80dp"
     android:layout_margin="10dp"
     android:background="#111111"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -11,16 +11,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="180dp" />
+        android:layout_margin="5dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp" />
 
     <TextView
         android:maxLines="2"
         android:gravity="center"
         android:id="@+id/text_artist_name"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image_artist_item"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_artist_item"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:textSize="16sp"
         android:layout_marginTop="10dp"
         android:textColor="@android:color/white"
