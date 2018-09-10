@@ -208,5 +208,5 @@ public class YoutubeFragment extends Fragment implements YoutubeView{
         presenter.onDestroy(youTubePlayerSupportFragment == null);
         super.onDestroy();
     }
-    
+
 }

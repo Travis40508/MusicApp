@@ -165,4 +165,9 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
     public void clearSearch() {
         searchInput.setText(Constants.EMPTY_TEXT);
     }
+
+    @Override
+    public void showSearchTextTopTracks(String topTrackText) {
+        searchedText.setText(topTrackText);
+    }
 }

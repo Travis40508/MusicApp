@@ -5,6 +5,7 @@ import android.util.Log;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
+import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 import java.util.List;
 
@@ -90,12 +91,12 @@ public class TrackSearchPresenter implements BasePresenter<TrackSearchView> {
         }
 
         if (!searchedText.isEmpty()) {
-            view.showSearchTextValue(searchedText);
+            view.showSearchTextValue("Showing Results For '" + searchedText + "'");
             disposable.add(repositoryService.getSearchedTracksFromNetwork((searchedText))
                     .subscribe(getSearchResponse(), updateUiWithError()));
 
         } else {
-            view.showSearchTextTopArtists();
+            view.showSearchTextTopTracks(Constants.TOP_TRACKS);
             disposable.add(repositoryService.getTopTracks().subscribe(updateUiWithTracks(), updateUiWithError()));
         }
     }

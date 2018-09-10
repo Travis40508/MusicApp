@@ -23,4 +23,6 @@ public interface TrackSearchView extends BaseView {
     void showSearchedTracks(List<MusicApi.SearchedTrack> trackList);
 
     void clearSearch();
+
+    void showSearchTextTopTracks(String topTracks);
 }

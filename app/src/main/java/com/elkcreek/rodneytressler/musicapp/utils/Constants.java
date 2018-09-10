@@ -67,6 +67,7 @@ public class Constants {
     //No Track Bio Image
     //No Youtube Video
     public static final String NO_LYRICS = "No lyrics found";
+    public static final String TOP_TRACKS = "Today\'s Top Tracks";
 
     public static String getYoutubeFragmentTag(int viewPagerId) {
         return "android:switcher:" + viewPagerId + ":" + 1;
