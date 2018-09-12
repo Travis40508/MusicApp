@@ -2,6 +2,7 @@ package com.elkcreek.rodneytressler.musicapp.ui.TrackSearchView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -73,6 +74,7 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
     public void onPause() {
         super.onPause();
         presenter.unsubscribe();
+        presenter.storeRecyclerViewPosition(recyclerView.getLayoutManager().onSaveInstanceState());
     }
 
     @Nullable
@@ -95,6 +97,18 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        presenter.saveState(outState, recyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter.getState(savedInstanceState);
+    }
+
+    @Override
     public void showTracks(List<MusicApi.Track> trackList) {
         adapter = new TopTracksAdapter(Glide.with(this), trackList);
 
@@ -107,6 +121,7 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter.notifyDataSetChanged();
+        presenter.listLoaded();
     }
 
     @Override
@@ -169,5 +184,10 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
     @Override
     public void showSearchTextTopTracks(String topTrackText) {
         searchedText.setText(topTrackText);
+    }
+
+    @Override
+    public void setRecyclerViewPosition(Parcelable recyclerViewPosition) {
+        recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewPosition);
     }
 }

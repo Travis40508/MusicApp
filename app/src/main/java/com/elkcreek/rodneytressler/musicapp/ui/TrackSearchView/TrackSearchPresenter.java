@@ -1,5 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.ui.TrackSearchView;
 
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
@@ -22,6 +24,8 @@ public class TrackSearchPresenter implements BasePresenter<TrackSearchView> {
     private List<MusicApi.Track> trackList;
     private boolean isSearching;
     private Object searchText;
+    private static final String STATE_RECYCLER_VIEW_POSITION = "state_recycler_view_position";
+    private Parcelable recyclerViewPosition;
 
     @Inject
     public TrackSearchPresenter(RepositoryService repositoryService) {
@@ -122,5 +126,23 @@ public class TrackSearchPresenter implements BasePresenter<TrackSearchView> {
         return throwable -> {
           Log.d("@@@@-TrackSearchPres", throwable.getMessage());
         };
+    }
+
+    public void storeRecyclerViewPosition(Parcelable parcelable) {
+        this.recyclerViewPosition = parcelable;
+    }
+
+    public void saveState(Bundle outState, Parcelable parcelable) {
+        outState.putParcelable(STATE_RECYCLER_VIEW_POSITION, parcelable);
+    }
+
+    public void getState(Bundle savedInstanceState) {
+        if(savedInstanceState != null) {
+            recyclerViewPosition = savedInstanceState.getParcelable(STATE_RECYCLER_VIEW_POSITION);
+        }
+    }
+
+    public void listLoaded() {
+        view.setRecyclerViewPosition(recyclerViewPosition);
     }
 }

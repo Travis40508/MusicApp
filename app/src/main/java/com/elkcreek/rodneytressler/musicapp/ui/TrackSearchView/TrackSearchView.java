@@ -1,5 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.ui.TrackSearchView;
 
+import android.os.Parcelable;
+
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.utils.BaseView;
 
@@ -25,4 +27,6 @@ public interface TrackSearchView extends BaseView {
     void clearSearch();
 
     void showSearchTextTopTracks(String topTracks);
+
+    void setRecyclerViewPosition(Parcelable recyclerViewPosition);
 }
