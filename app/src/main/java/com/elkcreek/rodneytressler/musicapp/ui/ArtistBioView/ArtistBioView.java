@@ -27,4 +27,6 @@ public interface ArtistBioView extends BaseView {
     void showNoSimilarArtistText();
 
     void setImageBackgroundWhite();
+
+    void setScrollViewPosition(int scrollYPosition);
 }

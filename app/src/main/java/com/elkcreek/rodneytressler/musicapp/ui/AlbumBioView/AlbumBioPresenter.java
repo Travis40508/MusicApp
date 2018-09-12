@@ -1,5 +1,6 @@
 package com.elkcreek.rodneytressler.musicapp.ui.AlbumBioView;
 
+import android.os.Bundle;
 import android.util.Log;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
@@ -19,6 +20,8 @@ public class AlbumBioPresenter implements BasePresenter<AlbumBioView> {
     private AlbumBioView view;
     private String albumUid;
     private boolean isExpanded;
+    private static final String STATE_SCROLL_VIEW_POSITION = "state_scroll_view_position";
+    private int scrollPosition;
 
     @Inject
     public AlbumBioPresenter(RepositoryService repositoryService) {
@@ -85,5 +88,23 @@ public class AlbumBioPresenter implements BasePresenter<AlbumBioView> {
             view.setReadMoreText(Constants.READ_MORE);
         }
         fetchAlbumInfo();
+    }
+
+    public void storeScrollViewPosition(int scrollY) {
+        this.scrollPosition = scrollY;
+    }
+
+    public void saveState(Bundle outState, int scrollY) {
+        outState.putInt(STATE_SCROLL_VIEW_POSITION, scrollY);
+    }
+
+    public void getState(Bundle savedInstanceState) {
+        if(savedInstanceState != null) {
+            scrollPosition = savedInstanceState.getInt(STATE_SCROLL_VIEW_POSITION);
+        }
+    }
+
+    public void bioLoaded() {
+        view.setScrollViewState(scrollPosition);
     }
 }

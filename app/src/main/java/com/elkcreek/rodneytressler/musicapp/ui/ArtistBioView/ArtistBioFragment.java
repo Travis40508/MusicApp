@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,6 +56,8 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
     protected RecyclerView similarArtistRecyclerView;
     @BindView(R.id.text_similar_artists)
     protected TextView similarArtistText;
+    @BindView(R.id.bio_scroll_view)
+    protected NestedScrollView scrollView;
     private SimilarArtistAdapter adapter;
 
     @OnClick(R.id.read_more_layout)
@@ -80,6 +83,7 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
     public void onPause() {
         super.onPause();
         presenter.unsubscribe();
+        presenter.storeScrollViewState(scrollView.getScrollY());
     }
 
     @Nullable
@@ -89,6 +93,18 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
         ButterKnife.bind(this, view);
         presenter.attachView(this);
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        presenter.saveState(outState, scrollView.getScrollY());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter.getState(savedInstanceState);
     }
 
     public static ArtistBioFragment newInstance() {
@@ -115,6 +131,7 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
     @Override
     public void showArtistBio(String artistBio) {
         artistBioText.setText(artistBio);
+        presenter.bioShown();
     }
 
     @Override
@@ -182,5 +199,15 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
     @Override
     public void setImageBackgroundWhite() {
         artistBioImage.setBackgroundColor(Color.WHITE);
+    }
+
+    @Override
+    public void setScrollViewPosition(int scrollYPosition) {
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.setScrollY(scrollYPosition);
+            }
+        });
     }
 }

@@ -30,4 +30,6 @@ public interface TrackBioView extends BaseView {
     void setImageBackgroundColorWhite();
 
     void showNoSimilarTracksText(String noSimilarTracks);
+
+    void setScrollPosition(int scrollPosition);
 }

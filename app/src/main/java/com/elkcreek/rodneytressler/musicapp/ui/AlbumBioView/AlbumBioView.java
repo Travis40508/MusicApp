@@ -14,4 +14,6 @@ public interface AlbumBioView extends BaseView {
     void showGenericAlbumImage();
 
     void setImageBackgroundWhite();
+
+    void setScrollViewState(int scrollPosition);
 }

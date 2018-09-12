@@ -1,5 +1,6 @@
 package com.elkcreek.rodneytressler.musicapp.ui.TrackBioView;
 
+import android.os.Bundle;
 import android.util.Log;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
@@ -25,6 +26,8 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
     private String trackUid;
     private String trackName;
     private String artistName;
+    private static final String STATE_SCROLL_VIEW_POSITION = "state_scroll_view_position";
+    private int scrollPosition;
 
     @Inject
     public TrackBioPresenter(RepositoryService repositoryService) {
@@ -125,5 +128,23 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
     public void namesRetrieved(String trackName, String artistName) {
         this.trackName = trackName;
         this.artistName = artistName;
+    }
+
+    public void storeScrollViewPosition(int scrollY) {
+        scrollPosition = scrollY;
+    }
+
+    public void saveState(Bundle outState, int scrollY) {
+        outState.putInt(STATE_SCROLL_VIEW_POSITION, scrollY);
+    }
+
+    public void getState(Bundle savedInstanceState) {
+        if(savedInstanceState != null) {
+            scrollPosition = savedInstanceState.getInt(STATE_SCROLL_VIEW_POSITION);
+        }
+    }
+
+    public void bioLoaded() {
+        view.setScrollPosition(scrollPosition);
     }
 }

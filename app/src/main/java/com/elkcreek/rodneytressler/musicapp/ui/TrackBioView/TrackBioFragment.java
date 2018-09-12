@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -56,6 +57,8 @@ public class TrackBioFragment extends BaseFragment implements TrackBioView {
     protected RecyclerView recyclerView;
     @BindView(R.id.text_similar_tracks)
     protected TextView similarTracksText;
+    @BindView(R.id.track_scroll_view)
+    protected NestedScrollView scrollView;
     private SimilarTracksAdapter adapter;
 
     @OnClick(R.id.read_more_layout)
@@ -79,6 +82,7 @@ public class TrackBioFragment extends BaseFragment implements TrackBioView {
     public void onPause() {
         super.onPause();
         presenter.unsubscribe();
+        presenter.storeScrollViewPosition(scrollView.getScrollY());
     }
 
     @Nullable
@@ -100,13 +104,27 @@ public class TrackBioFragment extends BaseFragment implements TrackBioView {
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        presenter.saveState(outState, scrollView.getScrollY());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter.getState(savedInstanceState);
+    }
+
+    @Override
     public void showTrackSummary(String trackSummary) {
         trackBio.setText(trackSummary);
+        presenter.bioLoaded();
     }
 
     @Override
     public void showTrackContent(String trackContent) {
         trackBio.setText(trackContent);
+        presenter.bioLoaded();
     }
 
     @Override
@@ -187,5 +205,15 @@ public class TrackBioFragment extends BaseFragment implements TrackBioView {
     @Override
     public void showNoSimilarTracksText(String noSimilarTracks) {
         similarTracksText.setText(noSimilarTracks);
+    }
+
+    @Override
+    public void setScrollPosition(int scrollPosition) {
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.setScrollY(scrollPosition);
+            }
+        });
     }
 }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -40,6 +41,8 @@ public class AlbumBioFragment extends BaseFragment implements AlbumBioView {
     protected TextView albumBio;
     @BindView(R.id.text_read_more)
     protected TextView readMoreText;
+    @BindView(R.id.bio_scroll_view)
+    protected ScrollView scrollView;
     private AlbumBioFragment albumBioFragment;
 
     @OnClick(R.id.read_more_layout)
@@ -64,6 +67,7 @@ public class AlbumBioFragment extends BaseFragment implements AlbumBioView {
     public void onPause() {
         super.onPause();
         presenter.unsubscribe();
+        presenter.storeScrollViewPosition(scrollView.getScrollY());
     }
 
     @Nullable
@@ -84,6 +88,17 @@ public class AlbumBioFragment extends BaseFragment implements AlbumBioView {
         return fragment;
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        presenter.saveState(outState, scrollView.getScrollY());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter.getState(savedInstanceState);
+    }
 
     @Override
     public void showAlbumImage(String trackImageUrl) {
@@ -100,8 +115,8 @@ public class AlbumBioFragment extends BaseFragment implements AlbumBioView {
     @Override
     public void showAlbumBio(String trackSummary) {
         this.albumBio.setText(trackSummary);
+        presenter.bioLoaded();
     }
-
 
     @Override
     public void setReadMoreText(String readMoreText) {
@@ -128,5 +143,15 @@ public class AlbumBioFragment extends BaseFragment implements AlbumBioView {
     @Override
     public void setImageBackgroundWhite() {
         albumImage.setBackgroundColor(Color.WHITE);
+    }
+
+    @Override
+    public void setScrollViewState(int scrollPosition) {
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.setScrollY(scrollPosition);
+            }
+        });
     }
 }
