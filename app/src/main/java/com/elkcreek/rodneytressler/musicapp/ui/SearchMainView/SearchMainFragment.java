@@ -44,6 +44,13 @@ public class SearchMainFragment extends BaseFragment implements SearchMainView {
         presenter.subscribe();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.unsubscribe();
+        presenter.storeViewPagerState(viewPager.getCurrentItem());
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,9 +78,27 @@ public class SearchMainFragment extends BaseFragment implements SearchMainView {
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        presenter.saveState(outState, viewPager.getCurrentItem());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter.getState(savedInstanceState);
+    }
+
+    @Override
     public void showScreens() {
         adapter = new SearchViewPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+        presenter.viewPagerCreated();
+    }
+
+    @Override
+    public void setViewPagerPage(int currentItem) {
+        viewPager.setCurrentItem(currentItem);
     }
 }

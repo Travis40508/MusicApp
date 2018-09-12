@@ -6,4 +6,6 @@ public interface SearchMainView extends BaseView {
     void reAttachFragment();
 
     void showScreens();
+
+    void setViewPagerPage(int currentItem);
 }

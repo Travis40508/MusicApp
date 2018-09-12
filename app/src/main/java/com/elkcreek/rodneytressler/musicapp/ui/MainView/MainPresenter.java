@@ -16,9 +16,6 @@ public class MainPresenter implements BasePresenter<MainView> {
     @Override
     public void attachView(MainView view) {
         this.view = view;
-        if(view != null) {
-            view.attachSearchFragment();
-        }
     }
 
     @Override
@@ -48,4 +45,11 @@ public class MainPresenter implements BasePresenter<MainView> {
         view.returnHome();
     }
 
+    public void screenRotated(boolean screenNeverRotated) {
+        if(!screenNeverRotated) {
+            view.reAttachSearchFragment();
+        } else {
+            view.attachSearchFragment();
+        }
+    }
 }

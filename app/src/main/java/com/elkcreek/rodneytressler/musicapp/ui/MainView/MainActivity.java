@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     protected FrameLayout loadingLayout;
     @BindView(R.id.my_toolbar)
     protected Toolbar toolbar;
+    private SearchMainFragment searchMainFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +44,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
         setSupportActionBar(toolbar);
 
         presenter.attachView(this);
+        presenter.screenRotated(savedInstanceState == null && getSupportFragmentManager().findFragmentByTag(SEARCH_FRAGMENT_TAG) == null);
     }
 
     @Override
     public void attachSearchFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, SearchMainFragment.newInstance(), SEARCH_MAIN_TAG).commit();
+        searchMainFragment = SearchMainFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, searchMainFragment, SEARCH_MAIN_TAG).commit();
     }
 
     @Override
@@ -73,6 +76,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     public void setOrientationToPortait() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    @Override
+    public void reAttachSearchFragment() {
+        searchMainFragment = (SearchMainFragment) getSupportFragmentManager().findFragmentByTag(SEARCH_MAIN_TAG);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, searchMainFragment, SEARCH_MAIN_TAG).commit();
     }
 
     @Override

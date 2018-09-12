@@ -14,4 +14,6 @@ public interface MainView extends BaseView {
     void hideMainLoadingLayout();
 
     void setOrientationToPortait();
+
+    void reAttachSearchFragment();
 }
