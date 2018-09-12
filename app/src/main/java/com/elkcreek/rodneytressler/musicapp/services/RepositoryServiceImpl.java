@@ -327,6 +327,13 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
+    public Observable<List<MusicApi.Track>> getSimilarTracksByName(String artist, String track, String apiKey) {
+        return musicApiService.getSimilarTracksByName(artist, track, apiKey)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
     public void clearCache() {
         musicDatabaseService.clearCache();
     }

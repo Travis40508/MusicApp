@@ -97,4 +97,12 @@ public class MusicApiServiceImpl implements MusicApiService {
                 .map(MusicApi.TrackSearchResults::getSearchedTracksResponse)
                 .map(MusicApi.SearchedTracksResponse::getTrackList);
     }
+
+    @Override
+    public Observable<List<MusicApi.Track>> getSimilarTracksByName(String artist, String track, String apiKey) {
+        return musicApi.getSimilarTracksByName(artist, track, apiKey)
+                .subscribeOn(Schedulers.io())
+                .map(MusicApi.SimilarTrackResponse::getSimilarTracks)
+                .map(MusicApi.SimilarTracks::getSimilarTrackList);
+    }
 }

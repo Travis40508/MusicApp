@@ -69,6 +69,7 @@ public interface RepositoryService {
     Observable<List<MusicApi.Track>> getSimilarTrackList(String trackUid);
     Observable<List<MusicApi.Track>> getSimilarTrackListFromDatabase(String trackUid);
     Observable<List<MusicApi.Track>> getSimilarTrackListFromNetwork(String trackUid);
+    Observable<List<MusicApi.Track>> getSimilarTracksByName(String artist, String track, String apiKey);
 
     //Clear Cache
 

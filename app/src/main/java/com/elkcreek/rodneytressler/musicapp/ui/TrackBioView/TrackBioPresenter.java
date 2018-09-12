@@ -54,11 +54,12 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
     private void fetchTrack() {
         if(trackUid != null && !trackUid.isEmpty()) {
             compositeDisposable.add(repositoryService.getTrack(trackUid).subscribe(updateUiWithTrack(), updateUiOnError()));
+            compositeDisposable.add(repositoryService.getSimilarTrackList(trackUid).subscribe(updateUiWithSimilarTracks(), updateUiWithSimilarTrackError()));
         } else {
             compositeDisposable.add(repositoryService.getTrackWithName(trackName, artistName).subscribe(updateUiWithTrack(), updateUiOnError()));
+            compositeDisposable.add(repositoryService.getSimilarTracksByName(artistName, trackName, Constants.API_KEY).subscribe(updateUiWithSimilarTracks(), updateUiWithSimilarTrackError()));
         }
-        //TODO make this call with names for top tracks
-        compositeDisposable.add(repositoryService.getSimilarTrackList(trackUid).subscribe(updateUiWithSimilarTracks(), updateUiWithSimilarTrackError()));
+
     }
 
     private Consumer<MusicApi.TrackInfo> updateUiWithTrack() {
