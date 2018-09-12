@@ -1,5 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.ui.ArtistSearchView;
 
+import android.os.Parcelable;
+
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.utils.BaseView;
 
@@ -27,4 +29,6 @@ public interface ArtistSearchView extends BaseView {
     void setActionBarTitle(String artistsTitle);
 
     void clearSearchText();
+
+    void setRecyclerViewPosition(Parcelable recyclerViewPosition);
 }

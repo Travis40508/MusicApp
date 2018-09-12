@@ -2,6 +2,7 @@ package com.elkcreek.rodneytressler.musicapp.ui.ArtistSearchView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -50,6 +51,7 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     @BindView(R.id.loading_layout)
     protected FrameLayout loadingLayout;
     private ArtistAdapter adapter;
+    private LinearLayoutManager linearLayoutManager;
 
     @OnTextChanged(value = R.id.input_artist_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void onArtistSearchChange(Editable editable) {
@@ -73,6 +75,7 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     public void onPause() {
         super.onPause();
         presenter.unsubscribe();
+        presenter.storeState(linearLayoutManager.onSaveInstanceState());
     }
 
     @Nullable
@@ -83,7 +86,8 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
         presenter.attachView(this);
         adapter = new ArtistAdapter(Glide.with(this), new ArrayList<>());
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
         return view;
     }
 
@@ -112,6 +116,19 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
                 presenter.onArtistClicked(artist);
             }
         });
+        presenter.listSet();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        presenter.saveState(outState, linearLayoutManager.onSaveInstanceState());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter.getState(savedInstanceState);
     }
 
     @Override
@@ -157,6 +174,11 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     @Override
     public void clearSearchText() {
         artistInput.setText(Constants.EMPTY_TEXT);
+    }
+
+    @Override
+    public void setRecyclerViewPosition(Parcelable recyclerViewPosition) {
+        recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewPosition);
     }
 
     @Override
