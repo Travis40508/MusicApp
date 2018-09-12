@@ -2,10 +2,9 @@ package com.elkcreek.rodneytressler.musicapp.ui.AlbumsView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,7 +17,6 @@ import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.AlbumMainView.AlbumMainFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.AlbumTracksView.AlbumTracksFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.AlbumsAdapter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
@@ -31,11 +29,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
-import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUMS_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_IMAGE_URL_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_MAIN_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_NAME_KEY;
-import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_TRACKS_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_UID_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
@@ -68,6 +64,7 @@ public class AlbumsFragment extends BaseFragment implements AlbumsView {
     public void onPause() {
         super.onPause();
         presenter.unsubscribe();
+        presenter.storeRecyclerViewPositionState(recyclerView.getLayoutManager().onSaveInstanceState());
     }
 
     @Nullable
@@ -79,6 +76,18 @@ public class AlbumsFragment extends BaseFragment implements AlbumsView {
         presenter.artistNameRetrieved(getArguments().getString(Constants.ARTIST_NAME_KEY));
         presenter.artistRetrieved(getArguments().getString(Constants.ARTIST_UID_KEY));
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        presenter.saveState(outState, recyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter.getState(savedInstanceState);
     }
 
     public static AlbumsFragment newInstance() {
@@ -103,6 +112,7 @@ public class AlbumsFragment extends BaseFragment implements AlbumsView {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter.notifyDataSetChanged();
+        presenter.listLoaded();
     }
 
     @Override
@@ -132,5 +142,10 @@ public class AlbumsFragment extends BaseFragment implements AlbumsView {
     @Override
     public void showNoAlbumsMessage() {
         noAlbumsText.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setRecyclerViewPosition(Parcelable recyclerViewPosition) {
+        recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewPosition);
     }
 }

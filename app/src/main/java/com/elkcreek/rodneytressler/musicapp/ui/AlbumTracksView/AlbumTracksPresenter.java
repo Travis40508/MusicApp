@@ -1,5 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.ui.AlbumTracksView;
 
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
@@ -21,6 +23,8 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
     private String albumUid;
     private String imageUrl;
     private List<MusicApi.Track> albumTracks;
+    private static final String STATE_RECYCLER_VIEW_POSITION = "state_recycler_view_position";
+    private Parcelable recyclerViewPosition;
 
     @Inject
     public AlbumTracksPresenter(RepositoryService repositoryService) {
@@ -86,5 +90,23 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
         return track -> {
             view.showPlayTracksFragment(track.getTrackName(), track.getTrackUid(), track.getArtistInfo().getArtistName());
         };
+    }
+
+    public void storeState(Parcelable parcelable) {
+        this.recyclerViewPosition = parcelable;
+    }
+
+    public void saveState(Bundle outState, Parcelable parcelable) {
+        outState.putParcelable(STATE_RECYCLER_VIEW_POSITION, parcelable);
+    }
+
+    public void getState(Bundle savedInstanceState) {
+        if(savedInstanceState != null) {
+            recyclerViewPosition = savedInstanceState.getParcelable(STATE_RECYCLER_VIEW_POSITION);
+        }
+    }
+
+    public void listLoaded() {
+        view.setRecyclerViewPosition(recyclerViewPosition);
     }
 }

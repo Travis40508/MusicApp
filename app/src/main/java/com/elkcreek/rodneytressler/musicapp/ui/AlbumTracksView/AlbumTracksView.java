@@ -1,5 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.ui.AlbumTracksView;
 
+import android.os.Parcelable;
+
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.utils.BaseView;
 
@@ -17,4 +19,6 @@ public interface AlbumTracksView extends BaseView {
     void hideLoadingLayout();
 
     void showNoTracksAvailableMessage();
+
+    void setRecyclerViewPosition(Parcelable recyclerViewPosition);
 }

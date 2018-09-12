@@ -1,5 +1,8 @@
 package com.elkcreek.rodneytressler.musicapp.ui.AllTracksView;
 
+import android.os.Bundle;
+import android.os.Parcelable;
+
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.utils.BaseView;
 
@@ -29,4 +32,10 @@ public interface AllTracksView extends BaseView {
     void hideTrackSearch();
 
     void hideShowingTracks();
+
+    void setRecyclerViewPosition(Parcelable recyclerViewPosition);
+
+    void storeLayoutManagerState();
+
+    void getLayoutManagerPosition(Bundle outState);
 }

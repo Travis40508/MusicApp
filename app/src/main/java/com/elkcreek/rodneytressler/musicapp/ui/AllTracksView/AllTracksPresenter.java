@@ -1,5 +1,8 @@
 package com.elkcreek.rodneytressler.musicapp.ui.AllTracksView;
 
+import android.os.Bundle;
+import android.os.Parcelable;
+
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
@@ -18,6 +21,8 @@ public class AllTracksPresenter implements BasePresenter<AllTracksView> {
     private CompositeDisposable disposable;
     private String artistUid;
     private String artistName;
+    private static final String STATE_RECYCLER_VIEW_POSITION = "state_recycler_view_position";
+    private Parcelable recyclerViewPosition;
 
     @Inject
     public AllTracksPresenter(RepositoryService repositoryService) {
@@ -85,6 +90,36 @@ public class AllTracksPresenter implements BasePresenter<AllTracksView> {
             disposable.add(repositoryService.getArtistTopTracks(artistUid)
                     .subscribe(updateUiWithTopTracks(), updateUiOnError()));
             view.showAllTracksText();
+        }
+    }
+
+    public void storeState(boolean layoutManagerIsNull) {
+        if(!layoutManagerIsNull) {
+            view.storeLayoutManagerState();
+        }
+    }
+
+    public void saveState(Bundle outState, Parcelable parcelable) {
+        outState.putParcelable(STATE_RECYCLER_VIEW_POSITION, parcelable);
+    }
+
+    public void getState(Bundle savedInstanceState) {
+        if(savedInstanceState != null) {
+            recyclerViewPosition = savedInstanceState.getParcelable(STATE_RECYCLER_VIEW_POSITION);
+        }
+    }
+
+    public void listLoaded() {
+        view.setRecyclerViewPosition(recyclerViewPosition);
+    }
+
+    public void storeLayoutManagerState(Parcelable parcelable) {
+        this.recyclerViewPosition = parcelable;
+    }
+
+    public void checkLayoutManagerAndSaveState(boolean layoutManagerIsNull, Bundle outState) {
+        if(!layoutManagerIsNull) {
+            view.getLayoutManagerPosition(outState);
         }
     }
 }

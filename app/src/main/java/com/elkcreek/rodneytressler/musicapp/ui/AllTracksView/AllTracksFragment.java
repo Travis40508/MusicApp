@@ -2,6 +2,7 @@ package com.elkcreek.rodneytressler.musicapp.ui.AllTracksView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -78,6 +79,7 @@ public class AllTracksFragment extends BaseFragment implements AllTracksView {
     public void onPause() {
         super.onPause();
         presenter.unsubscribe();
+        presenter.storeState(recyclerView.getLayoutManager() == null);
     }
 
 
@@ -102,6 +104,18 @@ public class AllTracksFragment extends BaseFragment implements AllTracksView {
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        presenter.checkLayoutManagerAndSaveState(recyclerView.getLayoutManager() == null, outState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter.getState(savedInstanceState);
+    }
+
+    @Override
     public void showTopTracks(List<MusicApi.Track> trackList) {
         adapter = new TracksAdapter(Glide.with(this), trackList);
         adapter.setPlayCallback(new TracksAdapter.TracksCallback() {
@@ -113,6 +127,7 @@ public class AllTracksFragment extends BaseFragment implements AllTracksView {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter.notifyDataSetChanged();
+        presenter.listLoaded();
     }
 
 
@@ -146,6 +161,21 @@ public class AllTracksFragment extends BaseFragment implements AllTracksView {
     @Override
     public void hideShowingTracks() {
         searchedTracksText.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setRecyclerViewPosition(Parcelable recyclerViewPosition) {
+        recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewPosition);
+    }
+
+    @Override
+    public void storeLayoutManagerState() {
+        presenter.storeLayoutManagerState(recyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    public void getLayoutManagerPosition(Bundle outState) {
+        presenter.saveState(outState, recyclerView.getLayoutManager().onSaveInstanceState());
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.elkcreek.rodneytressler.musicapp.ui.AlbumTracksView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -64,6 +65,7 @@ public class AlbumTracksFragment extends BaseFragment implements AlbumTracksView
     public void onPause() {
         super.onPause();
         presenter.unsubscribe();
+        presenter.storeState(recyclerView.getLayoutManager().onSaveInstanceState());
     }
 
     @Nullable
@@ -86,6 +88,18 @@ public class AlbumTracksFragment extends BaseFragment implements AlbumTracksView
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        presenter.saveState(outState, recyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter.getState(savedInstanceState);
+    }
+
+    @Override
     public void showTrackListForAlbum(List<MusicApi.Track> trackList, String imageUrl) {
         adapter = new AlbumTracksAdapter(Glide.with(this), trackList, imageUrl);
         adapter.setPlayCallback(new AlbumTracksAdapter.AlbumTracksCallback() {
@@ -97,6 +111,7 @@ public class AlbumTracksFragment extends BaseFragment implements AlbumTracksView
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter.notifyDataSetChanged();
+        presenter.listLoaded();
     }
 
     @Override
@@ -129,5 +144,10 @@ public class AlbumTracksFragment extends BaseFragment implements AlbumTracksView
     @Override
     public void showNoTracksAvailableMessage() {
         noTracksText.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setRecyclerViewPosition(Parcelable recyclerViewPosition) {
+        recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewPosition);
     }
 }
