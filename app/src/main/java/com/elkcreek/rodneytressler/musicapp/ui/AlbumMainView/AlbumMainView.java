@@ -10,4 +10,6 @@ public interface AlbumMainView extends BaseView {
     void setActionBarTitle(String s);
 
     void setViewPagerItem(int currentItem);
+
+    void setViewPagerState(int currentItem);
 }

@@ -57,6 +57,18 @@ public class ArtistMainFragment extends Fragment implements ArtistMainView {
         presenter.screenPaused(viewPager.getCurrentItem());
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        presenter.saveState(outState, viewPager.getCurrentItem());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter.getState(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -82,6 +94,7 @@ public class ArtistMainFragment extends Fragment implements ArtistMainView {
         adapter = new ArtistViewPagerAdapter(getChildFragmentManager(), artistUid, artistName);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+        presenter.viewPagerCreated();
     }
 
     @Override
@@ -97,6 +110,11 @@ public class ArtistMainFragment extends Fragment implements ArtistMainView {
 
     @Override
     public void setViewPagerItem(int currentItem) {
+        viewPager.setCurrentItem(currentItem);
+    }
+
+    @Override
+    public void setViewPagerState(int currentItem) {
         viewPager.setCurrentItem(currentItem);
     }
 }

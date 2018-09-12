@@ -59,6 +59,18 @@ public class AlbumMainFragment extends Fragment implements AlbumMainView {
         presenter.screenPaused(viewPager.getCurrentItem());
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        presenter.saveState(outState, viewPager.getCurrentItem());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter.getState(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -90,6 +102,7 @@ public class AlbumMainFragment extends Fragment implements AlbumMainView {
         adapter = new AlbumViewPagerAdapter(getChildFragmentManager(), artistName, artistUid, albumName, albumUid, albumImage);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+        presenter.viewPagerCreated();
     }
 
     @Override
@@ -99,6 +112,11 @@ public class AlbumMainFragment extends Fragment implements AlbumMainView {
 
     @Override
     public void setViewPagerItem(int currentItem) {
+        viewPager.setCurrentItem(currentItem);
+    }
+
+    @Override
+    public void setViewPagerState(int currentItem) {
         viewPager.setCurrentItem(currentItem);
     }
 }

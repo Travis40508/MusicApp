@@ -10,4 +10,6 @@ public interface ArtistMainView extends BaseView {
     void setActionBarTitle(String artistName);
 
     void setViewPagerItem(int currentItem);
+
+    void setViewPagerState(int currentItem);
 }

@@ -1,5 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.ui.ArtistMainView;
 
+import android.os.Bundle;
+
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
 
 import javax.inject.Inject;
@@ -13,6 +15,7 @@ public class ArtistMainPresenter implements BasePresenter<ArtistMainView> {
     private String artistUid;
     private String artistName;
     private int currentItem;
+    private static final String STATE_VIEW_PAGER_POSITION = "state_view_pager_position";
 
     @Inject
     public ArtistMainPresenter() {
@@ -60,5 +63,19 @@ public class ArtistMainPresenter implements BasePresenter<ArtistMainView> {
         if(currentItem != 0) {
             view.setViewPagerItem(currentItem);
         }
+    }
+
+    public void saveState(Bundle outState, int currentItem) {
+        outState.putInt(STATE_VIEW_PAGER_POSITION, currentItem);
+    }
+
+    public void getState(Bundle savedInstanceState) {
+        if(savedInstanceState != null) {
+            currentItem = savedInstanceState.getInt(STATE_VIEW_PAGER_POSITION);
+        }
+    }
+
+    public void viewPagerCreated() {
+        view.setViewPagerState(currentItem);
     }
 }
