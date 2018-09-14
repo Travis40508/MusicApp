@@ -133,7 +133,9 @@ public class TrackSearchPresenter implements BasePresenter<TrackSearchView> {
     }
 
     public void saveState(Bundle outState, Parcelable parcelable) {
-        outState.putParcelable(STATE_RECYCLER_VIEW_POSITION, parcelable);
+        if(outState != null) {
+            outState.putParcelable(STATE_RECYCLER_VIEW_POSITION, parcelable);
+        }
     }
 
     public void getState(Bundle savedInstanceState) {

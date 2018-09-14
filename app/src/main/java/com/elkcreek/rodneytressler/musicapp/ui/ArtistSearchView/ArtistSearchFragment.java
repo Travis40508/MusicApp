@@ -122,7 +122,7 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        presenter.saveState(outState, linearLayoutManager.onSaveInstanceState());
+        presenter.saveState(outState, linearLayoutManager != null ? linearLayoutManager.onSaveInstanceState() : null);
     }
 
     @Override

@@ -60,7 +60,7 @@ public class ArtistMainFragment extends Fragment implements ArtistMainView {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        presenter.saveState(outState, viewPager.getCurrentItem());
+        presenter.saveState(outState, viewPager != null ? viewPager.getCurrentItem() : 0);
     }
 
     @Override

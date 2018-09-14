@@ -106,7 +106,7 @@ public class AllTracksFragment extends BaseFragment implements AllTracksView {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        presenter.checkLayoutManagerAndSaveState(recyclerView.getLayoutManager() == null, outState);
+        presenter.checkLayoutManagerAndSaveState(recyclerView != null ? recyclerView.getLayoutManager() == null : true, outState);
     }
 
     @Override

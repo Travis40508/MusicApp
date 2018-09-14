@@ -99,7 +99,7 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        presenter.saveState(outState, recyclerView.getLayoutManager().onSaveInstanceState());
+        presenter.saveState(outState, recyclerView != null  && recyclerView.getLayoutManager() != null ? recyclerView.getLayoutManager().onSaveInstanceState() : null);
     }
 
     @Override

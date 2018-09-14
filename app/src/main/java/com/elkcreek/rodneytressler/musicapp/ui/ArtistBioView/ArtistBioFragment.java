@@ -98,7 +98,7 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        presenter.saveState(outState, scrollView.getScrollY());
+        presenter.saveState(outState, scrollView != null ? scrollView.getScrollY() : 0);
     }
 
     @Override

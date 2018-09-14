@@ -62,7 +62,7 @@ public class AlbumMainFragment extends Fragment implements AlbumMainView {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        presenter.saveState(outState, viewPager.getCurrentItem());
+        presenter.saveState(outState,  viewPager != null ?viewPager.getCurrentItem() : 0);
     }
 
     @Override
