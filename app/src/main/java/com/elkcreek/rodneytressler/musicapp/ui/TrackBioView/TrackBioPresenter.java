@@ -92,7 +92,7 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
 
     private Consumer<List<MusicApi.Track>> updateUiWithSimilarTracks() {
         return trackList -> {
-            if(trackList != null) {
+            if(trackList != null && !trackList.isEmpty()) {
                 view.showSimilarTracks(trackList);
             } else {
                 view.showNoSimilarTracksText(Constants.NO_SIMILAR_TRACKS);

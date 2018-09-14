@@ -61,7 +61,7 @@ public class ArtistBioPresenter implements BasePresenter<ArtistBioView> {
                 view.showGenericArtistImage();
             }
 
-            if(artist.getSimilar() != null) {
+            if(artist.getSimilar() != null && !artist.getSimilar().getArtistList().isEmpty()) {
                 view.showSimilarArtists(artist.getSimilar().getArtistList());
             } else {
                 view.showNoSimilarArtistText();

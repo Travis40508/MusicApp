@@ -75,7 +75,6 @@ public class YoutubeFragment extends Fragment implements YoutubeView{
         presenter.attachView(this);
         presenter.trackRetrieved(getArguments().getString(TRACK_UID_KEY));
         presenter.getVideoId(getArguments().getString(Constants.TRACK_NAME_KEY), getArguments().getString(Constants.ARTIST_NAME_KEY));
-//        presenter.screenRotated(savedInstanceState == null, getActivity().getSupportFragmentManager().findFragmentByTag(YOUTUBE_TAG) == null);
         return view;
     }
 
@@ -103,8 +102,7 @@ public class YoutubeFragment extends Fragment implements YoutubeView{
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        //TODO re-implement later.
-//        presenter.saveInstanceState(outState, youTubePlayer.getCurrentTimeMillis());
+        presenter.saveInstanceState(outState, youTubePlayer != null ? youTubePlayer.getCurrentTimeMillis() : 0);
     }
 
     @Override

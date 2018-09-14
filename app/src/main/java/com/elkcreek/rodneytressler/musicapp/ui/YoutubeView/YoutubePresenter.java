@@ -150,4 +150,7 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
         }
     }
 
+    public void saveInstanceState(Bundle outState, int currentTimeMillis) {
+        outState.putInt(STATE_YOUTUBE_VIDEO_POSITION, currentTimeMillis);
+    }
 }
