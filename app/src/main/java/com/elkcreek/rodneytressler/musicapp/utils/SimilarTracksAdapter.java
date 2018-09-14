@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.BitmapEncoder;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
@@ -82,6 +83,7 @@ public class SimilarTracksAdapter extends RecyclerView.Adapter<SimilarTracksAdap
                     .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
                     .apply(RequestOptions.circleCropTransform())
                     .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                    .transition(BitmapTransitionOptions.withCrossFade())
                     .into(similarTrackImage);
             similarTrackArtistName.setText(track.getArtist().getArtistName());
             similarTrackName.setText(track.getTrackName());
