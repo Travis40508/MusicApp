@@ -7,7 +7,7 @@
     android:clickable="true"
     android:focusable="true">
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/input_artist_search"
         android:hint="Enter Artist Name"
         android:inputType="text"

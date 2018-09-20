@@ -35,4 +35,6 @@ public interface ArtistSearchView extends BaseView {
     void detachFragment();
 
     void toastConnectionFailedToast();
+
+    void scrollRecyclerViewToTop();
 }

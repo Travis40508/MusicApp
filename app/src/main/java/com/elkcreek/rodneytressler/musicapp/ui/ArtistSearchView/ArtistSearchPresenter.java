@@ -45,7 +45,7 @@ public class ArtistSearchPresenter implements BasePresenter<ArtistSearchView> {
     }
 
 
-    private Observable<MusicApi.SearchResponse> getArtistSearchResults(String artistSearchText) {
+    private Observable<List<MusicApi.Artist>> getArtistSearchResults(String artistSearchText) {
         return musicApiService.getArtistSearchResults(artistSearchText, Constants.API_KEY)
                 .subscribeOn(Schedulers.io())
                 .onErrorResumeNext(Observable.empty())
@@ -72,11 +72,12 @@ public class ArtistSearchPresenter implements BasePresenter<ArtistSearchView> {
         };
     }
 
-    private Consumer<MusicApi.SearchResponse> getSearchResponse() {
+    private Consumer<List<MusicApi.Artist>> getSearchResponse() {
         return searchResponse -> {
             view.hideProgressBar();
             view.clearList();
-            view.loadArtists(searchResponse.getSearchResults().getArtistMatches().getArtistList());
+            view.loadArtists(searchResponse);
+            view.scrollRecyclerViewToTop();
         };
     }
 
@@ -154,6 +155,8 @@ public class ArtistSearchPresenter implements BasePresenter<ArtistSearchView> {
     }
 
     public void storeState(Parcelable parcelable) {
-        recyclerViewPosition = parcelable;
+        if(parcelable != null) {
+            recyclerViewPosition = parcelable;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.ui.ArtistSearchView;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -12,6 +13,8 @@ import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -45,7 +48,7 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     @BindView(R.id.recycler_view)
     protected RecyclerView recyclerView;
     @BindView(R.id.input_artist_search)
-    protected EditText artistInput;
+    protected AutoCompleteTextView artistInput;
     @BindView(R.id.text_search_value)
     protected TextView searchText;
     @BindView(R.id.loading_layout)
@@ -75,7 +78,7 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     public void onPause() {
         super.onPause();
         presenter.unsubscribe();
-        presenter.storeState(linearLayoutManager.onSaveInstanceState());
+        presenter.storeState(recyclerView.getLayoutManager() != null ? recyclerView.getLayoutManager().onSaveInstanceState() : null);
     }
 
     @Nullable
@@ -86,8 +89,7 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
         presenter.attachView(this);
         adapter = new ArtistAdapter(Glide.with(this), new ArrayList<>());
         recyclerView.setAdapter(adapter);
-        linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2));
         return view;
     }
 
@@ -122,7 +124,7 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        presenter.saveState(outState, linearLayoutManager != null ? linearLayoutManager.onSaveInstanceState() : null);
+        presenter.saveState(outState, recyclerView.getLayoutManager() != null ? recyclerView.getLayoutManager().onSaveInstanceState() : null);
     }
 
     @Override
@@ -190,6 +192,11 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     @Override
     public void toastConnectionFailedToast() {
         Toast.makeText(getContext(), Constants.CONNECTION_ERROR, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void scrollRecyclerViewToTop() {
+        recyclerView.getLayoutManager().scrollToPosition(0);
     }
 
     @Override
