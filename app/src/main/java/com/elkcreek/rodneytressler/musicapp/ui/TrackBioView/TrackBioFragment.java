@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -26,6 +27,7 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
+import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import com.elkcreek.rodneytressler.musicapp.utils.SimilarTracksAdapter;
 
 import java.util.List;
@@ -217,5 +219,15 @@ public class TrackBioFragment extends BaseFragment implements TrackBioView {
                 scrollView.setScrollY(scrollPosition);
             }
         });
+    }
+
+    @Override
+    public void detachFragment() {
+        getActivity().onBackPressed();
+    }
+
+    @Override
+    public void toastConnectionFailedToast() {
+        Toast.makeText(getContext(), Constants.CONNECTION_ERROR, Toast.LENGTH_SHORT).show();
     }
 }

@@ -10,6 +10,8 @@ import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -59,9 +61,14 @@ public class ArtistSearchPresenter implements BasePresenter<ArtistSearchView> {
 
     private Consumer<Throwable> updateUiWithError() {
         return throwable -> {
-            view.showErrorLoadingToast();
-            repositoryService.resetDate();
-            subscribe();
+            if(throwable instanceof SocketTimeoutException || throwable instanceof UnknownHostException) {
+                view.toastConnectionFailedToast();
+                view.detachFragment();
+            } else {
+                view.showErrorLoadingToast();
+                repositoryService.resetDate();
+                subscribe();
+            }
         };
     }
 
@@ -88,7 +95,7 @@ public class ArtistSearchPresenter implements BasePresenter<ArtistSearchView> {
                 repositoryService.saveDate();
             } else {
                 disposable.add(repositoryService.getTopArtists().subscribe(
-                        updateViewWithTopArtist()
+                        updateViewWithTopArtist(), updateUiWithError()
                 ));
             }
         } else {

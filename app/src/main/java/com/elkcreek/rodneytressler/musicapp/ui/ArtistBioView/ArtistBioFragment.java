@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -211,5 +212,15 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
                 scrollView.setScrollY(scrollYPosition);
             }
         });
+    }
+
+    @Override
+    public void toastConnectionFailedToast() {
+        Toast.makeText(getContext(), Constants.CONNECTION_ERROR, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void detachFragment() {
+        getActivity().onBackPressed();
     }
 }

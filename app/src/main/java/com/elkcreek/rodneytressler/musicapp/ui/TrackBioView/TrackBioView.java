@@ -32,4 +32,8 @@ public interface TrackBioView extends BaseView {
     void showNoSimilarTracksText(String noSimilarTracks);
 
     void setScrollPosition(int scrollPosition);
+
+    void detachFragment();
+
+    void toastConnectionFailedToast();
 }

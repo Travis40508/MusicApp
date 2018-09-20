@@ -29,4 +29,8 @@ public interface ArtistBioView extends BaseView {
     void setImageBackgroundWhite();
 
     void setScrollViewPosition(int scrollYPosition);
+
+    void toastConnectionFailedToast();
+
+    void detachFragment();
 }

@@ -8,6 +8,8 @@ import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -84,9 +86,14 @@ public class TrackBioPresenter implements BasePresenter<TrackBioView> {
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
             Log.d("@@@@-TrackBioPresenter", throwable.getMessage());
-            view.showTrackSummary(Constants.NO_TRACK_BIO_AVAILABLE);
-            view.setImageBackgroundColorWhite();
-            view.showGenericTrackImage();
+            if(throwable instanceof SocketTimeoutException || throwable instanceof UnknownHostException) {
+                view.detachFragment();
+                view.toastConnectionFailedToast();
+            } else {
+                view.showTrackSummary(Constants.NO_TRACK_BIO_AVAILABLE);
+                view.setImageBackgroundColorWhite();
+                view.showGenericTrackImage();
+            }
         };
     }
 

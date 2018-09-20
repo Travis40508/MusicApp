@@ -16,4 +16,8 @@ public interface AlbumBioView extends BaseView {
     void setImageBackgroundWhite();
 
     void setScrollViewState(int scrollPosition);
+
+    void detachFragment();
+
+    void toastConnectionFailedToast();
 }

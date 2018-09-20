@@ -129,7 +129,9 @@ public class TrackSearchPresenter implements BasePresenter<TrackSearchView> {
     }
 
     public void storeRecyclerViewPosition(Parcelable parcelable) {
-        this.recyclerViewPosition = parcelable;
+        if(parcelable != null) {
+            this.recyclerViewPosition = parcelable;
+        }
     }
 
     public void saveState(Bundle outState, Parcelable parcelable) {

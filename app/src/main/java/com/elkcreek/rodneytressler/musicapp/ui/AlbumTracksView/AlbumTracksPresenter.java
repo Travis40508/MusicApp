@@ -93,7 +93,9 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
     }
 
     public void storeState(Parcelable parcelable) {
-        this.recyclerViewPosition = parcelable;
+        if(parcelable != null) {
+            this.recyclerViewPosition = parcelable;
+        }
     }
 
     public void saveState(Bundle outState, Parcelable parcelable) {

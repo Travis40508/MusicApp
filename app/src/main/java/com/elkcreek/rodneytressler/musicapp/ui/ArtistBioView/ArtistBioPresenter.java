@@ -8,6 +8,9 @@ import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -79,12 +82,17 @@ public class ArtistBioPresenter implements BasePresenter<ArtistBioView> {
 
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
-            Log.d("@@@@", throwable.getMessage());
-            view.showArtistBio(Constants.NO_ARTIST_BIO_AVAILABLE);
-            view.setImageBackgroundWhite();
-            view.showGenericArtistImage();
-            view.showNoSimilarArtistText();
-            view.hideMainProgressBar();
+            Log.d("@@@@-ArtistBioPresenter", throwable.getMessage());
+            if(throwable instanceof SocketTimeoutException || throwable instanceof UnknownHostException) {
+                view.detachFragment();
+                view.toastConnectionFailedToast();
+            } else {
+                view.showArtistBio(Constants.NO_ARTIST_BIO_AVAILABLE);
+                view.setImageBackgroundWhite();
+                view.showGenericArtistImage();
+                view.showNoSimilarArtistText();
+                view.hideMainProgressBar();
+            }
         };
     }
 

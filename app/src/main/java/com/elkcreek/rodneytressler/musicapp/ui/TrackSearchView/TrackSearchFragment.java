@@ -74,7 +74,7 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
     public void onPause() {
         super.onPause();
         presenter.unsubscribe();
-        presenter.storeRecyclerViewPosition(recyclerView.getLayoutManager().onSaveInstanceState());
+        presenter.storeRecyclerViewPosition(recyclerView.getLayoutManager() != null ? recyclerView.getLayoutManager().onSaveInstanceState() : null);
     }
 
     @Nullable

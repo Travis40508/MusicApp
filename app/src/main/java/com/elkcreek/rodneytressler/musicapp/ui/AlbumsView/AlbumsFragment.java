@@ -64,7 +64,7 @@ public class AlbumsFragment extends BaseFragment implements AlbumsView {
     public void onPause() {
         super.onPause();
         presenter.unsubscribe();
-        presenter.storeRecyclerViewPositionState(recyclerView.getLayoutManager().onSaveInstanceState());
+        presenter.storeRecyclerViewPositionState(recyclerView.getLayoutManager() != null ? recyclerView.getLayoutManager().onSaveInstanceState() : null);
     }
 
     @Nullable

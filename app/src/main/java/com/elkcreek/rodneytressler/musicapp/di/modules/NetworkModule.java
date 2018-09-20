@@ -11,6 +11,8 @@ import com.elkcreek.rodneytressler.musicapp.services.YoutubeApiService;
 import com.elkcreek.rodneytressler.musicapp.services.YoutubeApiServiceImpl;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Named;
 
 import dagger.Module;
@@ -39,6 +41,8 @@ public class NetworkModule {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
         OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(5, TimeUnit.SECONDS)
                 .addInterceptor(logging)
                 .build();
         return client;

@@ -31,4 +31,8 @@ public interface ArtistSearchView extends BaseView {
     void clearSearchText();
 
     void setRecyclerViewPosition(Parcelable recyclerViewPosition);
+
+    void detachFragment();
+
+    void toastConnectionFailedToast();
 }

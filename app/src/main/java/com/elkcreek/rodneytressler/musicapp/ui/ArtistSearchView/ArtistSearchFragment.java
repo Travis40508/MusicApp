@@ -182,6 +182,17 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     }
 
     @Override
+    public void detachFragment() {
+        getActivity().onBackPressed();
+    }
+
+
+    @Override
+    public void toastConnectionFailedToast() {
+        Toast.makeText(getContext(), Constants.CONNECTION_ERROR, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void showMainArtistScreen(MusicApi.Artist artist) {
         Bundle bundle = new Bundle();
         bundle.putString(ARTIST_NAME_KEY, artist.getArtistName());
