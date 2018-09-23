@@ -179,7 +179,7 @@ public class YoutubeFragment extends Fragment implements YoutubeView{
         getActivity().findViewById(R.id.my_toolbar).setVisibility(View.VISIBLE);
         getParentFragment().getView().findViewById(R.id.tab_layout_track_main).setVisibility(View.VISIBLE);
     }
-    
+
     @Override
     public void onDestroy() {
         presenter.onDestroy(youTubePlayerSupportFragment == null);

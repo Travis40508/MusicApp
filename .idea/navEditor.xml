@@ -60,13 +60,13 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="searchMainFragment2">
+                  <entry key="searchMainFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-17" />
-                            <option name="y" value="193" />
+                            <option name="x" value="-16" />
+                            <option name="y" value="80" />
                           </Point>
                         </option>
                         <option name="myPositions">

@@ -1,8 +1,5 @@
 package com.elkcreek.rodneytressler.musicapp.ui.MainView;
 
-import android.content.pm.ActivityInfo;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,22 +11,14 @@ import android.widget.FrameLayout;
 
 
 import com.elkcreek.rodneytressler.musicapp.R;
-import com.elkcreek.rodneytressler.musicapp.ui.ArtistSearchView.ArtistSearchFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.SearchMainView.SearchMainFragment;
 
 import javax.inject.Inject;
 
-import androidx.navigation.NavController;
-import androidx.navigation.NavHost;
-import androidx.navigation.NavOptions;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
-
-import static com.elkcreek.rodneytressler.musicapp.utils.Constants.SEARCH_FRAGMENT_TAG;
-import static com.elkcreek.rodneytressler.musicapp.utils.Constants.SEARCH_MAIN_TAG;
 
 public class MainActivity extends AppCompatActivity implements MainView {
 
@@ -52,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         presenter.attachView(this);
     }
     public void returnHome() {
-        NavHostFragment.findNavController(getSupportFragmentManager().findFragmentById(R.id.my_nav_host_fragment)).popBackStack(R.id.searchMainFragment2, false);
+        NavHostFragment.findNavController(getSupportFragmentManager().findFragmentById(R.id.my_nav_host_fragment)).popBackStack(R.id.searchMainFragment, false);
     }
 
     @Override
