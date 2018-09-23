@@ -90,7 +90,7 @@ public class YoutubeFragment extends Fragment implements YoutubeView{
     @Override
     public void reAttachYoutubeFragment() {
         youtubeFragment = (YoutubeFragment) getActivity().getSupportFragmentManager().findFragmentByTag(YOUTUBE_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, youtubeFragment, YOUTUBE_TAG).commit();
+//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, youtubeFragment, YOUTUBE_TAG).commit();
     }
 
     @Override

@@ -175,8 +175,8 @@ public class TrackBioFragment extends BaseFragment implements TrackBioView {
         bundle.putString(TRACK_UID_KEY, trackUid);
         TrackMainFragment trackMainFragment = TrackMainFragment.newInstance();
         trackMainFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().
-                replace(R.id.fragment_holder, trackMainFragment, TRACK_MAIN_TAG).addToBackStack(null).commit();
+//        getActivity().getSupportFragmentManager().beginTransaction().
+//                replace(R.id.fragment_holder, trackMainFragment, TRACK_MAIN_TAG).addToBackStack(null).commit();
     }
 
     @Override

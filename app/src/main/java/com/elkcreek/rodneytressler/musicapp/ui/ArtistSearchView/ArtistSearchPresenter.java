@@ -2,6 +2,7 @@ package com.elkcreek.rodneytressler.musicapp.ui.ArtistSearchView;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
@@ -32,6 +33,7 @@ public class ArtistSearchPresenter implements BasePresenter<ArtistSearchView> {
     private String searchText;
     private static final String STATE_RECYCLER_VIEW_POSITION = "state_recycler_view_position";
     private Parcelable recyclerViewPosition;
+    private int page = 2;
 
     @Inject
     public ArtistSearchPresenter(MusicApiService musicApiService, RepositoryService repositoryService) {
@@ -157,6 +159,27 @@ public class ArtistSearchPresenter implements BasePresenter<ArtistSearchView> {
     public void storeState(Parcelable parcelable) {
         if(parcelable != null) {
             recyclerViewPosition = parcelable;
+        }
+    }
+
+    private Consumer<List<MusicApi.Artist>> addArtistsToView() {
+      return artists -> view.addArtists(artists);
+    }
+
+    public void loadMoreItems() {
+        page = page + 1;
+        disposable.add(musicApiService.getTopArtists(Constants.API_KEY, page)
+                .subscribeOn(Schedulers.io())
+                .map(MusicApi.TopArtistsResponse::getTopArtists)
+                .map(MusicApi.TopArtists::getTopArtistList)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(addArtistsToView(), updateUiWithError()));
+    }
+
+    public void scrollStateChanged(boolean canScrollDown) {
+        if(!canScrollDown) {
+            view.showLoadingMessage();
+            loadMoreItems();
         }
     }
 }

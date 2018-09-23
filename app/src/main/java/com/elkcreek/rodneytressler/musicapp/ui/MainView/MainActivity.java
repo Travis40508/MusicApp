@@ -2,6 +2,7 @@ package com.elkcreek.rodneytressler.musicapp.ui.MainView;
 
 import android.content.pm.ActivityInfo;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +19,11 @@ import com.elkcreek.rodneytressler.musicapp.ui.SearchMainView.SearchMainFragment
 
 import javax.inject.Inject;
 
+import androidx.navigation.NavController;
+import androidx.navigation.NavHost;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
@@ -44,49 +50,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
         setSupportActionBar(toolbar);
 
         presenter.attachView(this);
-        presenter.screenRotated(savedInstanceState == null && getSupportFragmentManager().findFragmentByTag(SEARCH_FRAGMENT_TAG) == null);
-    }
-
-    @Override
-    public void attachSearchFragment() {
-        searchMainFragment = SearchMainFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, searchMainFragment, SEARCH_MAIN_TAG).commit();
-    }
-
-    @Override
-    public void detachImmediateFragment() {
-        getSupportFragmentManager().popBackStack();
-    }
-
-    @Override
-    public void closeApp() {
-        super.onBackPressed();
     }
 
     @Override
     public void returnHome() {
-        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-    }
-
-    @Override
-    public void hideMainLoadingLayout() {
-        loadingLayout.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void setOrientationToPortait() {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-    }
-
-    @Override
-    public void reAttachSearchFragment() {
-        searchMainFragment = (SearchMainFragment) getSupportFragmentManager().findFragmentByTag(SEARCH_MAIN_TAG);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, searchMainFragment, SEARCH_MAIN_TAG).commit();
-    }
-
-    @Override
-    public void onBackPressed() {
-        presenter.backPressed(getSupportFragmentManager().getBackStackEntryCount(), toolbar.getVisibility() == View.GONE);
+        NavHostFragment.findNavController(getSupportFragmentManager().findFragmentById(R.id.my_nav_host_fragment)).popBackStack(R.id.searchMainFragment2, false);
     }
 
     @Override

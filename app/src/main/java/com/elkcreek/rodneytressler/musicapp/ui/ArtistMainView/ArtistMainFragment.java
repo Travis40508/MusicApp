@@ -100,7 +100,7 @@ public class ArtistMainFragment extends Fragment implements ArtistMainView {
     @Override
     public void reAttachFragment() {
         artistMainFragment = (ArtistMainFragment) getActivity().getSupportFragmentManager().findFragmentByTag(ARTIST_MAIN_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, artistMainFragment, ARTIST_MAIN_TAG).commit();
+//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, artistMainFragment, ARTIST_MAIN_TAG).commit();
     }
 
     @Override

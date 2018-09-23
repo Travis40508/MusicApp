@@ -34,6 +34,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.navigation.Navigation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -161,10 +162,7 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
         Bundle bundle = new Bundle();
         bundle.putString(ARTIST_UID_KEY, artistUID);
         bundle.putString(ARTIST_NAME_KEY, artistName);
-        ArtistMainFragment artistMainFragment = ArtistMainFragment.newInstance();
-        artistMainFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_holder, artistMainFragment, ARTIST_MAIN_TAG).addToBackStack(null).commit();
+        Navigation.findNavController(getView()).navigate(R.id.artistMainFragment, bundle);
     }
 
     @Override

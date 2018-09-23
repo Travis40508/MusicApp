@@ -9,7 +9,7 @@ import io.reactivex.Observable;
 public interface MusicApiService {
     Observable<List<MusicApi.Artist>> getArtistSearchResults(String artist, String apiKey);
     Observable<MusicApi.ArtistBioResponse> getArtistBio(String artistUid, String apiKey);
-    Observable<MusicApi.TopArtistsResponse> getTopArtists(String apiKey);
+    Observable<MusicApi.TopArtistsResponse> getTopArtists(String apiKey, int pageNumber);
     Observable<MusicApi.TopTracksResponse> getTopTracks(String artistUid, String apiKey);
     Observable<MusicApi.ArtistBioResponse> getArtistBioWithName(String artistName, String apiKey);
     Observable<MusicApi.TrackInfoResponse> getTrackInfo(String trackUid, String apiKey);

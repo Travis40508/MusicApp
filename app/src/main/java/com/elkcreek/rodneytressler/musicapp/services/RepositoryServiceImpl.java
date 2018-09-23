@@ -121,7 +121,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 
     @Override
     public Observable<List<MusicApi.Artist>> getTopArtistsFromNetwork() {
-        return musicApiService.getTopArtists(Constants.API_KEY)
+        return musicApiService.getTopArtists(Constants.API_KEY, 1)
                 .subscribeOn(Schedulers.io())
                 .map(MusicApi.TopArtistsResponse::getTopArtists)
                 .doOnNext(musicDatabaseService::insertTopArtist)

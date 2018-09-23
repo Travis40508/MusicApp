@@ -24,8 +24,8 @@ public interface MusicApi {
     @GET("/2.0?method=artist.getinfo&format=json")
     Observable<ArtistBioResponse> getArtistBioWithName(@Query("artist") String artistName, @Query("api_key") String apiKey);
 
-    @GET("/2.0?method=chart.gettopartists&format=json&limit=24")
-    Observable<TopArtistsResponse> getTopArtists(@Query("api_key") String apiKey);
+    @GET("/2.0?method=chart.gettopartists&format=json")
+    Observable<TopArtistsResponse> getTopArtists(@Query("api_key") String apiKey, @Query("page") int pageNumber);
 
     @GET("/2.0?method=chart.gettoptracks&format=json&limit=24")
     Observable<TopChartTracksResponse> getTopChartTracks(@Query("api_key") String apiKey);

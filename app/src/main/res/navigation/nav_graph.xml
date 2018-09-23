@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/searchMainFragment2">
+
+    <fragment
+        android:id="@+id/artistMainFragment"
+        android:name="com.elkcreek.rodneytressler.musicapp.ui.ArtistMainView.ArtistMainFragment"
+        android:label="fragment_artist_main"
+        tools:layout="@layout/fragment_artist_main" >
+
+        <action
+            android:id="@+id/action_artistMainFragment_self"
+            app:destination="@id/artistMainFragment" />
+        <action
+            android:id="@+id/action_artistMainFragment_to_trackMainFragment"
+            app:destination="@id/trackMainFragment" />
+        <action
+            android:id="@+id/action_artistMainFragment_to_albumMainFragment"
+            app:destination="@id/albumMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trackMainFragment"
+        android:name="com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment"
+        android:label="fragment_track_main"
+        tools:layout="@layout/fragment_track_main" />
+    <fragment
+        android:id="@+id/searchMainFragment2"
+        android:name="com.elkcreek.rodneytressler.musicapp.ui.SearchMainView.SearchMainFragment"
+        android:label="SearchMainFragment" >
+        <action
+            android:id="@+id/action_searchMainFragment2_to_artistMainFragment"
+            app:destination="@id/artistMainFragment" />
+        <action
+            android:id="@+id/action_searchMainFragment2_to_trackMainFragment"
+            app:destination="@id/trackMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/albumMainFragment"
+        android:name="com.elkcreek.rodneytressler.musicapp.ui.AlbumMainView.AlbumMainFragment"
+        android:label="fragment_album_main"
+        tools:layout="@layout/fragment_album_main" >
+        <action
+            android:id="@+id/action_albumMainFragment_to_trackMainFragment"
+            app:destination="@id/trackMainFragment" />
+    </fragment>
+</navigation>

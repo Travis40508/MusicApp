@@ -28,28 +28,7 @@ public class MainPresenter implements BasePresenter<MainView> {
 
     }
 
-    public void backPressed(int backStackEntryCount, boolean toolBarIsGone) {
-        if(!toolBarIsGone) {
-            if (backStackEntryCount > 0) {
-                view.detachImmediateFragment();
-                view.hideMainLoadingLayout();
-            } else {
-                view.closeApp();
-            }
-        } else {
-            view.setOrientationToPortait();
-        }
-    }
-
     public void homeClicked() {
         view.returnHome();
-    }
-
-    public void screenRotated(boolean screenNeverRotated) {
-        if(!screenNeverRotated) {
-            view.reAttachSearchFragment();
-        } else {
-            view.attachSearchFragment();
-        }
     }
 }

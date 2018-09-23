@@ -31,6 +31,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.navigation.Navigation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
@@ -137,10 +138,7 @@ public class AllTracksFragment extends BaseFragment implements AllTracksView {
         bundle.putString(TRACK_NAME_KEY, trackName);
         bundle.putString(ARTIST_NAME_KEY, artistName);
         bundle.putString(TRACK_UID_KEY, trackUid);
-        TrackMainFragment trackMainFragment = TrackMainFragment.newInstance();
-        trackMainFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().
-                replace(R.id.fragment_holder, trackMainFragment, TRACK_MAIN_TAG).addToBackStack(null).commit();
+        Navigation.findNavController(getView()).navigate(R.id.trackMainFragment, bundle);
     }
 
     @Override

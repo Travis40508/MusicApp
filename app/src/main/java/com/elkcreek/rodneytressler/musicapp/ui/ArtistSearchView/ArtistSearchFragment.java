@@ -1,5 +1,6 @@
 package com.elkcreek.rodneytressler.musicapp.ui.ArtistSearchView;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +36,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.navigation.Navigation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
@@ -79,6 +83,18 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
         super.onPause();
         presenter.unsubscribe();
         presenter.storeState(recyclerView.getLayoutManager() != null ? recyclerView.getLayoutManager().onSaveInstanceState() : null);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                presenter.scrollStateChanged(recyclerView.canScrollVertically(1));
+            }
+        });
     }
 
     @Nullable
@@ -200,13 +216,27 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     }
 
     @Override
+    public void addArtists(List<MusicApi.Artist> artists) {
+        adapter.addToList(artists);
+    }
+
+    @Override
     public void showMainArtistScreen(MusicApi.Artist artist) {
         Bundle bundle = new Bundle();
         bundle.putString(ARTIST_NAME_KEY, artist.getArtistName());
         bundle.putString(ARTIST_UID_KEY, artist.getArtistUID());
-        ArtistMainFragment artistMainFragment = ArtistMainFragment.newInstance();
-        artistMainFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().
-                replace(R.id.fragment_holder, artistMainFragment, ARTIST_MAIN_TAG).addToBackStack(null).commit();
+        Navigation.findNavController(getView()).navigate(R.id.artistMainFragment, bundle);
+    }
+
+    @Override
+    public void showLoadingMessage() {
+        View view = getLayoutInflater().inflate(R.layout.loading_view, null);
+        Dialog mBottomSheetDialog = new Dialog(getActivity(), R.style.Theme_Design_BottomSheetDialog);
+        mBottomSheetDialog.setContentView(view); // your custom view.
+        mBottomSheetDialog.setCancelable(true);
+        mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+
+        mBottomSheetDialog.show();
     }
 }

@@ -91,7 +91,7 @@ public class TrackMainFragment extends Fragment implements TrackMainView {
     @Override
     public void reAttachFragment() {
         trackMainFragment = (TrackMainFragment) getActivity().getSupportFragmentManager().findFragmentByTag(TRACK_MAIN_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, trackMainFragment, TRACK_MAIN_TAG).commit();
+//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, trackMainFragment, TRACK_MAIN_TAG).commit();
     }
 
     @Override

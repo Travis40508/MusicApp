@@ -37,4 +37,8 @@ public interface ArtistSearchView extends BaseView {
     void toastConnectionFailedToast();
 
     void scrollRecyclerViewToTop();
+
+    void addArtists(List<MusicApi.Artist> artists);
+
+    void showLoadingMessage();
 }

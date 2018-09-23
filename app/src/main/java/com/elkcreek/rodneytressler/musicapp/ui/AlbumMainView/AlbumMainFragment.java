@@ -94,7 +94,7 @@ public class AlbumMainFragment extends Fragment implements AlbumMainView {
     @Override
     public void reAttachFragment() {
         albumMainFragment = (AlbumMainFragment) getActivity().getSupportFragmentManager().findFragmentByTag(ALBUM_MAIN_TAG);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, albumMainFragment, ALBUM_MAIN_TAG).commit();
+//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, albumMainFragment, ALBUM_MAIN_TAG).commit();
     }
 
     @Override

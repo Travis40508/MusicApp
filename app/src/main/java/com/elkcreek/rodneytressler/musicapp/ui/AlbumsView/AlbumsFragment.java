@@ -25,6 +25,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.navigation.Navigation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
@@ -123,10 +124,7 @@ public class AlbumsFragment extends BaseFragment implements AlbumsView {
         bundle.putString(ALBUM_NAME_KEY, albumName);
         bundle.putString(ALBUM_UID_KEY, albumUid);
         bundle.putString(ALBUM_IMAGE_URL_KEY, imageUrl);
-        AlbumMainFragment albumMainFragment = AlbumMainFragment.newInstance();
-        albumMainFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_holder, albumMainFragment, ALBUM_MAIN_TAG).addToBackStack(null).commit();
+        Navigation.findNavController(getView()).navigate(R.id.albumMainFragment, bundle);
     }
 
     @Override

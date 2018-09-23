@@ -34,8 +34,8 @@ public class MusicApiServiceImpl implements MusicApiService {
     }
 
     @Override
-    public Observable<MusicApi.TopArtistsResponse> getTopArtists(String apiKey) {
-        return musicApi.getTopArtists(apiKey)
+    public Observable<MusicApi.TopArtistsResponse> getTopArtists(String apiKey, int pageNumber) {
+        return musicApi.getTopArtists(apiKey, pageNumber)
                 .subscribeOn(Schedulers.io());
     }
 
