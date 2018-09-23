@@ -227,12 +227,6 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
         Bundle bundle = new Bundle();
         bundle.putString(ARTIST_NAME_KEY, artist.getArtistName());
         bundle.putString(ARTIST_UID_KEY, artist.getArtistUID());
-        Navigation.findNavController(getView()).navigate(R.id.artistMainFragment, bundle,
-                new NavOptions.Builder()
-        .setEnterAnim(R.anim.enter_from_right)
-        .setExitAnim(R.anim.exit_to_left)
-        .setPopEnterAnim(R.anim.enter_from_left)
-        .setPopExitAnim(R.anim.exit_to_right)
-        .build());
+        Navigation.findNavController(getView()).navigate(R.id.artistMainFragment, bundle);
     }
 }

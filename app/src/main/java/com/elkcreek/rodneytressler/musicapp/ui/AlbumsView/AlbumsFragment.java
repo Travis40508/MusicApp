@@ -125,12 +125,7 @@ public class AlbumsFragment extends BaseFragment implements AlbumsView {
         bundle.putString(ALBUM_NAME_KEY, albumName);
         bundle.putString(ALBUM_UID_KEY, albumUid);
         bundle.putString(ALBUM_IMAGE_URL_KEY, imageUrl);
-        Navigation.findNavController(getView()).navigate(R.id.albumMainFragment, bundle, new NavOptions.Builder()
-                .setEnterAnim(R.anim.enter_from_right)
-                .setExitAnim(R.anim.exit_to_left)
-                .setPopEnterAnim(R.anim.enter_from_left)
-                .setPopExitAnim(R.anim.exit_to_right)
-                .build());
+        Navigation.findNavController(getView()).navigate(R.id.albumMainFragment, bundle);
     }
 
     @Override
