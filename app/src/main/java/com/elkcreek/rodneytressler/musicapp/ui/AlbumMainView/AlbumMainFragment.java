@@ -77,8 +77,6 @@ public class AlbumMainFragment extends Fragment implements AlbumMainView {
         View view = inflater.inflate(R.layout.fragment_album_main, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
-        presenter.checkSavedInstanceState(savedInstanceState == null,
-                getActivity().getSupportFragmentManager().findFragmentByTag(ALBUM_MAIN_TAG) == null);
         return view;
     }
 
@@ -89,12 +87,6 @@ public class AlbumMainFragment extends Fragment implements AlbumMainView {
         AlbumMainFragment fragment = new AlbumMainFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void reAttachFragment() {
-        albumMainFragment = (AlbumMainFragment) getActivity().getSupportFragmentManager().findFragmentByTag(ALBUM_MAIN_TAG);
-//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, albumMainFragment, ALBUM_MAIN_TAG).commit();
     }
 
     @Override

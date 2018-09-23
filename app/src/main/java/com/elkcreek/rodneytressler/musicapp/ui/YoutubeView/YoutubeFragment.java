@@ -88,17 +88,6 @@ public class YoutubeFragment extends Fragment implements YoutubeView{
     }
 
     @Override
-    public void reAttachYoutubeFragment() {
-        youtubeFragment = (YoutubeFragment) getActivity().getSupportFragmentManager().findFragmentByTag(YOUTUBE_TAG);
-//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, youtubeFragment, YOUTUBE_TAG).commit();
-    }
-
-    @Override
-    public void toastUnableToLoadVideo(String unableToLoadVideo) {
-        Toast.makeText(getContext(), unableToLoadVideo, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
@@ -170,12 +159,6 @@ public class YoutubeFragment extends Fragment implements YoutubeView{
     }
 
     @Override
-    public void releaseYouTubePlayer() {
-//        youTubePlayer.release();
-//        youTubePlayer = null;
-    }
-
-    @Override
     public void hideLoadingLayout() {
         loadingLayout.setVisibility(View.GONE);
     }
@@ -196,14 +179,7 @@ public class YoutubeFragment extends Fragment implements YoutubeView{
         getActivity().findViewById(R.id.my_toolbar).setVisibility(View.VISIBLE);
         getParentFragment().getView().findViewById(R.id.tab_layout_track_main).setVisibility(View.VISIBLE);
     }
-
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        presenter.onDetach();
-    }
-
+    
     @Override
     public void onDestroy() {
         presenter.onDestroy(youTubePlayerSupportFragment == null);

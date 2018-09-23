@@ -25,7 +25,11 @@
         android:id="@+id/trackMainFragment"
         android:name="com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment"
         android:label="fragment_track_main"
-        tools:layout="@layout/fragment_track_main" />
+        tools:layout="@layout/fragment_track_main" >
+        <action
+            android:id="@+id/action_trackMainFragment_self"
+            app:destination="@id/trackMainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchMainFragment2"
         android:name="com.elkcreek.rodneytressler.musicapp.ui.SearchMainView.SearchMainFragment"

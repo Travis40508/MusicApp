@@ -36,14 +36,6 @@ public class SearchMainPresenter implements BasePresenter<SearchMainView> {
 
     }
 
-    public void checkSavedInstanceState(boolean savedInstanceStateIsNull, boolean fragmentIsNull) {
-        if(!savedInstanceStateIsNull) {
-            if(!fragmentIsNull) {
-//                view.reAttachFragment();
-            }
-        }
-    }
-
     public void saveState(Bundle outState, int currentItem) {
         outState.putInt(STATE_VIEW_PAGER_POSITION, currentItem);
     }

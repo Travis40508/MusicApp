@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
         presenter.attachView(this);
     }
-
-    @Override
     public void returnHome() {
         NavHostFragment.findNavController(getSupportFragmentManager().findFragmentById(R.id.my_nav_host_fragment)).popBackStack(R.id.searchMainFragment2, false);
     }
@@ -68,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_home:
-                presenter.homeClicked();
+                returnHome();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

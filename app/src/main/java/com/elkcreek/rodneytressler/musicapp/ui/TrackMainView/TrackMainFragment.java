@@ -62,8 +62,6 @@ public class TrackMainFragment extends Fragment implements TrackMainView {
         View view = inflater.inflate(R.layout.fragment_track_main, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
-        presenter.screenRotated(savedInstanceState != null && getActivity().getSupportFragmentManager().findFragmentByTag(TRACK_MAIN_TAG) != null);
-
         return view;
     }
 
@@ -86,12 +84,6 @@ public class TrackMainFragment extends Fragment implements TrackMainView {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         presenter.getState(savedInstanceState);
-    }
-
-    @Override
-    public void reAttachFragment() {
-        trackMainFragment = (TrackMainFragment) getActivity().getSupportFragmentManager().findFragmentByTag(TRACK_MAIN_TAG);
-//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, trackMainFragment, TRACK_MAIN_TAG).commit();
     }
 
     @Override

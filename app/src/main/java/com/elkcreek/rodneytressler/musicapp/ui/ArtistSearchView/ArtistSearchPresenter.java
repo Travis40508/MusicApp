@@ -178,7 +178,6 @@ public class ArtistSearchPresenter implements BasePresenter<ArtistSearchView> {
 
     public void scrollStateChanged(boolean canScrollDown) {
         if(!canScrollDown) {
-            view.showLoadingMessage();
             loadMoreItems();
         }
     }

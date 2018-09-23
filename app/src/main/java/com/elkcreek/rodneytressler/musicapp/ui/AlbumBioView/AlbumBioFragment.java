@@ -26,6 +26,7 @@ import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 import javax.inject.Inject;
 
+import androidx.navigation.Navigation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -161,7 +162,7 @@ public class AlbumBioFragment extends BaseFragment implements AlbumBioView {
 
     @Override
     public void detachFragment() {
-        getActivity().onBackPressed();
+        Navigation.findNavController(getView()).popBackStack();
     }
 
     @Override

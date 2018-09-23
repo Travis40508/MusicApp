@@ -39,6 +39,4 @@ public interface ArtistSearchView extends BaseView {
     void scrollRecyclerViewToTop();
 
     void addArtists(List<MusicApi.Artist> artists);
-
-    void showLoadingMessage();
 }

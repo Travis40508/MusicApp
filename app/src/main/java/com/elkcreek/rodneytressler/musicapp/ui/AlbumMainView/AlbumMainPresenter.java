@@ -42,14 +42,6 @@ public class AlbumMainPresenter implements BasePresenter<AlbumMainView> {
         disposable.clear();
     }
 
-    public void checkSavedInstanceState(boolean savedInstanceStateIsNull, boolean albumMainFragmentIsNull) {
-        if(!savedInstanceStateIsNull) {
-            if(!albumMainFragmentIsNull) {
-                view.reAttachFragment();
-            }
-        }
-    }
-
     public void artistRetrieved(String artistName, String artistUid) {
         this.artistName = artistName;
         this.artistUid = artistUid;

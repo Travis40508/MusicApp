@@ -40,12 +40,6 @@ public class TrackMainPresenter implements BasePresenter<TrackMainView> {
         disposable.clear();
     }
 
-    public void screenRotated(boolean screenRotated) {
-        if(screenRotated) {
-            view.reAttachFragment();
-        }
-    }
-
     public void trackRetrieved(String trackUid) {
         this.trackUid = trackUid;
     }

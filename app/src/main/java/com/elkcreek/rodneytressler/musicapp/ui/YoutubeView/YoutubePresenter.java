@@ -136,10 +136,6 @@ public class YoutubePresenter implements BasePresenter<YoutubeView> {
         }
     }
 
-    public void onDetach() {
-        view.releaseYouTubePlayer();
-    }
-
     public void configurationChanged(boolean isInLandScapeMode, boolean youtubePlayerIsVisible) {
         if (youtubePlayerIsVisible) {
             if (isInLandScapeMode) {

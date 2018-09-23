@@ -219,6 +219,6 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
 
     @Override
     public void detachFragment() {
-        getActivity().onBackPressed();
+        Navigation.findNavController(getView()).popBackStack();
     }
 }

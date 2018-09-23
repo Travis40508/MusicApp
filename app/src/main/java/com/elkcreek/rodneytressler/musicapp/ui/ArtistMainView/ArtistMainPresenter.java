@@ -47,14 +47,6 @@ public class ArtistMainPresenter implements BasePresenter<ArtistMainView> {
         this.artistName = artistName;
     }
 
-    public void checkSavedInstanceState(boolean savedInstanceStateIsNull, boolean artistMainFragmentIsNull) {
-        if(!savedInstanceStateIsNull) {
-            if(!artistMainFragmentIsNull) {
-                view.reAttachFragment();
-            }
-        }
-    }
-
     public void screenPaused(int currentItem) {
         this.currentItem = currentItem;
     }

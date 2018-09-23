@@ -75,8 +75,6 @@ public class ArtistMainFragment extends Fragment implements ArtistMainView {
         View view = inflater.inflate(R.layout.fragment_artist_main, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
-        presenter.checkSavedInstanceState(savedInstanceState == null,
-                getActivity().getSupportFragmentManager().findFragmentByTag(ARTIST_MAIN_TAG) == null);
         return view;
     }
 
@@ -95,12 +93,6 @@ public class ArtistMainFragment extends Fragment implements ArtistMainView {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         presenter.viewPagerCreated();
-    }
-
-    @Override
-    public void reAttachFragment() {
-        artistMainFragment = (ArtistMainFragment) getActivity().getSupportFragmentManager().findFragmentByTag(ARTIST_MAIN_TAG);
-//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, artistMainFragment, ARTIST_MAIN_TAG).commit();
     }
 
     @Override

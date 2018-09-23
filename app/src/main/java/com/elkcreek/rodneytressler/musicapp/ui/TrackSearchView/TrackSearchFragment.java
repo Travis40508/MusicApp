@@ -137,10 +137,6 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
         bundle.putString(ARTIST_NAME_KEY, artistName);
         bundle.putString(TRACK_UID_KEY, trackUid);
         Navigation.findNavController(getView()).navigate(R.id.trackMainFragment, bundle);
-//        TrackMainFragment trackMainFragment = TrackMainFragment.newInstance();
-//        trackMainFragment.setArguments(bundle);
-//        getActivity().getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.fragment_holder, trackMainFragment, TRACK_MAIN_TAG).addToBackStack(null).commit();
     }
 
     @Override

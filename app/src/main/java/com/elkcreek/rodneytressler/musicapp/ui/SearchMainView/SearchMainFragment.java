@@ -57,8 +57,6 @@ public class SearchMainFragment extends BaseFragment implements SearchMainView {
         View view = inflater.inflate(R.layout.fragment_search_main, container, false);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
-        presenter.checkSavedInstanceState(savedInstanceState == null,
-                getActivity().getSupportFragmentManager().findFragmentByTag(Constants.SEARCH_MAIN_TAG) == null);
         return view;
     }
 
@@ -69,12 +67,6 @@ public class SearchMainFragment extends BaseFragment implements SearchMainView {
         SearchMainFragment fragment = new SearchMainFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void reAttachFragment() {
-//        searchMainFragment = (SearchMainFragment) getActivity().getSupportFragmentManager().findFragmentByTag(Constants.SEARCH_MAIN_TAG);
-//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, searchMainFragment, Constants.SEARCH_MAIN_TAG).commit();
     }
 
     @Override

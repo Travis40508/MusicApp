@@ -227,16 +227,4 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
         bundle.putString(ARTIST_UID_KEY, artist.getArtistUID());
         Navigation.findNavController(getView()).navigate(R.id.artistMainFragment, bundle);
     }
-
-    @Override
-    public void showLoadingMessage() {
-        View view = getLayoutInflater().inflate(R.layout.loading_view, null);
-        Dialog mBottomSheetDialog = new Dialog(getActivity(), R.style.Theme_Design_BottomSheetDialog);
-        mBottomSheetDialog.setContentView(view); // your custom view.
-        mBottomSheetDialog.setCancelable(true);
-        mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
-
-        mBottomSheetDialog.show();
-    }
 }
