@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
@@ -21,6 +22,7 @@ import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.AlbumTracksAdapter;
+import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 import java.util.List;
 
@@ -153,5 +155,15 @@ public class AlbumTracksFragment extends BaseFragment implements AlbumTracksView
     @Override
     public void setRecyclerViewPosition(Parcelable recyclerViewPosition) {
         recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewPosition);
+    }
+
+    @Override
+    public void toastConnectionFailedToast() {
+        Toast.makeText(getContext(), Constants.CONNECTION_ERROR, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void hideParentLoadingLayout() {
+        hideMainLoadingLayout();
     }
 }

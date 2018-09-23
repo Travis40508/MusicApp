@@ -85,6 +85,7 @@ public class ArtistBioPresenter implements BasePresenter<ArtistBioView> {
             Log.d("@@@@-ArtistBioPresenter", throwable.getMessage());
             if(throwable instanceof SocketTimeoutException || throwable instanceof UnknownHostException) {
                 view.detachFragment();
+                view.hideMainProgressBar();
                 view.toastConnectionFailedToast();
             } else {
                 view.showArtistBio(Constants.NO_ARTIST_BIO_AVAILABLE);

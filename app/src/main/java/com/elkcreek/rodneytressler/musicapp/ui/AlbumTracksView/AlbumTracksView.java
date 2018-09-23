@@ -21,4 +21,8 @@ public interface AlbumTracksView extends BaseView {
     void showNoTracksAvailableMessage();
 
     void setRecyclerViewPosition(Parcelable recyclerViewPosition);
+
+    void toastConnectionFailedToast();
+
+    void hideParentLoadingLayout();
 }

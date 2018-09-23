@@ -8,6 +8,8 @@ import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.utils.BasePresenter;
 
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -60,9 +62,14 @@ public class AlbumTracksPresenter implements BasePresenter<AlbumTracksView> {
 
     private Consumer<Throwable> updateUiWithError() {
         return throwable -> {
-            Log.d("@@@@", throwable.getMessage());
-            view.showNoTracksAvailableMessage();
-            view.hideLoadingLayout();
+            if(throwable instanceof SocketTimeoutException || throwable instanceof UnknownHostException) {
+                view.toastConnectionFailedToast();
+                view.hideParentLoadingLayout();
+            } else {
+                Log.d("@@@@", throwable.getMessage());
+                view.showNoTracksAvailableMessage();
+                view.hideLoadingLayout();
+            }
         };
     }
 
