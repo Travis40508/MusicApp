@@ -1,6 +1,9 @@
 package com.elkcreek.rodneytressler.musicapp.ui.ArtistSearchView;
 
 import android.app.Dialog;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
+import android.arch.lifecycle.ViewModelStore;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -51,6 +54,7 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KE
 public class ArtistSearchFragment extends BaseFragment implements ArtistSearchView {
 
     @Inject protected ArtistSearchPresenter presenter;
+    @Inject ArtistSearchFactory factory;
     @BindView(R.id.recycler_view)
     protected RecyclerView recyclerView;
     @BindView(R.id.input_artist_search)
@@ -61,6 +65,7 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     protected FrameLayout loadingLayout;
     private ArtistAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
+    private ArtistSearchViewModel viewModel;
 
     @OnTextChanged(value = R.id.input_artist_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void onArtistSearchChange(Editable editable) {
@@ -149,6 +154,11 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         presenter.getState(savedInstanceState);
+        viewModel = getViewModel();
+    }
+
+    private ArtistSearchViewModel getViewModel() {
+        return ViewModelProviders.of(this, factory).get(ArtistSearchViewModel.class);
     }
 
     @Override

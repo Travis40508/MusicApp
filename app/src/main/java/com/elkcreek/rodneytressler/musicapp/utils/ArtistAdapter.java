@@ -1,6 +1,7 @@
 package com.elkcreek.rodneytressler.musicapp.utils;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +16,9 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.elkcreek.rodneytressler.musicapp.BR;
 import com.elkcreek.rodneytressler.musicapp.R;
+import com.elkcreek.rodneytressler.musicapp.databinding.ItemArtistBinding;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.squareup.picasso.Picasso;
 
@@ -40,13 +43,15 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
     @NonNull
     @Override
     public ArtistViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_artist, viewGroup, false);
-        return new ArtistViewHolder(itemView);
+        ItemArtistBinding binding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_artist, viewGroup, false);
+        return new ArtistViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ArtistViewHolder artistViewHolder, int position) {
-        artistViewHolder.bindArtist(artistList.get(position));
+        MusicApi.Artist artist = artistList.get(position);
+        artist.getArtistImages().get(2).getImageUrl();
+        artistViewHolder.binding.setVariable(BR.artist, artist);
         artistViewHolder.itemView.setOnClickListener(artistViewHolder.onInfoButtonClicked(artistList.get(position)));
     }
 
@@ -77,28 +82,13 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
 
     public class ArtistViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.image_artist_item)
-        protected ImageView artistImage;
+        private final ItemArtistBinding binding;
 
-        @BindView(R.id.text_artist_name)
-        protected TextView artistText;
-
-        public ArtistViewHolder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public ArtistViewHolder(ItemArtistBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
-        public void bindArtist(MusicApi.Artist artist) {
-            glide.asBitmap()
-                    .load(artist.getArtistImages().get(2).getImageUrl())
-                    .apply(RequestOptions.overrideOf(250, 300))
-                    .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
-                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
-                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
-                    .transition(BitmapTransitionOptions.withCrossFade())
-                    .into(artistImage);
-            artistText.setText(artist.getArtistName());
-        }
 
         public View.OnClickListener onInfoButtonClicked(MusicApi.Artist artist) {
             return new View.OnClickListener() {

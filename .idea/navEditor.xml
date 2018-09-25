@@ -71,12 +71,12 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_searchMainFragment2_to_artistMainFragment">
+                            <entry key="action_searchMainFragment2_to_trackMainFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_searchMainFragment2_to_trackMainFragment">
+                            <entry key="action_searchMainFragment_to_artistMainFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
