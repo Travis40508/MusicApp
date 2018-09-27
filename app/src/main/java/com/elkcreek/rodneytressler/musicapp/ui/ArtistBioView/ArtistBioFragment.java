@@ -6,14 +6,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,9 +22,7 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
-import com.elkcreek.rodneytressler.musicapp.ui.AllTracksView.AllTracksFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.ArtistMainView.ArtistMainFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import com.elkcreek.rodneytressler.musicapp.utils.SimilarArtistAdapter;
 
@@ -34,7 +30,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +37,6 @@ import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 
 import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
-import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_MAIN_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
 

@@ -1,4 +1,4 @@
-package com.elkcreek.rodneytressler.musicapp.ui.ArtistSearchView;
+package com.elkcreek.rodneytressler.musicapp.ui.artistsearchview;
 
 import android.os.Parcelable;
 

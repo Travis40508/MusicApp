@@ -1,8 +1,7 @@
-package com.elkcreek.rodneytressler.musicapp.ui.ArtistSearchView;
+package com.elkcreek.rodneytressler.musicapp.ui.artistsearchview;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;

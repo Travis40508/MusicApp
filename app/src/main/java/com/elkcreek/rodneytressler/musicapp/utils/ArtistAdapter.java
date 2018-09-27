@@ -1,39 +1,23 @@
 package com.elkcreek.rodneytressler.musicapp.utils;
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
-import com.elkcreek.rodneytressler.musicapp.BR;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.ItemArtistBinding;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
 
 public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder> {
 
     private final RequestManager glide;
     private List<MusicApi.Artist> artistList;
-    private Callback callback;
 
     public ArtistAdapter(RequestManager glide, List<MusicApi.Artist> artistList) {
         this.artistList = artistList;
@@ -49,20 +33,16 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
 
     @Override
     public void onBindViewHolder(@NonNull ArtistViewHolder artistViewHolder, int position) {
+        EventHandlers eventHandlers = new EventHandlers();
         MusicApi.Artist artist = artistList.get(position);
-        artist.getArtistImages().get(2).getImageUrl();
-        artistViewHolder.binding.setVariable(BR.artist, artist);
-        artistViewHolder.itemView.setOnClickListener(artistViewHolder.onInfoButtonClicked(artistList.get(position)));
+        artistViewHolder.binding.setArtist(artist);
+        artistViewHolder.binding.setHandler(eventHandlers);
     }
 
 
     @Override
     public int getItemCount() {
         return artistList.size();
-    }
-
-    public void setAdapterCallback(Callback callback) {
-        this.callback = callback;
     }
 
     public void setArtistList(List<MusicApi.Artist> artistList) {
@@ -88,19 +68,5 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
             super(binding.getRoot());
             this.binding = binding;
         }
-
-
-        public View.OnClickListener onInfoButtonClicked(MusicApi.Artist artist) {
-            return new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    callback.onArtistInfoClicked(artist);
-                }
-            };
-        }
-    }
-
-    public interface Callback {
-        void onArtistInfoClicked(MusicApi.Artist artist);
     }
 }

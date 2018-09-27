@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,8 +17,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
-import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.AlbumTracksAdapter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
@@ -28,7 +25,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,7 +33,6 @@ import dagger.android.support.AndroidSupportInjection;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_IMAGE_URL_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_UID_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
-import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_MAIN_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_UID_KEY;
 

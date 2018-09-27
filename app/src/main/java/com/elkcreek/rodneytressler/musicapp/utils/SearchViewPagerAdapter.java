@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.elkcreek.rodneytressler.musicapp.ui.ArtistSearchView.ArtistSearchFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.artistsearchview.ArtistSearchFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackSearchView.TrackSearchFragment;
 
 public class SearchViewPagerAdapter extends FragmentPagerAdapter {

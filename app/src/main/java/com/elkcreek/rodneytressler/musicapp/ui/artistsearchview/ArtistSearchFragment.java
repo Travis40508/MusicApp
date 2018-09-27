@@ -1,11 +1,9 @@
-package com.elkcreek.rodneytressler.musicapp.ui.ArtistSearchView;
+package com.elkcreek.rodneytressler.musicapp.ui.artistsearchview;
 
-import android.app.Dialog;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.arch.lifecycle.ViewModelStore;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -14,23 +12,20 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
+import com.elkcreek.rodneytressler.musicapp.databinding.FragmentArtistSearchBinding;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
-import com.elkcreek.rodneytressler.musicapp.ui.ArtistMainView.ArtistMainFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
+import com.elkcreek.rodneytressler.musicapp.utils.EventHandlers;
 import com.elkcreek.rodneytressler.musicapp.utils.ArtistAdapter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
@@ -39,15 +34,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import androidx.navigation.NavController;
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
 import dagger.android.support.AndroidSupportInjection;
 
-import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_MAIN_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KEY;
 
@@ -66,6 +58,7 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     private ArtistAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
     private ArtistSearchViewModel viewModel;
+    private FragmentArtistSearchBinding binding;
 
     @OnTextChanged(value = R.id.input_artist_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void onArtistSearchChange(Editable editable) {
@@ -107,13 +100,13 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_artist_search, container, false);
-        ButterKnife.bind(this, view);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_artist_search, container, false);
+        ButterKnife.bind(this, binding.getRoot());
         presenter.attachView(this);
         adapter = new ArtistAdapter(Glide.with(this), new ArrayList<>());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2));
-        return view;
+        return binding.getRoot();
     }
 
 
@@ -135,12 +128,6 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     @Override
     public void loadArtists(List<MusicApi.Artist> artistList) {
         adapter.setArtistList(artistList);
-        adapter.setAdapterCallback(new ArtistAdapter.Callback() {
-            @Override
-            public void onArtistInfoClicked(MusicApi.Artist artist) {
-                presenter.onArtistClicked(artist);
-            }
-        });
         presenter.listSet();
     }
 
@@ -237,6 +224,14 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
         Bundle bundle = new Bundle();
         bundle.putString(ARTIST_NAME_KEY, artist.getArtistName());
         bundle.putString(ARTIST_UID_KEY, artist.getArtistUID());
+        Navigation.findNavController(getView()).navigate(R.id.artistMainFragment, bundle);
+    }
+
+
+    public void onArtistClicked(String artistName, String artistUid) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ARTIST_NAME_KEY, artistName);
+        bundle.putString(ARTIST_UID_KEY, artistUid);
         Navigation.findNavController(getView()).navigate(R.id.artistMainFragment, bundle);
     }
 }

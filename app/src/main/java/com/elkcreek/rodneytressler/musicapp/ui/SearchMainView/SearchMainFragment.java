@@ -11,8 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.elkcreek.rodneytressler.musicapp.R;
-import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
-import com.elkcreek.rodneytressler.musicapp.utils.Constants;
+import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.SearchViewPagerAdapter;
 
 import javax.inject.Inject;

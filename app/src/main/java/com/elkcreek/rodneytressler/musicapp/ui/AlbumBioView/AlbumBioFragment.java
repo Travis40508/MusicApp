@@ -6,11 +6,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -21,7 +19,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
-import com.elkcreek.rodneytressler.musicapp.ui.BaseFragment.BaseFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 import javax.inject.Inject;
@@ -33,7 +31,6 @@ import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 
 import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
-import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_BIO_TAG;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_UID_KEY;
 
 public class AlbumBioFragment extends BaseFragment implements AlbumBioView {
