@@ -77,6 +77,7 @@ public class ArtistSearchViewModel extends ViewModel {
     }
 
     public void onArtistSearchTextChanged(CharSequence artistSearchText, int start, int before, int count) {
+        setShowProgressBar(false);
         if (timer != null) {
             timer.cancel();
         }
@@ -92,7 +93,7 @@ public class ArtistSearchViewModel extends ViewModel {
                 public void run() {
                     disposable.add(getArtistSearchResults(artistSearchText.toString()).subscribe(getSearchResponse(), updateUiWithError()));
                 }
-            }, 1000);
+            }, 750);
         }
     }
 
