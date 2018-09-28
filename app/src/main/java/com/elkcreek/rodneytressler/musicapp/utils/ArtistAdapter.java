@@ -16,12 +16,10 @@ import java.util.List;
 
 public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder> {
 
-    private final RequestManager glide;
     private List<MusicApi.Artist> artistList;
 
-    public ArtistAdapter(RequestManager glide, List<MusicApi.Artist> artistList) {
+    public ArtistAdapter(List<MusicApi.Artist> artistList) {
         this.artistList = artistList;
-        this.glide = glide;
     }
 
     @NonNull

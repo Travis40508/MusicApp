@@ -45,24 +45,21 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KE
 
 public class ArtistSearchFragment extends BaseFragment implements ArtistSearchView {
 
-    @Inject protected ArtistSearchPresenter presenter;
     @Inject ArtistSearchFactory factory;
-    @BindView(R.id.recycler_view)
-    protected RecyclerView recyclerView;
     @BindView(R.id.input_artist_search)
     protected AutoCompleteTextView artistInput;
     @BindView(R.id.text_search_value)
     protected TextView searchText;
-    @BindView(R.id.loading_layout)
-    protected FrameLayout loadingLayout;
-    private ArtistAdapter adapter;
-    private LinearLayoutManager linearLayoutManager;
+//    @BindView(R.id.loading_layout)
+//    protected FrameLayout loadingLayout;
+//    private ArtistAdapter adapter;
+//    private LinearLayoutManager linearLayoutManager;
     private ArtistSearchViewModel viewModel;
     private FragmentArtistSearchBinding binding;
 
     @OnTextChanged(value = R.id.input_artist_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void onArtistSearchChange(Editable editable) {
-        presenter.artistSearchTextChanged(editable.toString(), adapter != null && adapter.getItemCount() > 0);
+//        presenter.artistSearchTextChanged(editable.toString(), adapter != null && adapter.getItemCount() > 0);
     }
 
 
@@ -75,37 +72,35 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     @Override
     public void onResume() {
         super.onResume();
-        presenter.subscribe();
+//        presenter.subscribe();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        presenter.unsubscribe();
-        presenter.storeState(recyclerView.getLayoutManager() != null ? recyclerView.getLayoutManager().onSaveInstanceState() : null);
+//        presenter.unsubscribe();
+//        presenter.storeState(recyclerView.getLayoutManager() != null ? recyclerView.getLayoutManager().onSaveInstanceState() : null);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                presenter.scrollStateChanged(recyclerView.canScrollVertically(1));
-            }
-        });
+//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+////                presenter.scrollStateChanged(recyclerView.canScrollVertically(1));
+//            }
+//        });
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_artist_search, container, false);
-        ButterKnife.bind(this, binding.getRoot());
-        presenter.attachView(this);
-        adapter = new ArtistAdapter(Glide.with(this), new ArrayList<>());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2));
+//        presenter.attachView(this);
+//        adapter = new ArtistAdapter(Glide.with(this), new ArrayList<>());
+//        recyclerView.setAdapter(adapter);
         return binding.getRoot();
     }
 
@@ -117,9 +112,9 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
     }
 
     public static ArtistSearchFragment newInstance() {
-        
+
         Bundle args = new Bundle();
-        
+
         ArtistSearchFragment fragment = new ArtistSearchFragment();
         fragment.setArguments(args);
         return fragment;
@@ -127,21 +122,22 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
 
     @Override
     public void loadArtists(List<MusicApi.Artist> artistList) {
-        adapter.setArtistList(artistList);
-        presenter.listSet();
+//        adapter.setArtistList(artistList);
+//        presenter.listSet();
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        presenter.saveState(outState, recyclerView.getLayoutManager() != null ? recyclerView.getLayoutManager().onSaveInstanceState() : null);
+//        presenter.saveState(outState, recyclerView.getLayoutManager() != null ? recyclerView.getLayoutManager().onSaveInstanceState() : null);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        presenter.getState(savedInstanceState);
+//        presenter.getState(savedInstanceState);
         viewModel = getViewModel();
+        binding.setViewModel(viewModel);
     }
 
     private ArtistSearchViewModel getViewModel() {
@@ -150,7 +146,7 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
 
     @Override
     public void showProgressBar() {
-        loadingLayout.setVisibility(View.VISIBLE);
+//        loadingLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -160,7 +156,7 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
 
     @Override
     public void hideProgressBar() {
-        loadingLayout.setVisibility(View.GONE);
+//        loadingLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -180,7 +176,7 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
 
     @Override
     public void clearList() {
-        adapter.clearList();
+//        adapter.clearList();
     }
 
     @Override
@@ -195,7 +191,7 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
 
     @Override
     public void setRecyclerViewPosition(Parcelable recyclerViewPosition) {
-        recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewPosition);
+//        recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewPosition);
     }
 
     @Override
@@ -211,12 +207,12 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
 
     @Override
     public void scrollRecyclerViewToTop() {
-        recyclerView.getLayoutManager().scrollToPosition(0);
+//        recyclerView.getLayoutManager().scrollToPosition(0);
     }
 
     @Override
     public void addArtists(List<MusicApi.Artist> artists) {
-        adapter.addToList(artists);
+//        adapter.addToList(artists);
     }
 
     @Override

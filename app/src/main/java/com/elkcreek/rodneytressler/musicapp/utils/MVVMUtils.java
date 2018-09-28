@@ -1,14 +1,24 @@
 package com.elkcreek.rodneytressler.musicapp.utils;
 
+import android.content.res.Configuration;
 import android.databinding.BindingAdapter;
 import android.graphics.Bitmap;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+
+import java.util.List;
+
+import androidx.navigation.Navigation;
 
 import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
 
@@ -24,5 +34,13 @@ public class MVVMUtils {
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
                 .transition(BitmapTransitionOptions.withCrossFade())
                 .into(imageView);
+    }
+
+    @BindingAdapter("data")
+    public static void loadArtists(RecyclerView recyclerView, List<MusicApi.Artist>artists) {
+        ArtistAdapter artistAdapter = new ArtistAdapter(artists);
+        recyclerView.setAdapter(artistAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), recyclerView.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2));
+        artistAdapter.notifyDataSetChanged();
     }
 }
