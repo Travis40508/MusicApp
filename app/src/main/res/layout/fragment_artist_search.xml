@@ -30,6 +30,7 @@
             android:imeOptions="actionDone"
             android:focusedByDefault="false"
             android:layout_margin="10dp"
+            android:onTextChanged="@{viewModel.onArtistSearchTextChanged}"
             android:textColorHint="@android:color/white"
             android:textColor="@android:color/white"
             app:layout_constraintTop_toTopOf="parent"
@@ -41,7 +42,7 @@
         <TextView
             android:id="@+id/text_search_value"
             android:textColor="@android:color/white"
-            android:text="Today's Top Artists"
+            android:text="@{viewModel.artistSearchValue}"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -68,8 +69,12 @@
         <FrameLayout
             android:id="@+id/loading_layout"
             android:background="@android:color/black"
+            app:layout_constraintTop_toBottomOf="@id/text_search_value"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:visibility="@{viewModel.showProgressBar ? View.VISIBLE : View.GONE}">
 
             <ProgressBar

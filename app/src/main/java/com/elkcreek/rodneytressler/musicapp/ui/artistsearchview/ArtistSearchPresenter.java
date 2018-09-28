@@ -46,12 +46,12 @@
 ////    }
 //
 //
-//    private Observable<List<MusicApi.Artist>> getArtistSearchResults(String artistSearchText) {
-//        return musicApiService.getArtistSearchResults(artistSearchText, Constants.API_KEY)
-//                .subscribeOn(Schedulers.io())
-//                .onErrorResumeNext(Observable.empty())
-//                .observeOn(AndroidSchedulers.mainThread());
-//    }
+////    private Observable<List<MusicApi.Artist>> getArtistSearchResults(String artistSearchText) {
+////        return musicApiService.getArtistSearchResults(artistSearchText, Constants.API_KEY)
+////                .subscribeOn(Schedulers.io())
+////                .onErrorResumeNext(Observable.empty())
+////                .observeOn(AndroidSchedulers.mainThread());
+////    }
 //
 ////    private Consumer<List<MusicApi.Artist>> updateViewWithTopArtist() {
 ////        return topArtists -> {
@@ -73,42 +73,42 @@
 ////        };
 ////    }
 //
-//    private Consumer<List<MusicApi.Artist>> getSearchResponse() {
-//        return searchResponse -> {
-//            view.hideProgressBar();
-//            view.clearList();
-//            view.loadArtists(searchResponse);
-//            view.scrollRecyclerViewToTop();
-//        };
-//    }
+////    private Consumer<List<MusicApi.Artist>> getSearchResponse() {
+////        return searchResponse -> {
+////            view.hideProgressBar();
+////            view.clearList();
+////            view.loadArtists(searchResponse);
+////            view.scrollRecyclerViewToTop();
+////        };
+////    }
 //
-//    @Override
-//    public void subscribe() {
-//        view.setActionBarTitle(Constants.SEARCH_TITLE);
-//        if (disposable == null) {
-//            view.showProgressBar();
-//        }
-//        disposable = new CompositeDisposable();
+////    @Override
+////    public void subscribe() {
+////        view.setActionBarTitle(Constants.SEARCH_TITLE);
+////        if (disposable == null) {
+////            view.showProgressBar();
+////        }
+////        disposable = new CompositeDisposable();
+////
+////        if (!isSearching) {
+////            if (repositoryService.isSameWeekSinceLastLaunch()) {
+////                repositoryService.clearCache();
+//////                disposable.add(repositoryService.getTopArtists().subscribe(updateViewWithTopArtist(), updateUiWithError()));
+////                repositoryService.saveDate();
+////            } else {
+////                disposable.add(repositoryService.getTopArtists().subscribe(
+////                        updateViewWithTopArtist(), updateUiWithError()
+////                ));
+////            }
+////        } else {
+////            artistSearchTextChanged(searchText, true);
+////        }
+////    }
 //
-//        if (!isSearching) {
-//            if (repositoryService.isSameWeekSinceLastLaunch()) {
-//                repositoryService.clearCache();
-////                disposable.add(repositoryService.getTopArtists().subscribe(updateViewWithTopArtist(), updateUiWithError()));
-//                repositoryService.saveDate();
-//            } else {
-//                disposable.add(repositoryService.getTopArtists().subscribe(
-//                        updateViewWithTopArtist(), updateUiWithError()
-//                ));
-//            }
-//        } else {
-//            artistSearchTextChanged(searchText, true);
-//        }
-//    }
-//
-//    @Override
-//    public void unsubscribe() {
-//        disposable.clear();
-//    }
+////    @Override
+////    public void unsubscribe() {
+////        disposable.clear();
+////    }
 //
 //    public void artistSearchTextChanged(String artistSearchText, boolean adapterHasItems) {
 //        this.isSearching = artistSearchText.length() > 0;
@@ -133,11 +133,11 @@
 //
 //    }
 //
-//    public void onArtistClicked(MusicApi.Artist artist) {
-//        view.clearSearchText();
-//        view.showMainProgressBar();
-//        view.showMainArtistScreen(artist);
-//    }
+////    public void onArtistClicked(MusicApi.Artist artist) {
+////        view.clearSearchText();
+////        view.showMainProgressBar();
+////        view.showMainArtistScreen(artist);
+////    }
 //
 //    public void saveState(Bundle outState, Parcelable parcelable) {
 //        if(outState != null) {

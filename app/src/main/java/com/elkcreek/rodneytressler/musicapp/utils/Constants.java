@@ -70,6 +70,7 @@ public class Constants {
     public static final String TOP_TRACKS = "Today\'s Top Tracks";
     public static final String CONNECTION_ERROR = "Request failed. Please check your Internet connection and try again.";
     public static final String LOADING_ERROR = "Error Connecting to Network - Please Try Again";
+    public static final String CURRENT_TOP_ARTISTS = "Today's Top Artists";
 
     public static String getYoutubeFragmentTag(int viewPagerId) {
         return "android:switcher:" + viewPagerId + ":" + 1;
