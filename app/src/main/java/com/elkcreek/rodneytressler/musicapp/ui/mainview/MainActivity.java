@@ -1,11 +1,15 @@
 package com.elkcreek.rodneytressler.musicapp.ui.mainview;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.ActivityMainBinding;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
@@ -24,7 +28,14 @@ public class MainActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         binding.setViewModel(viewModel);
         setSupportActionBar(binding.myToolbar);
+
+        listenForErrorToasts();
     }
+
+    private void listenForErrorToasts() {
+        viewModel.getErrorToastMessage().observe(this, message -> Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show());
+    }
+
     public void returnHome() {
         NavHostFragment.findNavController(getSupportFragmentManager().findFragmentById(R.id.my_nav_host_fragment)).popBackStack(R.id.searchMainFragment, false);
     }

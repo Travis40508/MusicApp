@@ -9,6 +9,7 @@ import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
+import com.elkcreek.rodneytressler.musicapp.utils.EventHandlers;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -43,7 +44,11 @@ public class ArtistBioViewModel extends ViewModel {
     }
 
     public void fetchArtistBio(String artistUid, String artistName) {
-        disposable.add(repositoryService.getArtistBio(artistUid, artistName).subscribe(updateUiWithArtist(), updateUiOnError()));
+        if(artistUid != null) {
+            disposable.add(repositoryService.getArtistBio(artistUid, artistName).subscribe(updateUiWithArtist(), updateUiOnError()));
+        } else {
+            disposable.add(repositoryService.getArtistBioWithName(artistName, Constants.API_KEY).subscribe(updateUiWithArtist(), updateUiOnError()));
+        }
     }
 
     private Consumer<MusicApi.Artist> updateUiWithArtist() {
@@ -63,17 +68,14 @@ public class ArtistBioViewModel extends ViewModel {
         return throwable -> {
             mainViewModel.showLoadingLayout.set(false);
             Log.d("@@@@-ArtistBioViewModel", throwable.getMessage());
-//            if(throwable instanceof SocketTimeoutException || throwable instanceof UnknownHostException) {
-//                view.detachFragment();
-//                view.hideMainProgressBar();
-//                view.toastConnectionFailedToast();
-//            } else {
-//                view.showArtistBio(Constants.NO_ARTIST_BIO_AVAILABLE);
-//                view.setImageBackgroundWhite();
-//                view.showGenericArtistImage();
-//                view.showNoSimilarArtistText();
-//                view.hideMainProgressBar();
-//            }
+            if (throwable instanceof SocketTimeoutException || throwable instanceof UnknownHostException) {
+                EventHandlers eventHandlers = new EventHandlers();
+                eventHandlers.popFragment();
+                mainViewModel.errorToastMessage.postValue(Constants.CONNECTION_ERROR);
+            } else {
+                bioSummary.set(Constants.NO_ARTIST_BIO_AVAILABLE);
+                bioContent.set(Constants.NO_ARTIST_BIO_AVAILABLE);
+            }
         };
     }
 
