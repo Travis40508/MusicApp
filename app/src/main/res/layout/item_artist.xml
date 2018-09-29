@@ -21,7 +21,7 @@
 
         <ImageView
             android:id="@+id/image_artist_item"
-            bind:imageUrl="@{artist}"
+            bind:artistImageUrl="@{artist}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

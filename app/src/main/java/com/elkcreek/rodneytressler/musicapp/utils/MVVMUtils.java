@@ -3,6 +3,7 @@ package com.elkcreek.rodneytressler.musicapp.utils;
 import android.content.res.Configuration;
 import android.databinding.BindingAdapter;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 
 import java.util.List;
@@ -24,16 +26,31 @@ import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
 
 public class MVVMUtils {
 
-    @BindingAdapter("imageUrl")
-    public static void loadImage(ImageView imageView, MusicApi.Artist artist) {
-        Glide.with(imageView.getContext()).asBitmap()
-                .load(artist.getArtistImages().get(2).getImageUrl())
-                .apply(RequestOptions.overrideOf(250, 300))
-                .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
-                .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
-                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
-                .transition(BitmapTransitionOptions.withCrossFade())
-                .into(imageView);
+    @BindingAdapter("artistImageUrl")
+    public static void loadArtistImage(ImageView imageView, MusicApi.Artist artist) {
+
+        if(artist != null && artist.getArtistImages() != null) {
+            Glide.with(imageView.getContext()).asBitmap()
+                    .load(artist.getArtistImages().get(2).getImageUrl())
+                    .apply(RequestOptions.overrideOf(250, 300))
+                    .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
+                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                    .transition(BitmapTransitionOptions.withCrossFade())
+                    .into(imageView);
+
+            imageView.setBackgroundColor(Color.BLACK);
+        } else {
+            Glide.with(imageView.getContext()).asBitmap()
+                    .load(imageView.getResources().getDrawable(R.drawable.generic_band))
+                    .apply(RequestOptions.overrideOf(250, 300))
+                    .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
+                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                    .transition(BitmapTransitionOptions.withCrossFade())
+                    .into(imageView);
+            imageView.setBackgroundColor(Color.WHITE);
+        }
     }
 
     @BindingAdapter("data")

@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.elkcreek.rodneytressler.musicapp.ui.AlbumsView.AlbumsFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.AllTracksView.AllTracksFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.ArtistBioView.ArtistBioFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.artistbioview.ArtistBioFragment;
 
 public class ArtistViewPagerAdapter extends FragmentPagerAdapter {
 

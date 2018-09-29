@@ -1,6 +1,8 @@
-package com.elkcreek.rodneytressler.musicapp.ui.ArtistBioView;
+package com.elkcreek.rodneytressler.musicapp.ui.artistbioview;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,8 +23,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
+import com.elkcreek.rodneytressler.musicapp.databinding.FragmentArtistBioBinding;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import com.elkcreek.rodneytressler.musicapp.utils.SimilarArtistAdapter;
 
@@ -42,8 +46,10 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_UID_KE
 
 public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
 
+//    @Inject
+//    protected ArtistBioPresenter presenter;
     @Inject
-    protected ArtistBioPresenter presenter;
+    protected ArtistBioFactory factory;
     @BindView(R.id.image_artist_bio)
     protected ImageView artistBioImage;
     @BindView(R.id.text_artist_bio)
@@ -57,10 +63,13 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
     @BindView(R.id.bio_scroll_view)
     protected NestedScrollView scrollView;
     private SimilarArtistAdapter adapter;
+    private ArtistBioViewModel viewModel;
+    private MainViewModel mainViewModel;
+    private FragmentArtistBioBinding binding;
 
     @OnClick(R.id.read_more_layout)
     protected void onReadMoreClicked(View view) {
-        presenter.readMoreClicked(readMoreText.getText().toString());
+//        presenter.readMoreClicked(readMoreText.getText().toString());
     }
 
     @Override
@@ -72,37 +81,44 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
     @Override
     public void onResume() {
         super.onResume();
-        presenter.artistRetrieved(getArguments().getString(Constants.ARTIST_UID_KEY));
-        presenter.artistNameRetrieved(getArguments().getString(Constants.ARTIST_NAME_KEY));
-        presenter.subscribe();
+//        presenter.artistRetrieved(getArguments().getString(Constants.ARTIST_UID_KEY));
+//        presenter.artistNameRetrieved(getArguments().getString(Constants.ARTIST_NAME_KEY));
+//        presenter.subscribe();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        presenter.unsubscribe();
-        presenter.storeScrollViewState(scrollView.getScrollY());
+//        presenter.unsubscribe();
+//        presenter.storeScrollViewState(scrollView.getScrollY());
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_artist_bio, container, false);
-        ButterKnife.bind(this, view);
-        presenter.attachView(this);
-        return view;
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_artist_bio, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        presenter.saveState(outState, scrollView != null ? scrollView.getScrollY() : 0);
+//        presenter.saveState(outState, scrollView != null ? scrollView.getScrollY() : 0);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        presenter.getState(savedInstanceState);
+//        presenter.getState(savedInstanceState);
+        viewModel = ViewModelProviders.of(this, factory).get(ArtistBioViewModel.class);
+        mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+        viewModel.setMainViewModel(mainViewModel);
+
+        binding.setViewModel(viewModel);
+
+        viewModel.fetchArtistBio(
+                getArguments().getString(Constants.ARTIST_UID_KEY),
+                getArguments().getString(Constants.ARTIST_NAME_KEY));
     }
 
     public static ArtistBioFragment newInstance() {
@@ -130,7 +146,7 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
     @Override
     public void showArtistBio(String artistBio) {
         artistBioText.setText(artistBio);
-        presenter.bioShown();
+//        presenter.bioShown();
     }
 
     @Override
@@ -147,7 +163,7 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
         adapter.setCallback(new SimilarArtistAdapter.BiosCallback() {
             @Override
             public void onSimilarArtistClicked(MusicApi.Artist artist) {
-                presenter.similarArtistClicked(artist);
+//                presenter.similarArtistClicked(artist);
             }
         });
     }

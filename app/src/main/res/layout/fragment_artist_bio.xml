@@ -1,86 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/black"
-    android:clickable="true"
-    android:focusable="true"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.elkcreek.rodneytressler.musicapp.ui.artistbioview.ArtistBioViewModel"/>
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/bio_scroll_view"
-        android:layout_marginTop="10dp"
+        <import type="com.elkcreek.rodneytressler.musicapp.utils.Constants"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:fillViewport="false"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:background="@android:color/black"
+        android:clickable="true"
+        android:focusable="true"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <LinearLayout
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/bio_scroll_view"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/image_artist_bio"
-                android:layout_width="250dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"/>
-
-            <TextView
-                android:id="@+id/text_artist_bio"
-                android:layout_marginTop="15dp"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:fillViewport="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <LinearLayout
-                android:id="@+id/read_more_layout"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:layout_margin="5dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/white"/>
+
+                <ImageView
+                    android:id="@+id/image_artist_bio"
+                    android:layout_width="250dp"
+                    android:layout_height="200dp"
+                    app:artistImageUrl="@{viewModel.artist}"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"/>
 
                 <TextView
-                    android:id="@+id/text_read_more"
+                    android:id="@+id/text_artist_bio"
+                    android:text="@{viewModel.bioIsExpanded ? viewModel.bioContent : viewModel.bioSummary}"
+                    android:layout_marginTop="15dp"
                     android:textColor="@android:color/white"
-                    android:text="Read More"
-                    android:layout_gravity="center_horizontal"
+                    android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
+                <LinearLayout
+                    android:id="@+id/read_more_layout"
+                    android:onClick="@{() -> viewModel.readMoreClicked()}"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:orientation="vertical">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/white"/>
+
+                    <TextView
+                        android:id="@+id/text_read_more"
+                        android:textColor="@android:color/white"
+                        android:text="@{viewModel.bioIsExpanded ? Constants.COLLAPSE : Constants.READ_MORE}"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/text_similar_artists"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/similar_artists_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/bio_similar_artist_recycler_view"
+                    android:layout_width="match_parent"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:paddingBottom="100dp">
+
+                </android.support.v7.widget.RecyclerView>
+
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/text_similar_artists"
-                android:textColor="@android:color/white"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:text="@string/similar_artists_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+        </android.support.v4.widget.NestedScrollView>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/bio_similar_artist_recycler_view"
-                android:layout_width="match_parent"
-                android:nestedScrollingEnabled="false"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:paddingBottom="100dp">
-
-            </android.support.v7.widget.RecyclerView>
-
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
-
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</layout>
