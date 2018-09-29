@@ -11,6 +11,10 @@
             name="viewModel"
             type="com.elkcreek.rodneytressler.musicapp.ui.artistsearchview.ArtistSearchViewModel"/>
 
+        <variable
+            name="mainViewModel"
+            type="com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel"/>
+
         <import type="android.support.v7.widget.GridLayoutManager"/>
         <import type="android.view.View"/>
     </data>

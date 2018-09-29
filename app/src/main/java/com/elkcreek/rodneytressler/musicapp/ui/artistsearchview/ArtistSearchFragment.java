@@ -25,6 +25,7 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.FragmentArtistSearchBinding;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 import com.elkcreek.rodneytressler.musicapp.utils.EventHandlers;
 import com.elkcreek.rodneytressler.musicapp.utils.ArtistAdapter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
@@ -55,6 +56,7 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
 //    private ArtistAdapter adapter;
 //    private LinearLayoutManager linearLayoutManager;
     private ArtistSearchViewModel viewModel;
+    private MainViewModel mainViewModel;
     private FragmentArtistSearchBinding binding;
 
     @OnTextChanged(value = R.id.input_artist_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -137,11 +139,17 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
         super.onActivityCreated(savedInstanceState);
 //        presenter.getState(savedInstanceState);
         viewModel = getViewModel();
+        mainViewModel = getMainViewModel();
         binding.setViewModel(viewModel);
+        binding.setMainViewModel(mainViewModel);
     }
 
     private ArtistSearchViewModel getViewModel() {
         return ViewModelProviders.of(this, factory).get(ArtistSearchViewModel.class);
+    }
+
+    private MainViewModel getMainViewModel() {
+        return ViewModelProviders.of(getActivity()).get(MainViewModel.class);
     }
 
     @Override
@@ -181,7 +189,7 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
 
     @Override
     public void setActionBarTitle(String artistsTitle) {
-        getActivity().setTitle(artistsTitle);
+//        getActivity().setTitle(artistsTitle);
     }
 
     @Override

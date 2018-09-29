@@ -162,7 +162,7 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
 
     @Override
     public void setTitle(String artistName) {
-        getActivity().setTitle(artistName);
+//        getActivity().setTitle(artistName);
     }
 
     @Override

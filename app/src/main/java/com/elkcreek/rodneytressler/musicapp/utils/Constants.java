@@ -53,6 +53,8 @@ public class Constants {
     public static final String READ_MORE = "Read More";
     public static final String COLLAPSE = "Collapse";
 
+    public static final String DEFAULT_ACTION_BAR_TITLE = "Music Search";
+
     //Null Values
     public static final String NO_ARTIST_BIO_AVAILABLE = "Sorry, no biography available for this artist. :(";
     public static final String NO_ALBUM_BIO_AVAILABLE = "Sorry, no biography available for this album. :(";

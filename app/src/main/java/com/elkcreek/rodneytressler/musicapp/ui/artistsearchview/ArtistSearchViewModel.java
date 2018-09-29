@@ -9,6 +9,7 @@ import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.MusicApiService;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
+import com.elkcreek.rodneytressler.musicapp.utils.EventHandlers;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -67,7 +68,8 @@ public class ArtistSearchViewModel extends ViewModel {
         return throwable -> {
             if (throwable instanceof SocketTimeoutException || throwable instanceof UnknownHostException) {
                 errorToastMessage.postValue(Constants.CONNECTION_ERROR);
-                //Detach Fragment
+                EventHandlers handlers = new EventHandlers();
+                handlers.popFragment();
             } else {
                 errorToastMessage.postValue(Constants.LOADING_ERROR);
                 repositoryService.resetDate();

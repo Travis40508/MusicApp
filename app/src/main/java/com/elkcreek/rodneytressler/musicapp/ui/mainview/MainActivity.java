@@ -1,44 +1,29 @@
-package com.elkcreek.rodneytressler.musicapp.ui.MainView;
-
+package com.elkcreek.rodneytressler.musicapp.ui.mainview;
+import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
-
-
 import com.elkcreek.rodneytressler.musicapp.R;
-import com.elkcreek.rodneytressler.musicapp.ui.SearchMainView.SearchMainFragment;
-
-import javax.inject.Inject;
-
+import com.elkcreek.rodneytressler.musicapp.databinding.ActivityMainBinding;
+import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import androidx.navigation.fragment.NavHostFragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 
-public class MainActivity extends AppCompatActivity implements MainView {
+public class MainActivity extends AppCompatActivity {
 
-    @Inject
-    protected MainPresenter presenter;
-    @BindView(R.id.main_loading_layout)
-    protected FrameLayout loadingLayout;
-    @BindView(R.id.my_toolbar)
-    protected Toolbar toolbar;
-    private SearchMainFragment searchMainFragment;
+    private MainViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-
-        presenter.attachView(this);
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        binding.setViewModel(viewModel);
+        setSupportActionBar(binding.myToolbar);
     }
     public void returnHome() {
         NavHostFragment.findNavController(getSupportFragmentManager().findFragmentById(R.id.my_nav_host_fragment)).popBackStack(R.id.searchMainFragment, false);
@@ -56,19 +41,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
         switch (item.getItemId()) {
             case R.id.action_home:
                 returnHome();
+                viewModel.setActionBarTitle(Constants.DEFAULT_ACTION_BAR_TITLE);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    public void showLoadingLayout() {
-        loadingLayout.setVisibility(View.VISIBLE);
-    }
-
-    public void hideLoadingLayout() {
-        loadingLayout.setVisibility(View.GONE);
-    }
-
-
 }

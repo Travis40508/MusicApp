@@ -1,5 +1,6 @@
 package com.elkcreek.rodneytressler.musicapp.ui.ArtistMainView;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.elkcreek.rodneytressler.musicapp.R;
+import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 import com.elkcreek.rodneytressler.musicapp.utils.ArtistViewPagerAdapter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
@@ -97,7 +99,8 @@ public class ArtistMainFragment extends Fragment implements ArtistMainView {
 
     @Override
     public void setActionBarTitle(String artistName) {
-        getActivity().setTitle(artistName);
+        MainViewModel mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+        mainViewModel.setActionBarTitle(artistName);
     }
 
     @Override

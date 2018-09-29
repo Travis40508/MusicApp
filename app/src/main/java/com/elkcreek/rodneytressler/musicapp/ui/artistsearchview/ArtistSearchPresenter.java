@@ -109,29 +109,29 @@
 ////    public void unsubscribe() {
 ////        disposable.clear();
 ////    }
-//
-//    public void artistSearchTextChanged(String artistSearchText, boolean adapterHasItems) {
-//        this.isSearching = artistSearchText.length() > 0;
-//        this.searchText = artistSearchText;
-//        if (disposable == null) {
-//            disposable = new CompositeDisposable();
-//        }
-//
-//        if (!adapterHasItems) {
-//            view.showProgressBar();
-//        }
-//
-//        if (!artistSearchText.isEmpty()) {
-//            view.showSearchTextValue(artistSearchText);
-//            disposable.add(getArtistSearchResults(artistSearchText)
-//                    .subscribe(getSearchResponse(), updateUiWithError()));
-//
-//        } else {
-//            view.showSearchTextTopArtists();
-//            disposable.add(repositoryService.getTopArtists().subscribe(updateViewWithTopArtist(), updateUiWithError()));
-//        }
-//
-//    }
+////
+////    public void artistSearchTextChanged(String artistSearchText, boolean adapterHasItems) {
+////        this.isSearching = artistSearchText.length() > 0;
+////        this.searchText = artistSearchText;
+////        if (disposable == null) {
+////            disposable = new CompositeDisposable();
+////        }
+////
+////        if (!adapterHasItems) {
+////            view.showProgressBar();
+////        }
+////
+////        if (!artistSearchText.isEmpty()) {
+////            view.showSearchTextValue(artistSearchText);
+////            disposable.add(getArtistSearchResults(artistSearchText)
+////                    .subscribe(getSearchResponse(), updateUiWithError()));
+////
+////        } else {
+////            view.showSearchTextTopArtists();
+////            disposable.add(repositoryService.getTopArtists().subscribe(updateViewWithTopArtist(), updateUiWithError()));
+////        }
+////
+////    }
 //
 ////    public void onArtistClicked(MusicApi.Artist artist) {
 ////        view.clearSearchText();
