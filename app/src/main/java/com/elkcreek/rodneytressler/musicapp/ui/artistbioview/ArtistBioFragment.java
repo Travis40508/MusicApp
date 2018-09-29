@@ -156,16 +156,16 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
 
     @Override
     public void showSimilarArtists(List<MusicApi.Artist> artistList) {
-        adapter = new SimilarArtistAdapter(Glide.with(this), artistList);
-        similarArtistRecyclerView.setAdapter(adapter);
-        similarArtistRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        adapter.notifyDataSetChanged();
-        adapter.setCallback(new SimilarArtistAdapter.BiosCallback() {
-            @Override
-            public void onSimilarArtistClicked(MusicApi.Artist artist) {
-//                presenter.similarArtistClicked(artist);
-            }
-        });
+//        adapter = new SimilarArtistAdapter(Glide.with(this), artistList);
+//        similarArtistRecyclerView.setAdapter(adapter);
+//        similarArtistRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+//        adapter.notifyDataSetChanged();
+//        adapter.setCallback(new SimilarArtistAdapter.BiosCallback() {
+//            @Override
+//            public void onSimilarArtistClicked(MusicApi.Artist artist) {
+////                presenter.similarArtistClicked(artist);
+//            }
+//        });
     }
 
     @Override

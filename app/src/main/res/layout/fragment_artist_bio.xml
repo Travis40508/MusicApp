@@ -78,7 +78,7 @@
                     android:textColor="@android:color/white"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="15dp"
-                    android:text="@string/similar_artists_text"
+                    android:text="@{viewModel.similarArtistText}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -87,6 +87,7 @@
                     android:layout_width="match_parent"
                     android:nestedScrollingEnabled="false"
                     android:layout_height="wrap_content"
+                    app:similarArtistData="@{viewModel.similarArtists}"
                     android:layout_margin="10dp"
                     android:paddingBottom="100dp">
 

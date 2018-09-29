@@ -1,5 +1,6 @@
 package com.elkcreek.rodneytressler.musicapp.utils;
 
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
+import com.elkcreek.rodneytressler.musicapp.databinding.ItemSimilarArtistBinding;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 
 import java.util.List;
@@ -26,26 +28,25 @@ import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
 
 public class SimilarArtistAdapter extends RecyclerView.Adapter<SimilarArtistAdapter.SimilarArtistViewHolder> {
 
-    private final RequestManager glide;
     private List<MusicApi.Artist> similarArtistList;
-    private BiosCallback biosCallback;
 
-    public SimilarArtistAdapter(RequestManager glide, List<MusicApi.Artist> similarArtistList) {
+    public SimilarArtistAdapter(List<MusicApi.Artist> similarArtistList) {
         this.similarArtistList = similarArtistList;
-        this.glide = glide;
     }
 
     @NonNull
     @Override
     public SimilarArtistViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_similar_artist, viewGroup, false);
-        return new SimilarArtistViewHolder(itemView);
+        ItemSimilarArtistBinding binding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_similar_artist, viewGroup, false);
+        return new SimilarArtistViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SimilarArtistViewHolder similarArtistViewHolder, int position) {
-        similarArtistViewHolder.bindSimilarArtist(similarArtistList.get(position));
-        similarArtistViewHolder.itemView.setOnClickListener(similarArtistViewHolder.onSimilarArtistClicked(similarArtistList.get(position)));
+        EventHandlers eventHandlers = new EventHandlers();
+        MusicApi.Artist artist = similarArtistList.get(position);
+        similarArtistViewHolder.binding.setArtist(artist);
+        similarArtistViewHolder.binding.setHandler(eventHandlers);
     }
 
     @Override
@@ -53,48 +54,14 @@ public class SimilarArtistAdapter extends RecyclerView.Adapter<SimilarArtistAdap
         return similarArtistList.size();
     }
 
-    public void setCallback(BiosCallback biosCallback) {
-        this.biosCallback = biosCallback;
-    }
-
     public class SimilarArtistViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.item_similar_artist_image)
-        protected ImageView similarArtistImage;
+        private final ItemSimilarArtistBinding binding;
 
-        @BindView(R.id.item_similar_artist_name)
-        protected TextView similarArtistName;
-
-        public SimilarArtistViewHolder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-
-        public void bindSimilarArtist(MusicApi.Artist artist) {
-            glide.asBitmap()
-                    .load(artist.getArtistImages().get(2).getImageUrl())
-                    .apply(RequestOptions.errorOf(R.drawable.no_image_available))
-                    .apply(RequestOptions.circleCropTransform())
-                    .apply(RequestOptions.overrideOf(100, 150))
-                    .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
-                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
-                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
-                    .transition(BitmapTransitionOptions.withCrossFade())
-                    .into(similarArtistImage);
-            similarArtistName.setText(artist.getArtistName());
-        }
-
-        public View.OnClickListener onSimilarArtistClicked(MusicApi.Artist artist) {
-            return new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    biosCallback.onSimilarArtistClicked(artist);
-                }
-            };
+        public SimilarArtistViewHolder(ItemSimilarArtistBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 
-    public interface BiosCallback {
-        void onSimilarArtistClicked(MusicApi.Artist artist);
-    }
 }

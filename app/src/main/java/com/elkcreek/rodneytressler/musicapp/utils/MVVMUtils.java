@@ -53,11 +53,33 @@ public class MVVMUtils {
         }
     }
 
+    @BindingAdapter("similarArtist")
+    public static void loadSimilarArtistImage(ImageView imageView, MusicApi.Artist artist) {
+        Glide.with(imageView.getContext()).asBitmap()
+                .load(artist.getArtistImages().get(2).getImageUrl())
+                .apply(RequestOptions.errorOf(R.drawable.no_image_available))
+                .apply(RequestOptions.circleCropTransform())
+                .apply(RequestOptions.overrideOf(100, 150))
+                .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
+                .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                .transition(BitmapTransitionOptions.withCrossFade())
+                .into(imageView);
+    }
+
     @BindingAdapter("data")
     public static void loadArtists(RecyclerView recyclerView, List<MusicApi.Artist>artists) {
         ArtistAdapter artistAdapter = new ArtistAdapter(artists);
         recyclerView.setAdapter(artistAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), recyclerView.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2));
         artistAdapter.notifyDataSetChanged();
+    }
+
+    @BindingAdapter("similarArtistData")
+    public static void loadSimilarArtists(RecyclerView recyclerView, List<MusicApi.Artist> similarArtists) {
+        SimilarArtistAdapter similarArtistAdapter = new SimilarArtistAdapter(similarArtists);
+        recyclerView.setAdapter(similarArtistAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 3));
+        similarArtistAdapter.notifyDataSetChanged();
     }
 }

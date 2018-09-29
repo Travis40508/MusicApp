@@ -1,29 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:id="@+id/item_similar_artist_image"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="10dp"
-        android:layout_width="80dp"
-        android:layout_height="80dp" />
+    <data>
+        <variable
+            name="artist"
+            type="com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi.Artist"/>
 
-    <TextView
-        android:id="@+id/item_similar_artist_name"
-        android:layout_margin="10dp"
-        android:textStyle="bold"
-        android:maxLines="1"
-        android:ellipsize="end"
-        app:layout_constraintTop_toBottomOf="@id/item_similar_artist_image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@android:color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <variable
+            name="handler"
+            type="com.elkcreek.rodneytressler.musicapp.utils.EventHandlers"/>
+    </data>
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{(v) -> handler.onArtistClicked(v, artist.artistName, artist.artistUID)}"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <ImageView
+            android:id="@+id/item_similar_artist_image"
+            app:similarArtist="@{artist}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="10dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+
+        <TextView
+            android:id="@+id/item_similar_artist_name"
+            android:layout_margin="10dp"
+            android:textStyle="bold"
+            android:text="@{artist.artistName}"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintTop_toBottomOf="@id/item_similar_artist_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
