@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.ActivityMainBinding;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
+
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import dagger.android.AndroidInjection;
 
@@ -30,6 +32,26 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.myToolbar);
 
         listenForErrorToasts();
+        listenForFragmentPop();
+        listenForAppClose();
+    }
+
+    private void listenForAppClose() {
+        viewModel.shouldCloseApp.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                MainActivity.super.onBackPressed();
+            }
+        });
+    }
+
+    private void listenForFragmentPop() {
+        viewModel.shouldPopFragment.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                NavHostFragment.findNavController(getSupportFragmentManager().findFragmentById(R.id.my_nav_host_fragment)).popBackStack();
+            }
+        });
     }
 
     private void listenForErrorToasts() {

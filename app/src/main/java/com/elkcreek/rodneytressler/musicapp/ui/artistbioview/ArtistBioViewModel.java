@@ -9,8 +9,6 @@ import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
-import com.elkcreek.rodneytressler.musicapp.utils.EventHandlers;
-
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -69,9 +67,8 @@ public class ArtistBioViewModel extends ViewModel {
             mainViewModel.showLoadingLayout.set(false);
             Log.d("@@@@-ArtistBioViewModel", throwable.getMessage());
             if (throwable instanceof SocketTimeoutException || throwable instanceof UnknownHostException) {
-                EventHandlers eventHandlers = new EventHandlers();
-                eventHandlers.popFragment();
                 mainViewModel.errorToastMessage.postValue(Constants.CONNECTION_ERROR);
+                mainViewModel.shouldPopFragment.postValue(true);
             } else {
                 bioSummary.set(Constants.NO_ARTIST_BIO_AVAILABLE);
                 bioContent.set(Constants.NO_ARTIST_BIO_AVAILABLE);

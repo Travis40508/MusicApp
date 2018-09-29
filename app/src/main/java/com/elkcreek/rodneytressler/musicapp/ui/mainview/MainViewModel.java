@@ -12,6 +12,8 @@ public class MainViewModel extends ViewModel {
     public ObservableField<String> actionBarTitle = new ObservableField<>(Constants.DEFAULT_ACTION_BAR_TITLE);
     public ObservableBoolean showLoadingLayout = new ObservableBoolean(false);
     public MutableLiveData<String> errorToastMessage = new MutableLiveData<>();
+    public MutableLiveData<Boolean> shouldPopFragment = new MutableLiveData<>();
+    public MutableLiveData<Boolean> shouldCloseApp = new MutableLiveData<>();
 
     public void setActionBarTitle(String title) {
         actionBarTitle.set(title);
@@ -19,5 +21,13 @@ public class MainViewModel extends ViewModel {
 
     public LiveData<String> getErrorToastMessage() {
         return errorToastMessage;
+    }
+
+    public LiveData<Boolean> getShouldPopFragment() {
+        return shouldPopFragment;
+    }
+
+    public LiveData<Boolean> getShouldCloseApp() {
+        return shouldCloseApp;
     }
 }

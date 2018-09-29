@@ -82,4 +82,5 @@ public class MVVMUtils {
         recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 3));
         similarArtistAdapter.notifyDataSetChanged();
     }
+
 }

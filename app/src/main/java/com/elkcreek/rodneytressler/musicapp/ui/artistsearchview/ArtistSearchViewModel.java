@@ -8,6 +8,7 @@ import android.databinding.ObservableField;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.MusicApiService;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
+import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import com.elkcreek.rodneytressler.musicapp.utils.EventHandlers;
 
@@ -32,9 +33,9 @@ public class ArtistSearchViewModel extends ViewModel {
     public ObservableField<List<MusicApi.Artist>> artists = new ObservableField<>(new ArrayList<>());
     public ObservableBoolean showProgressBar = new ObservableBoolean(true);
     public ObservableField<String> artistSearchValue = new ObservableField<>(Constants.CURRENT_TOP_ARTISTS);
-    public MutableLiveData<String> errorToastMessage = new MutableLiveData<>();
     public CompositeDisposable disposable;
     private Timer timer;
+    private MainViewModel mainViewModel;
 
     public ArtistSearchViewModel(MusicApiService musicApiService, RepositoryService repositoryService) {
         this.musicApiService = musicApiService;
@@ -67,11 +68,10 @@ public class ArtistSearchViewModel extends ViewModel {
     private Consumer<Throwable> updateUiWithError() {
         return throwable -> {
             if (throwable instanceof SocketTimeoutException || throwable instanceof UnknownHostException) {
-                errorToastMessage.postValue(Constants.CONNECTION_ERROR);
-                EventHandlers handlers = new EventHandlers();
-                handlers.popFragment();
+                mainViewModel.errorToastMessage.postValue(Constants.CONNECTION_ERROR);
+                mainViewModel.shouldCloseApp.postValue(true);
             } else {
-                errorToastMessage.postValue(Constants.LOADING_ERROR);
+                mainViewModel.errorToastMessage.postValue(Constants.LOADING_ERROR);
                 repositoryService.resetDate();
                 fetchTopArtists();
             }
@@ -123,5 +123,9 @@ public class ArtistSearchViewModel extends ViewModel {
 
     public void setShowProgressBar(boolean shouldShowProgressBar) {
         showProgressBar.set(shouldShowProgressBar);
+    }
+
+    public void setMainViewModel(MainViewModel mainViewModel) {
+        this.mainViewModel = mainViewModel;
     }
 }
