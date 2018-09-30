@@ -1,53 +1,45 @@
 package com.elkcreek.rodneytressler.musicapp.utils;
 
-import android.graphics.Bitmap;
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
+import com.elkcreek.rodneytressler.musicapp.databinding.ItemTracksBinding;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
-
-import java.util.ArrayList;
+import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 import java.util.List;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
 
 public class TracksAdapter extends RecyclerView.Adapter<TracksAdapter.TracksViewHolder> {
 
-    private final RequestManager glide;
+    private final MainViewModel mainViewModel;
     private List<MusicApi.Track> trackList;
-    private TracksCallback tracksCallback;
-    private List<MusicApi.Track> fullTrackList;
 
-    public TracksAdapter(RequestManager glide, List<MusicApi.Track> trackList) {
+    public TracksAdapter(List<MusicApi.Track> trackList, MainViewModel mainViewModel) {
         this.trackList = trackList;
-        this.glide = glide;
-        fullTrackList = trackList;
+        this.mainViewModel = mainViewModel;
     }
 
     @NonNull
     @Override
     public TracksViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_tracks, viewGroup, false);
-        return new TracksViewHolder(itemView);
+        ItemTracksBinding binding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_tracks, viewGroup, false);
+        return new TracksViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TracksViewHolder tracksViewHolder, int position) {
-        tracksViewHolder.bindTrack(trackList.get(position));
-        tracksViewHolder.itemView.setOnClickListener(tracksViewHolder.onPlayClicked(trackList.get(position)));
+        MusicApi.Track track = trackList.get(position);
+        EventHandlers handler = new EventHandlers();
+        String trackPosition = String.valueOf(trackList.indexOf(track) + 1);
+        String artistName = track.getArtist().getArtistName();
+        tracksViewHolder.binding.setArtistName(artistName);
+        tracksViewHolder.binding.setTrackPosition(trackPosition);
+        tracksViewHolder.binding.setTrack(track);
+        tracksViewHolder.binding.setMainViewModel(mainViewModel);
+        tracksViewHolder.binding.setHandler(handler);
     }
 
     @Override
@@ -55,51 +47,13 @@ public class TracksAdapter extends RecyclerView.Adapter<TracksAdapter.TracksView
         return trackList.size();
     }
 
-    public void setPlayCallback(TracksCallback tracksCallback) {
-        this.tracksCallback = tracksCallback;
-    }
-
-    public void showSearchedTracks(String searchText) {
-        List<MusicApi.Track> searchedTrackList = new ArrayList<>();
-        for(MusicApi.Track item : fullTrackList) {
-            if(item.getTrackName().toLowerCase().contains(searchText.toLowerCase())) {
-                searchedTrackList.add(item);
-                trackList = searchedTrackList;
-                notifyDataSetChanged();
-            }
-        }
-    }
-
     public class TracksViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.position_track_item)
-        protected TextView trackPosition;
+        private final ItemTracksBinding binding;
 
-        @BindView(R.id.text_track_name)
-        protected TextView trackName;
-
-        public TracksViewHolder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public TracksViewHolder(ItemTracksBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
-
-        public void bindTrack(MusicApi.Track track) {
-            String position = String.valueOf(trackList.indexOf(track) + 1);
-            trackPosition.setText(position);
-            trackName.setText(track.getTrackName());
-        }
-
-        public View.OnClickListener onPlayClicked(MusicApi.Track track) {
-            return new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    tracksCallback.onPlayClicked(track);
-                }
-            };
-        }
-    }
-
-    public interface TracksCallback {
-        void onPlayClicked(MusicApi.Track track);
     }
 }

@@ -1,36 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:layout_margin="10dp"
-    android:background="#111111"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/position_track_item"
-        android:background="@drawable/shape_circle"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="5dp"
-        android:textColor="@android:color/black"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="36sp"
-        android:layout_width="75dp"
-        android:layout_height="75dp" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/text_track_name"
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/position_track_item"
-        android:textSize="16sp"
-        android:textColor="@android:color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</android.support.constraint.ConstraintLayout>
+    <data>
+        <variable
+            name="artistName"
+            type="String"/>
+
+        <variable
+            name="trackPosition"
+            type="String"/>
+
+        <variable
+            name="mainViewModel"
+            type="com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel"/>
+
+        <variable
+            name="track"
+            type="com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi.Track"/>
+
+        <variable
+            name="handler"
+            type="com.elkcreek.rodneytressler.musicapp.utils.EventHandlers"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        android:background="#111111"
+        android:onClick="@{(v) -> handler.onTrackClicked(v, track.trackName, track.trackUid, artistName, mainViewModel)}"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <TextView
+            android:id="@+id/position_track_item"
+            android:background="@drawable/shape_circle"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{trackPosition}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="5dp"
+            android:textColor="@android:color/black"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="36sp"
+            android:layout_width="75dp"
+            android:layout_height="75dp" />
+
+        <TextView
+            android:id="@+id/text_track_name"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:text="@{track.trackName}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/position_track_item"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </android.support.constraint.ConstraintLayout>
+</layout>

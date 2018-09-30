@@ -1,80 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="@android:color/black">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.elkcreek.rodneytressler.musicapp.ui.alltracksview.AllTracksViewModel"/>
 
+        <variable
+            name="mainViewModel"
+            type="com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel"/>
 
-    <EditText
-        android:id="@+id/input_track_search"
-        android:hint="Enter Track Name"
-        android:inputType="text"
-        android:imeOptions="actionDone"
-        android:focusedByDefault="false"
-        android:layout_margin="10dp"
-        android:textColorHint="@android:color/white"
-        android:textColor="@android:color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        <import type="android.view.View"/>
+        <import type="com.elkcreek.rodneytressler.musicapp.utils.Constants"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@android:color/black">
 
 
-    <TextView
-        android:id="@+id/tracks_search_value"
-        android:textColor="@android:color/white"
-        android:text="Showing All Tracks"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/input_track_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/input_track_search"
+            android:hint="Enter Track Name"
+            android:inputType="text"
+            android:text="@={viewModel.searchedText}"
+            android:visibility="@{viewModel.topTracks.size() > 0 ? View.VISIBLE : View.GONE}"
+            android:imeOptions="actionDone"
+            android:focusedByDefault="false"
+            android:layout_margin="10dp"
+            android:textColorHint="@android:color/white"
+            android:textColor="@android:color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_tracks"
-        app:layout_constraintTop_toBottomOf="@id/tracks_search_value"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="50dp">
-
-    </android.support.v7.widget.RecyclerView>
-
-    <TextView
-        android:id="@+id/no_tracks_text"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="32sp"
-        android:text="@string/no_tracks_available_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
-    <FrameLayout
-        android:id="@+id/loading_layout"
-        android:background="@android:color/black"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ProgressBar
-            android:id="@+id/bio_progress_bar"
-            android:layout_gravity="center"
+        <TextView
+            android:id="@+id/tracks_search_value"
+            android:textColor="@android:color/white"
+            android:text="@{viewModel.searchedText.length() > 0 ? viewModel.searchedTextString : Constants.SHOWING_ALL_TRACKS}"
+            android:visibility="@{viewModel.topTracks.size() > 0 ? View.VISIBLE : View.GONE}"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/input_track_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-    </FrameLayout>
 
-</android.support.constraint.ConstraintLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_tracks"
+            app:allTracksData="@{viewModel.topTracks}"
+            app:mainViewModel="@{mainViewModel}"
+            app:searchText="@{viewModel.searchedText}"
+            app:layout_constraintTop_toBottomOf="@id/tracks_search_value"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:paddingBottom="50dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="50dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/no_tracks_text"
+            android:visibility="@{viewModel.topTracks.size() > 0 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="32sp"
+            android:text="@string/no_tracks_available_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <FrameLayout
+            android:id="@+id/loading_layout"
+            android:background="@android:color/black"
+            android:layout_width="match_parent"
+            android:visibility="@{viewModel.showProgressBar ? View.VISIBLE : View.GONE}"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/bio_progress_bar"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </FrameLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

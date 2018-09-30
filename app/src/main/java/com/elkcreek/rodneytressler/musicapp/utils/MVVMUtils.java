@@ -22,6 +22,7 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.navigation.Navigation;
@@ -32,7 +33,6 @@ public class MVVMUtils {
 
     @BindingAdapter("artistImageUrl")
     public static void loadArtistImage(ImageView imageView, MusicApi.Artist artist) {
-
         if(artist != null && artist.getArtistImages() != null) {
             Glide.with(imageView.getContext()).asBitmap()
                     .load(artist.getArtistImages().get(2).getImageUrl())
@@ -131,6 +131,24 @@ public class MVVMUtils {
                     .transition(BitmapTransitionOptions.withCrossFade())
                     .into(imageView);
             imageView.setBackgroundColor(Color.WHITE);
+        }
+    }
+
+    @BindingAdapter({"allTracksData", "mainViewModel", "searchText"})
+    public static void loadAllTracks(RecyclerView recyclerView, List<MusicApi.Track> trackList, MainViewModel mainViewModel, String searchText) {
+        TracksAdapter adapter = new TracksAdapter(trackList, mainViewModel);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        adapter.notifyDataSetChanged();
+
+        List<MusicApi.Track> searchedTrackList = new ArrayList<>();
+        for(MusicApi.Track item : trackList) {
+            if(item.getTrackName().toLowerCase().contains(searchText.toLowerCase())) {
+                searchedTrackList.add(item);
+                adapter = new TracksAdapter(searchedTrackList, mainViewModel);
+                recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
         }
     }
 }

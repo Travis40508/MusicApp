@@ -56,7 +56,7 @@ public class AlbumBioViewModel extends ViewModel {
 
     private Consumer<Throwable> updateUiWithError() {
         return throwable -> {
-            Log.d("@@@@-AlbumBioPresenter", throwable.getMessage());
+            Log.d("@@@@-AlbumBioViewModel", throwable.getMessage());
             if(throwable instanceof SocketTimeoutException || throwable instanceof UnknownHostException) {
                 mainViewModel.shouldPopFragment.postValue(true);
                 mainViewModel.errorToastMessage.postValue(Constants.CONNECTION_ERROR);

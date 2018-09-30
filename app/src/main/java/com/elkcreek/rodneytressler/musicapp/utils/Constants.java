@@ -70,6 +70,7 @@ public class Constants {
     //No Album Bio Image
     //No Track Bio Image
     //No Youtube Video
+    public static final String SHOWING_ALL_TRACKS = "Showing All Tracks";
     public static final String NO_LYRICS = "No lyrics found";
     public static final String TOP_TRACKS = "Today\'s Top Tracks";
     public static final String CONNECTION_ERROR = "Request failed. Please check your Internet connection and try again.";
