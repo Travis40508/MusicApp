@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -84,5 +85,26 @@ public class MVVMUtils {
         recyclerView.setAdapter(similarArtistAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 3));
         similarArtistAdapter.notifyDataSetChanged();
+    }
+
+    @BindingAdapter("albumImage")
+    public static void loadAlbumImage(ImageView imageView, MusicApi.Album album) {
+        Glide.with(imageView.getContext()).asBitmap()
+                .load(album.getTrackImage().get(2).getImageUrl())
+                .apply(RequestOptions.overrideOf(100, 150))
+                .apply(RequestOptions.circleCropTransform())
+                .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
+                .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                .transition(BitmapTransitionOptions.withCrossFade())
+                .into(imageView);
+    }
+
+    @BindingAdapter({"albumData", "mainViewModel"})
+    public static void albumRecyclerView(RecyclerView recyclerView, List<MusicApi.Album> albumList, MainViewModel mainViewModel) {
+        AlbumsAdapter albumsAdapter = new AlbumsAdapter(albumList, mainViewModel);
+        recyclerView.setAdapter(albumsAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        albumsAdapter.notifyDataSetChanged();
     }
 }

@@ -1,51 +1,45 @@
 package com.elkcreek.rodneytressler.musicapp.utils;
 
-import android.graphics.Bitmap;
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
+import com.elkcreek.rodneytressler.musicapp.databinding.ItemAlbumBinding;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
-
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsViewHolder> {
 
-    private final RequestManager glide;
+    private final MainViewModel mainViewModel;
     private List<MusicApi.Album> albumList;
-    private AlbumCallback callback;
 
-    public AlbumsAdapter(RequestManager glide, List<MusicApi.Album> albumList) {
+    public AlbumsAdapter(List<MusicApi.Album> albumList, MainViewModel mainViewModel) {
         this.albumList = albumList;
-        this.glide = glide;
+        this.mainViewModel = mainViewModel;
     }
 
     @NonNull
     @Override
     public AlbumsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_album, viewGroup, false);
-        return new AlbumsViewHolder(itemView);
+        ItemAlbumBinding binding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_album, viewGroup, false);
+        return new AlbumsViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AlbumsViewHolder albumsViewHolder, int position) {
-        albumsViewHolder.bindView(albumList.get(position));
-        albumsViewHolder.itemView.setOnClickListener(albumsViewHolder.onAlbumClicked(albumList.get(position)));
+        MusicApi.Album album = albumList.get(position);
+        EventHandlers handler = new EventHandlers();
+        MusicApi.Artist artist = album.getArtistResponse();
+        String imageUrl = album.getTrackImage().get(2).getImageUrl();
+        albumsViewHolder.binding.setMainViewModel(mainViewModel);
+        albumsViewHolder.binding.setAlbum(album);
+        albumsViewHolder.binding.setHandler(handler);
+        albumsViewHolder.binding.setArtist(artist);
+        albumsViewHolder.binding.setImageUrl(imageUrl);
     }
 
     @Override
@@ -53,47 +47,13 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsView
         return albumList.size();
     }
 
-    public void setAlbumCallback(AlbumCallback albumCallback) {
-        this.callback = albumCallback;
-    }
-
     public class AlbumsViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.image_album_item)
-        protected ImageView albumCover;
+        private final ItemAlbumBinding binding;
 
-        @BindView(R.id.text_album_name)
-        protected TextView albumName;
-
-        public AlbumsViewHolder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public AlbumsViewHolder(ItemAlbumBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
-
-        public void bindView(MusicApi.Album album) {
-            glide.asBitmap()
-                    .load(album.getTrackImage().get(2).getImageUrl())
-                    .apply(RequestOptions.overrideOf(100, 150))
-                    .apply(RequestOptions.circleCropTransform())
-                    .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
-                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
-                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
-                    .transition(BitmapTransitionOptions.withCrossFade())
-                    .into(albumCover);
-            albumName.setText(album.getAlbumName());
-        }
-
-        public View.OnClickListener onAlbumClicked(MusicApi.Album album) {
-            return new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    callback.albumClicked(album);
-                }
-            };
-        }
-    }
-
-    public interface AlbumCallback {
-        void albumClicked(MusicApi.Album album);
     }
 }
