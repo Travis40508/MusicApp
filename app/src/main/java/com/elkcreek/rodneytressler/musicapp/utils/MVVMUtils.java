@@ -107,4 +107,30 @@ public class MVVMUtils {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         albumsAdapter.notifyDataSetChanged();
     }
+
+    @BindingAdapter("albumBioImage")
+    public static void loadAlbumBioImage(ImageView imageView, String imageUrl) {
+        if (!imageUrl.isEmpty()) {
+            Glide.with(imageView.getContext()).asBitmap()
+                    .load(imageUrl)
+                    .apply(RequestOptions.overrideOf(250, 300))
+                    .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
+                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                    .transition(BitmapTransitionOptions.withCrossFade())
+                    .into(imageView);
+
+            imageView.setBackgroundColor(Color.BLACK);
+        } else {
+            Glide.with(imageView.getContext()).asBitmap()
+                    .load(imageView.getResources().getDrawable(R.drawable.generic_album))
+                    .apply(RequestOptions.overrideOf(250, 300))
+                    .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
+                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                    .transition(BitmapTransitionOptions.withCrossFade())
+                    .into(imageView);
+            imageView.setBackgroundColor(Color.WHITE);
+        }
+    }
 }

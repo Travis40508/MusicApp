@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.elkcreek.rodneytressler.musicapp.ui.AlbumBioView.AlbumBioFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.albumbioview.AlbumBioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.AlbumTracksView.AlbumTracksFragment;
 
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ALBUM_IMAGE_URL_KEY;
