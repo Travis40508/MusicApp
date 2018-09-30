@@ -141,6 +141,7 @@ public class ArtistSearchFragment extends BaseFragment implements ArtistSearchVi
         viewModel = getViewModel();
         mainViewModel = getMainViewModel();
         binding.setViewModel(viewModel);
+        binding.setMainViewModel(mainViewModel);
         viewModel.setMainViewModel(mainViewModel);
     }
 

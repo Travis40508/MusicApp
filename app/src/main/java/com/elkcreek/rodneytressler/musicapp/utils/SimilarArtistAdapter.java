@@ -18,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.ItemSimilarArtistBinding;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 
 import java.util.List;
 
@@ -28,10 +29,12 @@ import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
 
 public class SimilarArtistAdapter extends RecyclerView.Adapter<SimilarArtistAdapter.SimilarArtistViewHolder> {
 
+    private final MainViewModel mainViewModel;
     private List<MusicApi.Artist> similarArtistList;
 
-    public SimilarArtistAdapter(List<MusicApi.Artist> similarArtistList) {
+    public SimilarArtistAdapter(List<MusicApi.Artist> similarArtistList, MainViewModel mainViewModel) {
         this.similarArtistList = similarArtistList;
+        this.mainViewModel = mainViewModel;
     }
 
     @NonNull
@@ -46,6 +49,7 @@ public class SimilarArtistAdapter extends RecyclerView.Adapter<SimilarArtistAdap
         EventHandlers eventHandlers = new EventHandlers();
         MusicApi.Artist artist = similarArtistList.get(position);
         similarArtistViewHolder.binding.setArtist(artist);
+        similarArtistViewHolder.binding.setMainViewModel(mainViewModel);
         similarArtistViewHolder.binding.setHandler(eventHandlers);
     }
 

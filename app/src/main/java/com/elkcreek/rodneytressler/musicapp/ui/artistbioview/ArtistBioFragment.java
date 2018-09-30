@@ -113,8 +113,9 @@ public class ArtistBioFragment extends BaseFragment implements ArtistBioView {
         viewModel = ViewModelProviders.of(this, factory).get(ArtistBioViewModel.class);
         mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         viewModel.setMainViewModel(mainViewModel);
-
         binding.setViewModel(viewModel);
+        binding.setMainViewModel(mainViewModel);
+
 
         viewModel.fetchArtistBio(
                 getArguments().getString(Constants.ARTIST_UID_KEY),

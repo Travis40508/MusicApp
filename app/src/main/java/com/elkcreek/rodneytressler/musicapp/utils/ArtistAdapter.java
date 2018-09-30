@@ -1,5 +1,6 @@
 package com.elkcreek.rodneytressler.musicapp.utils;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,15 +12,18 @@ import com.bumptech.glide.RequestManager;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.ItemArtistBinding;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 
 import java.util.List;
 
 public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder> {
 
+    private final MainViewModel mainViewModel;
     private List<MusicApi.Artist> artistList;
 
-    public ArtistAdapter(List<MusicApi.Artist> artistList) {
+    public ArtistAdapter(List<MusicApi.Artist> artistList, MainViewModel mainViewModel) {
         this.artistList = artistList;
+        this.mainViewModel = mainViewModel;
     }
 
     @NonNull
@@ -34,6 +38,7 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         EventHandlers eventHandlers = new EventHandlers();
         MusicApi.Artist artist = artistList.get(position);
         artistViewHolder.binding.setArtist(artist);
+        artistViewHolder.binding.setMainViewModel(mainViewModel);
         artistViewHolder.binding.setHandler(eventHandlers);
     }
 

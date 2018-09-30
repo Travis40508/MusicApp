@@ -17,6 +17,7 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 
 import java.util.List;
 
@@ -67,17 +68,17 @@ public class MVVMUtils {
                 .into(imageView);
     }
 
-    @BindingAdapter("data")
-    public static void loadArtists(RecyclerView recyclerView, List<MusicApi.Artist>artists) {
-        ArtistAdapter artistAdapter = new ArtistAdapter(artists);
+    @BindingAdapter({"data", "mainViewModel"})
+    public static void loadArtists(RecyclerView recyclerView, List<MusicApi.Artist>artists, MainViewModel mainViewModel) {
+        ArtistAdapter artistAdapter = new ArtistAdapter(artists, mainViewModel);
         recyclerView.setAdapter(artistAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), recyclerView.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2));
         artistAdapter.notifyDataSetChanged();
     }
 
-    @BindingAdapter("similarArtistData")
-    public static void loadSimilarArtists(RecyclerView recyclerView, List<MusicApi.Artist> similarArtists) {
-        SimilarArtistAdapter similarArtistAdapter = new SimilarArtistAdapter(similarArtists);
+    @BindingAdapter({"similarArtistData", "mainViewModel"})
+    public static void loadSimilarArtists(RecyclerView recyclerView, List<MusicApi.Artist> similarArtists, MainViewModel mainViewModel) {
+        SimilarArtistAdapter similarArtistAdapter = new SimilarArtistAdapter(similarArtists, mainViewModel);
         recyclerView.setAdapter(similarArtistAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 3));
         similarArtistAdapter.notifyDataSetChanged();

@@ -11,6 +11,10 @@
             name="viewModel"
             type="com.elkcreek.rodneytressler.musicapp.ui.artistsearchview.ArtistSearchViewModel"/>
 
+        <variable
+            name="mainViewModel"
+            type="com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel"/>
+
         <import type="android.support.v7.widget.GridLayoutManager"/>
         <import type="android.view.View"/>
     </data>
@@ -58,7 +62,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="10dp"
             app:layoutManager="android.support.v7.widget.GridLayoutManager"
-            bind:data="@{viewModel.artists}"
+            app:data="@{viewModel.artists}"
+            app:mainViewModel="@{mainViewModel}"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="match_parent"
             android:layout_height="0dp"

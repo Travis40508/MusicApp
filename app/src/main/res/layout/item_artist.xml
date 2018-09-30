@@ -10,12 +10,16 @@
         <variable
             name="handler"
             type="com.elkcreek.rodneytressler.musicapp.utils.EventHandlers"/>
+
+        <variable
+            name="mainViewModel"
+            type="com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="275dp"
-        android:onClick="@{(v) -> handler.onArtistClicked(v, artist.artistName, artist.artistUID)}"
+        android:onClick="@{(v) -> handler.onArtistClicked(v, artist.artistName, artist.artistUID, mainViewModel)}"
         android:background="@android:color/transparent"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
