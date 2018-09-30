@@ -29,7 +29,7 @@
 
         <AutoCompleteTextView
             android:id="@+id/input_artist_search"
-            android:hint="Enter Artist Name"
+            android:hint="@{viewModel.artistSearchHint}"
             android:inputType="text"
             android:imeOptions="actionDone"
             android:focusedByDefault="false"
@@ -61,7 +61,6 @@
             app:layout_constraintTop_toBottomOf="@id/text_search_value"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="10dp"
-            app:layoutManager="android.support.v7.widget.GridLayoutManager"
             app:data="@{viewModel.artists}"
             app:mainViewModel="@{mainViewModel}"
             app:layout_constraintStart_toStartOf="parent"

@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.MusicApiService;
@@ -33,6 +34,8 @@ public class ArtistSearchViewModel extends ViewModel {
     public ObservableField<List<MusicApi.Artist>> artists = new ObservableField<>(new ArrayList<>());
     public ObservableBoolean showProgressBar = new ObservableBoolean(true);
     public ObservableField<String> artistSearchValue = new ObservableField<>(Constants.CURRENT_TOP_ARTISTS);
+    public ObservableField<String> artistSearchHint = new ObservableField<>(Constants.ENTER_ARTIST_NAME);
+    public ObservableInt scrollPosition = new ObservableInt(0);
     public CompositeDisposable disposable;
     private Timer timer;
     private MainViewModel mainViewModel;

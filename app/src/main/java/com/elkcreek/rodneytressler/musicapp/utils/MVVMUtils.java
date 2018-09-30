@@ -2,6 +2,8 @@ package com.elkcreek.rodneytressler.musicapp.utils;
 
 import android.content.res.Configuration;
 import android.databinding.BindingAdapter;
+import android.databinding.InverseBindingAdapter;
+import android.databinding.InverseBindingMethod;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
@@ -69,7 +71,7 @@ public class MVVMUtils {
     }
 
     @BindingAdapter({"data", "mainViewModel"})
-    public static void loadArtists(RecyclerView recyclerView, List<MusicApi.Artist>artists, MainViewModel mainViewModel) {
+    public static void artistRecyclerView(RecyclerView recyclerView, List<MusicApi.Artist>artists, MainViewModel mainViewModel) {
         ArtistAdapter artistAdapter = new ArtistAdapter(artists, mainViewModel);
         recyclerView.setAdapter(artistAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), recyclerView.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2));
@@ -77,11 +79,10 @@ public class MVVMUtils {
     }
 
     @BindingAdapter({"similarArtistData", "mainViewModel"})
-    public static void loadSimilarArtists(RecyclerView recyclerView, List<MusicApi.Artist> similarArtists, MainViewModel mainViewModel) {
+    public static void similarArtistRecyclerView(RecyclerView recyclerView, List<MusicApi.Artist> similarArtists, MainViewModel mainViewModel) {
         SimilarArtistAdapter similarArtistAdapter = new SimilarArtistAdapter(similarArtists, mainViewModel);
         recyclerView.setAdapter(similarArtistAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 3));
         similarArtistAdapter.notifyDataSetChanged();
     }
-
 }
