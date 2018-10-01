@@ -131,6 +131,9 @@ public class TrackBioFragment extends BaseFragment implements TrackBioView {
 
         binding.setViewModel(viewModel);
         binding.setMainViewModel(mainViewModel);
+
+        viewModel.fetchTrackBio(getArguments().getString(Constants.TRACK_UID_KEY), getArguments().getString(Constants.TRACK_NAME_KEY), getArguments().getString(Constants.ARTIST_NAME_KEY));
+        viewModel.fetchSimilarTracks(getArguments().getString(Constants.TRACK_UID_KEY), getArguments().getString(Constants.TRACK_NAME_KEY), getArguments().getString(Constants.ARTIST_NAME_KEY));
     }
 
     private MainViewModel getMainViewModel() {
@@ -173,16 +176,16 @@ public class TrackBioFragment extends BaseFragment implements TrackBioView {
 
     @Override
     public void showSimilarTracks(List<MusicApi.Track> trackList) {
-        adapter = new SimilarTracksAdapter(Glide.with(this), trackList);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        adapter.notifyDataSetChanged();
-        adapter.setCallback(new SimilarTracksAdapter.SimilarTracksAdapterCallback() {
-            @Override
-            public void similarTrackClicked(MusicApi.Track track) {
-//                presenter.similarTrackClicked(track);
-            }
-        });
+//        adapter = new SimilarTracksAdapter(Glide.with(this), trackList);
+//        recyclerView.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+//        adapter.notifyDataSetChanged();
+//        adapter.setCallback(new SimilarTracksAdapter.SimilarTracksAdapterCallback() {
+//            @Override
+//            public void similarTrackClicked(MusicApi.Track track) {
+////                presenter.similarTrackClicked(track);
+//            }
+//        });
     }
 
     @Override

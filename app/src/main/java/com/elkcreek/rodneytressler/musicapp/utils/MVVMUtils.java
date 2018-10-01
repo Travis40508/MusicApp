@@ -151,4 +151,38 @@ public class MVVMUtils {
             }
         }
     }
+
+    @BindingAdapter("trackBioImage")
+    public static void loadTrackBioImage(ImageView imageView, String imageUrl) {
+        if (!imageUrl.isEmpty()) {
+            Glide.with(imageView.getContext()).asBitmap()
+                    .load(imageUrl)
+                    .apply(RequestOptions.overrideOf(250, 300))
+                    .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
+                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                    .transition(BitmapTransitionOptions.withCrossFade())
+                    .into(imageView);
+
+            imageView.setBackgroundColor(Color.BLACK);
+        } else {
+            Glide.with(imageView.getContext()).asBitmap()
+                    .load(imageView.getResources().getDrawable(R.drawable.generic_track))
+                    .apply(RequestOptions.overrideOf(250, 300))
+                    .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
+                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                    .transition(BitmapTransitionOptions.withCrossFade())
+                    .into(imageView);
+            imageView.setBackgroundColor(Color.WHITE);
+        }
+    }
+
+    @BindingAdapter({"similarTrackData", "mainViewModel"})
+    public static void loadSimilarTracks(RecyclerView recyclerView, List<MusicApi.Track> similarTracks, MainViewModel mainViewModel) {
+        SimilarTracksAdapter adapter = new SimilarTracksAdapter(similarTracks, mainViewModel);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 3));
+        adapter.notifyDataSetChanged();
+    }
 }

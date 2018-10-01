@@ -64,6 +64,7 @@ public class Constants {
     //Album Tracks no Tracks available for this album
     public static final String SIMILAR_ARTISTS = "Similar Artists";
     public static final String ENTER_ARTIST_NAME = "Enter Artist Name";
+    public static final String SIMILAR_TRACKS = "Similar Tracks";
     public static final String NO_SIMILAR_ARTISTS = "No similar artists found.";
     public static final String NO_SIMILAR_TRACKS = "No similar tracks found.";
     //No Artist Bio Image

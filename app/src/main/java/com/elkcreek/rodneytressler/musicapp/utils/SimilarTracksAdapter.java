@@ -17,6 +17,7 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 
 import java.util.List;
 
@@ -27,13 +28,13 @@ import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
 
 public class SimilarTracksAdapter extends RecyclerView.Adapter<SimilarTracksAdapter.SimilarTracksViewHolder> {
 
-    private final RequestManager glide;
+    private final MainViewModel mainViewModel;
     private List<MusicApi.Track> similarTracks;
     private SimilarTracksAdapterCallback callback;
 
-    public SimilarTracksAdapter(RequestManager glide, List<MusicApi.Track> similarTracks) {
+    public SimilarTracksAdapter(List<MusicApi.Track> similarTracks, MainViewModel mainViewModel) {
         this.similarTracks = similarTracks;
-        this.glide = glide;
+        this.mainViewModel = mainViewModel;
     }
 
     @NonNull
@@ -75,18 +76,18 @@ public class SimilarTracksAdapter extends RecyclerView.Adapter<SimilarTracksAdap
         }
 
         public void bindSimilarTrack(MusicApi.Track track) {
-            glide.asBitmap()
-                    .load(track.getArtistImage().get(2).getImageUrl())
-                    .apply(RequestOptions.errorOf(R.drawable.no_image_available))
-                    .apply(RequestOptions.overrideOf(100, 150))
-                    .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
-                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
-                    .apply(RequestOptions.circleCropTransform())
-                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
-                    .transition(BitmapTransitionOptions.withCrossFade())
-                    .into(similarTrackImage);
-            similarTrackArtistName.setText(track.getArtist().getArtistName());
-            similarTrackName.setText(track.getTrackName());
+//            Glide.with(this).asBitmap()
+//                    .load(track.getArtistImage().get(2).getImageUrl())
+//                    .apply(RequestOptions.errorOf(R.drawable.no_image_available))
+//                    .apply(RequestOptions.overrideOf(100, 150))
+//                    .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
+//                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+//                    .apply(RequestOptions.circleCropTransform())
+//                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+//                    .transition(BitmapTransitionOptions.withCrossFade())
+//                    .into(similarTrackImage);
+//            similarTrackArtistName.setText(track.getArtist().getArtistName());
+//            similarTrackName.setText(track.getTrackName());
         }
 
         public View.OnClickListener onTrackClicked(MusicApi.Track track) {
