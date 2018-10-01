@@ -185,4 +185,18 @@ public class MVVMUtils {
         recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 3));
         adapter.notifyDataSetChanged();
     }
+
+    @BindingAdapter("similarTrackImage")
+    public static void loadSimilarTrackImage(ImageView imageView, String imageUrl) {
+            Glide.with(imageView.getContext()).asBitmap()
+                    .load(imageUrl)
+                    .apply(RequestOptions.errorOf(R.drawable.no_image_available))
+                    .apply(RequestOptions.overrideOf(100, 150))
+                    .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
+                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                    .apply(RequestOptions.circleCropTransform())
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                    .transition(BitmapTransitionOptions.withCrossFade())
+                    .into(imageView);
+    }
 }

@@ -1,5 +1,6 @@
 package com.elkcreek.rodneytressler.musicapp.utils;
 
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.bumptech.glide.load.resource.bitmap.BitmapEncoder;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
+import com.elkcreek.rodneytressler.musicapp.databinding.ItemSimilarTracksBinding;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 
@@ -30,7 +32,6 @@ public class SimilarTracksAdapter extends RecyclerView.Adapter<SimilarTracksAdap
 
     private final MainViewModel mainViewModel;
     private List<MusicApi.Track> similarTracks;
-    private SimilarTracksAdapterCallback callback;
 
     public SimilarTracksAdapter(List<MusicApi.Track> similarTracks, MainViewModel mainViewModel) {
         this.similarTracks = similarTracks;
@@ -40,18 +41,22 @@ public class SimilarTracksAdapter extends RecyclerView.Adapter<SimilarTracksAdap
     @NonNull
     @Override
     public SimilarTracksViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_similar_tracks, viewGroup, false);
-        return new SimilarTracksViewHolder(itemView);
-    }
-
-    public void setCallback(SimilarTracksAdapterCallback callback) {
-        this.callback = callback;
+        ItemSimilarTracksBinding binding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_similar_tracks, viewGroup, false);
+        return new SimilarTracksViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SimilarTracksViewHolder similarTracksViewHolder, int position) {
-        similarTracksViewHolder.bindSimilarTrack(similarTracks.get(position));
-        similarTracksViewHolder.itemView.setOnClickListener(similarTracksViewHolder.onTrackClicked(similarTracks.get(position)));
+        MusicApi.Track track = similarTracks.get(position);
+        String imageUrl = track.getArtistImage().get(2).getImageUrl();
+        String artistName = track.getArtist().getArtistName();
+        EventHandlers handler = new EventHandlers();
+
+        similarTracksViewHolder.binding.setArtistName(artistName);
+        similarTracksViewHolder.binding.setHandler(handler);
+        similarTracksViewHolder.binding.setImageUrl(imageUrl);
+        similarTracksViewHolder.binding.setTrack(track);
+        similarTracksViewHolder.binding.setMainViewModel(mainViewModel);
     }
 
     @Override
@@ -61,18 +66,11 @@ public class SimilarTracksAdapter extends RecyclerView.Adapter<SimilarTracksAdap
 
     public class SimilarTracksViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.item_similar_track_image)
-        protected ImageView similarTrackImage;
+        private final ItemSimilarTracksBinding binding;
 
-        @BindView(R.id.item_similar_track_artist_name)
-        protected TextView similarTrackArtistName;
-
-        @BindView(R.id.item_similar_track_track_name)
-        protected TextView similarTrackName;
-
-        public SimilarTracksViewHolder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public SimilarTracksViewHolder(ItemSimilarTracksBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
         public void bindSimilarTrack(MusicApi.Track track) {
@@ -89,18 +87,5 @@ public class SimilarTracksAdapter extends RecyclerView.Adapter<SimilarTracksAdap
 //            similarTrackArtistName.setText(track.getArtist().getArtistName());
 //            similarTrackName.setText(track.getTrackName());
         }
-
-        public View.OnClickListener onTrackClicked(MusicApi.Track track) {
-            return new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    callback.similarTrackClicked(track);
-                }
-            };
-        }
-    }
-
-    public interface SimilarTracksAdapterCallback {
-        void similarTrackClicked(MusicApi.Track track);
     }
 }
