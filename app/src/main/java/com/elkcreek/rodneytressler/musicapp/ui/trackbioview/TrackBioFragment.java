@@ -1,6 +1,8 @@
-package com.elkcreek.rodneytressler.musicapp.ui.TrackBioView;
+package com.elkcreek.rodneytressler.musicapp.ui.trackbioview;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,8 +24,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
+import com.elkcreek.rodneytressler.musicapp.databinding.FragmentTrackBioBinding;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import com.elkcreek.rodneytressler.musicapp.utils.SimilarTracksAdapter;
 
@@ -44,7 +48,7 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_UID_KEY
 
 public class TrackBioFragment extends BaseFragment implements TrackBioView {
 
-    @Inject protected TrackBioPresenter presenter;
+    @Inject protected TrackBioFactory factory;
     @BindView(R.id.image_album_cover)
     protected ImageView albumCover;
     @BindView(R.id.text_track_bio)
@@ -61,8 +65,14 @@ public class TrackBioFragment extends BaseFragment implements TrackBioView {
     protected NestedScrollView scrollView;
     private SimilarTracksAdapter adapter;
 
+    private TrackBioViewModel viewModel;
+    private MainViewModel mainViewModel;
+    private FragmentTrackBioBinding binding;
+
     @OnClick(R.id.read_more_layout)
-    protected void onReadMoreLayoutClicked(View view) {presenter.onReadMoreClicked(readMoreText.getText().toString());}
+    protected void onReadMoreLayoutClicked(View view) {
+//        presenter.onReadMoreClicked(readMoreText.getText().toString());
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -73,25 +83,26 @@ public class TrackBioFragment extends BaseFragment implements TrackBioView {
     @Override
     public void onResume() {
         super.onResume();
-        presenter.trackRetrieved(getArguments().getString(TRACK_UID_KEY));
-        presenter.namesRetrieved(getArguments().getString(TRACK_NAME_KEY), getArguments().getString(ARTIST_NAME_KEY));
-        presenter.subscribe();
+//        presenter.trackRetrieved(getArguments().getString(TRACK_UID_KEY));
+//        presenter.namesRetrieved(getArguments().getString(TRACK_NAME_KEY), getArguments().getString(ARTIST_NAME_KEY));
+//        presenter.subscribe();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        presenter.unsubscribe();
-        presenter.storeScrollViewPosition(scrollView.getScrollY());
+//        presenter.unsubscribe();
+//        presenter.storeScrollViewPosition(scrollView.getScrollY());
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_track_bio, container, false);
-        ButterKnife.bind(this, view);
-        presenter.attachView(this);
-        return view;
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_track_bio, container, false);
+//        View view = inflater.inflate(R.layout.fragment_track_bio, container, false);
+//        ButterKnife.bind(this, view);
+//        presenter.attachView(this);
+        return binding.getRoot();
     }
 
     public static TrackBioFragment newInstance() {
@@ -106,25 +117,40 @@ public class TrackBioFragment extends BaseFragment implements TrackBioView {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        presenter.saveState(outState, scrollView != null ? scrollView.getScrollY() : 0);
+//        presenter.saveState(outState, scrollView != null ? scrollView.getScrollY() : 0);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        presenter.getState(savedInstanceState);
+//        presenter.getState(savedInstanceState);
+
+        viewModel = getViewModel();
+        mainViewModel = getMainViewModel();
+        viewModel.setMainViewModel(mainViewModel);
+
+        binding.setViewModel(viewModel);
+        binding.setMainViewModel(mainViewModel);
+    }
+
+    private MainViewModel getMainViewModel() {
+        return ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+    }
+
+    private TrackBioViewModel getViewModel() {
+        return ViewModelProviders.of(this, factory).get(TrackBioViewModel.class);
     }
 
     @Override
     public void showTrackSummary(String trackSummary) {
         trackBio.setText(trackSummary);
-        presenter.bioLoaded();
+//        presenter.bioLoaded();
     }
 
     @Override
     public void showTrackContent(String trackContent) {
         trackBio.setText(trackContent);
-        presenter.bioLoaded();
+//        presenter.bioLoaded();
     }
 
     @Override
@@ -154,7 +180,7 @@ public class TrackBioFragment extends BaseFragment implements TrackBioView {
         adapter.setCallback(new SimilarTracksAdapter.SimilarTracksAdapterCallback() {
             @Override
             public void similarTrackClicked(MusicApi.Track track) {
-                presenter.similarTrackClicked(track);
+//                presenter.similarTrackClicked(track);
             }
         });
     }

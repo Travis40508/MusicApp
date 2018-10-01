@@ -1,4 +1,4 @@
-package com.elkcreek.rodneytressler.musicapp.ui.TrackBioView;
+package com.elkcreek.rodneytressler.musicapp.ui.trackbioview;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.utils.BaseView;

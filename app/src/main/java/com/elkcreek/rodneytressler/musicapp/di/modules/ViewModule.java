@@ -10,7 +10,7 @@ import com.elkcreek.rodneytressler.musicapp.ui.ArtistMainView.ArtistMainFragment
 import com.elkcreek.rodneytressler.musicapp.ui.artistsearchview.ArtistSearchFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainActivity;
 import com.elkcreek.rodneytressler.musicapp.ui.SearchMainView.SearchMainFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.TrackBioView.TrackBioFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.trackbioview.TrackBioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackSearchView.TrackSearchFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.YoutubeView.YoutubeFragment;

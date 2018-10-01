@@ -1,4 +1,4 @@
-package com.elkcreek.rodneytressler.musicapp.ui.TrackBioView;
+package com.elkcreek.rodneytressler.musicapp.ui.trackbioview;
 
 import android.os.Bundle;
 import android.util.Log;
