@@ -27,7 +27,7 @@
         android:clickable="true"
         android:focusable="true">
 
-        <AutoCompleteTextView
+        <EditText
             android:id="@+id/input_artist_search"
             android:hint="@{viewModel.artistSearchHint}"
             android:inputType="text"

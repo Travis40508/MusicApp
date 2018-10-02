@@ -2,7 +2,7 @@ package com.elkcreek.rodneytressler.musicapp.di.modules;
 
 import com.elkcreek.rodneytressler.musicapp.ui.albumbioview.AlbumBioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.AlbumMainView.AlbumMainFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.AlbumTracksView.AlbumTracksFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.albumtracksview.AlbumTracksFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.albumsview.AlbumsFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.alltracksview.AllTracksFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.artistbioview.ArtistBioFragment;

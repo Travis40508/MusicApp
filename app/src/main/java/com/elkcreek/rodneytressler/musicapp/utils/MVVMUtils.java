@@ -152,6 +152,14 @@ public class MVVMUtils {
         }
     }
 
+    @BindingAdapter({"albumTracksData", "mainViewModel"})
+    public static void loadAlbumTracks(RecyclerView recyclerView, List<MusicApi.Track> trackList, MainViewModel mainViewModel) {
+        TracksAdapter adapter = new TracksAdapter(trackList, mainViewModel);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        adapter.notifyDataSetChanged();
+    }
+
     @BindingAdapter("trackBioImage")
     public static void loadTrackBioImage(ImageView imageView, String imageUrl) {
         if (!imageUrl.isEmpty()) {

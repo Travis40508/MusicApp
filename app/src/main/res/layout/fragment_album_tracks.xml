@@ -1,46 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="@android:color/black">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_album_tracks"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.elkcreek.rodneytressler.musicapp.ui.albumtracksview.AlbumTracksViewModel"/>
+
+        <variable
+            name="mainViewModel"
+            type="com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel"/>
+
+        <import type="android.view.View"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="50dp">
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@android:color/black">
 
-    </android.support.v7.widget.RecyclerView>
-    <TextView
-        android:id="@+id/no_tracks_text"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="32sp"
-        android:text="@string/no_tracks_available_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_album_tracks"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            app:albumTracksData="@{viewModel.albumTrackList}"
+            app:mainViewModel="@{mainViewModel}"
+            android:layout_height="0dp"
+            android:layout_marginBottom="50dp">
 
-
-    <FrameLayout
-        android:id="@+id/loading_layout"
-        android:background="@android:color/black"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ProgressBar
-            android:layout_gravity="center"
+        </android.support.v7.widget.RecyclerView>
+        <TextView
+            android:id="@+id/no_tracks_text"
+            android:visibility="@{viewModel.albumTrackList.size() > 0 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="32sp"
+            android:text="@string/no_tracks_available_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </FrameLayout>
 
-</android.support.constraint.ConstraintLayout>
+
+        <FrameLayout
+            android:id="@+id/loading_layout"
+            android:visibility="@{viewModel.showProgressBar ? View.VISIBLE : View.GONE}"
+            android:background="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

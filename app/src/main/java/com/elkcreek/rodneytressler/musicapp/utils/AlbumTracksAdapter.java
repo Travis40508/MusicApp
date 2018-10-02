@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,17 +27,14 @@ import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
 
 public class AlbumTracksAdapter extends RecyclerView.Adapter<AlbumTracksAdapter.AlbumTracksViewHolder> {
 
-    private final String imageUrl;
-    private final RequestManager glide;
+    private final MainViewModel mainViewModel;
     private List<MusicApi.Track> trackList;
     private AlbumTracksCallback albumTracksCallback;
     private List<MusicApi.Track> fullTrackList;
 
-    public AlbumTracksAdapter(RequestManager glide, List<MusicApi.Track> trackList, String imageUrl) {
+    public AlbumTracksAdapter(List<MusicApi.Track> trackList, MainViewModel mainViewModel) {
         this.trackList = trackList;
-        this.imageUrl = imageUrl;
-        this.glide = glide;
-        fullTrackList = trackList;
+        this.mainViewModel = mainViewModel;
     }
 
     @NonNull
