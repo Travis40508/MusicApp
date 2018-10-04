@@ -207,4 +207,32 @@ public class MVVMUtils {
                     .transition(BitmapTransitionOptions.withCrossFade())
                     .into(imageView);
     }
+
+    @BindingAdapter("topTrackImage")
+    public static void loadTopTrackImage(ImageView imageView, String imageUrl) {
+        if (!imageUrl.isEmpty()) {
+            Glide.with(imageView.getContext()).asBitmap()
+                    .load(imageUrl)
+                    .apply(RequestOptions.circleCropTransform())
+                    .apply(RequestOptions.overrideOf(100, 150))
+                    .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
+                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                    .transition(BitmapTransitionOptions.withCrossFade())
+                    .into(imageView);
+
+            imageView.setBackgroundColor(Color.BLACK);
+        } else {
+            Glide.with(imageView.getContext()).asBitmap()
+                    .load(imageView.getResources().getDrawable(R.drawable.generic_track))
+                    .apply(RequestOptions.circleCropTransform())
+                    .apply(RequestOptions.overrideOf(250, 300))
+                    .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
+                    .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.DATA))
+                    .transition(BitmapTransitionOptions.withCrossFade())
+                    .into(imageView);
+            imageView.setBackgroundColor(Color.WHITE);
+        }
+    }
 }

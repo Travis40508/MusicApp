@@ -12,7 +12,7 @@ import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainActivity;
 import com.elkcreek.rodneytressler.musicapp.ui.SearchMainView.SearchMainFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.trackbioview.TrackBioFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.TrackSearchView.TrackSearchFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.tracksearchview.TrackSearchFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.YoutubeView.YoutubeFragment;
 
 import dagger.Module;

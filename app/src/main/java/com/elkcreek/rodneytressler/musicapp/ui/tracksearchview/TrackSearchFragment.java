@@ -1,6 +1,8 @@
-package com.elkcreek.rodneytressler.musicapp.ui.TrackSearchView;
+package com.elkcreek.rodneytressler.musicapp.ui.tracksearchview;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -17,8 +19,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.elkcreek.rodneytressler.musicapp.R;
+import com.elkcreek.rodneytressler.musicapp.databinding.FragmentTrackSearchBinding;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import com.elkcreek.rodneytressler.musicapp.utils.SearchedTracksAdapter;
 import com.elkcreek.rodneytressler.musicapp.utils.TopTracksAdapter;
@@ -39,7 +43,7 @@ import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_UID_KEY
 
 public class TrackSearchFragment extends BaseFragment implements TrackSearchView{
 
-    @Inject protected TrackSearchPresenter presenter;
+    @Inject TrackSearchFactory factory;
     @BindView(R.id.recycler_view)
     protected RecyclerView recyclerView;
     @BindView(R.id.loading_layout)
@@ -50,10 +54,13 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
     protected EditText searchInput;
     private TopTracksAdapter adapter;
     private SearchedTracksAdapter searchAdapter;
+    private TrackSearchViewModel viewModel;
+    private MainViewModel mainViewModel;
+    private FragmentTrackSearchBinding binding;
 
     @OnTextChanged(value = R.id.input_track_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void onArtistSearchChange(Editable editable) {
-        presenter.trackSearchTextChanged(editable.toString(), adapter != null && adapter.getItemCount() > 0);
+//        presenter.trackSearchTextChanged(editable.toString(), adapter != null && adapter.getItemCount() > 0);
     }
 
     @Override
@@ -65,24 +72,23 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
     @Override
     public void onResume() {
         super.onResume();
-        presenter.subscribe();
+//        presenter.subscribe();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        presenter.unsubscribe();
-        presenter.storeRecyclerViewPosition(recyclerView.getLayoutManager() != null ? recyclerView.getLayoutManager().onSaveInstanceState() : null);
+//        presenter.unsubscribe();
+//        presenter.storeRecyclerViewPosition(recyclerView.getLayoutManager() != null ? recyclerView.getLayoutManager().onSaveInstanceState() : null);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_track_search, container, false);
-        ButterKnife.bind(this, view);
-        presenter.attachView(this);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_track_search, container, false);
+//        presenter.attachView(this);
 
-        return view;
+        return binding.getRoot();
     }
 
     public static TrackSearchFragment newInstance() {
@@ -97,29 +103,44 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        presenter.saveState(outState, recyclerView != null  && recyclerView.getLayoutManager() != null ? recyclerView.getLayoutManager().onSaveInstanceState() : null);
+//        presenter.saveState(outState, recyclerView != null  && recyclerView.getLayoutManager() != null ? recyclerView.getLayoutManager().onSaveInstanceState() : null);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        presenter.getState(savedInstanceState);
+//        presenter.getState(savedInstanceState);
+
+        viewModel = getViewModel();
+        mainViewModel = getMainViewModel();
+        viewModel.setMainViewModel(mainViewModel);
+
+        binding.setViewModel(viewModel);
+        binding.setMainViewModel(mainViewModel);
+    }
+
+    private MainViewModel getMainViewModel() {
+        return ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+    }
+
+    private TrackSearchViewModel getViewModel() {
+        return ViewModelProviders.of(this, factory).get(TrackSearchViewModel.class);
     }
 
     @Override
     public void showTracks(List<MusicApi.Track> trackList) {
-        adapter = new TopTracksAdapter(Glide.with(this), trackList);
-
-        adapter.setAdapterCallback(new TopTracksAdapter.TopTrackCallback() {
-            @Override
-            public void onTopTrackClicked(MusicApi.Track track) {
-                presenter.trackClicked(track);
-            }
-        });
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter.notifyDataSetChanged();
-        presenter.listLoaded();
+//        adapter = new TopTracksAdapter(Glide.with(this), trackList);
+//
+//        adapter.setAdapterCallback(new TopTracksAdapter.TopTrackCallback() {
+//            @Override
+//            public void onTopTrackClicked(MusicApi.Track track) {
+//                presenter.trackClicked(track);
+//            }
+//        });
+//        recyclerView.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        adapter.notifyDataSetChanged();
+//        presenter.listLoaded();
     }
 
     @Override
@@ -162,7 +183,7 @@ public class TrackSearchFragment extends BaseFragment implements TrackSearchView
         searchAdapter.setSearchedCallback(new SearchedTracksAdapter.SearchedTrackCallback() {
             @Override
             public void onSearchedTrackClicked(MusicApi.SearchedTrack track) {
-                presenter.searchedTrackClicked(track);
+//                presenter.searchedTrackClicked(track);
             }
         });
 
