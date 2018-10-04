@@ -36,7 +36,6 @@ public class TrackSearchViewModel extends ViewModel {
     private Consumer<List<MusicApi.Track>> updateUiWithTracks() {
         return trackList -> {
             topTrackList.set(trackList);
-//            view.showTracks(trackList);
             showLoadingLayout.set(false);
         };
     }

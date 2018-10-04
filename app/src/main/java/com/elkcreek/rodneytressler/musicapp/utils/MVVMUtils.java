@@ -235,4 +235,12 @@ public class MVVMUtils {
             imageView.setBackgroundColor(Color.WHITE);
         }
     }
+
+    @BindingAdapter({"topTrackData", "mainViewModel"})
+    public static void loadTopTracks(RecyclerView recyclerView, List<MusicApi.Track> topTracks, MainViewModel mainViewModel) {
+        TopTracksAdapter adapter = new TopTracksAdapter(topTracks, mainViewModel);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        adapter.notifyDataSetChanged();
+    }
 }

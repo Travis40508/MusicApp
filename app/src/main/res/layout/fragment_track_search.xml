@@ -10,6 +10,8 @@
         <variable
             name="mainViewModel"
             type="com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel"/>
+
+        <import type="android.view.View"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -55,6 +57,8 @@
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="match_parent"
+            app:topTrackData="@{viewModel.topTrackList}"
+            app:mainViewModel="@{mainViewModel}"
             android:layout_height="0dp"
             android:paddingBottom="50dp">
 
@@ -62,6 +66,7 @@
 
         <FrameLayout
             android:id="@+id/loading_layout"
+            android:visibility="@{viewModel.showLoadingLayout ? View.VISIBLE : View.GONE}"
             android:background="@android:color/black"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
