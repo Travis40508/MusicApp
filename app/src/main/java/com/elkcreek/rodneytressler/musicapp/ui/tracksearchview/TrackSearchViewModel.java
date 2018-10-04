@@ -8,9 +8,12 @@ import android.util.Log;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
+import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -20,8 +23,11 @@ public class TrackSearchViewModel extends ViewModel {
     private final RepositoryService repositoryService;
     private CompositeDisposable disposable;
     public ObservableField<List<MusicApi.Track>> topTrackList = new ObservableField<>(new ArrayList<>());
+    public ObservableField<List<MusicApi.SearchedTrack>> searchedTrackList = new ObservableField<>(new ArrayList<>());
     public ObservableBoolean showLoadingLayout = new ObservableBoolean(true);
+    public ObservableField<String> trackSearchValue = new ObservableField<>(Constants.CURRENT_TOP_TRACKS);
     private MainViewModel mainViewModel;
+    private Timer timer;
 
     public TrackSearchViewModel(RepositoryService repositoryService) {
         this.repositoryService = repositoryService;
@@ -49,5 +55,36 @@ public class TrackSearchViewModel extends ViewModel {
 
     public void setMainViewModel(MainViewModel mainViewModel) {
         this.mainViewModel = mainViewModel;
+    }
+
+    public void onTrackSearchTextChanged(CharSequence trackSearchText, int start, int before, int count) {
+        showLoadingLayout.set(false);
+        if (timer != null) {
+            timer.cancel();
+        }
+
+        if (trackSearchText.length() == 0) {
+            fetchTopTracks();
+            searchedTrackList.get().clear();
+            trackSearchValue.set(Constants.CURRENT_TOP_TRACKS);
+        } else {
+            trackSearchValue.set("Showing results for '" + trackSearchText + "'");
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    showLoadingLayout.set(true);
+                    disposable.add(repositoryService.getSearchedTracksFromNetwork((trackSearchText.toString()))
+                            .subscribe(getSearchResponse(), updateUiWithError()));
+                }
+            }, 750);
+        }
+    }
+
+    private Consumer<List<MusicApi.SearchedTrack>> getSearchResponse() {
+        return trackList -> {
+            showLoadingLayout.set(false);
+            searchedTrackList.set(trackList);
+        };
     }
 }

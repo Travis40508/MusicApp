@@ -21,14 +21,18 @@
             type="String"/>
 
         <variable
-            name="track"
-            type="com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi.Track"/>
+            name="trackUid"
+            type="String"/>
+
+        <variable
+            name="trackName"
+            type="String"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:onClick="@{(v) -> handler.onTrackClicked(v, track.trackName, track.trackUid, artistName, mainViewModel)}"
+        android:onClick="@{(v) -> handler.onTrackClicked(v, trackName, trackUid, artistName, mainViewModel)}"
         android:layout_margin="10dp"
         android:background="#111111">
 
@@ -65,7 +69,7 @@
 
             <TextView
                 android:id="@+id/text_track_name"
-                android:text="@{track.trackName}"
+                android:text="@{trackName}"
                 android:textSize="16sp"
                 android:layout_gravity="center"
                 android:textColor="@android:color/white"

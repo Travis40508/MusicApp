@@ -50,10 +50,13 @@ public class TopTracksAdapter extends RecyclerView.Adapter<TopTracksAdapter.TopT
         MusicApi.Track track = topTracksList.get(position);
         String imageUrl = track.getArtistImage().get(2).getImageUrl();
         String artistName = track.getArtist().getArtistName();
+        String trackUid = track.getTrackUid();
+        String trackName = track.getTrackName();
 
         topTracksViewHolder.binding.setArtistName(artistName);
         topTracksViewHolder.binding.setImageUrl(imageUrl);
-        topTracksViewHolder.binding.setTrack(track);
+        topTracksViewHolder.binding.setTrackUid(trackUid);
+        topTracksViewHolder.binding.setTrackName(trackName);
         topTracksViewHolder.binding.setHandler(handler);
         topTracksViewHolder.binding.setMainViewModel(mainViewModel);
     }

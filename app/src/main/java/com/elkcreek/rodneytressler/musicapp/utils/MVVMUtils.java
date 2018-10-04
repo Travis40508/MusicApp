@@ -236,11 +236,18 @@ public class MVVMUtils {
         }
     }
 
-    @BindingAdapter({"topTrackData", "mainViewModel"})
-    public static void loadTopTracks(RecyclerView recyclerView, List<MusicApi.Track> topTracks, MainViewModel mainViewModel) {
+    @BindingAdapter({"topTrackData", "searchedTrackData", "mainViewModel"})
+    public static void loadTopTracks(RecyclerView recyclerView, List<MusicApi.Track> topTracks, List<MusicApi.SearchedTrack> searchedTracks, MainViewModel mainViewModel) {
         TopTracksAdapter adapter = new TopTracksAdapter(topTracks, mainViewModel);
-        recyclerView.setAdapter(adapter);
+        SearchedTracksAdapter searchedTracksAdapter = new SearchedTracksAdapter(searchedTracks, mainViewModel);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        adapter.notifyDataSetChanged();
+
+        if(searchedTracks.size() == 0) {
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        } else {
+            recyclerView.setAdapter(searchedTracksAdapter);
+            adapter.notifyDataSetChanged();
+        }
     }
 }
