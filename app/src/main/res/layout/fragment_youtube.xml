@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/black"
-    android:clickable="true"
-    android:focusable="true">
 
-    <FrameLayout
-        android:id="@+id/youtube_fragment_holder"
-        app:layout_constraintTop_toTopOf="parent"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.elkcreek.rodneytressler.musicapp.ui.youtubeview.YoutubeViewModel"/>
+
+        <import type="android.view.View"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:clickable="true"
+        android:focusable="true">
 
+        <FrameLayout
+            android:id="@+id/youtube_fragment_holder"
+            android:background="@android:color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/image_no_preview_available"
@@ -25,56 +39,57 @@
             android:textSize="20sp"
             android:visibility="gone"
             android:text="@string/no_preview_available"/>
-    </FrameLayout>
 
-    <ScrollView
-        android:id="@+id/youtube_scroll_view"
-        app:layout_constraintTop_toBottomOf="@id/youtube_fragment_holder"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:layout_height="0dp"
-        android:paddingBottom="100dp"
-        android:orientation="vertical">
-
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/youtube_scroll_view"
+            app:layout_constraintTop_toBottomOf="@id/youtube_fragment_holder"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_height="0dp"
+            android:paddingBottom="100dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/text_lyrics_title"
-                android:textSize="18sp"
-                android:layout_gravity="center_horizontal"
-                android:textStyle="bold"
-                android:layout_margin="5dp"
-                android:textColor="@android:color/white"
-                android:text="@string/song_lyrics_text"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_lyrics_title"
+                    android:textSize="18sp"
+                    android:layout_gravity="center_horizontal"
+                    android:textStyle="bold"
+                    android:layout_margin="5dp"
+                    android:textColor="@android:color/white"
+                    android:text="@string/song_lyrics_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/text_lyrics"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+        </ScrollView>
+
+        <FrameLayout
+            android:id="@+id/loading_layout"
+            android:visibility="@{viewModel.showLoadingLayout ? View.VISIBLE : View.GONE}"
+            android:background="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+        </FrameLayout>
 
-            <TextView
-                android:id="@+id/text_lyrics"
-                android:textSize="16sp"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-
-    </ScrollView>
-
-    <FrameLayout
-        android:id="@+id/loading_layout"
-        android:background="@android:color/black"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ProgressBar
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </FrameLayout>
-
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</layout>

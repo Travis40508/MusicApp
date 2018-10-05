@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.elkcreek.rodneytressler.musicapp.ui.trackbioview.TrackBioFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.YoutubeView.YoutubeFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.youtubeview.YoutubeFragment;
 
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.ARTIST_NAME_KEY;
 import static com.elkcreek.rodneytressler.musicapp.utils.Constants.TRACK_NAME_KEY;

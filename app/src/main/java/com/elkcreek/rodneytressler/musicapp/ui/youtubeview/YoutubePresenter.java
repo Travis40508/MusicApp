@@ -1,4 +1,4 @@
-package com.elkcreek.rodneytressler.musicapp.ui.YoutubeView;
+package com.elkcreek.rodneytressler.musicapp.ui.youtubeview;
 
 import android.os.Bundle;
 import android.util.Log;
