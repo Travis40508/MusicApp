@@ -70,6 +70,7 @@
                     android:id="@+id/text_lyrics"
                     android:textSize="16sp"
                     android:gravity="center"
+                    android:text="@{viewModel.songLyrics}"
                     android:textColor="@android:color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />

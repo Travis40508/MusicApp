@@ -80,14 +80,12 @@ public class TrackBioViewModel extends ViewModel {
             if (trackList != null && !trackList.isEmpty()) {
                 similarTracks.set(trackList);
             }
-            mainViewModel.showLoadingLayout.set(false);
         };
     }
 
     private Consumer<Throwable> updateUiWithSimilarTrackError() {
         return throwable -> {
             Log.d("@@@@-TrackBioViewModel", throwable.getMessage());
-            mainViewModel.showLoadingLayout.set(false);
         };
     }
 
