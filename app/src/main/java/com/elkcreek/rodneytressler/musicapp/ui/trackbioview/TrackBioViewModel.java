@@ -57,6 +57,7 @@ public class TrackBioViewModel extends ViewModel {
 
     private Consumer<MusicApi.TrackInfo> updateUiWithTrack() {
         return track -> {
+            mainViewModel.showLoadingLayout.set(false);
             trackSummary.set(track.getWiki() != null ? track.getWiki().getTrackSummary() : Constants.NO_TRACK_BIO_AVAILABLE);
             trackContent.set(track.getWiki() != null ? track.getWiki().getTrackContent() : Constants.NO_TRACK_BIO_AVAILABLE);
             if (track.getTrackAlbum() != null && track.getTrackAlbum().getTrackImage() != null) {
@@ -68,6 +69,7 @@ public class TrackBioViewModel extends ViewModel {
     private Consumer<Throwable> updateUiOnError() {
         return throwable -> {
             Log.d("@@@@-TrackBioViewModel", throwable.getMessage());
+            mainViewModel.showLoadingLayout.set(false);
             if (throwable instanceof SocketTimeoutException || throwable instanceof UnknownHostException) {
                 mainViewModel.shouldPopFragment.postValue(true);
                 mainViewModel.errorToastMessage.postValue(Constants.CONNECTION_ERROR);
@@ -85,6 +87,7 @@ public class TrackBioViewModel extends ViewModel {
 
     private Consumer<Throwable> updateUiWithSimilarTrackError() {
         return throwable -> {
+            mainViewModel.showLoadingLayout.set(false);
             Log.d("@@@@-TrackBioViewModel", throwable.getMessage());
         };
     }

@@ -1,5 +1,6 @@
 package com.elkcreek.rodneytressler.musicapp.ui.SearchMainView;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
+import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import com.elkcreek.rodneytressler.musicapp.utils.SearchViewPagerAdapter;
 
 import javax.inject.Inject;
@@ -30,6 +33,7 @@ public class SearchMainFragment extends BaseFragment implements SearchMainView {
     protected TabLayout tabLayout;
     private SearchViewPagerAdapter adapter;
     private SearchMainFragment searchMainFragment;
+    private MainViewModel mainViewModel;
 
     @Override
     public void onAttach(Context context) {
@@ -78,6 +82,8 @@ public class SearchMainFragment extends BaseFragment implements SearchMainView {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         presenter.getState(savedInstanceState);
+        mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+        mainViewModel.setActionBarTitle(Constants.DEFAULT_ACTION_BAR_TITLE);
     }
 
     @Override

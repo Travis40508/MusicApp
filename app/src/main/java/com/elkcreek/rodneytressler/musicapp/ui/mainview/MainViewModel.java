@@ -9,14 +9,14 @@ import android.databinding.ObservableField;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 public class MainViewModel extends ViewModel {
-    public ObservableField<String> actionBarTitle = new ObservableField<>(Constants.DEFAULT_ACTION_BAR_TITLE);
+    public MutableLiveData<String> actionBarTitle = new MutableLiveData<String>();
     public ObservableBoolean showLoadingLayout = new ObservableBoolean(false);
     public MutableLiveData<String> errorToastMessage = new MutableLiveData<>();
     public MutableLiveData<Boolean> shouldPopFragment = new MutableLiveData<>();
     public MutableLiveData<Boolean> shouldCloseApp = new MutableLiveData<>();
 
     public void setActionBarTitle(String title) {
-        actionBarTitle.set(title);
+        actionBarTitle.postValue(title);
     }
 
     public LiveData<String> getErrorToastMessage() {
@@ -29,5 +29,9 @@ public class MainViewModel extends ViewModel {
 
     public LiveData<Boolean> getShouldCloseApp() {
         return shouldCloseApp;
+    }
+
+    public LiveData<String> getActionBarTitle() {
+        return actionBarTitle;
     }
 }

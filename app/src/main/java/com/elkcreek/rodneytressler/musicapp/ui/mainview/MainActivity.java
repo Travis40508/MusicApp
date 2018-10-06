@@ -34,24 +34,19 @@ public class MainActivity extends AppCompatActivity {
         listenForErrorToasts();
         listenForFragmentPop();
         listenForAppClose();
+        listenForTitleChanges();
+    }
+
+    private void listenForTitleChanges() {
+        viewModel.getActionBarTitle().observe(this, this::setTitle);
     }
 
     private void listenForAppClose() {
-        viewModel.shouldCloseApp.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                MainActivity.super.onBackPressed();
-            }
-        });
+        viewModel.shouldCloseApp.observe(this, aBoolean -> MainActivity.super.onBackPressed());
     }
 
     private void listenForFragmentPop() {
-        viewModel.shouldPopFragment.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                NavHostFragment.findNavController(getSupportFragmentManager().findFragmentById(R.id.my_nav_host_fragment)).popBackStack();
-            }
-        });
+        viewModel.shouldPopFragment.observe(this, aBoolean -> NavHostFragment.findNavController(getSupportFragmentManager().findFragmentById(R.id.my_nav_host_fragment)).popBackStack());
     }
 
     private void listenForErrorToasts() {

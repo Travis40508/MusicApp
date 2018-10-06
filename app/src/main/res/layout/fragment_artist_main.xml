@@ -1,27 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/black"
-    android:clickable="true"
-    android:focusable="true">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout_artist_main"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="adapter"
+            type="com.elkcreek.rodneytressler.musicapp.utils.ArtistViewPagerAdapter"/>
+
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabTextColor="@android:color/white"
-        app:tabMode="fixed">
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:clickable="true"
+        android:focusable="true">
 
-    </android.support.design.widget.TabLayout>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayoutArtistMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabTextColor="@android:color/white"
+            app:tabMode="fixed">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager_artist_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tab_layout_artist_main">
+        </android.support.design.widget.TabLayout>
 
-    </android.support.v4.view.ViewPager>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager_artist_main"
+            android:layout_width="match_parent"
+            app:artistViewPagerAdapter="@{adapter}"
+            app:tabLayout="@{tabLayoutArtistMain}"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tabLayoutArtistMain">
 
-</android.support.constraint.ConstraintLayout>
+        </android.support.v4.view.ViewPager>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

@@ -6,7 +6,7 @@ import com.elkcreek.rodneytressler.musicapp.ui.albumtracksview.AlbumTracksFragme
 import com.elkcreek.rodneytressler.musicapp.ui.albumsview.AlbumsFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.alltracksview.AllTracksFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.artistbioview.ArtistBioFragment;
-import com.elkcreek.rodneytressler.musicapp.ui.ArtistMainView.ArtistMainFragment;
+import com.elkcreek.rodneytressler.musicapp.ui.artistmainview.ArtistMainFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.artistsearchview.ArtistSearchFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainActivity;
 import com.elkcreek.rodneytressler.musicapp.ui.SearchMainView.SearchMainFragment;
