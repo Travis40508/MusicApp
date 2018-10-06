@@ -13,7 +13,11 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.FragmentAlbumsBinding;
 import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
+import com.elkcreek.rodneytressler.musicapp.utils.Adapter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
+
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 
@@ -51,9 +55,10 @@ public class AlbumsFragment extends BaseFragment  {
         super.onActivityCreated(savedInstanceState);
         viewModel = getViewModel();
         mainViewModel = getMainViewModel();
+        Adapter adapter = new Adapter(new ArrayList<>(), mainViewModel);
 
         binding.setViewModel(viewModel);
-        binding.setMainViewModel(mainViewModel);
+        binding.setAdapter(adapter);
 
         viewModel.fetchItems(getArguments().getString(Constants.ARTIST_UID_KEY));
     }

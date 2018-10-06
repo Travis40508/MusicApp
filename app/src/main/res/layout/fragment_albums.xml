@@ -8,10 +8,11 @@
             type="com.elkcreek.rodneytressler.musicapp.ui.albumsview.AlbumsViewModel"/>
 
         <variable
-            name="mainViewModel"
-            type="com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel"/>
+            name="adapter"
+            type="com.elkcreek.rodneytressler.musicapp.utils.Adapter"/>
 
         <import type="android.view.View"/>
+        <import type="android.support.v7.widget.LinearLayoutManager"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -27,8 +28,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:albumData="@{viewModel.albumList}"
-            app:mainViewModel="@{mainViewModel}"
+            app:data="@{viewModel.albumList}"
+            android:adapter="@{adapter}"
+            app:adapter="@{adapter}"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="50dp">

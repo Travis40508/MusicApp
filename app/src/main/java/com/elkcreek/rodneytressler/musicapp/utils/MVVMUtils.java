@@ -79,9 +79,21 @@ public class MVVMUtils {
                 .into(imageView);
     }
 
-    @BindingAdapter({"data", "adapter"})
-    public static void artistRecyclerView(RecyclerView recyclerView, List<Object> list, Adapter adapter) {
+    @BindingAdapter(value = {"data", "adapter", "searchText"}, requireAll = false)
+    public static void artistRecyclerView(RecyclerView recyclerView, List<Object> list, Adapter adapter, String searchedText) {
+
         adapter.setAdapterItems(list);
+
+        List<Object> searchedTrackList = new ArrayList<>();
+
+        if(searchedText != null) {
+            for (Object item : list) {
+                if (((MusicApi.Track) item).getTrackName().toLowerCase().contains(searchedText.toLowerCase())) {
+                    searchedTrackList.add(item);
+                    adapter.setAdapterItems(searchedTrackList);
+                }
+            }
+        }
     }
 
     @BindingAdapter({"similarArtistData", "mainViewModel"})

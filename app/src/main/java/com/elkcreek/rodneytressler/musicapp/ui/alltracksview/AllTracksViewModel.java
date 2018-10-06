@@ -7,6 +7,7 @@ import android.util.Log;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -15,7 +16,7 @@ public class AllTracksViewModel extends ViewModel {
 
     private CompositeDisposable disposable;
     private final RepositoryService repositoryService;
-    public ObservableField<List<MusicApi.Track>> topTracks = new ObservableField<>(new ArrayList<>());
+    public ObservableField<List<Object>> topTracks = new ObservableField<>(new ArrayList<>());
     public ObservableBoolean showProgressBar = new ObservableBoolean(true);
     public ObservableField<String> searchedText = new ObservableField<>("");
 
@@ -31,7 +32,7 @@ public class AllTracksViewModel extends ViewModel {
 
     private Consumer<List<MusicApi.Track>> updateUiWithTopTracks() {
         return tracks -> {
-            topTracks.set(tracks);
+            topTracks.set(Arrays.asList(tracks.toArray()));
             showProgressBar.set(false);
         };
     }

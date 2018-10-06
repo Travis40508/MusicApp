@@ -6,10 +6,11 @@
             type="com.elkcreek.rodneytressler.musicapp.ui.alltracksview.AllTracksViewModel"/>
 
         <variable
-            name="mainViewModel"
-            type="com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel"/>
+            name="adapter"
+            type="com.elkcreek.rodneytressler.musicapp.utils.Adapter"/>
 
         <import type="android.view.View"/>
+        <import type="android.support.v7.widget.LinearLayoutManager"/>
         <import type="com.elkcreek.rodneytressler.musicapp.utils.Constants"/>
     </data>
 
@@ -56,8 +57,10 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_tracks"
-            app:allTracksData="@{viewModel.topTracks}"
-            app:mainViewModel="@{mainViewModel}"
+            app:data="@{viewModel.topTracks}"
+            android:adapter="@{adapter}"
+            app:adapter="@{adapter}"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             app:searchText="@{viewModel.searchedText}"
             app:layout_constraintTop_toBottomOf="@id/tracks_search_value"
             app:layout_constraintBottom_toBottomOf="parent"
