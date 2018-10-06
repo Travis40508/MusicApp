@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/albumMainFragment"
-        android:name="com.elkcreek.rodneytressler.musicapp.ui.AlbumMainView.AlbumMainFragment"
+        android:name="com.elkcreek.rodneytressler.musicapp.ui.albummainview.AlbumMainFragment"
         android:label="fragment_album_main"
         tools:layout="@layout/fragment_album_main" >
         <action

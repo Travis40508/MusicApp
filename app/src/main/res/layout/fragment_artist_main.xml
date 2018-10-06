@@ -7,8 +7,6 @@
         <variable
             name="adapter"
             type="com.elkcreek.rodneytressler.musicapp.utils.ArtistViewPagerAdapter"/>
-
-
     </data>
 
     <android.support.constraint.ConstraintLayout

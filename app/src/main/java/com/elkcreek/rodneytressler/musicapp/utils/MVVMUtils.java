@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -259,7 +260,7 @@ public class MVVMUtils {
     }
 
     @BindingAdapter({"artistViewPagerAdapter", "tabLayout"})
-    public static void loadArtistViewPager(ViewPager viewPager, ArtistViewPagerAdapter adapter, TabLayout tabLayout) {
+    public static void loadArtistViewPager(ViewPager viewPager, FragmentPagerAdapter adapter, TabLayout tabLayout) {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }
