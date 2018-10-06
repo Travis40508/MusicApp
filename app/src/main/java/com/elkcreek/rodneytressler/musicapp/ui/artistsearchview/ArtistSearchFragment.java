@@ -2,10 +2,12 @@ package com.elkcreek.rodneytressler.musicapp.ui.artistsearchview;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,10 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.FragmentArtistSearchBinding;
 import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
+import com.elkcreek.rodneytressler.musicapp.utils.Adapter;
+
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 
@@ -50,8 +56,11 @@ public class ArtistSearchFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         viewModel = getViewModel();
         mainViewModel = getMainViewModel();
+        Adapter adapter = new Adapter(new ArrayList<>(), mainViewModel);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2);
+        binding.setAdapter(adapter);
+        binding.setLayoutManager(layoutManager);
         binding.setViewModel(viewModel);
-        binding.setMainViewModel(mainViewModel);
         viewModel.setMainViewModel(mainViewModel);
     }
 

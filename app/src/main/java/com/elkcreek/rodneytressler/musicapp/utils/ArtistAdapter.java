@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.bumptech.glide.RequestManager;
 import com.elkcreek.rodneytressler.musicapp.R;
+import com.elkcreek.rodneytressler.musicapp.databinding.ItemAlbumBinding;
 import com.elkcreek.rodneytressler.musicapp.databinding.ItemArtistBinding;
+import com.elkcreek.rodneytressler.musicapp.databinding.ItemTracksBinding;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 
@@ -72,4 +74,5 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
             this.binding = binding;
         }
     }
+
 }

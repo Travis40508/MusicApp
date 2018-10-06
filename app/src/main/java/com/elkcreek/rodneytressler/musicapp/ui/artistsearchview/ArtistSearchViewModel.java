@@ -13,10 +13,12 @@ import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import com.elkcreek.rodneytressler.musicapp.utils.EventHandlers;
 
+import java.lang.reflect.Array;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,7 +33,7 @@ public class ArtistSearchViewModel extends ViewModel {
 
     public final MusicApiService musicApiService;
     public final RepositoryService repositoryService;
-    public ObservableField<List<MusicApi.Artist>> artists = new ObservableField<>(new ArrayList<>());
+    public ObservableField<List<Object>> artists = new ObservableField<>(new ArrayList<>());
     public ObservableBoolean showProgressBar = new ObservableBoolean(true);
     public ObservableField<String> artistSearchValue = new ObservableField<>(Constants.CURRENT_TOP_ARTISTS);
     public ObservableField<String> artistSearchHint = new ObservableField<>(Constants.ENTER_ARTIST_NAME);
@@ -63,7 +65,7 @@ public class ArtistSearchViewModel extends ViewModel {
 
     private Consumer<List<MusicApi.Artist>> updateViewWithTopArtist() {
         return topArtists -> {
-            artists.set(topArtists);
+            artists.set(Arrays.asList(topArtists.toArray()));
             setShowProgressBar(false);
         };
     }
@@ -113,7 +115,7 @@ public class ArtistSearchViewModel extends ViewModel {
     private Consumer<List<MusicApi.Artist>> getSearchResponse() {
         return searchResponse -> {
             setShowProgressBar(false);
-            artists.set(searchResponse);
+            artists.set(Arrays.asList(searchResponse.toArray()));
 //            view.scrollRecyclerViewToTop();
         };
     }

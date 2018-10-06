@@ -79,12 +79,9 @@ public class MVVMUtils {
                 .into(imageView);
     }
 
-    @BindingAdapter({"data", "mainViewModel"})
-    public static void artistRecyclerView(RecyclerView recyclerView, List<MusicApi.Artist>artists, MainViewModel mainViewModel) {
-        ArtistAdapter artistAdapter = new ArtistAdapter(artists, mainViewModel);
-        recyclerView.setAdapter(artistAdapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), recyclerView.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2));
-        artistAdapter.notifyDataSetChanged();
+    @BindingAdapter({"data", "adapter"})
+    public static void artistRecyclerView(RecyclerView recyclerView, List<Object> list, Adapter adapter) {
+        adapter.setAdapterItems(list);
     }
 
     @BindingAdapter({"similarArtistData", "mainViewModel"})
