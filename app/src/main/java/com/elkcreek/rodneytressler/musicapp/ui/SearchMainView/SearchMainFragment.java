@@ -2,38 +2,25 @@ package com.elkcreek.rodneytressler.musicapp.ui.SearchMainView;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.elkcreek.rodneytressler.musicapp.R;
+import com.elkcreek.rodneytressler.musicapp.databinding.FragmentSearchMainBinding;
 import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import com.elkcreek.rodneytressler.musicapp.utils.SearchViewPagerAdapter;
-
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
-public class SearchMainFragment extends BaseFragment implements SearchMainView {
+public class SearchMainFragment extends BaseFragment {
 
-    @Inject
-    protected SearchMainPresenter presenter;
-    @BindView(R.id.view_pager_search_main)
-    protected ViewPager viewPager;
-    @BindView(R.id.tab_layout_search_main)
-    protected TabLayout tabLayout;
-    private SearchViewPagerAdapter adapter;
-    private SearchMainFragment searchMainFragment;
     private MainViewModel mainViewModel;
+    private FragmentSearchMainBinding binding;
 
     @Override
     public void onAttach(Context context) {
@@ -41,26 +28,11 @@ public class SearchMainFragment extends BaseFragment implements SearchMainView {
         super.onAttach(context);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.subscribe();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        presenter.unsubscribe();
-        presenter.storeViewPagerState(viewPager.getCurrentItem());
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search_main, container, false);
-        ButterKnife.bind(this, view);
-        presenter.attachView(this);
-        return view;
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_main, container, false);
+        return binding.getRoot();
     }
 
     public static SearchMainFragment newInstance() {
@@ -73,29 +45,11 @@ public class SearchMainFragment extends BaseFragment implements SearchMainView {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        presenter.saveState(outState, viewPager != null ? viewPager.getCurrentItem() : 0);
-    }
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        presenter.getState(savedInstanceState);
+        SearchViewPagerAdapter adapter = new SearchViewPagerAdapter(getChildFragmentManager());
+        binding.setAdapter(adapter);
         mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         mainViewModel.setActionBarTitle(Constants.DEFAULT_ACTION_BAR_TITLE);
-    }
-
-    @Override
-    public void showScreens() {
-        adapter = new SearchViewPagerAdapter(getChildFragmentManager());
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-        presenter.viewPagerCreated();
-    }
-
-    @Override
-    public void setViewPagerPage(int currentItem) {
-        viewPager.setCurrentItem(currentItem);
     }
 }
