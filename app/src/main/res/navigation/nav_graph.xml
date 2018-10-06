@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/trackMainFragment"
-        android:name="com.elkcreek.rodneytressler.musicapp.ui.TrackMainView.TrackMainFragment"
+        android:name="com.elkcreek.rodneytressler.musicapp.ui.trackmainview.TrackMainFragment"
         android:label="fragment_track_main"
         tools:layout="@layout/fragment_track_main" >
         <action
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchMainFragment"
-        android:name="com.elkcreek.rodneytressler.musicapp.ui.SearchMainView.SearchMainFragment"
+        android:name="com.elkcreek.rodneytressler.musicapp.ui.searchmainview.SearchMainFragment"
         android:label="SearchMainFragment" >
         <action
             android:id="@+id/action_searchMainFragment_to_artistMainFragment"

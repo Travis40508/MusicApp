@@ -1,4 +1,4 @@
-package com.elkcreek.rodneytressler.musicapp.ui.SearchMainView;
+package com.elkcreek.rodneytressler.musicapp.ui.searchmainview;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -19,7 +19,6 @@ import dagger.android.support.AndroidSupportInjection;
 
 public class SearchMainFragment extends BaseFragment {
 
-    private MainViewModel mainViewModel;
     private FragmentSearchMainBinding binding;
 
     @Override
@@ -49,7 +48,7 @@ public class SearchMainFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         SearchViewPagerAdapter adapter = new SearchViewPagerAdapter(getChildFragmentManager());
         binding.setAdapter(adapter);
-        mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+        MainViewModel mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         mainViewModel.setActionBarTitle(Constants.DEFAULT_ACTION_BAR_TITLE);
     }
 }
