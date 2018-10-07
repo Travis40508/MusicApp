@@ -1,22 +1,13 @@
 package com.elkcreek.rodneytressler.musicapp.utils;
 
-import android.content.res.Configuration;
 import android.databinding.BindingAdapter;
-import android.databinding.InverseBindingAdapter;
-import android.databinding.InverseBindingMethod;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -24,16 +15,9 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
-import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainActivity;
-import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.navigation.Navigation;
 
 import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
 
@@ -79,21 +63,21 @@ public class MVVMUtils {
                 .into(imageView);
     }
 
-    @BindingAdapter(value = {"data", "adapter", "searchText"}, requireAll = false)
-    public static void artistRecyclerView(RecyclerView recyclerView, List<Object> list, Adapter adapter, String searchedText) {
-        adapter.setAdapterItems(list);
+    @BindingAdapter(value = {"data", "recyclerViewAdapter", "searchText"}, requireAll = false)
+    public static void artistRecyclerView(RecyclerView recyclerView, List<Object> list, RecyclerViewAdapter recyclerViewAdapter, String searchedText) {
+        recyclerViewAdapter.setAdapterItems(list);
         List<Object> searchedTrackList = new ArrayList<>();
 
         if(searchedText != null) {
             for (Object item : list) {
                 if (((MusicApi.Track) item).getTrackName().toLowerCase().contains(searchedText.toLowerCase())) {
                     searchedTrackList.add(item);
-                    adapter.setAdapterItems(searchedTrackList);
+                    recyclerViewAdapter.setAdapterItems(searchedTrackList);
                 }
             }
         }
     }
-    
+
     @BindingAdapter("albumImage")
     public static void loadAlbumImage(ImageView imageView, MusicApi.Album album) {
         Glide.with(imageView.getContext()).asBitmap()
@@ -157,14 +141,6 @@ public class MVVMUtils {
                     .into(imageView);
             imageView.setBackgroundColor(Color.WHITE);
         }
-    }
-
-    @BindingAdapter({"similarTrackData", "mainViewModel"})
-    public static void loadSimilarTracks(RecyclerView recyclerView, List<MusicApi.Track> similarTracks, MainViewModel mainViewModel) {
-        SimilarTracksAdapter adapter = new SimilarTracksAdapter(similarTracks, mainViewModel);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 3));
-        adapter.notifyDataSetChanged();
     }
 
     @BindingAdapter("similarTrackImage")

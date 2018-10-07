@@ -8,8 +8,8 @@
             type="com.elkcreek.rodneytressler.musicapp.ui.albumsview.AlbumsViewModel"/>
 
         <variable
-            name="adapter"
-            type="com.elkcreek.rodneytressler.musicapp.utils.Adapter"/>
+            name="recyclerViewAdapter"
+            type="com.elkcreek.rodneytressler.musicapp.utils.RecyclerViewAdapter"/>
 
         <import type="android.view.View"/>
         <import type="android.support.v7.widget.LinearLayoutManager"/>
@@ -29,8 +29,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:data="@{viewModel.albumList}"
-            android:adapter="@{adapter}"
-            app:adapter="@{adapter}"
+            android:adapter="@{recyclerViewAdapter}"
+            app:recyclerViewAdapter="@{recyclerViewAdapter}"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             android:layout_width="match_parent"
             android:layout_height="0dp"

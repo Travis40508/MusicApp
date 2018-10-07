@@ -13,7 +13,7 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.FragmentAllTracksBinding;
 import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
-import com.elkcreek.rodneytressler.musicapp.utils.Adapter;
+import com.elkcreek.rodneytressler.musicapp.utils.RecyclerViewAdapter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 import java.util.ArrayList;
@@ -55,9 +55,9 @@ public class AllTracksFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         viewModel = getViewModel();
         mainViewModel = getMainViewModel();
-        Adapter adapter = new Adapter(new ArrayList<>(), mainViewModel);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(new ArrayList<>(), mainViewModel);
         binding.setViewModel(viewModel);
-        binding.setAdapter(adapter);
+        binding.setRecyclerViewAdapter(recyclerViewAdapter);
 
         viewModel.fetchTopTracks(getArguments().getString(Constants.ARTIST_UID_KEY));
     }

@@ -13,7 +13,7 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.FragmentTrackSearchBinding;
 import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
-import com.elkcreek.rodneytressler.musicapp.utils.Adapter;
+import com.elkcreek.rodneytressler.musicapp.utils.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 
@@ -55,9 +55,9 @@ public class TrackSearchFragment extends BaseFragment {
         viewModel = getViewModel();
         mainViewModel = getMainViewModel();
         viewModel.setMainViewModel(mainViewModel);
-        Adapter adapter = new Adapter(new ArrayList<>(), mainViewModel);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(new ArrayList<>(), mainViewModel);
 
-        binding.setAdapter(adapter);
+        binding.setRecyclerViewAdapter(recyclerViewAdapter);
         binding.setViewModel(viewModel);
     }
 

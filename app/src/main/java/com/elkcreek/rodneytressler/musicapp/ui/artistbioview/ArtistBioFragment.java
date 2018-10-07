@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,7 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.FragmentArtistBioBinding;
 import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
-import com.elkcreek.rodneytressler.musicapp.utils.Adapter;
+import com.elkcreek.rodneytressler.musicapp.utils.RecyclerViewAdapter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 import java.util.ArrayList;
@@ -27,8 +26,6 @@ public class ArtistBioFragment extends BaseFragment {
 
     @Inject
     protected ArtistBioFactory factory;
-    protected NestedScrollView scrollView;
-    private SimilarArtistAdapter adapter;
     private ArtistBioViewModel viewModel;
     private MainViewModel mainViewModel;
     private FragmentArtistBioBinding binding;
@@ -51,11 +48,11 @@ public class ArtistBioFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(this, factory).get(ArtistBioViewModel.class);
         mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
-        Adapter adapter = new Adapter(new ArrayList<>(), mainViewModel);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(new ArrayList<>(), mainViewModel);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
         viewModel.setMainViewModel(mainViewModel);
         binding.setViewModel(viewModel);
-        binding.setAdapter(adapter);
+        binding.setRecyclerViewAdapter(recyclerViewAdapter);
         binding.setLayoutManager(layoutManager);
 
         viewModel.fetchArtistBio(

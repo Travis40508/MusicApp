@@ -51,7 +51,7 @@ public class TrackMainFragment extends Fragment {
 
         TrackViewPagerAdapter adapter = new TrackViewPagerAdapter(getChildFragmentManager(),
                 getArguments().getString(Constants.TRACK_UID_KEY), trackName, artistName);
-        binding.setAdapter(adapter);
+        binding.setRecyclerViewAdapter(adapter);
 
         MainViewModel mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         mainViewModel.setActionBarTitle(artistName + " - " + trackName);

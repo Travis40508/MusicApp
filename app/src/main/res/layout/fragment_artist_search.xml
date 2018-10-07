@@ -11,8 +11,8 @@
             type="com.elkcreek.rodneytressler.musicapp.ui.artistsearchview.ArtistSearchViewModel"/>
 
         <variable
-            name="adapter"
-            type="com.elkcreek.rodneytressler.musicapp.utils.Adapter"/>
+            name="recyclerViewAdapter"
+            type="com.elkcreek.rodneytressler.musicapp.utils.RecyclerViewAdapter"/>
 
         <variable
             name="layoutManager"
@@ -66,8 +66,8 @@
             android:layout_marginTop="10dp"
             app:data="@{viewModel.artists}"
             app:layoutManager="@{layoutManager}"
-            android:adapter="@{adapter}"
-            app:adapter="@{adapter}"
+            android:adapter="@{recyclerViewAdapter}"
+            app:recyclerViewAdapter="@{recyclerViewAdapter}"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="match_parent"
             android:layout_height="0dp"

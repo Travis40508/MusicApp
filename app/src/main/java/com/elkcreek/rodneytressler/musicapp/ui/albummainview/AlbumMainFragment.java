@@ -43,7 +43,7 @@ public class AlbumMainFragment extends Fragment {
         MainViewModel mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         mainViewModel.setActionBarTitle(getArguments().getString(ALBUM_NAME_KEY));
 
-        binding.setAdapter(adapter);
+        binding.setRecyclerViewAdapter(adapter);
     }
 
     @Nullable

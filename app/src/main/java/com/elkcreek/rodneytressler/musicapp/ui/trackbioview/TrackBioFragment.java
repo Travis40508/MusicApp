@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,11 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.FragmentTrackBioBinding;
 import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
+import com.elkcreek.rodneytressler.musicapp.utils.RecyclerViewAdapter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
+
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 
@@ -51,10 +56,13 @@ public class TrackBioFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         viewModel = getViewModel();
         mainViewModel = getMainViewModel();
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(new ArrayList<>(), mainViewModel);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
         viewModel.setMainViewModel(mainViewModel);
 
         binding.setViewModel(viewModel);
-        binding.setMainViewModel(mainViewModel);
+        binding.setRecyclerViewAdapter(recyclerViewAdapter);
+        binding.setLayoutManager(layoutManager);
 
         viewModel.fetchTrackBio(getArguments().getString(Constants.TRACK_UID_KEY), getArguments().getString(Constants.TRACK_NAME_KEY), getArguments().getString(Constants.ARTIST_NAME_KEY));
         viewModel.fetchSimilarTracks(getArguments().getString(Constants.TRACK_UID_KEY), getArguments().getString(Constants.TRACK_NAME_KEY), getArguments().getString(Constants.ARTIST_NAME_KEY));

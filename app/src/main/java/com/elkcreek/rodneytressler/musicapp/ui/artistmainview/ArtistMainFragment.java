@@ -50,7 +50,7 @@ public class ArtistMainFragment extends Fragment {
         ArtistViewPagerAdapter adapter = new ArtistViewPagerAdapter(getChildFragmentManager(), getArguments().getString(Constants.ARTIST_UID_KEY)
                 ,getArguments().getString(Constants.ARTIST_NAME_KEY));
 
-        binding.setAdapter(adapter);
+        binding.setRecyclerViewAdapter(adapter);
         mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         mainViewModel.setActionBarTitle(getArguments().getString(Constants.ARTIST_NAME_KEY));
     }

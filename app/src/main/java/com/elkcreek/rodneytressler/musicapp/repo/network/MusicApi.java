@@ -523,6 +523,9 @@ public interface MusicApi {
         @SerializedName("playcount")
         @Expose private Integer playCount;
 
+        @SerializedName("match")
+        @Expose private double match;
+
         @PrimaryKey(autoGenerate = true)
         private int primaryKey;
 
@@ -616,6 +619,14 @@ public interface MusicApi {
 
         public void setPlayCount(Integer playCount) {
             this.playCount = playCount;
+        }
+
+        public double getMatch() {
+            return match;
+        }
+
+        public void setMatch(double match) {
+            this.match = match;
         }
     }
 

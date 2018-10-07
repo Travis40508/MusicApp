@@ -10,6 +10,7 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.ItemAlbumBinding;
 import com.elkcreek.rodneytressler.musicapp.databinding.ItemArtistBinding;
 import com.elkcreek.rodneytressler.musicapp.databinding.ItemSimilarArtistBinding;
+import com.elkcreek.rodneytressler.musicapp.databinding.ItemSimilarTracksBinding;
 import com.elkcreek.rodneytressler.musicapp.databinding.ItemTopTrackBinding;
 import com.elkcreek.rodneytressler.musicapp.databinding.ItemTracksBinding;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
@@ -17,7 +18,7 @@ import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final MainViewModel mainViewModel;
     private List<Object> objectList;
@@ -29,7 +30,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int SIMILAR_ARTIST_ITEM = 4;
     private static final int SIMILAR_TRACK_ITEM = 5;
 
-    public Adapter(List<Object> objectList, MainViewModel mainViewModel) {
+    public RecyclerViewAdapter(List<Object> objectList, MainViewModel mainViewModel) {
         this.objectList = objectList;
         this.mainViewModel = mainViewModel;
         handler = new EventHandlers();
@@ -53,10 +54,14 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (listItem instanceof MusicApi.Album) {
             return ALBUM_ITEM;
         } else if (listItem instanceof MusicApi.Track) {
-            if (((MusicApi.Track) listItem).getPlayCount() != null && ((MusicApi.Track) listItem).getDuration() != null) {
-                return TOP_TRACK_ITEM;
+            if(((MusicApi.Track) listItem).getMatch() > 0) {
+                return SIMILAR_TRACK_ITEM;
             } else {
-                return TRACK_ITEM;
+                if (((MusicApi.Track) listItem).getPlayCount() != null && ((MusicApi.Track) listItem).getDuration() != null) {
+                    return TOP_TRACK_ITEM;
+                } else {
+                    return TRACK_ITEM;
+                }
             }
         } else if (listItem instanceof MusicApi.SearchedTrack) {
             return TOP_TRACK_ITEM;
@@ -85,7 +90,8 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ItemSimilarArtistBinding similarArtistBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_similar_artist, viewGroup, false);
                 return new SimilarArtistViewHolder(similarArtistBinding);
             case SIMILAR_TRACK_ITEM:
-                return null;
+                ItemSimilarTracksBinding similarTracksBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_similar_tracks, viewGroup, false);
+                return new SimilarTracksViewHolder(similarTracksBinding);
             default:
                 return null;
         }
@@ -104,10 +110,14 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (listItem instanceof MusicApi.Album) {
             bindAlbum((AlbumsViewHolder) viewHolder, (MusicApi.Album) listItem);
         } else if (listItem instanceof MusicApi.Track) {
-            if (((MusicApi.Track) listItem).getPlayCount() != null && ((MusicApi.Track) listItem).getDuration() != null) {
-                bindTopTrack((TopTracksViewHolder) viewHolder, (MusicApi.Track) listItem);
+            if(((MusicApi.Track) listItem).getMatch() > 0) {
+                bindSimilarTrack((SimilarTracksViewHolder) viewHolder, (MusicApi.Track) listItem);
             } else {
-                bindTrack((TracksViewHolder) viewHolder, (MusicApi.Track) listItem);
+                if (((MusicApi.Track) listItem).getPlayCount() != null && ((MusicApi.Track) listItem).getDuration() != null) {
+                    bindTopTrack((TopTracksViewHolder) viewHolder, (MusicApi.Track) listItem);
+                } else {
+                    bindTrack((TracksViewHolder) viewHolder, (MusicApi.Track) listItem);
+                }
             }
         } else if (listItem instanceof MusicApi.SearchedTrack) {
             bindSearchedTrack((TopTracksViewHolder) viewHolder, (MusicApi.SearchedTrack) listItem);
@@ -174,6 +184,18 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         viewHolder.binding.setHandler(handler);
     }
 
+    private void bindSimilarTrack(SimilarTracksViewHolder viewHolder, MusicApi.Track similarTrack) {
+        String imageUrl = similarTrack.getArtistImage().get(2).getImageUrl();
+        String artistName = similarTrack.getArtist().getArtistName();
+        EventHandlers handler = new EventHandlers();
+
+        viewHolder.binding.setArtistName(artistName);
+        viewHolder.binding.setHandler(handler);
+        viewHolder.binding.setImageUrl(imageUrl);
+        viewHolder.binding.setTrack(similarTrack);
+        viewHolder.binding.setMainViewModel(mainViewModel);
+    }
+
     @Override
     public int getItemCount() {
         return objectList.size();
@@ -229,4 +251,13 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
+    public class SimilarTracksViewHolder extends RecyclerView.ViewHolder {
+
+        private final ItemSimilarTracksBinding binding;
+
+        public SimilarTracksViewHolder(ItemSimilarTracksBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+    }
 }

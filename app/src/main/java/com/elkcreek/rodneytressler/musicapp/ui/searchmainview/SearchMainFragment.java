@@ -47,7 +47,7 @@ public class SearchMainFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         SearchViewPagerAdapter adapter = new SearchViewPagerAdapter(getChildFragmentManager());
-        binding.setAdapter(adapter);
+        binding.setRecyclerViewAdapter(adapter);
         MainViewModel mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         mainViewModel.setActionBarTitle(Constants.DEFAULT_ACTION_BAR_TITLE);
     }

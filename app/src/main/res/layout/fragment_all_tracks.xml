@@ -6,8 +6,8 @@
             type="com.elkcreek.rodneytressler.musicapp.ui.alltracksview.AllTracksViewModel"/>
 
         <variable
-            name="adapter"
-            type="com.elkcreek.rodneytressler.musicapp.utils.Adapter"/>
+            name="recyclerViewAdapter"
+            type="com.elkcreek.rodneytressler.musicapp.utils.RecyclerViewAdapter"/>
 
         <import type="android.view.View"/>
         <import type="android.support.v7.widget.LinearLayoutManager"/>
@@ -58,8 +58,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_tracks"
             app:data="@{viewModel.topTracks}"
-            android:adapter="@{adapter}"
-            app:adapter="@{adapter}"
+            android:adapter="@{recyclerViewAdapter}"
+            app:recyclerViewAdapter="@{recyclerViewAdapter}"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             app:searchText="@{viewModel.searchedText}"
             app:layout_constraintTop_toBottomOf="@id/tracks_search_value"

@@ -8,8 +8,8 @@
             type="com.elkcreek.rodneytressler.musicapp.ui.artistbioview.ArtistBioViewModel"/>
 
         <variable
-            name="adapter"
-            type="com.elkcreek.rodneytressler.musicapp.utils.Adapter"/>
+            name="recyclerViewAdapter"
+            type="com.elkcreek.rodneytressler.musicapp.utils.RecyclerViewAdapter"/>
 
         <variable
             name="layoutManager"
@@ -96,8 +96,8 @@
                     android:nestedScrollingEnabled="false"
                     android:layout_height="wrap_content"
                     app:data="@{viewModel.similarArtists}"
-                    android:adapter="@{adapter}"
-                    app:adapter="@{adapter}"
+                    android:adapter="@{recyclerViewAdapter}"
+                    app:recyclerViewAdapter="@{recyclerViewAdapter}"
                     app:layoutManager="@{layoutManager}"
                     android:layout_margin="10dp"
                     android:paddingBottom="100dp">

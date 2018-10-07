@@ -10,9 +10,11 @@ import com.elkcreek.rodneytressler.musicapp.services.RepositoryService;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
+import java.lang.reflect.Array;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -27,7 +29,7 @@ public class TrackBioViewModel extends ViewModel {
     public ObservableField<String> trackContent = new ObservableField<>(Constants.NO_TRACK_BIO_AVAILABLE);
     public ObservableField<String> trackSummary = new ObservableField<>(Constants.NO_TRACK_BIO_AVAILABLE);
     public ObservableField<String> imageUrl = new ObservableField<>("");
-    public ObservableField<List<MusicApi.Track>> similarTracks = new ObservableField<>(new ArrayList<>());
+    public ObservableField<List<Object>> similarTracks = new ObservableField<>(new ArrayList<>());
 
     public TrackBioViewModel(RepositoryService repositoryService) {
         this.repositoryService = repositoryService;
@@ -80,7 +82,7 @@ public class TrackBioViewModel extends ViewModel {
     private Consumer<List<MusicApi.Track>> updateUiWithSimilarTracks() {
         return trackList -> {
             if (trackList != null && !trackList.isEmpty()) {
-                similarTracks.set(trackList);
+                similarTracks.set(Arrays.asList(trackList.toArray()));
             }
         };
     }

@@ -9,8 +9,12 @@
             type="com.elkcreek.rodneytressler.musicapp.ui.trackbioview.TrackBioViewModel"/>
 
         <variable
-            name="mainViewModel"
-            type="com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel"/>
+            name="recyclerViewAdapter"
+            type="com.elkcreek.rodneytressler.musicapp.utils.RecyclerViewAdapter"/>
+
+        <variable
+            name="layoutManager"
+            type="android.support.v7.widget.GridLayoutManager"/>
 
         <import type="com.elkcreek.rodneytressler.musicapp.utils.Constants"/>
     </data>
@@ -90,8 +94,10 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/bio_similar_tracks_recycler_view"
-                    app:similarTrackData="@{viewModel.similarTracks}"
-                    app:mainViewModel="@{mainViewModel}"
+                    app:data="@{viewModel.similarTracks}"
+                    android:adapter="@{recyclerViewAdapter}"
+                    app:recyclerViewAdapter="@{recyclerViewAdapter}"
+                    app:layoutManager="@{layoutManager}"
                     android:layout_width="match_parent"
                     android:nestedScrollingEnabled="false"
                     android:layout_height="wrap_content"

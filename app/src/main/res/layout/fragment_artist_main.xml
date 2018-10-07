@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="adapter"
+            name="recyclerViewAdapter"
             type="com.elkcreek.rodneytressler.musicapp.utils.ArtistViewPagerAdapter"/>
     </data>
 
@@ -28,7 +28,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager_artist_main"
             android:layout_width="match_parent"
-            app:artistViewPagerAdapter="@{adapter}"
+            app:artistViewPagerAdapter="@{recyclerViewAdapter}"
             app:tabLayout="@{tabLayoutArtistMain}"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/tabLayoutArtistMain">

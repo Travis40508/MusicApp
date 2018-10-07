@@ -15,7 +15,7 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.FragmentArtistSearchBinding;
 import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
-import com.elkcreek.rodneytressler.musicapp.utils.Adapter;
+import com.elkcreek.rodneytressler.musicapp.utils.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 
@@ -56,9 +56,9 @@ public class ArtistSearchFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         viewModel = getViewModel();
         mainViewModel = getMainViewModel();
-        Adapter adapter = new Adapter(new ArrayList<>(), mainViewModel);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(new ArrayList<>(), mainViewModel);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2);
-        binding.setAdapter(adapter);
+        binding.setRecyclerViewAdapter(recyclerViewAdapter);
         binding.setLayoutManager(layoutManager);
         binding.setViewModel(viewModel);
         viewModel.setMainViewModel(mainViewModel);
