@@ -6,33 +6,24 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.FragmentAlbumTracksBinding;
 import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
-import com.elkcreek.rodneytressler.musicapp.utils.AlbumTracksAdapter;
+import com.elkcreek.rodneytressler.musicapp.utils.Adapter;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
+
+import java.util.ArrayList;
+
 import javax.inject.Inject;
-import butterknife.BindView;
 import dagger.android.support.AndroidSupportInjection;
 
 public class AlbumTracksFragment extends BaseFragment {
 
     @Inject protected AlbumTracksFactory factory;
-    @BindView(R.id.recycler_view_album_tracks)
-    protected RecyclerView recyclerView;
-    @BindView(R.id.loading_layout)
-    protected FrameLayout loadingLayout;
-    @BindView(R.id.no_tracks_text)
-    protected TextView noTracksText;
-    private AlbumTracksFragment albumTracksFragment;
-    private AlbumTracksAdapter adapter;
 
     private AlbumTracksViewModel viewModel;
     private MainViewModel mainViewModel;
@@ -66,9 +57,10 @@ public class AlbumTracksFragment extends BaseFragment {
         viewModel = getViewModel();
         mainViewModel = getMainViewModel();
 
+        Adapter adapter = new Adapter(new ArrayList<>(), mainViewModel);
         viewModel.setMainViewModel(mainViewModel);
         binding.setViewModel(viewModel);
-        binding.setMainViewModel(mainViewModel);
+        binding.setAdapter(adapter);
         viewModel.fetchAlbumTracks(getArguments().getString(Constants.ALBUM_UID_KEY));
     }
 

@@ -506,6 +506,12 @@ public interface MusicApi {
         @SerializedName("mbid")
         @Expose private String trackUid;
 
+        @SerializedName("duration")
+        @Expose private Integer duration;
+
+        @SerializedName("playcount")
+        @Expose private Integer playCount;
+
         @PrimaryKey(autoGenerate = true)
         private int primaryKey;
 
@@ -583,6 +589,22 @@ public interface MusicApi {
 
         public void setWiki(Wiki wiki) {
             this.wiki = wiki;
+        }
+
+        public Integer getDuration() {
+            return duration;
+        }
+
+        public void setDuration(Integer duration) {
+            this.duration = duration;
+        }
+
+        public Integer getPlayCount() {
+            return playCount;
+        }
+
+        public void setPlayCount(Integer playCount) {
+            this.playCount = playCount;
         }
     }
 

@@ -13,6 +13,10 @@ import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.FragmentTrackSearchBinding;
 import com.elkcreek.rodneytressler.musicapp.ui.basefragment.BaseFragment;
 import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
+import com.elkcreek.rodneytressler.musicapp.utils.Adapter;
+
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 
@@ -51,9 +55,10 @@ public class TrackSearchFragment extends BaseFragment {
         viewModel = getViewModel();
         mainViewModel = getMainViewModel();
         viewModel.setMainViewModel(mainViewModel);
+        Adapter adapter = new Adapter(new ArrayList<>(), mainViewModel);
 
+        binding.setAdapter(adapter);
         binding.setViewModel(viewModel);
-        binding.setMainViewModel(mainViewModel);
     }
 
     private MainViewModel getMainViewModel() {

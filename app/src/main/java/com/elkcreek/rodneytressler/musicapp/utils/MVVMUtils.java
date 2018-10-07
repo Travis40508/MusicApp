@@ -81,9 +81,7 @@ public class MVVMUtils {
 
     @BindingAdapter(value = {"data", "adapter", "searchText"}, requireAll = false)
     public static void artistRecyclerView(RecyclerView recyclerView, List<Object> list, Adapter adapter, String searchedText) {
-
         adapter.setAdapterItems(list);
-
         List<Object> searchedTrackList = new ArrayList<>();
 
         if(searchedText != null) {
@@ -117,14 +115,6 @@ public class MVVMUtils {
                 .into(imageView);
     }
 
-    @BindingAdapter({"albumData", "mainViewModel"})
-    public static void albumRecyclerView(RecyclerView recyclerView, List<MusicApi.Album> albumList, MainViewModel mainViewModel) {
-        AlbumsAdapter albumsAdapter = new AlbumsAdapter(albumList, mainViewModel);
-        recyclerView.setAdapter(albumsAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        albumsAdapter.notifyDataSetChanged();
-    }
-
     @BindingAdapter("albumBioImage")
     public static void loadAlbumBioImage(ImageView imageView, String imageUrl) {
         if (!imageUrl.isEmpty()) {
@@ -149,32 +139,6 @@ public class MVVMUtils {
                     .into(imageView);
             imageView.setBackgroundColor(Color.WHITE);
         }
-    }
-
-    @BindingAdapter({"allTracksData", "mainViewModel", "searchText"})
-    public static void loadAllTracks(RecyclerView recyclerView, List<MusicApi.Track> trackList, MainViewModel mainViewModel, String searchText) {
-        TracksAdapter adapter = new TracksAdapter(trackList, mainViewModel);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        adapter.notifyDataSetChanged();
-
-        List<MusicApi.Track> searchedTrackList = new ArrayList<>();
-        for(MusicApi.Track item : trackList) {
-            if(item.getTrackName().toLowerCase().contains(searchText.toLowerCase())) {
-                searchedTrackList.add(item);
-                adapter = new TracksAdapter(searchedTrackList, mainViewModel);
-                recyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-            }
-        }
-    }
-
-    @BindingAdapter({"albumTracksData", "mainViewModel"})
-    public static void loadAlbumTracks(RecyclerView recyclerView, List<MusicApi.Track> trackList, MainViewModel mainViewModel) {
-        TracksAdapter adapter = new TracksAdapter(trackList, mainViewModel);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        adapter.notifyDataSetChanged();
     }
 
     @BindingAdapter("trackBioImage")
@@ -253,20 +217,6 @@ public class MVVMUtils {
         }
     }
 
-    @BindingAdapter({"topTrackData", "searchedTrackData", "mainViewModel"})
-    public static void loadTopTracks(RecyclerView recyclerView, List<MusicApi.Track> topTracks, List<MusicApi.SearchedTrack> searchedTracks, MainViewModel mainViewModel) {
-        TopTracksAdapter adapter = new TopTracksAdapter(topTracks, mainViewModel);
-        SearchedTracksAdapter searchedTracksAdapter = new SearchedTracksAdapter(searchedTracks, mainViewModel);
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-
-        if(searchedTracks.size() == 0) {
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        } else {
-            recyclerView.setAdapter(searchedTracksAdapter);
-            adapter.notifyDataSetChanged();
-        }
-    }
 
     @BindingAdapter({"artistViewPagerAdapter", "tabLayout"})
     public static void loadArtistViewPager(ViewPager viewPager, FragmentPagerAdapter adapter, TabLayout tabLayout) {

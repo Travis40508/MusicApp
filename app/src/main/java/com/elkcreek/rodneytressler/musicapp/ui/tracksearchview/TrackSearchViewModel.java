@@ -11,6 +11,7 @@ import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel;
 import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,8 +23,7 @@ public class TrackSearchViewModel extends ViewModel {
 
     private final RepositoryService repositoryService;
     private CompositeDisposable disposable;
-    public ObservableField<List<MusicApi.Track>> topTrackList = new ObservableField<>(new ArrayList<>());
-    public ObservableField<List<MusicApi.SearchedTrack>> searchedTrackList = new ObservableField<>(new ArrayList<>());
+    public ObservableField<List<Object>> trackList = new ObservableField<>(new ArrayList<>());
     public ObservableBoolean showLoadingLayout = new ObservableBoolean(true);
     public ObservableField<String> trackSearchValue = new ObservableField<>(Constants.CURRENT_TOP_TRACKS);
     private MainViewModel mainViewModel;
@@ -41,7 +41,7 @@ public class TrackSearchViewModel extends ViewModel {
 
     private Consumer<List<MusicApi.Track>> updateUiWithTracks() {
         return trackList -> {
-            topTrackList.set(trackList);
+            this.trackList.set(Arrays.asList(trackList.toArray()));
             showLoadingLayout.set(false);
         };
     }
@@ -65,7 +65,6 @@ public class TrackSearchViewModel extends ViewModel {
 
         if (trackSearchText.length() == 0) {
             fetchTopTracks();
-            searchedTrackList.get().clear();
             trackSearchValue.set(Constants.CURRENT_TOP_TRACKS);
         } else {
             trackSearchValue.set("Showing results for '" + trackSearchText + "'");
@@ -74,6 +73,7 @@ public class TrackSearchViewModel extends ViewModel {
                 @Override
                 public void run() {
                     showLoadingLayout.set(true);
+                    trackList.set(new ArrayList<>());
                     disposable.add(repositoryService.getSearchedTracksFromNetwork((trackSearchText.toString()))
                             .subscribe(getSearchResponse(), updateUiWithError()));
                 }
@@ -84,7 +84,7 @@ public class TrackSearchViewModel extends ViewModel {
     private Consumer<List<MusicApi.SearchedTrack>> getSearchResponse() {
         return trackList -> {
             showLoadingLayout.set(false);
-            searchedTrackList.set(trackList);
+            this.trackList.set(Arrays.asList(trackList.toArray()));
         };
     }
 }

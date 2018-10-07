@@ -46,11 +46,13 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (listItem instanceof MusicApi.Album) {
             return ALBUM_ITEM;
         } else if (listItem instanceof MusicApi.Track) {
-            if (((MusicApi.Track) listItem).getTrackUid() != null) {
-                return TRACK_ITEM;
-            } else {
+            if (((MusicApi.Track) listItem).getPlayCount() != null && ((MusicApi.Track) listItem).getDuration() != null) {
                 return TOP_TRACK_ITEM;
+            } else {
+                return TRACK_ITEM;
             }
+        } else if (listItem instanceof MusicApi.SearchedTrack) {
+            return TOP_TRACK_ITEM;
         } else {
             return 4;
         }
@@ -60,16 +62,16 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int itemViewType) {
         switch (itemViewType) {
-            case 0:
+            case ARTIST_ITEM:
                 ItemArtistBinding artistBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_artist, viewGroup, false);
                 return new ArtistViewHolder(artistBinding);
-            case 1:
+            case ALBUM_ITEM:
                 ItemAlbumBinding albumBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_album, viewGroup, false);
                 return new AlbumsViewHolder(albumBinding);
-            case 2:
+            case TRACK_ITEM:
                 ItemTracksBinding trackBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_tracks, viewGroup, false);
                 return new TracksViewHolder(trackBinding);
-            case 3:
+            case TOP_TRACK_ITEM:
                 ItemTopTrackBinding topTrackBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_top_track, viewGroup, false);
                 return new TopTracksViewHolder(topTrackBinding);
             default:
@@ -86,11 +88,13 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (listItem instanceof MusicApi.Album) {
             bindAlbum((AlbumsViewHolder) viewHolder, (MusicApi.Album) listItem);
         } else if (listItem instanceof MusicApi.Track) {
-            if (((MusicApi.Track) listItem).getTrackUid() != null) {
-                bindTrack((TracksViewHolder) viewHolder, (MusicApi.Track) listItem);
-            } else {
+            if (((MusicApi.Track) listItem).getPlayCount() != null && ((MusicApi.Track) listItem).getDuration() != null) {
                 bindTopTrack((TopTracksViewHolder) viewHolder, (MusicApi.Track) listItem);
+            } else {
+                bindTrack((TracksViewHolder) viewHolder, (MusicApi.Track) listItem);
             }
+        } else if (listItem instanceof MusicApi.SearchedTrack) {
+            bindSearchedTrack((TopTracksViewHolder) viewHolder, (MusicApi.SearchedTrack) listItem);
         }
     }
 
@@ -123,6 +127,20 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private void bindTopTrack(TopTracksViewHolder viewHolder, MusicApi.Track track) {
         String imageUrl = track.getArtistImage().get(2).getImageUrl();
         String artistName = track.getArtist().getArtistName();
+        String trackUid = track.getTrackUid();
+        String trackName = track.getTrackName();
+
+        viewHolder.binding.setArtistName(artistName);
+        viewHolder.binding.setImageUrl(imageUrl);
+        viewHolder.binding.setTrackUid(trackUid);
+        viewHolder.binding.setTrackName(trackName);
+        viewHolder.binding.setHandler(handler);
+        viewHolder.binding.setMainViewModel(mainViewModel);
+    }
+
+    private void bindSearchedTrack(TopTracksViewHolder viewHolder, MusicApi.SearchedTrack track) {
+        String imageUrl = track.getArtistImage().get(2).getImageUrl();
+        String artistName = track.getArtist();
         String trackUid = track.getTrackUid();
         String trackName = track.getTrackName();
 
@@ -177,4 +195,5 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.binding = binding;
         }
     }
+
 }

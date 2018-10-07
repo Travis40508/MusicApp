@@ -13,6 +13,7 @@ import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -23,7 +24,7 @@ public class AlbumTracksViewModel extends ViewModel {
     private final RepositoryService repositoryService;
     private CompositeDisposable disposable;
     private MainViewModel mainViewModel;
-    public ObservableField<List<MusicApi.Track>> albumTrackList = new ObservableField<>(new ArrayList<>());
+    public ObservableField<List<Object>> albumTrackList = new ObservableField<>(new ArrayList<>());
     public ObservableBoolean showProgressBar = new ObservableBoolean(true);
 
     public AlbumTracksViewModel(RepositoryService repositoryService) {
@@ -42,7 +43,7 @@ public class AlbumTracksViewModel extends ViewModel {
 
     private Consumer<List<MusicApi.Track>> updateUiWithTracks() {
         return trackList -> {
-            albumTrackList.set(trackList);
+            albumTrackList.set(Arrays.asList(trackList.toArray()));
             showProgressBar.set(false);
         };
     }

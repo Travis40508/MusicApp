@@ -8,9 +8,10 @@
             type="com.elkcreek.rodneytressler.musicapp.ui.tracksearchview.TrackSearchViewModel"/>
 
         <variable
-            name="mainViewModel"
-            type="com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel"/>
+            name="adapter"
+            type="com.elkcreek.rodneytressler.musicapp.utils.Adapter"/>
 
+        <import type="android.support.v7.widget.LinearLayoutManager"/>
         <import type="android.view.View"/>
     </data>
 
@@ -58,9 +59,10 @@
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="match_parent"
-            app:topTrackData="@{viewModel.topTrackList}"
-            app:searchedTrackData="@{viewModel.searchedTrackList}"
-            app:mainViewModel="@{mainViewModel}"
+            app:data="@{viewModel.trackList}"
+            android:adapter="@{adapter}"
+            app:adapter="@{adapter}"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             android:layout_height="0dp"
             android:paddingBottom="50dp">
 
