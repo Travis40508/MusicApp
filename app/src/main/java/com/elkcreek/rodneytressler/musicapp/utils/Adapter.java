@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.ItemAlbumBinding;
 import com.elkcreek.rodneytressler.musicapp.databinding.ItemArtistBinding;
+import com.elkcreek.rodneytressler.musicapp.databinding.ItemSimilarArtistBinding;
 import com.elkcreek.rodneytressler.musicapp.databinding.ItemTopTrackBinding;
 import com.elkcreek.rodneytressler.musicapp.databinding.ItemTracksBinding;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
@@ -25,6 +26,8 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int ALBUM_ITEM = 1;
     private static final int TRACK_ITEM = 2;
     private static final int TOP_TRACK_ITEM = 3;
+    private static final int SIMILAR_ARTIST_ITEM = 4;
+    private static final int SIMILAR_TRACK_ITEM = 5;
 
     public Adapter(List<Object> objectList, MainViewModel mainViewModel) {
         this.objectList = objectList;
@@ -42,7 +45,11 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Object listItem = objectList.get(position);
 
         if (listItem instanceof MusicApi.Artist) {
-            return ARTIST_ITEM;
+            if (((MusicApi.Artist) listItem).getPlayCount() != null) {
+                return ARTIST_ITEM;
+            } else {
+                return SIMILAR_ARTIST_ITEM;
+            }
         } else if (listItem instanceof MusicApi.Album) {
             return ALBUM_ITEM;
         } else if (listItem instanceof MusicApi.Track) {
@@ -54,7 +61,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (listItem instanceof MusicApi.SearchedTrack) {
             return TOP_TRACK_ITEM;
         } else {
-            return 4;
+            return 6;
         }
     }
 
@@ -74,6 +81,11 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case TOP_TRACK_ITEM:
                 ItemTopTrackBinding topTrackBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_top_track, viewGroup, false);
                 return new TopTracksViewHolder(topTrackBinding);
+            case SIMILAR_ARTIST_ITEM:
+                ItemSimilarArtistBinding similarArtistBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_similar_artist, viewGroup, false);
+                return new SimilarArtistViewHolder(similarArtistBinding);
+            case SIMILAR_TRACK_ITEM:
+                return null;
             default:
                 return null;
         }
@@ -84,7 +96,11 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Object listItem = objectList.get(position);
 
         if (listItem instanceof MusicApi.Artist) {
-            bindArtist((ArtistViewHolder) viewHolder, (MusicApi.Artist)listItem);
+            if (((MusicApi.Artist) listItem).getPlayCount() != null) {
+                bindArtist((ArtistViewHolder) viewHolder, (MusicApi.Artist) listItem);
+            } else {
+                bindSimilarArtist((SimilarArtistViewHolder) viewHolder, (MusicApi.Artist) listItem);
+            }
         } else if (listItem instanceof MusicApi.Album) {
             bindAlbum((AlbumsViewHolder) viewHolder, (MusicApi.Album) listItem);
         } else if (listItem instanceof MusicApi.Track) {
@@ -152,6 +168,12 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         viewHolder.binding.setMainViewModel(mainViewModel);
     }
 
+    private void bindSimilarArtist(SimilarArtistViewHolder viewHolder, MusicApi.Artist similarArtist) {
+        viewHolder.binding.setArtist(similarArtist);
+        viewHolder.binding.setMainViewModel(mainViewModel);
+        viewHolder.binding.setHandler(handler);
+    }
+
     @Override
     public int getItemCount() {
         return objectList.size();
@@ -186,11 +208,22 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.binding = binding;
         }
     }
+
     public class TopTracksViewHolder extends RecyclerView.ViewHolder {
 
         private final ItemTopTrackBinding binding;
 
         public TopTracksViewHolder(ItemTopTrackBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+    }
+
+    public class SimilarArtistViewHolder extends RecyclerView.ViewHolder {
+
+        private final ItemSimilarArtistBinding binding;
+
+        public SimilarArtistViewHolder(ItemSimilarArtistBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

@@ -8,8 +8,12 @@
             type="com.elkcreek.rodneytressler.musicapp.ui.artistbioview.ArtistBioViewModel"/>
 
         <variable
-            name="mainViewModel"
-            type="com.elkcreek.rodneytressler.musicapp.ui.mainview.MainViewModel"/>
+            name="adapter"
+            type="com.elkcreek.rodneytressler.musicapp.utils.Adapter"/>
+
+        <variable
+            name="layoutManager"
+            type="android.support.v7.widget.GridLayoutManager"/>
 
         <import type="com.elkcreek.rodneytressler.musicapp.utils.Constants"/>
     </data>
@@ -91,8 +95,10 @@
                     android:layout_width="match_parent"
                     android:nestedScrollingEnabled="false"
                     android:layout_height="wrap_content"
-                    app:similarArtistData="@{viewModel.similarArtists}"
-                    app:mainViewModel="@{mainViewModel}"
+                    app:data="@{viewModel.similarArtists}"
+                    android:adapter="@{adapter}"
+                    app:adapter="@{adapter}"
+                    app:layoutManager="@{layoutManager}"
                     android:layout_margin="10dp"
                     android:paddingBottom="100dp">
 

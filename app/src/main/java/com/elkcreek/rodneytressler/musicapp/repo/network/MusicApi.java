@@ -145,6 +145,9 @@ public interface MusicApi {
         @SerializedName("similar")
         @Expose private Similar similar;
 
+        @SerializedName("playcount")
+        @Expose private Integer playCount;
+
         private boolean isTopArtist;
 
         public String getArtistName() {
@@ -201,6 +204,14 @@ public interface MusicApi {
 
         public void setTopArtist(boolean topArtist) {
             isTopArtist = topArtist;
+        }
+
+        public Integer getPlayCount() {
+            return playCount;
+        }
+
+        public void setPlayCount(Integer playCount) {
+            this.playCount = playCount;
         }
     }
 

@@ -12,6 +12,7 @@ import com.elkcreek.rodneytressler.musicapp.utils.Constants;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -26,7 +27,7 @@ public class ArtistBioViewModel extends ViewModel {
     public ObservableField<String> bioSummary = new ObservableField<>();
     public ObservableField<String> bioContent = new ObservableField<>();
     public ObservableField<MusicApi.Artist> artist = new ObservableField<>();
-    public ObservableField<List<MusicApi.Artist>> similarArtists = new ObservableField<>(new ArrayList<>());
+    public ObservableField<List<Object>> similarArtists = new ObservableField<>(new ArrayList<>());
     public ObservableField<String> similarArtistText = new ObservableField<>(Constants.NO_SIMILAR_ARTISTS);
 
     public ArtistBioViewModel(RepositoryService repositoryService) {
@@ -56,7 +57,7 @@ public class ArtistBioViewModel extends ViewModel {
             bioSummary.set(artist.getArtistBio() != null ? artist.getArtistBio().getBioSummary() : Constants.NO_ARTIST_BIO_AVAILABLE);
             bioContent.set(artist.getArtistBio() != null ? artist.getArtistBio().getBioContent() : Constants.NO_ARTIST_BIO_AVAILABLE);
             if(artist.getSimilar() != null && !artist.getSimilar().getArtistList().isEmpty()) {
-                similarArtists.set(artist.getSimilar().getArtistList());
+                similarArtists.set(Arrays.asList(artist.getSimilar().getArtistList().toArray()));
                 similarArtistText.set(Constants.SIMILAR_ARTISTS);
             }
         };

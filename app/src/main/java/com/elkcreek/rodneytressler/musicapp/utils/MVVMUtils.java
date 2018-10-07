@@ -93,15 +93,7 @@ public class MVVMUtils {
             }
         }
     }
-
-    @BindingAdapter({"similarArtistData", "mainViewModel"})
-    public static void similarArtistRecyclerView(RecyclerView recyclerView, List<MusicApi.Artist> similarArtists, MainViewModel mainViewModel) {
-        SimilarArtistAdapter similarArtistAdapter = new SimilarArtistAdapter(similarArtists, mainViewModel);
-        recyclerView.setAdapter(similarArtistAdapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 3));
-        similarArtistAdapter.notifyDataSetChanged();
-    }
-
+    
     @BindingAdapter("albumImage")
     public static void loadAlbumImage(ImageView imageView, MusicApi.Album album) {
         Glide.with(imageView.getContext()).asBitmap()
