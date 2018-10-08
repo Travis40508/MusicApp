@@ -10,7 +10,7 @@ public interface MusicDatabaseService {
 
     void insertTrack(MusicApi.Track track);
 
-    Observable<List<MusicApi.Track>> getTrackList(String artistUid);
+    Observable<List<MusicApi.ArtistTrack>> getTrackList(String artistUid);
 
     void insertBioResponse(MusicApi.Artist artist);
 
@@ -26,11 +26,11 @@ public interface MusicDatabaseService {
     void deleteTopArtists();
     void deleteTrack(String trackUid);
 
-    void insertTopTracks(List<MusicApi.Track> trackList);
+    void insertTopTracks(List<MusicApi.ArtistTrack> trackList);
     Observable<MusicApi.Track> getTrack(String trackUid);
     Observable<List<MusicApi.Album>> getAlbumList(String artistUid);
     void insertAlbums(List<MusicApi.Album> albumList);
-    void updateAlbumWithAlbumUid(List<MusicApi.Track> trackList, String albumUid);
+    void updateAlbumWithAlbumUid(List<MusicApi.AlbumTrack> trackList, String albumUid);
     Observable<MusicApi.Album> getAlbumByUid(String albumUid);
     void updateTrackWithUid(MusicApi.TrackInfo trackInfo, List<MusicApi.Track> trackList, String albumUid);
     void insertTrackInfo(MusicApi.TrackInfo trackInfo);
@@ -46,8 +46,8 @@ public interface MusicDatabaseService {
     boolean isSameWeekSinceLastLaunch();
     void resetDate();
 
-    Observable<List<MusicApi.Track>> getSimilarTracks(String trackUid);
-    void updateTrackInfoWithSimilarArtists(List<MusicApi.Track> similarTrackList, String trackUid);
+    Observable<List<MusicApi.SimilarTrack>> getSimilarTracks(String trackUid);
+    void updateTrackInfoWithSimilarArtists(List<MusicApi.SimilarTrack> similarTrackList, String trackUid);
     void insertTopTracks(MusicApi.TopChartTracks topChartTracks);
     Observable<MusicApi.TopChartTracks> getTopChartTracks();
     void updateTopTracksList(String artistName, String trackName, String trackUid, List<MusicApi.Track> trackList);

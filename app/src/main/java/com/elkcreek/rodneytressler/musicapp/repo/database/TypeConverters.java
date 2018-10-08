@@ -62,6 +62,30 @@ public class TypeConverters {
     }
 
     @TypeConverter
+    public String fromSimilarArtistList(List<MusicApi.SimilarArtist> artists) {
+        if (artists == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<MusicApi.SimilarArtist>>() {
+        }.getType();
+        String json = gson.toJson(artists, type);
+        return json;
+    }
+
+    @TypeConverter
+    public List<MusicApi.SimilarArtist> toSimilarArtistList(String artistsString) {
+        if (artistsString == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<MusicApi.SimilarArtist>>() {
+        }.getType();
+        List<MusicApi.SimilarArtist> artistList = gson.fromJson(artistsString, type);
+        return artistList;
+    }
+
+    @TypeConverter
     public String fromTrackList(List<MusicApi.Track> tracks) {
         if (tracks == null) {
             return (null);
@@ -82,6 +106,78 @@ public class TypeConverters {
         Type type = new TypeToken<List<MusicApi.Track>>() {
         }.getType();
         List<MusicApi.Track> trackList = gson.fromJson(tracksString, type);
+        return trackList;
+    }
+
+    @TypeConverter
+    public String fromSimilarTrackList(List<MusicApi.SimilarTrack> tracks) {
+        if (tracks == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<MusicApi.SimilarTrack>>() {
+        }.getType();
+        String json = gson.toJson(tracks, type);
+        return json;
+    }
+
+    @TypeConverter
+    public List<MusicApi.SimilarTrack> toSimilarTrackList(String tracksString) {
+        if (tracksString == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<MusicApi.SimilarTrack>>() {
+        }.getType();
+        List<MusicApi.SimilarTrack> trackList = gson.fromJson(tracksString, type);
+        return trackList;
+    }
+
+    @TypeConverter
+    public String fromAlbumTrackList(List<MusicApi.AlbumTrack> tracks) {
+        if (tracks == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<MusicApi.AlbumTrack>>() {
+        }.getType();
+        String json = gson.toJson(tracks, type);
+        return json;
+    }
+
+    @TypeConverter
+    public List<MusicApi.AlbumTrack> toAlbumTrackList(String tracksString) {
+        if (tracksString == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<MusicApi.AlbumTrack>>() {
+        }.getType();
+        List<MusicApi.AlbumTrack> trackList = gson.fromJson(tracksString, type);
+        return trackList;
+    }
+
+    @TypeConverter
+    public String fromTopTrackList(List<MusicApi.TopTrack> tracks) {
+        if (tracks == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<MusicApi.TopTrack>>() {
+        }.getType();
+        String json = gson.toJson(tracks, type);
+        return json;
+    }
+
+    @TypeConverter
+    public List<MusicApi.TopTrack> toTopTrackList(String tracksString) {
+        if (tracksString == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<MusicApi.TopTrack>>() {
+        }.getType();
+        List<MusicApi.TopTrack> trackList = gson.fromJson(tracksString, type);
         return trackList;
     }
 

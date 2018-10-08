@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.databinding.ItemAlbumBinding;
 import com.elkcreek.rodneytressler.musicapp.databinding.ItemArtistBinding;
@@ -45,28 +44,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public int getItemViewType(int position) {
         Object listItem = objectList.get(position);
 
-        if (listItem instanceof MusicApi.Artist) {
-            if (((MusicApi.Artist) listItem).getPlayCount() != null) {
-                return ARTIST_ITEM;
-            } else {
-                return SIMILAR_ARTIST_ITEM;
-            }
-        } else if (listItem instanceof MusicApi.Album) {
-            return ALBUM_ITEM;
-        } else if (listItem instanceof MusicApi.Track) {
-            if(((MusicApi.Track) listItem).getMatch() > 0) {
-                return SIMILAR_TRACK_ITEM;
-            } else {
-                if (((MusicApi.Track) listItem).getPlayCount() != null && ((MusicApi.Track) listItem).getDuration() != null) {
-                    return TOP_TRACK_ITEM;
-                } else {
-                    return TRACK_ITEM;
-                }
-            }
-        } else if (listItem instanceof MusicApi.SearchedTrack) {
+        if(listItem instanceof MusicApi.SimilarArtist) {
+            return SIMILAR_ARTIST_ITEM;
+        } else if(listItem instanceof MusicApi.SimilarTrack) {
+            return SIMILAR_TRACK_ITEM;
+        } else if(listItem instanceof MusicApi.Artist) {
+            return ARTIST_ITEM;
+        } else if (listItem instanceof MusicApi.TopTrack || listItem instanceof MusicApi.SearchedTrack) {
             return TOP_TRACK_ITEM;
+        } else if(listItem instanceof MusicApi.AlbumTrack || listItem instanceof MusicApi.ArtistTrack) {
+            return TRACK_ITEM;
+        } else if(listItem instanceof MusicApi.Album) {
+            return ALBUM_ITEM;
         } else {
-            return 6;
+            return 0;
         }
     }
 
@@ -101,26 +92,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         Object listItem = objectList.get(position);
 
-        if (listItem instanceof MusicApi.Artist) {
-            if (((MusicApi.Artist) listItem).getPlayCount() != null) {
-                bindArtist((ArtistViewHolder) viewHolder, (MusicApi.Artist) listItem);
-            } else {
-                bindSimilarArtist((SimilarArtistViewHolder) viewHolder, (MusicApi.Artist) listItem);
-            }
-        } else if (listItem instanceof MusicApi.Album) {
-            bindAlbum((AlbumsViewHolder) viewHolder, (MusicApi.Album) listItem);
-        } else if (listItem instanceof MusicApi.Track) {
-            if(((MusicApi.Track) listItem).getMatch() > 0) {
-                bindSimilarTrack((SimilarTracksViewHolder) viewHolder, (MusicApi.Track) listItem);
-            } else {
-                if (((MusicApi.Track) listItem).getPlayCount() != null && ((MusicApi.Track) listItem).getDuration() != null) {
-                    bindTopTrack((TopTracksViewHolder) viewHolder, (MusicApi.Track) listItem);
-                } else {
-                    bindTrack((TracksViewHolder) viewHolder, (MusicApi.Track) listItem);
-                }
-            }
-        } else if (listItem instanceof MusicApi.SearchedTrack) {
+        if(listItem instanceof MusicApi.SimilarArtist) {
+            bindSimilarArtist((SimilarArtistViewHolder) viewHolder, (MusicApi.Artist) listItem);
+        } else if(listItem instanceof MusicApi.SimilarTrack) {
+            bindSimilarTrack((SimilarTracksViewHolder) viewHolder, (MusicApi.Track) listItem);
+        } else if(listItem instanceof MusicApi.Artist) {
+            bindArtist((ArtistViewHolder) viewHolder, (MusicApi.Artist) listItem);
+        } else if (listItem instanceof MusicApi.TopTrack) {
+            bindTopTrack((TopTracksViewHolder) viewHolder, (MusicApi.Track) listItem);
+        } else if(listItem instanceof MusicApi.SearchedTrack) {
             bindSearchedTrack((TopTracksViewHolder) viewHolder, (MusicApi.SearchedTrack) listItem);
+        } else if(listItem instanceof MusicApi.AlbumTrack || listItem instanceof MusicApi.ArtistTrack) {
+            bindTrack((TracksViewHolder) viewHolder, (MusicApi.Track) listItem);
+        } else if(listItem instanceof MusicApi.Album) {
+            bindAlbum((AlbumsViewHolder) viewHolder, (MusicApi.Album) listItem);
         }
     }
 

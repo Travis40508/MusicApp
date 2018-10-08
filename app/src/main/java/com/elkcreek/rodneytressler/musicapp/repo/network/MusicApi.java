@@ -219,13 +219,13 @@ public interface MusicApi {
     class Similar {
         @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
         @SerializedName("artist")
-        @Expose private List<Artist> artistList;
+        @Expose private List<SimilarArtist> artistList;
 
-        public List<Artist> getArtistList() {
+        public List<SimilarArtist> getArtistList() {
             return artistList;
         }
 
-        public void setArtistList(List<Artist> artistList) {
+        public void setArtistList(List<SimilarArtist> artistList) {
             this.artistList = artistList;
         }
     }
@@ -337,9 +337,9 @@ public interface MusicApi {
         @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
         @SerializedName("track")
         @Expose
-        private List<Track> trackList;
+        private List<ArtistTrack> trackList;
 
-        public List<Track> getTrackList() {
+        public List<ArtistTrack> getTrackList() {
             return trackList;
         }
     }
@@ -376,7 +376,7 @@ public interface MusicApi {
         private String lyrics;
 
         @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
-        private List<Track> similarTrackList;
+        private List<SimilarTrack> similarTrackList;
 
         public String getYoutubeId() {
             return youtubeId;
@@ -450,11 +450,11 @@ public interface MusicApi {
             this.lyrics = lyrics;
         }
 
-        public List<Track> getSimilarTrackList() {
+        public List<SimilarTrack> getSimilarTrackList() {
             return similarTrackList;
         }
 
-        public void setSimilarTrackList(List<Track> similarTrackList) {
+        public void setSimilarTrackList(List<SimilarTrack> similarTrackList) {
             this.similarTrackList = similarTrackList;
         }
     }
@@ -663,7 +663,7 @@ public interface MusicApi {
 
         @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
         @SerializedName("tracks")
-        @Expose private List<Track> trackList;
+        @Expose private List<AlbumTrack> trackList;
 
         public List<TrackImage> getTrackImage() {
             return trackImage;
@@ -697,11 +697,11 @@ public interface MusicApi {
             this.primaryKey = primaryKey;
         }
 
-        public List<Track> getTrackList() {
+        public List<AlbumTrack> getTrackList() {
             return trackList;
         }
 
-        public void setTrackList(List<Track> trackList) {
+        public void setTrackList(List<AlbumTrack> trackList) {
             this.trackList = trackList;
         }
 
@@ -863,13 +863,13 @@ public interface MusicApi {
 
     class TracksResponse {
         @SerializedName("track")
-        @Expose private List<Track> trackList;
+        @Expose private List<AlbumTrack> trackList;
 
-        public List<Track> getTrackList() {
+        public List<AlbumTrack> getTrackList() {
             return trackList;
         }
 
-        public void setTrackList(List<Track> trackList) {
+        public void setTrackList(List<AlbumTrack> trackList) {
             this.trackList = trackList;
         }
     }
@@ -961,13 +961,13 @@ public interface MusicApi {
 
         @TypeConverters(com.elkcreek.rodneytressler.musicapp.repo.database.TypeConverters.class)
         @SerializedName("track")
-        @Expose private List<Track> trackList;
+        @Expose private List<TopTrack> trackList;
 
-        public List<Track> getTrackList() {
+        public List<TopTrack> getTrackList() {
             return trackList;
         }
 
-        public void setTrackList(List<Track> trackList) {
+        public void setTrackList(List<TopTrack> trackList) {
             this.trackList = trackList;
         }
 
@@ -991,10 +991,27 @@ public interface MusicApi {
 
     class SimilarTracks {
         @SerializedName("track")
-        @Expose private List<Track> similarTrackList;
+        @Expose private List<SimilarTrack> similarTrackList;
 
-        public List<Track> getSimilarTrackList() {
+        public List<SimilarTrack> getSimilarTrackList() {
             return similarTrackList;
         }
     }
+
+    @Entity
+    class SimilarArtist extends Artist {}
+
+    @Entity
+    class SimilarTrack extends Track {}
+
+    @Entity
+    class TopTrack extends Track {}
+
+    @Entity
+    class ArtistTrack extends Track {}
+
+    @Entity
+    class AlbumTrack extends Track {}
+
+
 }

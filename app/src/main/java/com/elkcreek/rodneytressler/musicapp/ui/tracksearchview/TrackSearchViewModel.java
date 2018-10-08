@@ -39,7 +39,7 @@ public class TrackSearchViewModel extends ViewModel {
         disposable.add(repositoryService.getTopTracks().subscribe(updateUiWithTracks(), updateUiWithError()));
     }
 
-    private Consumer<List<MusicApi.Track>> updateUiWithTracks() {
+    private Consumer<List<MusicApi.TopTrack>> updateUiWithTracks() {
         return trackList -> {
             this.trackList.set(Arrays.asList(trackList.toArray()));
             showLoadingLayout.set(false);

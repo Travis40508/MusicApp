@@ -23,7 +23,7 @@ public interface MusicDao {
     void insertTrack(MusicApi.Track track);
 
     @Query("SELECT * FROM Track WHERE `artistartistUID` LIKE :artistUid")
-    Flowable<List<MusicApi.Track>> getTrackList(String artistUid);
+    Flowable<List<MusicApi.ArtistTrack>> getTrackList(String artistUid);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertArtist(MusicApi.Artist artist);
@@ -59,7 +59,7 @@ public interface MusicDao {
     Flowable<List<MusicApi.Artist>> getTopArtists(boolean isTopArtist);
 
     @Query("UPDATE Artist SET bioSummary = :artistSummary, bioContent = :artistContent, artistList = :similarArtistList WHERE artistUID = :artistUID")
-    void updateArtist(String artistSummary, String artistContent, String artistUID, List<MusicApi.Artist> similarArtistList);
+    void updateArtist(String artistSummary, String artistContent, String artistUID, List<MusicApi.SimilarArtist> similarArtistList);
 
     @Query("UPDATE Artist SET artistUID = :artistUID WHERE artistName = :artistName")
     void updateArtistWithName(String artistUID, String artistName);
@@ -80,7 +80,7 @@ public interface MusicDao {
     void deleteTrack(String trackUid);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertTopTracks(List<MusicApi.Track> trackList);
+    void insertTopTracks(List<MusicApi.ArtistTrack> trackList);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAlbums(List<MusicApi.Album> albumList);
@@ -89,7 +89,7 @@ public interface MusicDao {
     Flowable<List<MusicApi.Album>> getAlbumList(String artistUid);
 
     @Query("UPDATE Album SET trackList = :trackList WHERE albumUid = :albumUid")
-    void updateAlbumWithAlbumUid(List<MusicApi.Track> trackList, String albumUid);
+    void updateAlbumWithAlbumUid(List<MusicApi.AlbumTrack> trackList, String albumUid);
 
     @Query("SELECT * FROM Album WHERE albumUid LIKE :albumUid")
     Flowable<List<MusicApi.Album>> getAlbumByUid(String albumUid);
@@ -113,7 +113,7 @@ public interface MusicDao {
     Single<String> getTrackInfoSongLyrics(String trackUid);
 
     @Query("UPDATE TrackInfo SET similarTrackList = :similarTrackList WHERE trackUid = :trackUid")
-    void updateTrackInfoWithSimilarTracksList(List<MusicApi.Track> similarTrackList, String trackUid);
+    void updateTrackInfoWithSimilarTracksList(List<MusicApi.SimilarTrack> similarTrackList, String trackUid);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAlbumInfo(MusicApi.AlbumInfo albumInfo);

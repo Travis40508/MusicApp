@@ -78,7 +78,7 @@ public class MusicApiServiceImpl implements MusicApiService {
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getListOfSimilarTracks(String trackUid) {
+    public Observable<List<MusicApi.SimilarTrack>> getListOfSimilarTracks(String trackUid) {
         return musicApi.getSimilarTracks(trackUid, Constants.API_KEY)
                 .subscribeOn(Schedulers.io())
                 .map(MusicApi.SimilarTrackResponse::getSimilarTracks)
@@ -102,7 +102,7 @@ public class MusicApiServiceImpl implements MusicApiService {
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getSimilarTracksByName(String artist, String track, String apiKey) {
+    public Observable<List<MusicApi.SimilarTrack>> getSimilarTracksByName(String artist, String track, String apiKey) {
         return musicApi.getSimilarTracksByName(artist, track, apiKey)
                 .subscribeOn(Schedulers.io())
                 .map(MusicApi.SimilarTrackResponse::getSimilarTracks)

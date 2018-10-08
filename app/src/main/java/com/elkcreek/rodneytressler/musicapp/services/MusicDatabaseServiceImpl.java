@@ -35,7 +35,7 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getTrackList(String artistUid) {
+    public Observable<List<MusicApi.ArtistTrack>> getTrackList(String artistUid) {
         return database.musicDao().getTrackList(artistUid).toObservable()
                 .subscribeOn(Schedulers.io());
     }
@@ -92,7 +92,7 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
                 String artistSummary = artist.getArtistBio().getBioSummary();
                 String artistContent = artist.getArtistBio().getBioContent();
                 String artistUID = artist.getArtistUID();
-                List<MusicApi.Artist> similarArtistList = artist.getSimilar().getArtistList();
+                List<MusicApi.SimilarArtist> similarArtistList = artist.getSimilar().getArtistList();
 
                 database.musicDao().updateArtist(artistSummary, artistContent, artistUID, similarArtistList);
             }
@@ -145,7 +145,7 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     }
 
     @Override
-    public void insertTopTracks(List<MusicApi.Track> trackList) {
+    public void insertTopTracks(List<MusicApi.ArtistTrack> trackList) {
         Schedulers.io().scheduleDirect(new Runnable() {
             @Override
             public void run() {
@@ -179,7 +179,7 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     }
 
     @Override
-    public void updateAlbumWithAlbumUid(List<MusicApi.Track> trackList, String albumUid) {
+    public void updateAlbumWithAlbumUid(List<MusicApi.AlbumTrack> trackList, String albumUid) {
         Schedulers.io().scheduleDirect(new Runnable() {
             @Override
             public void run() {
@@ -323,7 +323,7 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getSimilarTracks(String trackUid) {
+    public Observable<List<MusicApi.SimilarTrack>> getSimilarTracks(String trackUid) {
         return database.musicDao().getTrackInfo(trackUid)
                 .subscribeOn(Schedulers.io())
                 .map(trackInfos -> trackInfos.get(0))
@@ -331,7 +331,7 @@ public class MusicDatabaseServiceImpl implements MusicDatabaseService {
     }
 
     @Override
-    public void updateTrackInfoWithSimilarArtists(List<MusicApi.Track> similarTrackList, String trackUid) {
+    public void updateTrackInfoWithSimilarArtists(List<MusicApi.SimilarTrack> similarTrackList, String trackUid) {
         Schedulers.io().scheduleDirect(new Runnable() {
             @Override
             public void run() {

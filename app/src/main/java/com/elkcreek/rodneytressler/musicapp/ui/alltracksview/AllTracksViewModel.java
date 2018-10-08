@@ -30,7 +30,7 @@ public class AllTracksViewModel extends ViewModel {
         disposable.add(repositoryService.getArtistTopTracks(artistUid).subscribe(updateUiWithTopTracks(), updateUiOnError()));
     }
 
-    private Consumer<List<MusicApi.Track>> updateUiWithTopTracks() {
+    private Consumer<List<MusicApi.ArtistTrack>> updateUiWithTopTracks() {
         return tracks -> {
             topTracks.set(Arrays.asList(tracks.toArray()));
             showProgressBar.set(false);

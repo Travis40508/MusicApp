@@ -10,9 +10,9 @@ import io.reactivex.Observable;
 public interface RepositoryService {
 
     //Tracks
-    Observable<List<MusicApi.Track>> getArtistTopTracks(String artistUid);
-    Observable<List<MusicApi.Track>> getArtistTopTracksFromDatabase(String artistUid);
-    Observable<List<MusicApi.Track>> getArtistTracksFromNetwork(String artistUid);
+    Observable<List<MusicApi.ArtistTrack>> getArtistTopTracks(String artistUid);
+    Observable<List<MusicApi.ArtistTrack>> getArtistTopTracksFromDatabase(String artistUid);
+    Observable<List<MusicApi.ArtistTrack>> getArtistTracksFromNetwork(String artistUid);
     Observable<List<MusicApi.SearchedTrack>> getSearchedTracksFromNetwork(String searchedTrack);
 
     //Bio
@@ -30,9 +30,9 @@ public interface RepositoryService {
     void deleteTopArtists();
 
     //TopTracks
-    Observable<List<MusicApi.Track>> getTopTracks();
-    Observable<List<MusicApi.Track>> getTopTracksFromDatabase();
-    Observable<List<MusicApi.Track>> getTopTracksFromNetwork();
+    Observable<List<MusicApi.TopTrack>> getTopTracks();
+    Observable<List<MusicApi.TopTrack>> getTopTracksFromDatabase();
+    Observable<List<MusicApi.TopTrack>> getTopTracksFromNetwork();
     Observable<MusicApi.TrackInfo> getTrackWithName(String trackName, String artistName);
 
     //Track
@@ -49,9 +49,9 @@ public interface RepositoryService {
     Observable<List<MusicApi.Album>> getAlbums(String artistUid);
     Observable<List<MusicApi.Album>> getAlbumsFromDatabase(String artistUid);
     Observable<List<MusicApi.Album>> getAlbumsFromNetwork(String artistUid);
-    Observable<List<MusicApi.Track>> getTracksFromAlbum(String albumUid);
-    Observable<List<MusicApi.Track>> getTracksFromAlbumFromDatabase(String albumUid);
-    Observable<List<MusicApi.Track>> getTracksFromAlbumFromNetwork(String albumUid);
+    Observable<List<MusicApi.AlbumTrack>> getTracksFromAlbum(String albumUid);
+    Observable<List<MusicApi.AlbumTrack>> getTracksFromAlbumFromDatabase(String albumUid);
+    Observable<List<MusicApi.AlbumTrack>> getTracksFromAlbumFromNetwork(String albumUid);
 
     Observable<MusicApi.TrackInfo> getTrackWithName(String trackName, String artistName, List<MusicApi.Track> trackList, String albumUid);
 
@@ -66,10 +66,10 @@ public interface RepositoryService {
     Observable<String> getLyricsFromNetwork(String artistName, String songTitle, String trackUid);
 
     //Similar Tracks
-    Observable<List<MusicApi.Track>> getSimilarTrackList(String trackUid);
-    Observable<List<MusicApi.Track>> getSimilarTrackListFromDatabase(String trackUid);
-    Observable<List<MusicApi.Track>> getSimilarTrackListFromNetwork(String trackUid);
-    Observable<List<MusicApi.Track>> getSimilarTracksByName(String artist, String track, String apiKey);
+    Observable<List<MusicApi.SimilarTrack>> getSimilarTrackList(String trackUid);
+    Observable<List<MusicApi.SimilarTrack>> getSimilarTrackListFromDatabase(String trackUid);
+    Observable<List<MusicApi.SimilarTrack>> getSimilarTrackListFromNetwork(String trackUid);
+    Observable<List<MusicApi.SimilarTrack>> getSimilarTracksByName(String artist, String track, String apiKey);
 
     //Clear Cache
 

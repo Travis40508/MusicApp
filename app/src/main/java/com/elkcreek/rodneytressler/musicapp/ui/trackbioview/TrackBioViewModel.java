@@ -79,7 +79,7 @@ public class TrackBioViewModel extends ViewModel {
         };
     }
 
-    private Consumer<List<MusicApi.Track>> updateUiWithSimilarTracks() {
+    private Consumer<List<MusicApi.SimilarTrack>> updateUiWithSimilarTracks() {
         return trackList -> {
             if (trackList != null && !trackList.isEmpty()) {
                 similarTracks.set(Arrays.asList(trackList.toArray()));

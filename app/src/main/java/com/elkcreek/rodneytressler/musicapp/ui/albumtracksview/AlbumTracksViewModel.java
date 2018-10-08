@@ -41,7 +41,7 @@ public class AlbumTracksViewModel extends ViewModel {
         disposable.add(repositoryService.getTracksFromAlbum(albumUid).subscribe(updateUiWithTracks(), updateUiWithError()));
     }
 
-    private Consumer<List<MusicApi.Track>> updateUiWithTracks() {
+    private Consumer<List<MusicApi.AlbumTrack>> updateUiWithTracks() {
         return trackList -> {
             albumTrackList.set(Arrays.asList(trackList.toArray()));
             showProgressBar.set(false);

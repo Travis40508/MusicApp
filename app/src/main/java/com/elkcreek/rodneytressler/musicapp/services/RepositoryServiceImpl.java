@@ -27,7 +27,7 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getArtistTopTracks(String artistUid) {
+    public Observable<List<MusicApi.ArtistTrack>> getArtistTopTracks(String artistUid) {
         return getArtistTopTracksFromDatabase(artistUid)
                 .subscribeOn(Schedulers.io())
                 .flatMap(tracks -> tracks.isEmpty() ? Observable.error(Throwable::new) : Observable.just(tracks))
@@ -37,12 +37,12 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getArtistTopTracksFromDatabase(String artistUid) {
+    public Observable<List<MusicApi.ArtistTrack>> getArtistTopTracksFromDatabase(String artistUid) {
         return musicDatabaseService.getTrackList(artistUid).subscribeOn(Schedulers.io());
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getArtistTracksFromNetwork(String artistUid) {
+    public Observable<List<MusicApi.ArtistTrack>> getArtistTracksFromNetwork(String artistUid) {
         return musicApiService.getTopTracks(artistUid, Constants.API_KEY)
                 .subscribeOn(Schedulers.io())
                 .map(MusicApi.TopTracksResponse::getTopTracks)
@@ -134,7 +134,7 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getTopTracks() {
+    public Observable<List<MusicApi.TopTrack>> getTopTracks() {
         return getTopTracksFromDatabase()
                 .flatMap(trackList -> trackList.get(0) == null ? Observable.error(Throwable::new) : Observable.just(trackList))
                 .onErrorResumeNext(Observable.empty())
@@ -143,14 +143,14 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getTopTracksFromDatabase() {
+    public Observable<List<MusicApi.TopTrack>> getTopTracksFromDatabase() {
         return musicDatabaseService.getTopChartTracks()
                 .subscribeOn(Schedulers.io())
                 .map(MusicApi.TopChartTracks::getTrackList);
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getTopTracksFromNetwork() {
+    public Observable<List<MusicApi.TopTrack>> getTopTracksFromNetwork() {
         return musicApiService.getTopTracksList(Constants.API_KEY)
                 .subscribeOn(Schedulers.io())
                 .doOnNext(musicDatabaseService::insertTopTracks)
@@ -227,7 +227,7 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getTracksFromAlbum(String albumUid) {
+    public Observable<List<MusicApi.AlbumTrack>> getTracksFromAlbum(String albumUid) {
         return getTracksFromAlbumFromDatabase(albumUid)
                 .subscribeOn(Schedulers.io())
                 .flatMap(trackList -> trackList.get(0) == null ? Observable.error(Throwable::new) : Observable.just(trackList))
@@ -237,14 +237,14 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getTracksFromAlbumFromDatabase(String albumUid) {
+    public Observable<List<MusicApi.AlbumTrack>> getTracksFromAlbumFromDatabase(String albumUid) {
         return musicDatabaseService.getAlbumByUid(albumUid)
                 .subscribeOn(Schedulers.io())
                 .map(MusicApi.Album::getTrackList);
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getTracksFromAlbumFromNetwork(String albumUid) {
+    public Observable<List<MusicApi.AlbumTrack>> getTracksFromAlbumFromNetwork(String albumUid) {
         return musicApiService.getAlbumInfo(Constants.API_KEY, albumUid)
                 .subscribeOn(Schedulers.io())
                 .map(albumInfo -> albumInfo.getTracksResponse().getTrackList())
@@ -305,7 +305,7 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getSimilarTrackList(String trackUid) {
+    public Observable<List<MusicApi.SimilarTrack>> getSimilarTrackList(String trackUid) {
         return getSimilarTrackListFromDatabase(trackUid)
                 .subscribeOn(Schedulers.io())
                 .flatMap(trackList -> trackList.get(0) == null ? Observable.error(Throwable::new) : Observable.just(trackList))
@@ -315,19 +315,19 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getSimilarTrackListFromDatabase(String trackUid) {
+    public Observable<List<MusicApi.SimilarTrack>> getSimilarTrackListFromDatabase(String trackUid) {
         return musicDatabaseService.getSimilarTracks(trackUid).subscribeOn(Schedulers.io());
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getSimilarTrackListFromNetwork(String trackUid) {
+    public Observable<List<MusicApi.SimilarTrack>> getSimilarTrackListFromNetwork(String trackUid) {
         return musicApiService.getListOfSimilarTracks(trackUid)
                 .subscribeOn(Schedulers.io())
                 .doOnNext(trackList -> musicDatabaseService.updateTrackInfoWithSimilarArtists(trackList, trackUid));
     }
 
     @Override
-    public Observable<List<MusicApi.Track>> getSimilarTracksByName(String artist, String track, String apiKey) {
+    public Observable<List<MusicApi.SimilarTrack>> getSimilarTracksByName(String artist, String track, String apiKey) {
         return musicApiService.getSimilarTracksByName(artist, track, apiKey)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
