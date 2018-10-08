@@ -110,9 +110,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private void bindArtist(ArtistViewHolder viewHolder, MusicApi.Artist artist) {
+        String imageUrl = artist.getArtistImages().get(2).getImageUrl();
+
         viewHolder.binding.setArtist(artist);
         viewHolder.binding.setMainViewModel(mainViewModel);
         viewHolder.binding.setHandler(handler);
+        viewHolder.binding.setImageUrl(imageUrl);
     }
 
     private void bindAlbum(AlbumsViewHolder viewHolder, MusicApi.Album album) {
@@ -164,7 +167,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private void bindSimilarArtist(SimilarArtistViewHolder viewHolder, MusicApi.Artist similarArtist) {
+        String imageUrl = similarArtist.getArtistImages().get(2).getImageUrl();
+
         viewHolder.binding.setArtist(similarArtist);
+        viewHolder.binding.setImageUrl(imageUrl);
         viewHolder.binding.setMainViewModel(mainViewModel);
         viewHolder.binding.setHandler(handler);
     }

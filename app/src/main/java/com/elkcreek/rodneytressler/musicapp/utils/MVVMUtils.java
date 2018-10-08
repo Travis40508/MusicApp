@@ -24,10 +24,10 @@ import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
 public class MVVMUtils {
 
     @BindingAdapter("artistImageUrl")
-    public static void loadArtistImage(ImageView imageView, MusicApi.Artist artist) {
-        if(artist != null && artist.getArtistImages() != null) {
+    public static void loadArtistImage(ImageView imageView, String imageUrl) {
+        if(imageUrl != null) {
             Glide.with(imageView.getContext()).asBitmap()
-                    .load(artist.getArtistImages().get(2).getImageUrl())
+                    .load(imageUrl)
                     .apply(RequestOptions.overrideOf(250, 300))
                     .apply(RequestOptions.encodeFormatOf(Bitmap.CompressFormat.PNG))
                     .apply(RequestOptions.formatOf(PREFER_ARGB_8888))
@@ -50,9 +50,9 @@ public class MVVMUtils {
     }
 
     @BindingAdapter("similarArtist")
-    public static void loadSimilarArtistImage(ImageView imageView, MusicApi.Artist artist) {
+    public static void loadSimilarArtistImage(ImageView imageView, String imageUrl) {
         Glide.with(imageView.getContext()).asBitmap()
-                .load(artist.getArtistImages().get(2).getImageUrl())
+                .load(imageUrl)
                 .apply(RequestOptions.errorOf(R.drawable.no_image_available))
                 .apply(RequestOptions.circleCropTransform())
                 .apply(RequestOptions.overrideOf(100, 150))
@@ -64,7 +64,7 @@ public class MVVMUtils {
     }
 
     @BindingAdapter(value = {"data", "recyclerViewAdapter", "searchText"}, requireAll = false)
-    public static void artistRecyclerView(RecyclerView recyclerView, List<Object> list, RecyclerViewAdapter recyclerViewAdapter, String searchedText) {
+    public static void recyclerViewLoading(RecyclerView recyclerView, List<Object> list, RecyclerViewAdapter recyclerViewAdapter, String searchedText) {
         recyclerViewAdapter.setAdapterItems(list);
         List<Object> searchedTrackList = new ArrayList<>();
 

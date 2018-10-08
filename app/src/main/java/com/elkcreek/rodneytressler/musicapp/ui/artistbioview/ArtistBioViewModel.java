@@ -27,6 +27,7 @@ public class ArtistBioViewModel extends ViewModel {
     public ObservableField<String> bioSummary = new ObservableField<>();
     public ObservableField<String> bioContent = new ObservableField<>();
     public ObservableField<MusicApi.Artist> artist = new ObservableField<>();
+    public ObservableField<String> imageUrl = new ObservableField<>();
     public ObservableField<List<Object>> similarArtists = new ObservableField<>(new ArrayList<>());
     public ObservableField<String> similarArtistText = new ObservableField<>(Constants.NO_SIMILAR_ARTISTS);
 
@@ -53,7 +54,7 @@ public class ArtistBioViewModel extends ViewModel {
     private Consumer<MusicApi.Artist> updateUiWithArtist() {
         return artist -> {
             mainViewModel.showLoadingLayout.set(false);
-            this.artist.set(artist);
+            this.imageUrl.set(artist.getArtistImages().get(2).getImageUrl());
             bioSummary.set(artist.getArtistBio() != null ? artist.getArtistBio().getBioSummary() : Constants.NO_ARTIST_BIO_AVAILABLE);
             bioContent.set(artist.getArtistBio() != null ? artist.getArtistBio().getBioContent() : Constants.NO_ARTIST_BIO_AVAILABLE);
             if(artist.getSimilar() != null && !artist.getSimilar().getArtistList().isEmpty()) {
