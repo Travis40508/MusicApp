@@ -43,7 +43,7 @@
 
                 <ImageView
                     android:id="@+id/image_album_cover"
-                    app:trackBioImage="@{viewModel.imageUrl}"
+                    app:imageUrl="@{viewModel.imageUrl.get()}"
                     android:layout_width="250dp"
                     android:layout_height="200dp"
                     android:layout_gravity="center_horizontal"

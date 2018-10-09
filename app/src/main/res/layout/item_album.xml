@@ -37,7 +37,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:albumImage="@{album}"
+            app:imageUrl="@{imageUrl}"
+            app:imageObject="@{album}"
             android:layout_width="75dp"
             android:layout_height="75dp" />
 

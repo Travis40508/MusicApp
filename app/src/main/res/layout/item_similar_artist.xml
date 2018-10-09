@@ -7,6 +7,10 @@
             type="com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi.Artist"/>
 
         <variable
+            name="similarArtist"
+            type="com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi.SimilarArtist"/>
+
+        <variable
             name="imageUrl"
             type="String"/>
 
@@ -27,7 +31,8 @@
 
         <ImageView
             android:id="@+id/item_similar_artist_image"
-            app:similarArtist="@{imageUrl}"
+            app:imageUrl="@{imageUrl}"
+            app:imageObject="@{similarArtist}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

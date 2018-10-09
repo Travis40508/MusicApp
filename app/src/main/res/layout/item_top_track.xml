@@ -27,6 +27,10 @@
         <variable
             name="trackName"
             type="String"/>
+
+        <variable
+            name="topTrack"
+            type="com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi.TopTrack"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -42,7 +46,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_margin="5dp"
-            app:topTrackImage="@{imageUrl}"
+            app:imageUrl="@{imageUrl}"
+            app:imageObject="@{topTrack}"
             android:layout_width="75dp"
             android:layout_height="75dp" />
 

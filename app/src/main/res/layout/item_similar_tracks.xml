@@ -23,6 +23,10 @@
             name="imageUrl"
             type="String"/>
 
+        <variable
+            name="similarTrack"
+            type="com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi.SimilarTrack"/>
+
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -36,7 +40,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:similarTrackImage="@{imageUrl}"
+            app:imageUrl="@{imageUrl}"
+            app:imageObject="@{similarTrack}"
             android:layout_margin="10dp"
             android:layout_width="80dp"
             android:layout_height="80dp" />

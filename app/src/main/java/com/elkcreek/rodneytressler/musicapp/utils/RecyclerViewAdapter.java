@@ -93,13 +93,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         Object listItem = objectList.get(position);
 
         if(listItem instanceof MusicApi.SimilarArtist) {
-            bindSimilarArtist((SimilarArtistViewHolder) viewHolder, (MusicApi.Artist) listItem);
+            bindSimilarArtist((SimilarArtistViewHolder) viewHolder, (MusicApi.SimilarArtist) listItem);
         } else if(listItem instanceof MusicApi.SimilarTrack) {
-            bindSimilarTrack((SimilarTracksViewHolder) viewHolder, (MusicApi.Track) listItem);
+            bindSimilarTrack((SimilarTracksViewHolder) viewHolder, (MusicApi.SimilarTrack) listItem);
         } else if(listItem instanceof MusicApi.Artist) {
             bindArtist((ArtistViewHolder) viewHolder, (MusicApi.Artist) listItem);
         } else if (listItem instanceof MusicApi.TopTrack) {
-            bindTopTrack((TopTracksViewHolder) viewHolder, (MusicApi.Track) listItem);
+            bindTopTrack((TopTracksViewHolder) viewHolder, (MusicApi.TopTrack) listItem);
         } else if(listItem instanceof MusicApi.SearchedTrack) {
             bindSearchedTrack((TopTracksViewHolder) viewHolder, (MusicApi.SearchedTrack) listItem);
         } else if(listItem instanceof MusicApi.AlbumTrack || listItem instanceof MusicApi.ArtistTrack) {
@@ -138,12 +138,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         viewHolder.binding.setHandler(handler);
     }
 
-    private void bindTopTrack(TopTracksViewHolder viewHolder, MusicApi.Track track) {
-        String imageUrl = track.getArtistImage().get(2).getImageUrl();
-        String artistName = track.getArtist().getArtistName();
-        String trackUid = track.getTrackUid();
-        String trackName = track.getTrackName();
+    private void bindTopTrack(TopTracksViewHolder viewHolder, MusicApi.TopTrack topTrack) {
+        String imageUrl = topTrack.getArtistImage().get(2).getImageUrl();
+        String artistName = topTrack.getArtist().getArtistName();
+        String trackUid = topTrack.getTrackUid();
+        String trackName = topTrack.getTrackName();
 
+        viewHolder.binding.setTopTrack(topTrack);
         viewHolder.binding.setArtistName(artistName);
         viewHolder.binding.setImageUrl(imageUrl);
         viewHolder.binding.setTrackUid(trackUid);
@@ -166,20 +167,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         viewHolder.binding.setMainViewModel(mainViewModel);
     }
 
-    private void bindSimilarArtist(SimilarArtistViewHolder viewHolder, MusicApi.Artist similarArtist) {
+    private void bindSimilarArtist(SimilarArtistViewHolder viewHolder, MusicApi.SimilarArtist similarArtist) {
         String imageUrl = similarArtist.getArtistImages().get(2).getImageUrl();
 
+        viewHolder.binding.setSimilarArtist(similarArtist);
         viewHolder.binding.setArtist(similarArtist);
         viewHolder.binding.setImageUrl(imageUrl);
         viewHolder.binding.setMainViewModel(mainViewModel);
         viewHolder.binding.setHandler(handler);
     }
 
-    private void bindSimilarTrack(SimilarTracksViewHolder viewHolder, MusicApi.Track similarTrack) {
+    private void bindSimilarTrack(SimilarTracksViewHolder viewHolder, MusicApi.SimilarTrack similarTrack) {
         String imageUrl = similarTrack.getArtistImage().get(2).getImageUrl();
         String artistName = similarTrack.getArtist().getArtistName();
         EventHandlers handler = new EventHandlers();
 
+        viewHolder.binding.setSimilarTrack(similarTrack);
         viewHolder.binding.setArtistName(artistName);
         viewHolder.binding.setHandler(handler);
         viewHolder.binding.setImageUrl(imageUrl);
