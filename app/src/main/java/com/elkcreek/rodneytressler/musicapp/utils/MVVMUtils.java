@@ -14,6 +14,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +24,7 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.elkcreek.rodneytressler.musicapp.R;
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
+import com.elkcreek.rodneytressler.musicapp.ui.mainview.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,5 +99,19 @@ public class MVVMUtils {
     public static void loadViewPager(ViewPager viewPager, FragmentPagerAdapter adapter, TabLayout tabLayout) {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @BindingAdapter("tabLayoutVisibility")
+    public static void checkTabLayoutVisibility(TabLayout tabLayout, TrackViewPagerAdapter adapter) {
+        int orientation = tabLayout.getContext().getResources().getConfiguration().orientation;
+        boolean isYoutubeScreenVisible = adapter.getItem(1).getUserVisibleHint();
+
+        if(orientation == Configuration.ORIENTATION_LANDSCAPE && isYoutubeScreenVisible) {
+            ((MainActivity)tabLayout.getContext()).getSupportActionBar().hide();
+            tabLayout.setVisibility(View.GONE);
+        } else {
+            ((MainActivity)tabLayout.getContext()).getSupportActionBar().show();
+            tabLayout.setVisibility(View.VISIBLE);
+        }
     }
 }

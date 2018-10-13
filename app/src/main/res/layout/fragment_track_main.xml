@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="recyclerViewAdapter"
+            name="adapter"
             type="com.elkcreek.rodneytressler.musicapp.utils.TrackViewPagerAdapter"/>
     </data>
 
@@ -19,6 +19,7 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayoutTrackMain"
             android:layout_width="match_parent"
+            app:tabLayoutVisibility="@{adapter}"
             android:layout_height="wrap_content"
             app:tabTextColor="@android:color/white"
             app:tabMode="fixed">
@@ -28,7 +29,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager_track_main"
             android:layout_width="match_parent"
-            app:artistViewPagerAdapter="@{recyclerViewAdapter}"
+            app:artistViewPagerAdapter="@{adapter}"
             app:tabLayout="@{tabLayoutTrackMain}"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/tabLayoutTrackMain">
