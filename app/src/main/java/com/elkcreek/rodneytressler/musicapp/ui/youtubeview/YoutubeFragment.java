@@ -25,6 +25,8 @@ public class YoutubeFragment extends Fragment {
     @Inject protected YoutubeFactory factory;
     private YoutubeViewModel viewModel;
     private FragmentYoutubeBinding binding;
+    private YouTubePlayer videoPlayer;
+    private int videoTime;
 
     @Override
     public void onAttach(Context context) {
@@ -69,7 +71,9 @@ public class YoutubeFragment extends Fragment {
                 youTubePlayerSupportFragment.initialize(Constants.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
                     @Override
                     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                        youTubePlayer.cueVideo(videoId);
+                        YoutubeFragment.this.videoPlayer = youTubePlayer;
+                        youTubePlayer.cueVideo(videoId, videoTime);
+                        youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
                     }
 
                     @Override
@@ -79,6 +83,24 @@ public class YoutubeFragment extends Fragment {
                 });
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(Constants.YOUTUBE_VIDEO_TAG, videoPlayer.getCurrentTimeMillis());
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        videoTime = savedInstanceState == null ? 0 : savedInstanceState.getInt(Constants.YOUTUBE_VIDEO_TAG);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        videoPlayer.release();
     }
 
     private YoutubeViewModel getViewModel() {
