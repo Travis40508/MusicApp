@@ -35,9 +35,9 @@ public class ArtistSearchViewModel extends ViewModel {
     public final RepositoryService repositoryService;
     public ObservableField<List<Object>> artists = new ObservableField<>(new ArrayList<>());
     public ObservableBoolean showProgressBar = new ObservableBoolean(true);
+    public ObservableInt scrollPosition = new ObservableInt(0);
     public ObservableField<String> artistSearchValue = new ObservableField<>(Constants.CURRENT_TOP_ARTISTS);
     public ObservableField<String> artistSearchHint = new ObservableField<>(Constants.ENTER_ARTIST_NAME);
-    public ObservableInt scrollPosition = new ObservableInt(0);
     public CompositeDisposable disposable;
     private Timer timer;
     private MainViewModel mainViewModel;
@@ -116,7 +116,6 @@ public class ArtistSearchViewModel extends ViewModel {
         return searchResponse -> {
             setShowProgressBar(false);
             artists.set(Arrays.asList(searchResponse.toArray()));
-//            view.scrollRecyclerViewToTop();
         };
     }
 

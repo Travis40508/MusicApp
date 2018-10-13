@@ -12,10 +12,7 @@
             name="recyclerViewAdapter"
             type="com.elkcreek.rodneytressler.musicapp.utils.RecyclerViewAdapter"/>
 
-        <variable
-            name="layoutManager"
-            type="android.support.v7.widget.GridLayoutManager"/>
-
+        <import type="android.support.v7.widget.GridLayoutManager"/>
         <import type="com.elkcreek.rodneytressler.musicapp.utils.Constants"/>
     </data>
 
@@ -97,7 +94,7 @@
                     app:data="@{viewModel.similarTracks}"
                     android:adapter="@{recyclerViewAdapter}"
                     app:recyclerViewAdapter="@{recyclerViewAdapter}"
-                    app:layoutManager="@{layoutManager}"
+                    app:layoutManager="android.support.v7.widget.GridLayoutManager"
                     android:layout_width="match_parent"
                     android:nestedScrollingEnabled="false"
                     android:layout_height="wrap_content"

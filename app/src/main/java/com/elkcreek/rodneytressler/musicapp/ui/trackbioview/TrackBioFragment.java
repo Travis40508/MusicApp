@@ -57,12 +57,10 @@ public class TrackBioFragment extends BaseFragment {
         viewModel = getViewModel();
         mainViewModel = getMainViewModel();
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(new ArrayList<>(), mainViewModel);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
         viewModel.setMainViewModel(mainViewModel);
 
         binding.setViewModel(viewModel);
         binding.setRecyclerViewAdapter(recyclerViewAdapter);
-        binding.setLayoutManager(layoutManager);
 
         viewModel.fetchTrackBio(getArguments().getString(Constants.TRACK_UID_KEY), getArguments().getString(Constants.TRACK_NAME_KEY), getArguments().getString(Constants.ARTIST_NAME_KEY));
         viewModel.fetchSimilarTracks(getArguments().getString(Constants.TRACK_UID_KEY), getArguments().getString(Constants.TRACK_NAME_KEY), getArguments().getString(Constants.ARTIST_NAME_KEY));

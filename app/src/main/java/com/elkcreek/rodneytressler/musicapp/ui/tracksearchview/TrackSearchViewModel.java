@@ -3,6 +3,7 @@ package com.elkcreek.rodneytressler.musicapp.ui.tracksearchview;
 import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 import android.util.Log;
 
 import com.elkcreek.rodneytressler.musicapp.repo.network.MusicApi;
@@ -26,7 +27,7 @@ public class TrackSearchViewModel extends ViewModel {
     public ObservableField<List<Object>> trackList = new ObservableField<>(new ArrayList<>());
     public ObservableBoolean showLoadingLayout = new ObservableBoolean(true);
     public ObservableField<String> trackSearchValue = new ObservableField<>(Constants.CURRENT_TOP_TRACKS);
-    private MainViewModel mainViewModel;
+    public ObservableInt scrollPosition = new ObservableInt(0);
     private Timer timer;
 
     public TrackSearchViewModel(RepositoryService repositoryService) {
@@ -51,10 +52,6 @@ public class TrackSearchViewModel extends ViewModel {
             Log.d("@@@@-TrackSearchVM", throwable.getMessage());
             showLoadingLayout.set(false);
         };
-    }
-
-    public void setMainViewModel(MainViewModel mainViewModel) {
-        this.mainViewModel = mainViewModel;
     }
 
     public void onTrackSearchTextChanged(CharSequence trackSearchText, int start, int before, int count) {

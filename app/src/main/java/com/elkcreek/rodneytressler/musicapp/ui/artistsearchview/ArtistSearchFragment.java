@@ -57,9 +57,7 @@ public class ArtistSearchFragment extends BaseFragment {
         viewModel = getViewModel();
         mainViewModel = getMainViewModel();
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(new ArrayList<>(), mainViewModel);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2);
         binding.setRecyclerViewAdapter(recyclerViewAdapter);
-        binding.setLayoutManager(layoutManager);
         binding.setViewModel(viewModel);
         viewModel.setMainViewModel(mainViewModel);
     }

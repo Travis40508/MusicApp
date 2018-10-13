@@ -49,11 +49,9 @@ public class ArtistBioFragment extends BaseFragment {
         viewModel = ViewModelProviders.of(this, factory).get(ArtistBioViewModel.class);
         mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(new ArrayList<>(), mainViewModel);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
         viewModel.setMainViewModel(mainViewModel);
         binding.setViewModel(viewModel);
         binding.setRecyclerViewAdapter(recyclerViewAdapter);
-        binding.setLayoutManager(layoutManager);
 
         viewModel.fetchArtistBio(
                 getArguments().getString(Constants.ARTIST_UID_KEY),

@@ -14,10 +14,6 @@
             name="recyclerViewAdapter"
             type="com.elkcreek.rodneytressler.musicapp.utils.RecyclerViewAdapter"/>
 
-        <variable
-            name="layoutManager"
-            type="GridLayoutManager"/>
-
         <import type="android.support.v7.widget.GridLayoutManager"/>
         <import type="android.view.View"/>
     </data>
@@ -65,7 +61,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="10dp"
             app:data="@{viewModel.artists}"
-            app:layoutManager="@{layoutManager}"
+            app:layoutManager="android.support.v7.widget.GridLayoutManager"
             android:adapter="@{recyclerViewAdapter}"
             app:recyclerViewAdapter="@{recyclerViewAdapter}"
             app:layout_constraintStart_toStartOf="parent"

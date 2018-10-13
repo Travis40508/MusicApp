@@ -54,7 +54,6 @@ public class TrackSearchFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         viewModel = getViewModel();
         mainViewModel = getMainViewModel();
-        viewModel.setMainViewModel(mainViewModel);
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(new ArrayList<>(), mainViewModel);
 
         binding.setRecyclerViewAdapter(recyclerViewAdapter);

@@ -190,6 +190,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         viewHolder.binding.setMainViewModel(mainViewModel);
     }
 
+
+
     @Override
     public int getItemCount() {
         return objectList.size();
