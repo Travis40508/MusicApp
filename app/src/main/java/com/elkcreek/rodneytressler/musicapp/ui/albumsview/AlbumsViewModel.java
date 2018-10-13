@@ -44,4 +44,11 @@ public class AlbumsViewModel extends ViewModel {
             shouldShowLoadingLayout.set(false);
         };
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        disposable.clear();
+    }
+
 }

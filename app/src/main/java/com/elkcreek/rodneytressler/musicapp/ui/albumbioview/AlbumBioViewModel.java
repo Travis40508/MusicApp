@@ -69,4 +69,11 @@ public class AlbumBioViewModel extends ViewModel {
     public void bioExpandedClicked() {
         bioIsExpanded.set(!bioIsExpanded.get());
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        disposable.clear();
+    }
+
 }

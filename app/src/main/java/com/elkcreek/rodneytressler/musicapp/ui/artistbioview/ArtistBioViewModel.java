@@ -81,4 +81,11 @@ public class ArtistBioViewModel extends ViewModel {
     public void readMoreClicked() {
         bioIsExpanded.set(!bioIsExpanded.get());
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        disposable.clear();
+    }
+
 }

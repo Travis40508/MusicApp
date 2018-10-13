@@ -56,23 +56,23 @@ public class Constants {
     public static final String DEFAULT_ACTION_BAR_TITLE = "Music Search";
 
     //Null Values
-    public static final String NO_ARTIST_BIO_AVAILABLE = "Sorry, no biography available for this artist. :(";
-    public static final String NO_ALBUM_BIO_AVAILABLE = "Sorry, no biography available for this album. :(";
-    public static final String NO_TRACK_BIO_AVAILABLE = "Sorry, no biography available for this track. :(";
-    //Albums no Albums Available
+    public static final String NO_ARTIST_BIO_AVAILABLE = "Sorry, no biography available for this artist. ¯\\_(ツ)_/¯";
+    public static final String NO_ALBUM_BIO_AVAILABLE = "Sorry, no biography available for this album. ¯\\_(ツ)_/¯";
+    public static final String NO_TRACK_BIO_AVAILABLE = "Sorry, no biography available for this track. ¯\\_(ツ)_/¯";
+    public static final String NO_ALBUMS_AVAILABLE = "No Albums Available.\n ¯\\_(ツ)_/¯";
     //All Tracks no Tracks Available
     //Album Tracks no Tracks available for this album
     public static final String SIMILAR_ARTISTS = "Similar Artists";
     public static final String ENTER_ARTIST_NAME = "Enter Artist Name";
     public static final String SIMILAR_TRACKS = "Similar Tracks";
-    public static final String NO_SIMILAR_ARTISTS = "No similar artists found.";
-    public static final String NO_SIMILAR_TRACKS = "No similar tracks found.";
+    public static final String NO_SIMILAR_ARTISTS = "No similar artists found. ¯\\_(ツ)_/¯";
+    public static final String NO_SIMILAR_TRACKS = "No similar tracks found. ¯\\_(ツ)_/¯";
     //No Artist Bio Image
     //No Album Bio Image
     //No Track Bio Image
     //No Youtube Video
     public static final String SHOWING_ALL_TRACKS = "Showing All Tracks";
-    public static final String NO_LYRICS = "No lyrics found";
+    public static final String NO_LYRICS = "No lyrics found ¯\\_(ツ)_/¯";
     public static final String TOP_TRACKS = "Today\'s Top Tracks";
     public static final String CONNECTION_ERROR = "Request failed. Please check your Internet connection and try again.";
     public static final String LOADING_ERROR = "Error Connecting to Network - Please Try Again";

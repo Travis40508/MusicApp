@@ -62,4 +62,11 @@ public class YoutubeViewModel extends ViewModel {
     public LiveData<String> getYoutubeVideoId() {
         return youtubeVideoId;
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        disposable.clear();
+    }
+
 }

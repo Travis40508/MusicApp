@@ -42,11 +42,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void listenForAppClose() {
-        viewModel.shouldCloseApp.observe(this, aBoolean -> MainActivity.super.onBackPressed());
+        viewModel.getShouldCloseApp().observe(this, aBoolean -> MainActivity.super.onBackPressed());
     }
 
     private void listenForFragmentPop() {
-        viewModel.shouldPopFragment.observe(this, aBoolean -> NavHostFragment.findNavController(getSupportFragmentManager().findFragmentById(R.id.my_nav_host_fragment)).popBackStack());
+        viewModel.getShouldPopFragment().observe(this, aBoolean -> NavHostFragment.findNavController(getSupportFragmentManager().findFragmentById(R.id.my_nav_host_fragment)).popBackStack());
     }
 
     private void listenForErrorToasts() {

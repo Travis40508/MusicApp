@@ -84,4 +84,11 @@ public class TrackSearchViewModel extends ViewModel {
             this.trackList.set(Arrays.asList(trackList.toArray()));
         };
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        disposable.clear();
+    }
+
 }

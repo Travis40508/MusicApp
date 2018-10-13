@@ -47,4 +47,11 @@ public class AllTracksViewModel extends ViewModel {
     public String getSearchedTextString() {
         return "Showing results for '" + searchedText.get() + "'";
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        disposable.clear();
+    }
+
 }
