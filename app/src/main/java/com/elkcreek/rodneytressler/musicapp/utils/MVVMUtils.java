@@ -69,7 +69,15 @@ public class MVVMUtils {
         if (searchedText == null) {
             recyclerViewAdapter.setAdapterItems(list);
         }
-        if(recyclerView.getLayoutManager() instanceof GridLayoutManager) {
+
+        Object listItem = null;
+        if(list != null && !list.isEmpty()) {
+            listItem = list.get(0);
+        }
+
+        if(recyclerView.getLayoutManager() instanceof GridLayoutManager && (listItem instanceof MusicApi.SimilarArtist || listItem instanceof MusicApi.SimilarTrack)) {
+            ((GridLayoutManager) recyclerView.getLayoutManager()).setSpanCount(recyclerView.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 4 : 3);
+        } else if(recyclerView.getLayoutManager() instanceof GridLayoutManager) {
             ((GridLayoutManager) recyclerView.getLayoutManager()).setSpanCount(recyclerView.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2);
         }
 
